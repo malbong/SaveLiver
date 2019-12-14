@@ -29,6 +29,8 @@ public abstract class Enemy : MonoBehaviour
     public virtual void MoveToPlayer(float speed = 10.0f)
     {
         transform.Translate(0, -speed * Time.deltaTime, 0);
+        transform.parent.position = transform.position;
+        transform.localPosition = new Vector3(0, 0, 0);
 
         Vector3 currentVec = -transform.up; //현재 이동방향 단위벡터
         Vector3 diffVec = (Player.instance.transform.position - transform.position).normalized; // 적 -> 플레이어 단위벡터
@@ -40,7 +42,7 @@ public abstract class Enemy : MonoBehaviour
         Vector3 rotationVec = new Vector3(0, 0, finalAngle); //finalAngle의 벡터화
         Quaternion targetRotation = Quaternion.Euler(transform.rotation.eulerAngles + rotationVec); //쿼터니언 <- 현재 회전값 + 회전해야할 값 
 
-        transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, 0.04f); //부드러운 회전을 위함
+        transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, 0.02f); //부드러운 회전을 위함
     }
 
 
@@ -68,4 +70,5 @@ public abstract class Enemy : MonoBehaviour
      *         Animation 혹은 Particle을 실행
      */
     public abstract void OnDead();
+    //Rig and Arrow //Spawn() //Hit() // Dead()
 }
