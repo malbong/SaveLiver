@@ -25,6 +25,8 @@ public class RigEnemy : MonoBehaviour
         GameObject rigEnemy = new GameObject("Rig Enemy");
         transform.SetParent(rigEnemy.transform);
         SpriteRenderer enemySpriteRenderer = rigEnemy.AddComponent<SpriteRenderer>();
+        Rigidbody2D rigid = rigEnemy.AddComponent<Rigidbody2D>();
+        rigid.gravityScale = 0;
         enemySpriteRenderer.sprite = sprite;
     }
 }
