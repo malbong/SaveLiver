@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 8283322269876636976}
   - component: {fileID: 8283322269876636977}
   - component: {fileID: 8283322269876636978}
+  - component: {fileID: 4207881039540627341}
   m_Layer: 0
   m_Name: Turtle01
   m_TagString: Untagged
@@ -46,9 +47,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lifeTime: 10
+  rigid: {fileID: 4207881039540627341}
+  childRigid: {fileID: 6410653990964860604}
   score: 5
   hitCount: 1
-  speed: 2
+  speed: 4
 --- !u!114 &8283322269876636978
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -62,6 +65,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sprite: {fileID: 21300000, guid: fac41bf3662dc1844a9abe8f1a66cbae, type: 3}
+--- !u!50 &4207881039540627341
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8283322269876636943}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1 &8283322269913569030
 GameObject:
   m_ObjectHideFlags: 0
@@ -72,6 +96,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8283322269913569031}
   - component: {fileID: 8283322269913569032}
+  - component: {fileID: 6410653990964860604}
   m_Layer: 0
   m_Name: Enemy_Arrow
   m_TagString: Untagged
@@ -142,3 +167,24 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!50 &6410653990964860604
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8283322269913569030}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0

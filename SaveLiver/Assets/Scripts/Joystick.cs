@@ -13,8 +13,6 @@ public class Joystick : MonoBehaviour, IDragHandler, IPointerDownHandler, IPoint
 
     void Start()
     {
-        JoystickVector = Vector3.up;
-
         backgroundPad = transform.GetComponent<Image>();
         innerPad = transform.GetChild(0).GetComponent<Image>();
     }
@@ -25,9 +23,11 @@ public class Joystick : MonoBehaviour, IDragHandler, IPointerDownHandler, IPoint
     /**************************************
     * @함수명: OnDrag(PointerEventData data)
     * @작성자: zeli
-    * @입력: data
+    * @입력: data (터치에 대한 정보)
     * @출력: void
     * @설명: 조이스틱 드래그 모션 구현, 드래그 방향 구하기
+    *        드래그할 때마다 발생
+    *        조이스틱 방향(JoystickVector)을 Player로 넘김
     */
     public void OnDrag(PointerEventData data)
     {
@@ -44,7 +44,7 @@ public class Joystick : MonoBehaviour, IDragHandler, IPointerDownHandler, IPoint
             JoystickVector = (JoystickVector.magnitude > 1.0f) ? JoystickVector.normalized : JoystickVector;
 
             // Player에게 조이스틱 방향 넘기기
-            Player.instance.JoystickVec = JoystickVector;
+            Player.instance.TurnAngle(JoystickVector);
 
             // innerPad 이미지 터치한 곳으로 옮기기
             innerPad.rectTransform.anchoredPosition = new Vector3(JoystickVector.x * (backgroundPad.rectTransform.sizeDelta.x / 3),
@@ -76,6 +76,7 @@ public class Joystick : MonoBehaviour, IDragHandler, IPointerDownHandler, IPoint
     * @입력: data
     * @출력: void
     * @설명: 조이스틱 패드 터치가 끝나면 innerPad 원위치로 옮기기
+    *        터치를 떼면 발동
     */
     public void OnPointerUp(PointerEventData data)
     {
