@@ -5,9 +5,11 @@ using UnityEngine;
 public abstract class Enemy : MonoBehaviour
 {
     public float lifeTime = 10.0f;
+    public float rotateSpeed = 3.0f;
     private Rigidbody2D enemyRigid;
+    private Coroutine runningCoroutine;
     //private Rigidbody2D parentRigid;
-
+    
 
     private void Start()
     {
@@ -72,14 +74,30 @@ public abstract class Enemy : MonoBehaviour
 
         float angle = Vector3.Angle(currentVec, diffVec); //0 ~ 180
         int sign = Vector3.Cross(currentVec, diffVec).z < 0 ? -1 : 1; // -1 or 1
-        float finalAngle = angle * sign;
 
-        Vector3 rotationVec = new Vector3(0, 0, finalAngle); //finalAngle의 벡터화
-        Quaternion targetRotation = Quaternion.Euler(transform.rotation.eulerAngles + rotationVec); //쿼터니언 <- 현재 회전값 + 회전해야할 값 
+        if (runningCoroutine != null)
+        {
+            StopCoroutine(runningCoroutine);
+        }
+        runningCoroutine = StartCoroutine(RotateAngle(angle, sign));
 
-        transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, 0.03f); //부드러운 회전을 위함
+        //float finalAngle = angle * sign;
+        //Vector3 rotationVec = new Vector3(0, 0, finalAngle); //finalAngle의 벡터화
+        //Quaternion targetRotation = Quaternion.Euler(transform.rotation.eulerAngles + rotationVec); //쿼터니언 <- 현재 회전값 + 회전해야할 값 
+        //transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, 0.03f); //부드러운 회전을 위함
     }
 
+    IEnumerator RotateAngle(float angle, int sign)
+    {
+        
+        for (float i = angle%rotateSpeed; i < angle; i += rotateSpeed)
+        {
+            transform.Rotate(0, 0, rotateSpeed * sign);
+            yield return null;
+        }
+        
+        transform.Rotate(0, 0, angle%rotateSpeed);   
+    }
 
     /********************************************
      * @함수명 : Hit()
@@ -95,6 +113,7 @@ public abstract class Enemy : MonoBehaviour
         if (Player.instance.hp <= 0)
         {
             //Player.onDead();
+
         }
     }
 }

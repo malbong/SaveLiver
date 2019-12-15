@@ -30,6 +30,6 @@ public class Turtle01 : Enemy
         //add score
 
         //once used destroy instead SetActive(false);
-        Destroy(transform.parent.gameObject);
+        //Destroy(transform.parent.gameObject);
     }
 }

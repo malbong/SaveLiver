@@ -5,7 +5,6 @@ using UnityEngine;
 public class Bubble : MonoBehaviour, IItem
 {
     public int breathAmout = 1;
-
     public Animator popAni;
 
     public void Use()
