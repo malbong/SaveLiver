@@ -98,11 +98,13 @@ public class Player : MonoBehaviour
     */
     IEnumerator RotateAngle(float angle, int sign)
     {
-        for (float i=0; i<angle; i+=rotateSpeed)
+        float mod = angle % rotateSpeed;
+        for (float i=mod; i<angle; i+=rotateSpeed)
         {
             arrowRotate.Rotate(0, 0, sign * rotateSpeed);
             yield return null; // 1프레임 대기
         }
+        arrowRotate.Rotate(0, 0, sign * mod); // 남은 각도 회전
     }
 
 
