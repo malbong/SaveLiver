@@ -75,9 +75,14 @@ public class SpawnManager : MonoBehaviour
      */
     IEnumerator CreateEnemy()
     {
+        Spawn(enemies[5]);
+        Spawn(enemies[4]);
         Spawn(enemies[0]);
         yield return new WaitForSeconds(3.0f);
-        Spawn(enemies[0]);
+        Spawn(enemies[1]);
         yield return new WaitForSeconds(3.0f);
+        Spawn(enemies[2]);
+        yield return new WaitForSeconds(3.0f);
+        Spawn(enemies[3]);
     }
 }

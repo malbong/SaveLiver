@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: -6606254667868547597}
   - component: {fileID: -8157112749806662931}
   m_Layer: 0
-  m_Name: Turtle01
+  m_Name: Turtle04
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -52,7 +52,7 @@ MonoBehaviour:
   rotateSpeed: 2.5
   score: 5
   hitCount: 1
-  speed: 3
+  speed: 4.5
 --- !u!114 &8283322269876636978
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -65,7 +65,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 09827cf65581057458bf2fb96bc7181a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sprite: {fileID: 21300000, guid: fac41bf3662dc1844a9abe8f1a66cbae, type: 3}
+  sprite: {fileID: 21300000, guid: 23f662a3f17b3e244b7bdd0b55abe434, type: 3}
 --- !u!96 &3512060300423802652
 TrailRenderer:
   serializedVersion: 2

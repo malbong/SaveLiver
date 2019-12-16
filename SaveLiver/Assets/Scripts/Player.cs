@@ -33,12 +33,12 @@ public class Player : MonoBehaviour
     void Start()
     {
         playerRigid = GetComponent<Rigidbody2D>();
-        StartCoroutine(RotateAngle(180, 1)); // 시작하면 Player를 180도 왼쪽으로 돌리기.
+        runningCoroutine = StartCoroutine(RotateAngle(180, -1)); // 시작하면 Player를 180도 오른쪽으로 돌리기.
     }
 
     void Update()
     {
-        playerRigid.velocity = -arrowRotate.up * speed; // 화살표 방향으로 speed만큼 직진
+        playerRigid.velocity = arrowRotate.up * speed; // 화살표 방향으로 speed만큼 직진
     }
 
 
@@ -54,7 +54,7 @@ public class Player : MonoBehaviour
     */
     public void TurnAngle(Vector3 currentJoystickVec)
     {
-        Vector3 originJoystickVec = -arrowRotate.up; // 화살표 방향 벡터
+        Vector3 originJoystickVec = arrowRotate.up; // 화살표 방향 벡터
 
         float angle = Vector3.Angle(currentJoystickVec, originJoystickVec);
         int sign = (Vector3.Cross(currentJoystickVec, originJoystickVec).z > 0) ? -1 : 1;
