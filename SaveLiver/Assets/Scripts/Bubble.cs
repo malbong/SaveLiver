@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Bubble : MonoBehaviour, IItem
+public class Bubble : Item, IItem
 {
     public int breathAmout = 1;
     public Animator popAni;
