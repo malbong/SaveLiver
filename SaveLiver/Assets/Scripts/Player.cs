@@ -67,22 +67,6 @@ public class Player : MonoBehaviour
             StopCoroutine(runningCoroutine);
         }
         runningCoroutine = StartCoroutine(RotateAngle(angle, sign));
-
-
-
-        //arrowRotate.Rotate(0, 0, finalAngle * rotateSpeed * deltaTime);
-        // Rotate을 이용한 회전
-        // 문제점
-        // 각도가 넓으면 빨리 회전하고, 각도가 좁으면 느리게 회전함
-        // angle값이 계속 갱신돼서 회전값이 일정하지 않음 (각도가 좁아질수록 느리게 회전함)
-
-
-
-        //Vector3 currentRotation = arrowRotate.rotation.eulerAngles;
-        //Vector3 targetRotation = currentRotation + new Vector3(0, 0, finalAngle);
-        //Quaternion finalTargetRotation = Quaternion.Euler(targetRotation);
-        //arrowRotate.rotation = Quaternion.Lerp(arrowRotate.rotation, finalTargetRotation, 0.04f);
-        // Quaternion 회전. angle값이 계속 갱신돼서 회전값이 일정하지 않음 (각도가 좁아질수록 느리게 회전함)
     }
 
 
@@ -120,11 +104,16 @@ public class Player : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other)
     {
         IItem item = other.GetComponent<IItem>();
-
         if (item != null)
         {
             item.Use();
         }
     }
 
+
+
+    public void OnDead()
+    {
+        //Destroy(gameObject);
+    }
 }

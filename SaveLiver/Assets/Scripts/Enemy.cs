@@ -112,8 +112,7 @@ public abstract class Enemy : MonoBehaviour
         Player.instance.hp -= hitCount;
         if (Player.instance.hp <= 0)
         {
-            //Player.onDead();
-
+            Player.instance.OnDead();
         }
     }
 }

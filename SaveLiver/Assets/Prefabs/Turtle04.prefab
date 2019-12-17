@@ -52,7 +52,7 @@ MonoBehaviour:
   rotateSpeed: 2.5
   score: 5
   hitCount: 1
-  speed: 4.5
+  speed: 5
 --- !u!114 &8283322269876636978
 MonoBehaviour:
   m_ObjectHideFlags: 0

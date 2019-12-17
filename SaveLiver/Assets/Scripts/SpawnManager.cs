@@ -6,7 +6,7 @@ public class SpawnManager : MonoBehaviour
 {
     public float radius = 10.0f;
     public Enemy[] enemies;
-
+    public Item[] items;
 
     private void Start()
     {
@@ -42,26 +42,49 @@ public class SpawnManager : MonoBehaviour
     }
 
 
+
     /********************************************
      * @함수명 : Spawn()
-     * @작성자 : Malbong
-     * @입력 : Enemy
+     * @작성자 : Malbong, zeli
+     * @입력 : Object
      * @출력 : void
      * @설명 : 임의의 위치에서 Spawn하기
      *         CreateEnemy()라는 코루틴함수에서 계속 사용
-     *         Enemy가 입력으로 들어오면 생성함
+     *         입력된 오브젝트를 생성함
+     *         Turtle: 캐릭터를 향해 회전한 상태로 생성
      */
-    public void Spawn(Enemy enemy)
+    public void Spawn(Object objects)
     {   
         Vector3 randomPosition = GetRandomPosition();
+
+        if(objects.GetType() == typeof(Turtle01))
+        {
+            Vector3 targetPosition = Player.instance.transform.position;
+            Vector3 dir = targetPosition - randomPosition;
+            float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+            Vector3 tmp = new Vector3(0, 0, 90 + angle);
+            Quaternion rotation = Quaternion.Euler(tmp);
+
+            Instantiate(objects, randomPosition, rotation);
+        }
+        else if(objects.GetType().BaseType == typeof(Item))
+        {
+            Instantiate(objects, randomPosition, Quaternion.identity);
+        }
         
-        Vector3 targetPosition = Player.instance.transform.position;
-        Vector3 dir = targetPosition - randomPosition;
-        float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
-        Vector3 tmp = new Vector3(0, 0, 90 + angle);
-        Quaternion rotation = Quaternion.Euler(tmp);
-        
-        Instantiate(enemy, randomPosition, rotation);
+    }
+
+
+    /********************************************
+     * @함수명 : GetRandomItemIndex()
+     * @작성자 : zeli
+     * @입력 : void
+     * @출력 : int
+     * @설명 : item을 랜덤으로 생성하기 위한 Index값 랜덤 생성
+     */
+    public int GetRandomItemIndex()
+    {
+        return Random.Range(0, items.Length);
     }
 
 
@@ -75,12 +98,14 @@ public class SpawnManager : MonoBehaviour
      */
     IEnumerator CreateEnemy()
     {
+        Spawn(items[GetRandomItemIndex()]);
         Spawn(enemies[5]);
         Spawn(enemies[4]);
         Spawn(enemies[0]);
         yield return new WaitForSeconds(3.0f);
         Spawn(enemies[1]);
         yield return new WaitForSeconds(3.0f);
+        Spawn(items[GetRandomItemIndex()]);
         Spawn(enemies[2]);
         yield return new WaitForSeconds(3.0f);
         Spawn(enemies[3]);
