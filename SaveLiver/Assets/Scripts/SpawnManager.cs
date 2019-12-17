@@ -4,9 +4,25 @@ using UnityEngine;
 
 public class SpawnManager : MonoBehaviour
 {
+    public static SpawnManager instance;
+
     public float radius = 10.0f;
     public Enemy[] enemies;
     public Item[] items;
+
+
+    private void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this; // instance 초기화
+        }
+        else if (instance != this)
+        {
+            Destroy(gameObject);
+        }
+    }
+
 
     private void Start()
     {
@@ -29,22 +45,31 @@ public class SpawnManager : MonoBehaviour
         {
             Vector3 targetPosition = Player.instance.transform.position; //player위치 정보얻기
             float tarX = targetPosition.x; //player의 좌표중 x좌표얻기
+            float tarY = targetPosition.y;
             posX = Random.Range(tarX - radius, tarX + radius); // x-10 ~  x+10 중 랜덤 x값 얻기
-            posY = Mathf.Sqrt(Mathf.Pow(radius, 2) - Mathf.Pow(posX, 2)); // 얻은 x값을 이용해 y값도 얻기
+            posY = Mathf.Sqrt(Mathf.Pow(radius, 2) - Mathf.Pow(posX-tarX, 2)); // 얻은 x값을 이용해 y값도 얻기
             int randomSignPosY = 1;
             if (Random.Range(0f, 1f) < 0.5) randomSignPosY = -1; //posY 부호도 랜덤으로 정하기
             posY *= randomSignPosY;
-            if (posY > -5) break; //플레이화면 하단이 아닐 때 break
+            posY += tarY;
+            if (posY > tarY - 5) break; //플레이화면 하단이 아닐 때 break
         }
-
         Vector3 randomPosition = new Vector3(posX, posY, 0);
         return randomPosition;
     }
+    
 
-
+    public Quaternion GetAngleWithTargetFromY(Vector3 currentPosition, Vector3 targetPosition)
+    {
+        Vector3 dir = targetPosition - currentPosition;
+        float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+        Vector3 tmp = new Vector3(0, 0, 90 + angle);
+        Quaternion rotation = Quaternion.Euler(tmp);
+        return rotation;
+    }
 
     /********************************************
-     * @함수명 : Spawn()
+     * @함수명 : RandomSpawn()
      * @작성자 : Malbong, zeli
      * @입력 : Object
      * @출력 : void
@@ -53,25 +78,20 @@ public class SpawnManager : MonoBehaviour
      *         입력된 오브젝트를 생성함
      *         Turtle: 캐릭터를 향해 회전한 상태로 생성
      */
-    public void Spawn(Object objects)
+    public void RandomSpawn(Object objects)
     {   
         Vector3 randomPosition = GetRandomPosition();
 
-        if(objects.GetType() == typeof(Turtle01))
+        if(objects.GetType() == typeof(TurtleFollow))
         {
             Vector3 targetPosition = Player.instance.transform.position;
-            Vector3 dir = targetPosition - randomPosition;
-            float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
-            Vector3 tmp = new Vector3(0, 0, 90 + angle);
-            Quaternion rotation = Quaternion.Euler(tmp);
-
+            Quaternion rotation = GetAngleWithTargetFromY(randomPosition, targetPosition);
             Instantiate(objects, randomPosition, rotation);
         }
         else if(objects.GetType().BaseType == typeof(Item))
         {
             Instantiate(objects, randomPosition, Quaternion.identity);
         }
-        
     }
 
 
@@ -98,16 +118,19 @@ public class SpawnManager : MonoBehaviour
      */
     IEnumerator CreateEnemy()
     {
-        Spawn(items[GetRandomItemIndex()]);
-        Spawn(enemies[5]);
-        Spawn(enemies[4]);
-        Spawn(enemies[0]);
+        RandomSpawn(items[GetRandomItemIndex()]);
+        RandomSpawn(enemies[0]);
         yield return new WaitForSeconds(3.0f);
-        Spawn(enemies[1]);
+        RandomSpawn(enemies[1]);
         yield return new WaitForSeconds(3.0f);
-        Spawn(items[GetRandomItemIndex()]);
-        Spawn(enemies[2]);
+        RandomSpawn(items[GetRandomItemIndex()]);
+        RandomSpawn(enemies[2]);
         yield return new WaitForSeconds(3.0f);
-        Spawn(enemies[3]);
+        RandomSpawn(enemies[3]);
+        yield return new WaitForSeconds(3.0f);
+        RandomSpawn(enemies[4]);
+        yield return new WaitForSeconds(3.0f);
+        RandomSpawn(enemies[5]);
+        yield return new WaitForSeconds(3.0f);
     }
 }

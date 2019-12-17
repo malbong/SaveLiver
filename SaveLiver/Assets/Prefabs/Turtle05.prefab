@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 8283322269876636976}
   - component: {fileID: 8283322269876636977}
-  - component: {fileID: 8283322269876636978}
   - component: {fileID: 3512060300423802652}
   - component: {fileID: -6606254667868547597}
   - component: {fileID: -8157112749806662931}
@@ -49,23 +48,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lifeTime: 10
-  rotateSpeed: 2.5
+  sprite: {fileID: 21300000, guid: 6d280472609217f4ba886ed87c476e9a, type: 3}
   score: 5
   hitCount: 1
   speed: 5.5
---- !u!114 &8283322269876636978
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8283322269876636943}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 09827cf65581057458bf2fb96bc7181a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sprite: {fileID: 21300000, guid: 6d280472609217f4ba886ed87c476e9a, type: 3}
+  rotateSpeed: 2.5
 --- !u!96 &3512060300423802652
 TrailRenderer:
   serializedVersion: 2
