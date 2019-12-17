@@ -7,8 +7,8 @@ public class Turtle01 : Enemy
     public int score = 5;
     public int hitCount = 1;
     public float speed = 5.0f;
-
     
+
     public override void MoveToPlayer(float speed)
     {
         base.MoveToPlayer(this.speed);

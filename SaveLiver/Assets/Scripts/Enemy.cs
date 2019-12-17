@@ -87,17 +87,24 @@ public abstract class Enemy : MonoBehaviour
         //transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, 0.03f); //부드러운 회전을 위함
     }
 
+
+    /********************************************
+     * @함수명 : RotateAngle(float angle, int sign)
+     * @작성자 : Malbong
+     * @입력 : float angle, int sign
+     * @출력 : void
+     * @설명 : angle을 입력받아 angle까지 한 프레임당 rotateSpeed만큼 천천히 회전하는 코루틴
+     */
     IEnumerator RotateAngle(float angle, int sign)
     {
-        
-        for (float i = angle%rotateSpeed; i < angle; i += rotateSpeed)
+        for (float i = angle % rotateSpeed; i < angle; i += rotateSpeed)
         {
             transform.Rotate(0, 0, rotateSpeed * sign);
             yield return null;
         }
-        
-        transform.Rotate(0, 0, angle%rotateSpeed);   
+        transform.Rotate(0, 0, angle % rotateSpeed);
     }
+
 
     /********************************************
      * @함수명 : Hit()
@@ -113,7 +120,6 @@ public abstract class Enemy : MonoBehaviour
         if (Player.instance.hp <= 0)
         {
             //Player.onDead();
-
         }
     }
 }
