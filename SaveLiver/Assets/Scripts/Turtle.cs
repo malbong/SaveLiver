@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Turtle01 : Enemy
+public class Turtle : Enemy
 {
     public int score = 5;
     public int hitCount = 1;

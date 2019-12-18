@@ -4,20 +4,10 @@ using UnityEngine;
 
 public class Item : MonoBehaviour
 {
-    public float lifeTime = 10.0f;
-    protected GameObject shield;
-    private GameObject player;
+    public static float itemLifeTime = 10.0f;
 
-    void Start()
-    {
-        player = GameObject.Find("Player");
-        shield = player.transform.GetChild(3).gameObject;
-        // GetChild(3) : Hare Shield
-    }
+    public static float shieldItemTime { get; set; } = 0f;
+    public static float speedUpItemTime { get; set; } = 0f;
 
-    void Update()
-    {
-        
-    }
 
 }

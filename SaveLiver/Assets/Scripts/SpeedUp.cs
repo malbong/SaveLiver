@@ -2,15 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Shield : Item, IItem
+public class SpeedUp : Item, IItem
 {
-    public float itemDuration = 5f;
+    public float itemDuration = 8f;
     private bool hasItem = false;
-    private GameObject shield;
 
     void Start()
     {
-        shield = Player.instance.gameObject.transform.GetChild(3).gameObject;
         StartCoroutine("TimeCheckAndDestroy");
     }
 
@@ -21,10 +19,10 @@ public class Shield : Item, IItem
 
     private void ItemDurationAndDestroy()
     {
-        if (Time.time - shieldItemTime >= itemDuration && hasItem)
+        if (Time.time - speedUpItemTime >= itemDuration && hasItem)
         {
             hasItem = false;
-            shield.SetActive(false);
+            Player.instance.speed = 3f;
             Destroy(gameObject);
         }
     }
@@ -33,8 +31,8 @@ public class Shield : Item, IItem
     {
         GetComponent<Collider2D>().enabled = false;
         GetComponent<SpriteRenderer>().enabled = false;
-        shield.SetActive(true);
-        shieldItemTime = Time.time;
+        Player.instance.speed = 5f;
+        speedUpItemTime = Time.time;
         hasItem = true;
     }
 

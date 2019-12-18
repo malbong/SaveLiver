@@ -57,7 +57,7 @@ public class SpawnManager : MonoBehaviour
     {   
         Vector3 randomPosition = GetRandomPosition();
 
-        if(objects.GetType() == typeof(Turtle01))
+        if(objects.GetType() == typeof(Turtle))
         {
             Vector3 targetPosition = Player.instance.transform.position;
             Vector3 dir = targetPosition - randomPosition;
@@ -98,16 +98,19 @@ public class SpawnManager : MonoBehaviour
      */
     IEnumerator CreateEnemy()
     {
-        Spawn(items[GetRandomItemIndex()]);
         Spawn(enemies[5]);
         Spawn(enemies[4]);
         Spawn(enemies[0]);
+        Spawn(items[GetRandomItemIndex()]);
+        Spawn(items[GetRandomItemIndex()]);
         yield return new WaitForSeconds(3.0f);
         Spawn(enemies[1]);
-        yield return new WaitForSeconds(3.0f);
         Spawn(items[GetRandomItemIndex()]);
+        yield return new WaitForSeconds(3.0f);
         Spawn(enemies[2]);
+        Spawn(items[GetRandomItemIndex()]);
         yield return new WaitForSeconds(3.0f);
         Spawn(enemies[3]);
+        Spawn(items[GetRandomItemIndex()]);
     }
 }

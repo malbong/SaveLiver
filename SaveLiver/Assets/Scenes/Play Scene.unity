@@ -158,7 +158,8 @@ MonoBehaviour:
   - {fileID: 8283322269876636977, guid: 3ea93895c43860b4d8c34a934b5c9a68, type: 3}
   - {fileID: 8283322269876636977, guid: eae8938057f53f64993295df4071f08d, type: 3}
   items:
-  - {fileID: 4436604604985677619, guid: acf01a4af88bccb44a9ece5580409869, type: 3}
+  - {fileID: 5501080412273985864, guid: 606f6e64fe5e46b44b5d3e054eef7423, type: 3}
+  - {fileID: 4892270473449316274, guid: 315b9f1a8424641408e030ba7135982c, type: 3}
 --- !u!4 &51573629
 Transform:
   m_ObjectHideFlags: 0
@@ -5865,7 +5866,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6571d2548eed7744fa5966b6db407573, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lifeTime: 10
 --- !u!4 &1588305520
 Transform:
   m_ObjectHideFlags: 0

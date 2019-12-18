@@ -30,8 +30,13 @@ public class Player : MonoBehaviour
 
     private Rigidbody2D playerRigid;
 
+
+    public bool IsShield { get; set; }
+
+
     void Start()
     {
+        IsShield = false;
         playerRigid = GetComponent<Rigidbody2D>();
         runningCoroutine = StartCoroutine(RotateAngle(180, -1)); // 시작하면 Player를 180도 오른쪽으로 돌리기.
     }
@@ -110,6 +115,19 @@ public class Player : MonoBehaviour
         }
     }
 
+
+
+    /**************************************
+    * @함수명: TakeDamage
+    * @작성자: zeli
+    * @입력: damage
+    * @출력: void
+    * @설명: Turtle로부터 받은 데미지를 받은 후 계산
+    */
+    public void TakeDamage(float damage)
+    {
+
+    }
 
 
     public void OnDead()
