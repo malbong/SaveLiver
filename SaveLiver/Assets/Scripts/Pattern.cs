@@ -26,7 +26,7 @@ public class Pattern : MonoBehaviour
         Swirl(-250f, 3, true);
         yield return new WaitForSeconds(3.0f);
         Swirl(-250f);
-        /*
+        
         AllDirection4();
         Shark(-1, 1, 2.5f);
         yield return new WaitForSeconds(3.0f);
@@ -40,7 +40,7 @@ public class Pattern : MonoBehaviour
         DiagonalRight(2f);
         yield return new WaitForSeconds(3.0f);
         DiagonalBothSide(2f);
-        */
+        
     }
 
 

@@ -19,7 +19,7 @@ public class Swirl : MonoBehaviour
         currentForce = minForce;
         toMaxForceSpeed = (maxForce - minForce) / toMaxForceTime; // -150/2 => -75
 
-        //Destroy(gameObject, lifeTime);
+        Destroy(gameObject, lifeTime);
     }
 
     public void Update()

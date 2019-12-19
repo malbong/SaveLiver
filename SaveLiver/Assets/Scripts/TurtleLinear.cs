@@ -5,7 +5,7 @@ using UnityEngine;
 public class TurtleLinear : Enemy
 {
     public int score = 5;
-    public int hitCount = 1;
+    public int hitCount = 2;
     public float speed = 7.0f;
     private Rigidbody2D enemyRigid;
     
@@ -13,6 +13,7 @@ public class TurtleLinear : Enemy
     private void Start()
     {
         enemyRigid = GetComponent<Rigidbody2D>();
+        Destroy(transform.GetChild(1).gameObject, 1f);
     }
 
 
@@ -32,9 +33,9 @@ public class TurtleLinear : Enemy
     }
     
 
-    public override void Hit(int hitCount)
+    public override void HitOnPlayer(int hitCount)
     {
-        base.Hit(this.hitCount);
+        base.HitOnPlayer(this.hitCount);
     }
 
     
@@ -46,7 +47,8 @@ public class TurtleLinear : Enemy
 
         //add score
 
-        //once used destroy instead SetActive(false);
+        //destroy instead SetActive(false);
+
         //Destroy(transform.parent.gameObject);
 
         //add List
