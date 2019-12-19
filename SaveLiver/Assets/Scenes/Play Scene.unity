@@ -158,13 +158,7 @@ MonoBehaviour:
   - {fileID: 8283322269876636977, guid: 3ea93895c43860b4d8c34a934b5c9a68, type: 3}
   - {fileID: 8283322269876636977, guid: eae8938057f53f64993295df4071f08d, type: 3}
   items:
-  - {fileID: 5501080412273985864, guid: 606f6e64fe5e46b44b5d3e054eef7423, type: 3}
-  - {fileID: 4892270473449316274, guid: 315b9f1a8424641408e030ba7135982c, type: 3}
-  - {fileID: 8487389808940549697, guid: 4e6903c82cee99b44a953001d3a33330, type: 3}
-  - {fileID: 5701024369591569647, guid: 80a6940d54997654985cc6565ee8974d, type: 3}
-  - {fileID: 3313876244229441205, guid: 533bada88130c8f45a181c7465d3672e, type: 3}
-  - {fileID: 2880798928468241725, guid: a4602c7464a754946add3651455bbee3, type: 3}
-  - {fileID: 5901582473228211540, guid: 2336b4e893a9e8b4996a646e2df71c33, type: 3}
+  - {fileID: 4436604604985677619, guid: acf01a4af88bccb44a9ece5580409869, type: 3}
 --- !u!4 &51573629
 Transform:
   m_ObjectHideFlags: 0
@@ -259,8 +253,7 @@ GameObject:
   - component: {fileID: 279356178}
   - component: {fileID: 279356179}
   - component: {fileID: 279356180}
-  - component: {fileID: 279356181}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -351,7 +344,6 @@ MonoBehaviour:
   speed: 3
   rotateSpeed: 4
   arrowRotate: {fileID: 396888133}
-  anim: {fileID: 279356181}
 --- !u!50 &279356178
 Rigidbody2D:
   serializedVersion: 4
@@ -364,7 +356,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 2
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 0
@@ -438,7 +430,7 @@ TrailRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Time: 5
+  m_Time: 1
   m_Parameters:
     serializedVersion: 3
     widthMultiplier: 1
@@ -447,7 +439,7 @@ TrailRenderer:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 0.051546395
+        value: 0.09654999
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -455,21 +447,21 @@ TrailRenderer:
         inWeight: 0.33333334
         outWeight: 0.33333334
       - serializedVersion: 3
-        time: 0.106839985
+        time: 1
         value: 0
-        inSlope: 0
-        outSlope: 0
+        inSlope: 0.000067902736
+        outSlope: 0.000067902736
         tangentMode: 0
         weightedMode: 0
-        inWeight: 0
+        inWeight: 0.10094637
         outWeight: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 0.16409636, g: 1, b: 0, a: 1}
-      key1: {r: 0.23137255, g: 0.5921569, b: 1, a: 1}
+      key0: {r: 0.8254717, g: 0.87201256, b: 1, a: 1}
+      key1: {r: 1, g: 1, b: 1, a: 1}
       key2: {r: 0, g: 0, b: 0, a: 0}
       key3: {r: 0, g: 0, b: 0, a: 0}
       key4: {r: 0, g: 0, b: 0, a: 0}
@@ -504,25 +496,6 @@ TrailRenderer:
   m_MinVertexDistance: 0.1
   m_Autodestruct: 0
   m_Emitting: 1
---- !u!95 &279356181
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 279356174}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 6297b3b1ffc833b4dba1992bf582474d, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &396888132
 GameObject:
   m_ObjectHideFlags: 0
@@ -532,7 +505,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 396888133}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: ArrowRotate
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -565,7 +538,7 @@ GameObject:
   - component: {fileID: 519420032}
   - component: {fileID: 519420031}
   - component: {fileID: 519420029}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Main Camera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
@@ -589,8 +562,8 @@ Camera:
   m_GameObject: {fileID: 519420028}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 2
-  m_BackGroundColor: {r: 0, g: 0.3890648, b: 1, a: 0}
+  m_ClearFlags: 1
+  m_BackGroundColor: {r: 0, g: 0.3764706, b: 1, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -721,7 +694,7 @@ GameObject:
   - component: {fileID: 818498213}
   - component: {fileID: 818498215}
   - component: {fileID: 818498214}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Bubble Trail
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5659,7 +5632,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1500161584}
   - component: {fileID: 1500161585}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Hare_Arrow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5739,7 +5712,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1698619667}
   - component: {fileID: 1698619668}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Hare Shield
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5809,49 +5782,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!1 &1850123044
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1850123046}
-  - component: {fileID: 1850123045}
-  m_Layer: 0
-  m_Name: Item Manager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1850123045
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1850123044}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6571d2548eed7744fa5966b6db407573, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!4 &1850123046
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1850123044}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.8857032, y: 2.6033907, z: -8.89973}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 5
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2097777702
 GameObject:
   m_ObjectHideFlags: 0
@@ -5881,8 +5811,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f500ace33f65e5b4a80f96e9e35a4a90, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemy: {fileID: 495805892100660454, guid: 9f8d10e1b2b2ca244aab3eab29a18bee, type: 3}
-  interval: 2
+  linearTutle: {fileID: 495805892100660454, guid: 9f8d10e1b2b2ca244aab3eab29a18bee,
+    type: 3}
+  shark: {fileID: 6141161139982369957, guid: 358485da22620a7479f5a4dfb98dc49e, type: 3}
+  swirl: {fileID: 8092271508286597704, guid: 628db650080e9cd4c962649d2f22f7e7, type: 3}
 --- !u!4 &2097777704
 Transform:
   m_ObjectHideFlags: 0

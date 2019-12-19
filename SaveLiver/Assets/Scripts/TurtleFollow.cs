@@ -79,5 +79,7 @@ public class TurtleFollow : Enemy
 
         //once used destroy instead SetActive(false);
         //Destroy(transform.parent.gameObject);
+
+        //add List
     }
 }

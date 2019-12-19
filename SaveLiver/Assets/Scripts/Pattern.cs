@@ -4,11 +4,12 @@ using UnityEngine;
 
 public class Pattern : MonoBehaviour
 {
-    public Enemy enemy;
+    public TurtleLinear linearTutle;
+    public Shark shark;
+    public Swirl swirl;
     private Vector3 playerPosition;
     private float spawnRadius;
     private float angle45Length;
-    public float interval = 2.0f;
 
     private void Start()
     {
@@ -21,15 +22,25 @@ public class Pattern : MonoBehaviour
 
     IEnumerator tmp()
     {
+        yield return new WaitForSeconds(3.0f);
+        Swirl(-250f, 3, true);
+        yield return new WaitForSeconds(3.0f);
+        Swirl(-250f);
+        /*
         AllDirection4();
+        Shark(-1, 1, 2.5f);
         yield return new WaitForSeconds(3.0f);
         AllDirection8();
+        Shark(1, 1, 2f);
         yield return new WaitForSeconds(3.0f);
-        DiagonalLeft();
+        Shark(1, -1, 2f);
+        DiagonalLeft(2f);
         yield return new WaitForSeconds(3.0f);
-        DiagonalRight();
+        Shark(-1, -1, 2.5f);
+        DiagonalRight(2f);
         yield return new WaitForSeconds(3.0f);
-        DiagonalBothSide();
+        DiagonalBothSide(2f);
+        */
     }
 
 
@@ -37,7 +48,7 @@ public class Pattern : MonoBehaviour
     {
         Vector3 createPosition = targetPosition + diffPosition;
         Quaternion rotation = SpawnManager.instance.GetAngleWithTargetFromY(createPosition, targetPosition);
-        Enemy instance = Instantiate(enemy, createPosition, rotation);
+        Enemy instance = Instantiate(linearTutle, createPosition, rotation);
         return instance;
     }
 
@@ -80,7 +91,7 @@ public class Pattern : MonoBehaviour
     }
 
 
-    public void DiagonalLeft()
+    public void DiagonalLeft(float interval)
     {
         playerPosition = Player.instance.transform.position;
         
@@ -98,7 +109,7 @@ public class Pattern : MonoBehaviour
     }
 
 
-    public void DiagonalRight()
+    public void DiagonalRight(float interval)
     {
         playerPosition = Player.instance.transform.position;
 
@@ -116,24 +127,68 @@ public class Pattern : MonoBehaviour
     }
 
 
-    public void DiagonalBothSide()
+    public void DiagonalBothSide(float interval)
     {
-        DiagonalLeft();
-        DiagonalRight();
+        DiagonalLeft(interval);
+        DiagonalRight(interval);
     }
 
 
-    public void Swirl()
+    public void Swirl(float maxForce, float interval = 0, bool upDown = false)
     {
-
+        playerPosition = Player.instance.transform.position;
+        if (upDown == true)
+        {
+            Vector3 targetPosition = playerPosition + new Vector3(0, interval, 0);
+            Swirl instance = Instantiate(swirl, targetPosition, Quaternion.identity);
+            instance.maxForce = maxForce;
+            
+            targetPosition = playerPosition + new Vector3(0, -interval, 0);
+            instance = Instantiate(swirl, targetPosition, Quaternion.identity);
+            instance.maxForce = maxForce;
+        }
+        else
+        {
+            Swirl instance = Instantiate(swirl, playerPosition, Quaternion.identity);
+            instance.maxForce = maxForce;
+        }
+        
     }
+    
 
-
-    public void Shark()
+    public void Shark(int dir, int isOver, float interval)
     {
-
+        playerPosition = Player.instance.transform.position;
+        if (dir == 1) // create right 
+        {
+            if (isOver == 1) // create over player
+            {
+                Vector3 createPosition = playerPosition + new Vector3(10, interval, 0);
+                Shark instance = Instantiate(shark, createPosition, Quaternion.identity);
+            }
+            else // create under player
+            {
+                Vector3 createPosition = playerPosition + new Vector3(10, -interval, 0);
+                Shark instance = Instantiate(shark, createPosition, Quaternion.identity);
+            }
+        }
+        else // create left
+        {
+            if (isOver == 1) // create over player
+            {
+                Vector3 createPosition = playerPosition + new Vector3(-10, interval, 0);
+                Shark instance = Instantiate(shark, createPosition, Quaternion.identity);
+                instance.transform.Rotate(0, 180, 0);
+            }
+            else // create under player
+            {
+                Vector3 createPosition = playerPosition + new Vector3(-10, -interval, 0);
+                Shark instance = Instantiate(shark, createPosition, Quaternion.identity);
+                instance.transform.Rotate(0, 180, 0);
+            }
+        }
     }
-
+    
 
     public void MeetBoss()
     {

@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 3512060300423802652}
   - component: {fileID: -6606254667868547597}
   - component: {fileID: -8157112749806662931}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Turtle06
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -92,7 +92,7 @@ TrailRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Time: 5
+  m_Time: 1
   m_Parameters:
     serializedVersion: 3
     widthMultiplier: 1
@@ -122,8 +122,8 @@ TrailRenderer:
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 0, g: 0.265306, b: 1, a: 1}
-      key1: {r: 0, g: 0.3882353, b: 1, a: 1}
+      key0: {r: 0.83766466, g: 0.8759226, b: 0.9811321, a: 1}
+      key1: {r: 1, g: 1, b: 1, a: 1}
       key2: {r: 0, g: 0, b: 0, a: 0}
       key3: {r: 0, g: 0, b: 0, a: 0}
       key4: {r: 0, g: 0, b: 0, a: 0}
@@ -170,7 +170,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 1.2
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 0
@@ -205,7 +205,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8283322269913569031}
   - component: {fileID: 8283322269913569032}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Enemy_Arrow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
