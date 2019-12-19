@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 6908370968680663821}
   m_Layer: 0
   m_Name: SppedUp Controller
-  m_TagString: Untagged
+  m_TagString: Item
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -45,7 +45,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd36a489288c66045884a49d179dc679, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speedUpLifeTime: 8
+  itemDuration: 8
 --- !u!212 &3650236285021223883
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -84,7 +84,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 3d83d7ee49c75cc42af39159b45dfe72, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 4bf6b458efc6e7945b7ab2e502d45cf9, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

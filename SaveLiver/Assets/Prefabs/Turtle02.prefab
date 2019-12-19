@@ -44,7 +44,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 8283322269876636943}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a3913d3ddd9e77644be1a93f2a6a08e5, type: 3}
+  m_Script: {fileID: 11500000, guid: 7129d25fa513d104b9c37c08da108584, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   lifeTime: 10
@@ -52,7 +52,7 @@ MonoBehaviour:
   score: 5
   hitCount: 1
   speed: 4
-  rotateSpeed: 2.5
+  rotateSpeed: 3
 --- !u!96 &3512060300423802652
 TrailRenderer:
   serializedVersion: 2

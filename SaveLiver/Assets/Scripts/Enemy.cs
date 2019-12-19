@@ -49,7 +49,7 @@ public abstract class Enemy : MonoBehaviour
      */
     public virtual void Hit(int hitCount = 1)
     {
-        Player.instance.hp -= hitCount;
+        Player.instance.TakeDamage(hitCount);
         if (Player.instance.hp <= 0)
         {
             Player.instance.OnDead();

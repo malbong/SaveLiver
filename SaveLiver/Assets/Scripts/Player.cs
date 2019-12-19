@@ -24,19 +24,21 @@ public class Player : MonoBehaviour
     public float speed;
     public float rotateSpeed;
 
+    private bool isFeverd = false;
+
     private Coroutine runningCoroutine = null;
 
     public Transform arrowRotate; // 화살표 회전 컨트롤
 
     private Rigidbody2D playerRigid;
+    public Animator anim;
 
 
-    public bool IsShield { get; set; }
+    public bool HasShield { get; set; } = false;
 
 
     void Start()
     {
-        IsShield = false;
         playerRigid = GetComponent<Rigidbody2D>();
         runningCoroutine = StartCoroutine(RotateAngle(180, -1)); // 시작하면 Player를 180도 오른쪽으로 돌리기.
     }
@@ -123,15 +125,74 @@ public class Player : MonoBehaviour
     * @입력: damage
     * @출력: void
     * @설명: Turtle로부터 받은 데미지를 받은 후 계산
+    *        hp(Liver)가 없으면 OnDead 처리
     */
-    public void TakeDamage(float damage)
+    public void TakeDamage(int damage)
     {
+        if (HasShield) 
+        {
+            HasShield = false;
+            return;
+        }
 
+        if (isFeverd)
+        {
+            return;
+        }
+
+        hp -= damage;
+        if(hp <= 0)
+        {
+            OnDead();
+        }
     }
 
+    
 
+    /**************************************
+    * @함수명: OnDead
+    * @작성자: zeli
+    * @입력: void
+    * @출력: void
+    * @설명: hp(Liver)가 없으면 발동
+    */
     public void OnDead()
     {
         //Destroy(gameObject);
+    }
+    
+
+
+
+
+    /**************************************
+    * @함수명: FeverTime
+    * @작성자: zeli
+    * @입력: breath
+    * @출력: void
+    * @설명: 무적 활성화
+    *        무적 애니메이션 재생
+    *        Fever에서 사용함
+    */
+    public void FeverTime()
+    {
+        isFeverd = true;
+        anim.SetBool("feverAnimation", true);
+    }
+
+
+    /**************************************
+    * @함수명: EndFeverTime
+    * @작성자: zeli
+    * @입력: breath
+    * @출력: void
+    * @설명: 무적 비활성화
+    *        무적 애니메이션 정지
+    *        Fever에서 사용
+    */
+    public void EndFeverTime()
+    {
+        isFeverd = false;
+        anim.SetBool("feverAnimation", false);
     }
 }

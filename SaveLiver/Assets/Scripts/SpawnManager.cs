@@ -8,7 +8,7 @@ public class SpawnManager : MonoBehaviour
 
     public float radius = 10.0f;
     public Enemy[] enemies;
-    public Item[] items;
+    public ItemManager[] items;
 
 
     private void Awake()
@@ -82,17 +82,13 @@ public class SpawnManager : MonoBehaviour
     {   
         Vector3 randomPosition = GetRandomPosition();
 
-<<<<<<< HEAD
-        if(objects.GetType() == typeof(Turtle))
-=======
         if(objects.GetType() == typeof(TurtleFollow))
->>>>>>> e02982aa6dc095e98faca436d02a9857d0a61a86
         {
             Vector3 targetPosition = Player.instance.transform.position;
             Quaternion rotation = GetAngleWithTargetFromY(randomPosition, targetPosition);
             Instantiate(objects, randomPosition, rotation);
         }
-        else if(objects.GetType().BaseType == typeof(Item))
+        else if(objects.GetType().BaseType == typeof(ItemManager))
         {
             Instantiate(objects, randomPosition, Quaternion.identity);
         }
@@ -122,22 +118,9 @@ public class SpawnManager : MonoBehaviour
      */
     IEnumerator CreateEnemy()
     {
-<<<<<<< HEAD
-        Spawn(enemies[5]);
-        Spawn(enemies[4]);
-        Spawn(enemies[0]);
-        Spawn(items[GetRandomItemIndex()]);
-        Spawn(items[GetRandomItemIndex()]);
-        yield return new WaitForSeconds(3.0f);
-        Spawn(enemies[1]);
-        Spawn(items[GetRandomItemIndex()]);
-        yield return new WaitForSeconds(3.0f);
-        Spawn(enemies[2]);
-        Spawn(items[GetRandomItemIndex()]);
-        yield return new WaitForSeconds(3.0f);
-        Spawn(enemies[3]);
-        Spawn(items[GetRandomItemIndex()]);
-=======
+        RandomSpawn(items[GetRandomItemIndex()]);
+        RandomSpawn(items[GetRandomItemIndex()]);
+        RandomSpawn(items[GetRandomItemIndex()]);
         RandomSpawn(items[GetRandomItemIndex()]);
         RandomSpawn(enemies[0]);
         yield return new WaitForSeconds(3.0f);
@@ -146,12 +129,17 @@ public class SpawnManager : MonoBehaviour
         RandomSpawn(items[GetRandomItemIndex()]);
         RandomSpawn(enemies[2]);
         yield return new WaitForSeconds(3.0f);
+        RandomSpawn(items[GetRandomItemIndex()]);
+        RandomSpawn(items[GetRandomItemIndex()]);
+        RandomSpawn(items[GetRandomItemIndex()]);
         RandomSpawn(enemies[3]);
+        RandomSpawn(items[GetRandomItemIndex()]);
         yield return new WaitForSeconds(3.0f);
         RandomSpawn(enemies[4]);
+        RandomSpawn(items[GetRandomItemIndex()]);
+        RandomSpawn(items[GetRandomItemIndex()]);
         yield return new WaitForSeconds(3.0f);
         RandomSpawn(enemies[5]);
         yield return new WaitForSeconds(3.0f);
->>>>>>> e02982aa6dc095e98faca436d02a9857d0a61a86
     }
 }

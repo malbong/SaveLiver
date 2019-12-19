@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 2833775142550208208}
   m_Layer: 0
   m_Name: Shield Controller
-  m_TagString: Untagged
+  m_TagString: Item
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -45,7 +45,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27a5bf391c43b52408f4d2b99f9dfab9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shieldLifeTime: 5
+  itemDuration: 5
 --- !u!58 &8471478683222144210
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -100,7 +100,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: cbf0af27e0baa2347bade0ae35715bcc, type: 3}
+  m_Sprite: {fileID: 21300000, guid: a46a89c41cf70e04ca230284446a510a, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
