@@ -62,6 +62,7 @@ public abstract class Enemy : MonoBehaviour
         if (other.tag == "Player")
         {
             Hit();
+            OnDead();
         }
         else if (other.tag == "Enemy")
         {
