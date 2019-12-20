@@ -49,6 +49,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lifeTime: 10
   sprite: {fileID: 21300000, guid: 677633880245b82458de687f57937ef3, type: 3}
+  onDeadParticle: {fileID: 1708963747482929553, guid: b9b3df1ca623e924caee4d6f30d8a5d7,
+    type: 3}
+  onDeadParticleGetLiver: {fileID: 1233760811648962126, guid: c9e0995724b123447a193dae5be43b23,
+    type: 3}
+  getLiverSprite: {fileID: 21300000, guid: 971011af16b22634eb19086185a6edd3, type: 3}
   score: 5
   hitCount: 1
   speed: 6

@@ -47,10 +47,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0de08e37495410d47ac5879cb7bd2d22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  anim: {fileID: 8092271508286597701}
   pointEffector: {fileID: 766098296}
   lifeTime: 10
   minForce: -50
-  maxForce: -200
+  maxForce: -250
+  toMaxForceTime: 2
 --- !u!212 &8092271508286597702
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -88,7 +90,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -100
   m_Sprite: {fileID: 21300000, guid: b67a1c603244f1c45b475355460b891a, type: 3}
   m_Color: {r: 0, g: 0.7529412, b: 1, a: 1}
   m_FlipX: 0

@@ -23,8 +23,7 @@ public class Pattern : MonoBehaviour
     IEnumerator tmp()
     {
         yield return new WaitForSeconds(3.0f);
-        Swirl(-250f, 3, true);
-        yield return new WaitForSeconds(3.0f);
+        //Swirl(-250f, 3, true);
         Swirl(-250f);
         
         AllDirection4();

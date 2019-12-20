@@ -26,6 +26,10 @@ public class Player : MonoBehaviour
 
     public bool isFevered = false;
 
+    public ParticleSystem onDeadParticle;
+
+    private Camera cam;
+
     private Coroutine runningCoroutine = null;
 
     public Transform arrowRotate; // 화살표 회전 컨트롤
@@ -33,7 +37,7 @@ public class Player : MonoBehaviour
     private Rigidbody2D playerRigid;
     public Animator anim;
 
-    
+    public bool isAlive = true;
 
 
     public bool HasShield { get; set; } = false;
@@ -49,7 +53,14 @@ public class Player : MonoBehaviour
 
     void Update()
     {
-        playerRigid.velocity = arrowRotate.up * speed; // 화살표 방향으로 speed만큼 직진
+        if (isAlive)
+        {
+            playerRigid.velocity = arrowRotate.up * speed; // 화살표 방향으로 speed만큼 직진
+        }
+        else
+        {
+            playerRigid.velocity = Vector3.zero;
+        }
     }
 
 
@@ -174,16 +185,36 @@ public class Player : MonoBehaviour
 
     /**************************************
     * @함수명: OnDead
-    * @작성자: zeli
+    * @작성자: zeli, malbong
     * @입력: void
     * @출력: void
     * @설명: hp(Liver)가 없으면 발동
     */
     public void OnDead()
     {
-        //Destroy(gameObject);
+        if (isAlive == false) return; // dont re died
+
+        isAlive = false; // died
+
+        GetComponent<BoxCollider2D>().enabled = false;
+
+        cam = Camera.main;
+        cam.transform.parent = null;
+
+        ParticleSystem instance = Instantiate(onDeadParticle, transform.position, Quaternion.identity);
+        instance.Play();
+        instance.GetComponent<AudioSource>().Play();
+        Destroy(instance.gameObject, instance.main.startLifetime.constant);
+
+        transform.gameObject.SetActive(false);
+        
+
+        //once used destroy instead SetActive(false);
+        //transform.parent.gameObject.SetActive(false);
+
+
     }
-    
+
 
 
 
