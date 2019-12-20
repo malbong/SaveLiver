@@ -6,7 +6,9 @@ public abstract class Enemy : MonoBehaviour
 {
     public float lifeTime = 10.0f;
     public Sprite sprite;
-
+    public ParticleSystem onDeadParticle;
+    public ParticleSystem onDeadParticleGetLiver;
+    protected bool isAlive = true;
 
     void Awake()
     {
@@ -21,7 +23,14 @@ public abstract class Enemy : MonoBehaviour
 
     private void FixedUpdate()
     {
-        Move();
+        if (isAlive)
+        {
+            Move();
+        }
+        else
+        {
+            transform.GetComponent<Rigidbody2D>().velocity = Vector3.zero;
+        }
     }
     
 
@@ -34,7 +43,7 @@ public abstract class Enemy : MonoBehaviour
      *         Animation 혹은 Particle을 실행
      *         자식에서 오버라이딩 필요
      */
-    public abstract void OnDead();
+    public abstract void OnDead(bool getLiver = false);
     
     public abstract void Move();
     
@@ -49,10 +58,15 @@ public abstract class Enemy : MonoBehaviour
      */
     public virtual void HitOnPlayer(int hitCount = 1)
     {
+        if (Player.instance.isFevered == true || Player.instance.HasShield == true)
+        {
+            OnDead(false);
+        }
+        else // both false (dont have fever and shield)
+        {
+            OnDead(true);
+        }
         Player.instance.TakeDamage(hitCount);
-        //check player fever -> true -> onDead() bubble
-        //check player shield -> true -> onDead() bubble
-        //both false -> onDead() get liver
     }
 
 
@@ -62,9 +76,9 @@ public abstract class Enemy : MonoBehaviour
         {
             HitOnPlayer();
         }
-        else if (other.tag == "Enemy" || other.tag == "Shark")
+        else if (other.tag == "Enemy" || other.tag == "Dragon")
         {
-            OnDead(); //bubble
+            OnDead(false);
         }
     }
 

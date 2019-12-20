@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class TurtleFollow : Enemy
 {
+    public Sprite getLiverSprite;
     public int score = 5;
     public int hitCount = 1;
     public float speed = 5.0f;
@@ -69,17 +70,57 @@ public class TurtleFollow : Enemy
     }
 
     
-    public override void OnDead()
+    public override void OnDead(bool getLiver)
     {
-        //use Animation or Particle
+        if (base.isAlive == false) return; // dont re died
 
-        //use AudioSource.Play()
+        base.isAlive = false; // died
 
+        transform.GetComponent<CircleCollider2D>().enabled = false;
+        transform.GetChild(0).gameObject.SetActive(false);
+
+        if (getLiver == true)
+        {
+            PlayParticle(onDeadParticleGetLiver);
+            StartCoroutine(FadeOut());
+        }
+        else
+        {
+            PlayParticle(onDeadParticle);
+            transform.parent.gameObject.SetActive(false);
+        }
         //add score
 
-        //once used destroy instead SetActive(false);
-        //Destroy(transform.parent.gameObject);
-
         //add List
+
+        //once used destroy instead SetActive(false);
+        //transform.parent.gameObject.SetActive(false);
+
+
+    }
+
+
+    private IEnumerator FadeOut()
+    {
+        SpriteRenderer spriteRenderer = transform.parent.GetComponent<SpriteRenderer>();
+        spriteRenderer.sprite = getLiverSprite;
+        while (true)
+        {
+            Color targetColor = spriteRenderer.color;
+            targetColor.a -= Time.deltaTime;
+            spriteRenderer.color = targetColor;
+            yield return null;
+            if (targetColor.a <= 0) break;
+        }
+        transform.parent.gameObject.SetActive(false);
+    }
+
+
+    private void PlayParticle(ParticleSystem targetParticle)
+    {
+        ParticleSystem particleInstance = Instantiate(targetParticle, transform.position, Quaternion.identity);
+        particleInstance.Play();
+        particleInstance.GetComponent<AudioSource>().Play();
+        Destroy(particleInstance.gameObject, particleInstance.main.startLifetime.constant);
     }
 }

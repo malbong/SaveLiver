@@ -31,6 +31,8 @@ public class Joystick : MonoBehaviour, IDragHandler, IPointerDownHandler, IPoint
     */
     public void OnDrag(PointerEventData data)
     {
+        if (Player.instance.isAlive == false) return;
+
         if (RectTransformUtility.ScreenPointToLocalPointInRectangle(backgroundPad.rectTransform,
             data.position, data.pressEventCamera, out Vector2 pos))
         {

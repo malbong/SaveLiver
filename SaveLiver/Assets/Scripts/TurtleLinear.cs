@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class TurtleLinear : Enemy
 {
+    public Sprite getLiverSprite;
     public int score = 5;
     public int hitCount = 2;
     public float speed = 7.0f;
@@ -39,10 +40,25 @@ public class TurtleLinear : Enemy
     }
 
     
-    public override void OnDead()
+    public override void OnDead(bool getLiver = false)
     {
-        //use Animation or Particle
+        if (base.isAlive == false) return; // dont re died
 
+        base.isAlive = false; // died
+
+        transform.GetComponent<BoxCollider2D>().enabled = false;
+        transform.GetChild(0).gameObject.SetActive(false);
+
+        if (getLiver == true)
+        {
+            PlayParticle(onDeadParticleGetLiver);
+            StartCoroutine(FadeOut());
+        }
+        else
+        {
+            PlayParticle(onDeadParticle);
+            transform.parent.gameObject.SetActive(false);
+        }
         //use AudioSource.Play()
 
         //add score
@@ -52,5 +68,30 @@ public class TurtleLinear : Enemy
         //Destroy(transform.parent.gameObject);
 
         //add List
+    }
+
+
+    private IEnumerator FadeOut()
+    {
+        SpriteRenderer spriteRenderer = transform.parent.GetComponent<SpriteRenderer>();
+        spriteRenderer.sprite = getLiverSprite;
+        while (true)
+        {
+            Color targetColor = spriteRenderer.color;
+            targetColor.a -= Time.deltaTime;
+            spriteRenderer.color = targetColor;
+            yield return null;
+            if (targetColor.a <= 0) break;
+        }
+        transform.parent.gameObject.SetActive(false);
+    }
+
+
+    private void PlayParticle(ParticleSystem targetParticle)
+    {
+        ParticleSystem particleInstance = Instantiate(targetParticle, transform.position, Quaternion.identity);
+        particleInstance.Play();
+        particleInstance.GetComponent<AudioSource>().Play();
+        Destroy(particleInstance.gameObject, particleInstance.main.startLifetime.constant);
     }
 }
