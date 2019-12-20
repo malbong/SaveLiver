@@ -47,13 +47,12 @@ public abstract class Enemy : MonoBehaviour
      * @설명 : OnTriggerEnter2D()에서 실행시킬 함수
      *         Player의 hp를 깎음
      */
-    public virtual void Hit(int hitCount = 1)
+    public virtual void HitOnPlayer(int hitCount = 1)
     {
         Player.instance.TakeDamage(hitCount);
-        if (Player.instance.hp <= 0)
-        {
-            Player.instance.OnDead();
-        }
+        //check player fever -> true -> onDead() bubble
+        //check player shield -> true -> onDead() bubble
+        //both false -> onDead() get liver
     }
 
 
@@ -61,12 +60,11 @@ public abstract class Enemy : MonoBehaviour
     {
         if (other.tag == "Player")
         {
-            Hit();
-            OnDead();
+            HitOnPlayer();
         }
-        else if (other.tag == "Enemy")
+        else if (other.tag == "Enemy" || other.tag == "Shark")
         {
-            OnDead();
+            OnDead(); //bubble
         }
     }
 

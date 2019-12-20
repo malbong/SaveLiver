@@ -63,9 +63,9 @@ public class TurtleFollow : Enemy
     }
 
 
-    public override void Hit(int hitCount)
+    public override void HitOnPlayer(int hitCount)
     {
-        base.Hit(this.hitCount);
+        base.HitOnPlayer(this.hitCount);
     }
 
     

@@ -24,7 +24,7 @@ public class Player : MonoBehaviour
     public float speed;
     public float rotateSpeed;
 
-    private bool isFeverd = false;
+    public bool isFevered = false;
 
     private Coroutine runningCoroutine = null;
 
@@ -139,7 +139,7 @@ public class Player : MonoBehaviour
             return;
         }
 
-        if (isFeverd)
+        if (isFevered)
         {
             return;
         }
@@ -199,7 +199,7 @@ public class Player : MonoBehaviour
     */
     public void FeverTime()
     {
-        isFeverd = true;
+        isFevered = true;
         anim.SetBool("feverAnimation", true);
     }
 
@@ -215,7 +215,7 @@ public class Player : MonoBehaviour
     */
     public void EndFeverTime()
     {
-        isFeverd = false;
+        isFevered = false;
         anim.SetBool("feverAnimation", false);
     }
 }

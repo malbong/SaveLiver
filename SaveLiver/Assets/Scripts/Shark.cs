@@ -6,6 +6,7 @@ public class Shark : MonoBehaviour
 {
     public float speed = 20.0f;
     public float lifeTime = 10.0f;
+    private bool isHitOnPlayer = false;
     private Rigidbody2D enemyRigid;
 
 
@@ -31,13 +32,19 @@ public class Shark : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.tag == "Enemy")
+        if (other.tag == "Player")
         {
-            other.GetComponent<Enemy>().OnDead();
+            //check isHitOnPlayer 
+            //check player fever -> onDead()
+            //Player.instance.TakeDamage(true);
+            //isHitOnPlayer = true
         }
-        else if (other.tag == "Player")
+        else if (other.tag == "Shark")
         {
-            //Player.instance.TakeDamage(-1);
+            //onDead();
         }
     }
+    
+    
+    //OnDead() implement
 }
