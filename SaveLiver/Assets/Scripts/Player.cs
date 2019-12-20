@@ -33,12 +33,15 @@ public class Player : MonoBehaviour
     private Rigidbody2D playerRigid;
     public Animator anim;
 
+    public GameObject hareSprite;
     
-
 
     public bool HasShield { get; set; } = false;
     public bool HasSpeedUp { get; set; } = false;
     public bool HasRotateUp { get; set; } = false;
+
+    public int feverNum = 0;
+    public int speedUpNum = 0;
 
 
     void Start()
@@ -152,7 +155,7 @@ public class Player : MonoBehaviour
 
     }
 
-    public void TakeDamage(bool isShark)
+    public void TakeDamage(bool isDragon)
     {
         if (HasShield)
         {
@@ -164,9 +167,10 @@ public class Player : MonoBehaviour
             return;
         }
 
-        OnDead();
-
-
+        if(isDragon)
+        {
+            OnDead();
+        }
     }
 
 

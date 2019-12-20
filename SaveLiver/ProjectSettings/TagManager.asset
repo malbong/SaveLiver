@@ -6,7 +6,8 @@ TagManager:
   tags:
   - Item
   - Enemy
-  - Shark
+  - Dragon
+  - BoomEffect
   layers:
   - Default
   - TransparentFX

@@ -6,7 +6,8 @@ public class Fever : ItemManager, IItem
 {
     public float itemDuration = 8f;
     private bool hasItem = false;
-    //private float amountSpeedUp = 2f;
+    private float amountSpeedUp = 2f;
+    private float feverItemTime = 0f;
 
     private Rigidbody2D parent;
 
@@ -30,8 +31,9 @@ public class Fever : ItemManager, IItem
         if (Time.time - feverItemTime >= itemDuration && hasItem)
         {
             hasItem = false;
-            Player.instance.EndFeverTime(); // 무적종료 알림
-            //Player.instance.speed -= amountSpeedUp;
+            Player.instance.feverNum -= 1;
+            if(Player.instance.feverNum == 0) Player.instance.EndFeverTime(); // Item 소진 시 무적종료 알림
+            Player.instance.speed -= amountSpeedUp;
             Destroy(parent.gameObject);
         }
     }
@@ -51,19 +53,10 @@ public class Fever : ItemManager, IItem
         GetComponentInParent<Collider2D>().enabled = false;
         GetComponentInParent<SpriteRenderer>().enabled = false;
         GetComponent<Collider2D>().enabled = false;
-        Player.instance.FeverTime(); // 무적시작을 알림
         feverItemTime = Time.time;
-        /*if (!Player.instance.isFevered)
-        {
-            if (!Player.instance.HasSpeedUp) // 스피드업이 되어 있지 않을 때
-            {
-                Player.instance.speed += amountSpeedUp; // 스피드업
-            }
-        }
-        else if(Player.instance.isFevered) // 무적상태일 경우
-        {
-            Destroy(parent.gameObject); // 이 아이템 삭제 (새로 먹은 아이템만 살아있음)
-        }*/
+        Player.instance.speed += amountSpeedUp; // 스피드업
+        Player.instance.feverNum += 1; // 먹은 fever Item 갯수 +1
+        Player.instance.FeverTime(); // 무적시작을 알림
         hasItem = true;
     }
 

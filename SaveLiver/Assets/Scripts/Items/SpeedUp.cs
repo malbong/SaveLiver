@@ -8,6 +8,7 @@ public class SpeedUp : ItemManager, IItem
     private bool hasItem = false;
     public float amountSpeedUp = 2f;
     private Rigidbody2D parent;
+    private float speedUpItemTime = 0f;
 
     void Start()
     {
@@ -50,12 +51,7 @@ public class SpeedUp : ItemManager, IItem
         transform.GetComponentInParent<Collider2D>().enabled = false;
         transform.GetComponentInParent<SpriteRenderer>().enabled = false;
         GetComponent<Collider2D>().enabled = false;
-        if (Player.instance.HasSpeedUp)
-        {
-            Player.instance.speed -= amountSpeedUp;
-            Destroy(parent.gameObject);
-        }
-        
+
         Player.instance.speed += amountSpeedUp;
         Player.instance.HasSpeedUp = true;
         speedUpItemTime = Time.time;

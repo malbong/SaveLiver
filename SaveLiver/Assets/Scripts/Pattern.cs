@@ -5,7 +5,7 @@ using UnityEngine;
 public class Pattern : MonoBehaviour
 {
     public TurtleLinear linearTutle;
-    public Shark shark;
+    public Dragon dragon;
     public Swirl swirl;
     private Vector3 playerPosition;
     private float spawnRadius;
@@ -28,15 +28,15 @@ public class Pattern : MonoBehaviour
         Swirl(-250f);
         
         AllDirection4();
-        Shark(-1, 1, 2.5f);
+        Dragon(-1, 1, 2.5f);
         yield return new WaitForSeconds(3.0f);
         AllDirection8();
-        Shark(1, 1, 2f);
+        Dragon(1, 1, 2f);
         yield return new WaitForSeconds(3.0f);
-        Shark(1, -1, 2f);
+        Dragon(1, -1, 2f);
         DiagonalLeft(2f);
         yield return new WaitForSeconds(3.0f);
-        Shark(-1, -1, 2.5f);
+        Dragon(-1, -1, 2.5f);
         DiagonalRight(2f);
         yield return new WaitForSeconds(3.0f);
         DiagonalBothSide(2f);
@@ -156,34 +156,34 @@ public class Pattern : MonoBehaviour
     }
     
 
-    public void Shark(int dir, int isOver, float interval)
+    public void Dragon(int dir, int isOver, float interval)
     {
         playerPosition = Player.instance.transform.position;
         if (dir == 1) // create right 
         {
             if (isOver == 1) // create over player
             {
-                Vector3 createPosition = playerPosition + new Vector3(10, interval, 0);
-                Shark instance = Instantiate(shark, createPosition, Quaternion.identity);
+                Vector3 createPosition = playerPosition + new Vector3(25, interval, 0);
+                Dragon instance = Instantiate(dragon, createPosition, Quaternion.identity);
             }
             else // create under player
             {
-                Vector3 createPosition = playerPosition + new Vector3(10, -interval, 0);
-                Shark instance = Instantiate(shark, createPosition, Quaternion.identity);
+                Vector3 createPosition = playerPosition + new Vector3(25, -interval, 0);
+                Dragon instance = Instantiate(dragon, createPosition, Quaternion.identity);
             }
         }
         else // create left
         {
             if (isOver == 1) // create over player
             {
-                Vector3 createPosition = playerPosition + new Vector3(-10, interval, 0);
-                Shark instance = Instantiate(shark, createPosition, Quaternion.identity);
+                Vector3 createPosition = playerPosition + new Vector3(-25, interval, 0);
+                Dragon instance = Instantiate(dragon, createPosition, Quaternion.identity);
                 instance.transform.Rotate(0, 180, 0);
             }
             else // create under player
             {
-                Vector3 createPosition = playerPosition + new Vector3(-10, -interval, 0);
-                Shark instance = Instantiate(shark, createPosition, Quaternion.identity);
+                Vector3 createPosition = playerPosition + new Vector3(-25, -interval, 0);
+                Dragon instance = Instantiate(dragon, createPosition, Quaternion.identity);
                 instance.transform.Rotate(0, 180, 0);
             }
         }
