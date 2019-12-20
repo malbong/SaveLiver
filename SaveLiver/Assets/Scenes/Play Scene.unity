@@ -5103,6 +5103,7 @@ MonoBehaviour:
   breath: 10
   speed: 3
   rotateSpeed: 4
+  isFevered: 0
   arrowRotate: {fileID: 396888133}
   anim: {fileID: 279356181}
 --- !u!50 &279356178

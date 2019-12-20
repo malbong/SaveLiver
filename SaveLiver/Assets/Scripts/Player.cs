@@ -159,7 +159,7 @@ public class Player : MonoBehaviour
             HasShield = false;
             return;
         }
-        if (isFeverd)
+        if (isFevered)
         {
             return;
         }
