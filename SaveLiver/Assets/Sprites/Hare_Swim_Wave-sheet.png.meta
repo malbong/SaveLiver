@@ -1,34 +1,34 @@
 fileFormatVersion: 2
-guid: 9b22eb4ff4d1d284a9598851e7f8385b
+guid: 4cecaa551725b594b8926ce716ab1872
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -2352042093359182849
-    second: Boom_01_0
+      213: 2469532440422879983
+    second: Hare_Swim_Wave-sheet_0
   - first:
-      213: -7527614527040785440
-    second: Boom_01_1
+      213: -8437572840520857995
+    second: Hare_Swim_Wave-sheet_1
   - first:
-      213: 3080953350219270660
-    second: Boom_01_2
+      213: 4173934857595410560
+    second: Hare_Swim_Wave-sheet_2
   - first:
-      213: -6449964896108098275
-    second: Boom_01_3
+      213: 5026154127792110407
+    second: Hare_Swim_Wave-sheet_3
   - first:
-      213: 5595536261526855310
-    second: Boom_01_4
+      213: -3704291416601332970
+    second: Hare_Swim_Wave-sheet_4
   - first:
-      213: -6525393082848877192
-    second: Boom_01_5
+      213: -7904293940220784705
+    second: Hare_Swim_Wave-sheet_5
   - first:
-      213: 5326226077163482888
-    second: Boom_01_6
+      213: 1690640860813595746
+    second: Hare_Swim_Wave-sheet_6
   - first:
-      213: -7159804219731504117
-    second: Boom_01_7
+      213: 7584396862240896954
+    second: Hare_Swim_Wave-sheet_7
   - first:
-      213: -3656333700712943967
-    second: Boom_01_8
+      213: 6711479918213579266
+    second: Hare_Swim_Wave-sheet_8
   externalObjects: {}
   serializedVersion: 10
   mipmaps:
@@ -125,190 +125,190 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Boom_01_0
+      name: Hare_Swim_Wave-sheet_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 32
-        height: 32
+        width: 51
+        height: 45
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2941e1e5f8c42454894c8dbdcff28f09
-      internalID: -2352042093359182849
+      spriteID: 6379dc155198ef241a8fc6f4da91ec46
+      internalID: 2469532440422879983
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Boom_01_1
+      name: Hare_Swim_Wave-sheet_1
       rect:
         serializedVersion: 2
-        x: 32
+        x: 51
         y: 0
-        width: 32
-        height: 32
+        width: 51
+        height: 45
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d61c092e154a90749a194b7928a19081
-      internalID: -7527614527040785440
+      spriteID: 9171092dd33aacd4c9377267dbfe5706
+      internalID: -8437572840520857995
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Boom_01_2
+      name: Hare_Swim_Wave-sheet_2
       rect:
         serializedVersion: 2
-        x: 64
+        x: 102
         y: 0
-        width: 32
-        height: 32
+        width: 51
+        height: 45
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f52e797d8dec53547a6099fe86eeba2a
-      internalID: 3080953350219270660
+      spriteID: 6e12a37d5a63c7e489c20541f20af0a7
+      internalID: 4173934857595410560
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Boom_01_3
+      name: Hare_Swim_Wave-sheet_3
       rect:
         serializedVersion: 2
-        x: 96
+        x: 153
         y: 0
-        width: 32
-        height: 32
+        width: 51
+        height: 45
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 1, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 0376ab07d86bd0e44ad5a6c7045f6c27
-      internalID: -6449964896108098275
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Boom_01_4
-      rect:
-        serializedVersion: 2
-        x: 127
-        y: 0
-        width: 33
-        height: 32
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 2, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 623c00c9157138a4db0736a8de5b27e1
-      internalID: 5595536261526855310
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Boom_01_5
-      rect:
-        serializedVersion: 2
-        x: 160
-        y: 0
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a163d8bd7d2246e4dafeda342a3298a0
-      internalID: -6525393082848877192
+      spriteID: f871bd693a289224f81685ab95227e17
+      internalID: 5026154127792110407
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Boom_01_6
+      name: Hare_Swim_Wave-sheet_4
       rect:
         serializedVersion: 2
-        x: 192
+        x: 204
         y: 0
-        width: 32
-        height: 32
+        width: 51
+        height: 45
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9c9259f0a340408439182cc04fbd2f8a
-      internalID: 5326226077163482888
+      spriteID: 7ceb87aabcc2c084ca762968c4ad8f26
+      internalID: -3704291416601332970
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Boom_01_7
+      name: Hare_Swim_Wave-sheet_5
       rect:
         serializedVersion: 2
-        x: 224
+        x: 255
         y: 0
-        width: 32
-        height: 32
+        width: 51
+        height: 45
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b4d7627de2ca2f84bb1605ef083841b4
-      internalID: -7159804219731504117
+      spriteID: fd93479041313be499b9c8a532a5d41e
+      internalID: -7904293940220784705
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Boom_01_8
+      name: Hare_Swim_Wave-sheet_6
       rect:
         serializedVersion: 2
-        x: 256
+        x: 306
         y: 0
-        width: 32
-        height: 32
+        width: 51
+        height: 45
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 111508263f8ea314da0c6b1719ba9cb4
-      internalID: -3656333700712943967
+      spriteID: 21e199a7922759a4bbc656ee87ebff9b
+      internalID: 1690640860813595746
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Hare_Swim_Wave-sheet_7
+      rect:
+        serializedVersion: 2
+        x: 357
+        y: 0
+        width: 51
+        height: 45
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 95c5a487a3f077b449cf4b2dac7b4817
+      internalID: 7584396862240896954
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Hare_Swim_Wave-sheet_8
+      rect:
+        serializedVersion: 2
+        x: 408
+        y: 0
+        width: 51
+        height: 45
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d616a31198e49314fa4e41151db54164
+      internalID: 6711479918213579266
       vertices: []
       indices: 
       edges: []

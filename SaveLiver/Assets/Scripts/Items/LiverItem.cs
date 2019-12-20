@@ -4,9 +4,12 @@ using UnityEngine;
 
 public class LiverItem : ItemManager, IItem
 {
+    private Rigidbody2D parent;
+
     void Start()
     {
-        Destroy(gameObject, itemLifeTime);
+        parent = GetComponentInParent<Rigidbody2D>();
+        Destroy(parent.gameObject, itemLifeTime);
     }
 
 
@@ -23,7 +26,7 @@ public class LiverItem : ItemManager, IItem
     public void Use()
     {
         LiverCheckAndPlus(1);
-        Destroy(gameObject);
+        Destroy(parent.gameObject);
     }
 
 

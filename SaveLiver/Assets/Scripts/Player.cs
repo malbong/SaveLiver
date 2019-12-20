@@ -33,8 +33,12 @@ public class Player : MonoBehaviour
     private Rigidbody2D playerRigid;
     public Animator anim;
 
+    
+
 
     public bool HasShield { get; set; } = false;
+    public bool HasSpeedUp { get; set; } = false;
+    public bool HasRotateUp { get; set; } = false;
 
 
     void Start()
@@ -145,9 +149,28 @@ public class Player : MonoBehaviour
         {
             OnDead();
         }
+
     }
 
-    
+    public void TakeDamage(bool isShark)
+    {
+        if (HasShield)
+        {
+            HasShield = false;
+            return;
+        }
+        if (isFeverd)
+        {
+            return;
+        }
+
+        OnDead();
+
+
+    }
+
+
+
 
     /**************************************
     * @함수명: OnDead

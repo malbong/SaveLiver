@@ -12,8 +12,11 @@ public class Bomb : ItemManager, IItem
 
     public GameObject boomEffect;
 
+    private Rigidbody2D parent;
+
     void Start()
     {
+        parent = GetComponentInParent<Rigidbody2D>();
         StartCoroutine("TimeCheckAndDestroy");
     }
 
@@ -32,7 +35,7 @@ public class Bomb : ItemManager, IItem
         {
             hasItem = false;
             Instantiate(boomEffect, transform.position, Quaternion.identity); // 폭발효과
-            Destroy(gameObject);
+            Destroy(parent.gameObject);
         }
     }
 
@@ -49,6 +52,7 @@ public class Bomb : ItemManager, IItem
     public void Use()
     {
         anim.SetBool("Fire", true);
+        GetComponentInParent<Collider2D>().enabled = false;
         GetComponent<Collider2D>().enabled = false;
         bombItemTime = Time.time;
         hasItem = true;
@@ -63,7 +67,7 @@ public class Bomb : ItemManager, IItem
         yield return new WaitForSeconds(itemLifeTime);
         if (!hasItem)
         {
-            Destroy(gameObject);
+            Destroy(parent.gameObject);
         }
     }
 }
