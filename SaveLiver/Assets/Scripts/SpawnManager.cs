@@ -8,7 +8,7 @@ public class SpawnManager : MonoBehaviour
 
     public float radius = 10.0f;
     public Enemy[] enemies;
-    public ItemManager[] items;
+    public GameObject[] items;
 
 
     private void Awake()
@@ -88,7 +88,7 @@ public class SpawnManager : MonoBehaviour
             Quaternion rotation = GetAngleWithTargetFromY(randomPosition, targetPosition);
             Instantiate(objects, randomPosition, rotation);
         }
-        else if(objects.GetType().BaseType == typeof(ItemManager))
+        else
         {
             Instantiate(objects, randomPosition, Quaternion.identity);
         }

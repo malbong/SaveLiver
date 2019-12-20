@@ -7,9 +7,11 @@ public class Shield : ItemManager, IItem
     public float itemDuration = 5f;
     private bool hasItem = false;
     private GameObject shield;
+    private Rigidbody2D parent;
 
     void Start()
     {
+        parent = transform.GetComponentInParent<Rigidbody2D>();
         shield = Player.instance.gameObject.transform.GetChild(3).gameObject;
         // GetChild(3) : Hare Shield
         StartCoroutine("TimeCheckAndDestroy");
@@ -34,14 +36,14 @@ public class Shield : ItemManager, IItem
         {
             hasItem = false;
             shield.SetActive(false);
-            Destroy(gameObject);
+            Destroy(parent.gameObject);
         }
         if (Time.time - shieldItemTime >= itemDuration && hasItem)
         {
             Player.instance.HasShield = false;
             hasItem = false;
             shield.SetActive(false);
-            Destroy(gameObject);
+            Destroy(parent.gameObject);
         }
     }
 
@@ -57,8 +59,9 @@ public class Shield : ItemManager, IItem
     */
     public void Use()
     {
+        GetComponentInParent<Collider2D>().enabled = false;
+        GetComponentInParent<SpriteRenderer>().enabled = false;
         GetComponent<Collider2D>().enabled = false;
-        GetComponent<SpriteRenderer>().enabled = false;
         Player.instance.HasShield = true;
         shield.SetActive(true); // 쉴드막 생성 (플레이어 자식 스프라이트 On)
         shieldItemTime = Time.time;
@@ -78,7 +81,7 @@ public class Shield : ItemManager, IItem
         yield return new WaitForSeconds(itemLifeTime);
         if (!hasItem)
         {
-            Destroy(gameObject);
+            Destroy(parent.gameObject);
         }
     }
 }

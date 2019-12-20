@@ -4,9 +4,12 @@ using UnityEngine;
 
 public class BreathItem : ItemManager, IItem
 {
+    private Rigidbody2D parent;
+
     void Start()
     {
-        Destroy(gameObject, itemLifeTime);
+        parent = GetComponentInParent<Rigidbody2D>();
+        Destroy(parent.gameObject, itemLifeTime);
     }
 
 
@@ -23,7 +26,7 @@ public class BreathItem : ItemManager, IItem
     public void Use()
     {
         BreathCheckAndPlus(3);
-        Destroy(gameObject);
+        Destroy(parent.gameObject);
     }
 
 

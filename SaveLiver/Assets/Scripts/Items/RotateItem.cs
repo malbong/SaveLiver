@@ -6,9 +6,13 @@ public class RotateItem : ItemManager, IItem
 {
     public float itemDuration = 8f;
     private bool hasItem = false;
+    private float amountRotateUp = 2f;
+
+    private Rigidbody2D parent;
 
     void Start()
     {
+        parent = GetComponentInParent<Rigidbody2D>();
         StartCoroutine("TimeCheckAndDestroy");
     }
 
@@ -26,8 +30,9 @@ public class RotateItem : ItemManager, IItem
         if (Time.time - rotateUpItemTime >= itemDuration && hasItem)
         {
             hasItem = false;
-            Player.instance.rotateSpeed = 4f;
-            Destroy(gameObject);
+            Player.instance.rotateSpeed -= amountRotateUp;
+            Player.instance.HasRotateUp = false;
+            Destroy(parent.gameObject);
         }
     }
 
@@ -39,13 +44,20 @@ public class RotateItem : ItemManager, IItem
     * @출력: void
     * @설명: 로테이트업 아이템과 충돌 시 발동
     *        Coliider와 Sprite를 꺼줌
-    *        플레이어 로테이트를 6으로 만듦
+    *        플레이어 로테이트를 더해줌
     */
     public void Use()
     {
+        GetComponentInParent<Collider2D>().enabled = false;
+        GetComponentInParent<SpriteRenderer>().enabled = false;
         GetComponent<Collider2D>().enabled = false;
-        GetComponent<SpriteRenderer>().enabled = false;
-        Player.instance.rotateSpeed = 6f;
+        if (Player.instance.HasRotateUp)
+        {
+            Player.instance.rotateSpeed -= amountRotateUp;
+            Destroy(parent.gameObject);
+        }
+        Player.instance.rotateSpeed += amountRotateUp;
+        Player.instance.HasRotateUp = true;
         rotateUpItemTime = Time.time;
         hasItem = true;
     }
@@ -59,7 +71,7 @@ public class RotateItem : ItemManager, IItem
         yield return new WaitForSeconds(itemLifeTime);
         if (!hasItem)
         {
-            Destroy(gameObject);
+            Destroy(parent.gameObject);
         }
     }
 }

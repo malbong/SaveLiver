@@ -6,9 +6,13 @@ public class Fever : ItemManager, IItem
 {
     public float itemDuration = 8f;
     private bool hasItem = false;
+    //private float amountSpeedUp = 2f;
+
+    private Rigidbody2D parent;
 
     void Start()
     {
+        parent = GetComponentInParent<Rigidbody2D>();
         StartCoroutine("TimeCheckAndDestroy");
     }
 
@@ -27,7 +31,8 @@ public class Fever : ItemManager, IItem
         {
             hasItem = false;
             Player.instance.EndFeverTime(); // 무적종료 알림
-            Destroy(gameObject);
+            //Player.instance.speed -= amountSpeedUp;
+            Destroy(parent.gameObject);
         }
     }
 
@@ -43,10 +48,22 @@ public class Fever : ItemManager, IItem
     */
     public void Use()
     {
+        GetComponentInParent<Collider2D>().enabled = false;
+        GetComponentInParent<SpriteRenderer>().enabled = false;
         GetComponent<Collider2D>().enabled = false;
-        GetComponent<SpriteRenderer>().enabled = false;
         Player.instance.FeverTime(); // 무적시작을 알림
         feverItemTime = Time.time;
+        /*if (!Player.instance.isFevered)
+        {
+            if (!Player.instance.HasSpeedUp) // 스피드업이 되어 있지 않을 때
+            {
+                Player.instance.speed += amountSpeedUp; // 스피드업
+            }
+        }
+        else if(Player.instance.isFevered) // 무적상태일 경우
+        {
+            Destroy(parent.gameObject); // 이 아이템 삭제 (새로 먹은 아이템만 살아있음)
+        }*/
         hasItem = true;
     }
 
@@ -59,7 +76,7 @@ public class Fever : ItemManager, IItem
         yield return new WaitForSeconds(itemLifeTime);
         if (!hasItem)
         {
-            Destroy(gameObject);
+            Destroy(parent.gameObject);
         }
     }
 }

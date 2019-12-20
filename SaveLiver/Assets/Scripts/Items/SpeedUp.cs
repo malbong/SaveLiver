@@ -6,9 +6,12 @@ public class SpeedUp : ItemManager, IItem
 {
     public float itemDuration = 8f;
     private bool hasItem = false;
+    public float amountSpeedUp = 2f;
+    private Rigidbody2D parent;
 
     void Start()
     {
+        parent = gameObject.GetComponentInParent<Rigidbody2D>();
         StartCoroutine("TimeCheckAndDestroy");
     }
 
@@ -26,8 +29,9 @@ public class SpeedUp : ItemManager, IItem
         if (Time.time - speedUpItemTime >= itemDuration && hasItem)
         {
             hasItem = false;
-            Player.instance.speed = 3f;
-            Destroy(gameObject);
+            Player.instance.speed -= amountSpeedUp;
+            Player.instance.HasSpeedUp = false;
+            Destroy(parent.gameObject);
         }
     }
 
@@ -43,9 +47,17 @@ public class SpeedUp : ItemManager, IItem
     */
     public void Use()
     {
+        transform.GetComponentInParent<Collider2D>().enabled = false;
+        transform.GetComponentInParent<SpriteRenderer>().enabled = false;
         GetComponent<Collider2D>().enabled = false;
-        GetComponent<SpriteRenderer>().enabled = false;
-        Player.instance.speed = 5f;
+        if (Player.instance.HasSpeedUp)
+        {
+            Player.instance.speed -= amountSpeedUp;
+            Destroy(parent.gameObject);
+        }
+        
+        Player.instance.speed += amountSpeedUp;
+        Player.instance.HasSpeedUp = true;
         speedUpItemTime = Time.time;
         hasItem = true;
     }
@@ -59,7 +71,7 @@ public class SpeedUp : ItemManager, IItem
         yield return new WaitForSeconds(itemLifeTime);
         if (!hasItem)
         {
-            Destroy(gameObject);
+            Destroy(parent.gameObject);
         }
     }
 }
