@@ -48,6 +48,9 @@ public class RotateItem : ItemManager, IItem
     */
     public void Use()
     {
+        AudioSource audio = GetComponent<AudioSource>();
+        audio.Play();
+
         GetComponentInParent<Collider2D>().enabled = false;
         GetComponentInParent<SpriteRenderer>().enabled = false;
         GetComponent<Collider2D>().enabled = false;

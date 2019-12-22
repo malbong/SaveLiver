@@ -48,6 +48,9 @@ public class SpeedUp : ItemManager, IItem
     */
     public void Use()
     {
+        AudioSource audio = GetComponent<AudioSource>();
+        audio.Play();
+
         transform.GetComponentInParent<Collider2D>().enabled = false;
         transform.GetComponentInParent<SpriteRenderer>().enabled = false;
         GetComponent<Collider2D>().enabled = false;

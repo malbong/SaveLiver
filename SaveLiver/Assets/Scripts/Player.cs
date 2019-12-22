@@ -34,7 +34,7 @@ public class Player : MonoBehaviour
 
     public Transform arrowRotate; // 화살표 회전 컨트롤
 
-    private Rigidbody2D playerRigid;
+    private Rigidbody2D playerRigid;    
     public Animator anim;
     
     public bool isAlive = true;
@@ -43,8 +43,8 @@ public class Player : MonoBehaviour
     public bool HasSpeedUp { get; set; } = false;
     public bool HasRotateUp { get; set; } = false;
 
-    public int feverNum = 0;
-    public int speedUpNum = 0;
+    public int feverNum { get; set; } = 0;
+    public int speedUpNum { get; set; } = 0;
 
 
     void Start()

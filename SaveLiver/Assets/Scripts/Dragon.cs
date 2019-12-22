@@ -11,7 +11,7 @@ public class Dragon : MonoBehaviour
     private Rigidbody2D enemyRigid;
     private Renderer dragonRenderer;
 
-    public Animator anim;
+    public Animator DeadAnim;
 
     private void Start()
     {
@@ -56,7 +56,7 @@ public class Dragon : MonoBehaviour
     private void OnDead()
     {
         isDead = true;
-        anim.SetTrigger("Dead");
+        DeadAnim.SetTrigger("Dead");
         StartCoroutine("FadeOut");
     }
 

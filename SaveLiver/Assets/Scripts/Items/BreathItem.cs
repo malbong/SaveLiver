@@ -25,6 +25,9 @@ public class BreathItem : ItemManager, IItem
     */
     public void Use()
     {
+        AudioSource audio = GetComponent<AudioSource>();
+        audio.Play();
+
         BreathCheckAndPlus(3);
         Destroy(parent.gameObject);
     }

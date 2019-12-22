@@ -50,6 +50,10 @@ public class Fever : ItemManager, IItem
     */
     public void Use()
     {
+        AudioSource audio = GetComponent<AudioSource>();
+        audio.Play();
+
+
         GetComponentInParent<Collider2D>().enabled = false;
         GetComponentInParent<SpriteRenderer>().enabled = false;
         GetComponent<Collider2D>().enabled = false;
@@ -59,6 +63,7 @@ public class Fever : ItemManager, IItem
         Player.instance.FeverTime(); // 무적시작을 알림
         hasItem = true;
     }
+
 
 
     /**************************************

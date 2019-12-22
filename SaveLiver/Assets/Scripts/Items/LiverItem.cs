@@ -25,6 +25,9 @@ public class LiverItem : ItemManager, IItem
     */
     public void Use()
     {
+        AudioSource audio = GetComponent<AudioSource>();
+        audio.Play();
+
         LiverCheckAndPlus(1);
         Destroy(parent.gameObject);
     }

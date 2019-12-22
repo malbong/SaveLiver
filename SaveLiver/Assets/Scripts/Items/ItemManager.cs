@@ -12,5 +12,4 @@ public class ItemManager: MonoBehaviour
     public static float rotateUpItemTime { get; set; } = 0f;
     //public static float feverItemTime { get; set; } = 0f;
 
-
 }

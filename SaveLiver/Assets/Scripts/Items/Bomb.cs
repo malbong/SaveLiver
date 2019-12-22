@@ -51,6 +51,9 @@ public class Bomb : ItemManager, IItem
     */
     public void Use()
     {
+        AudioSource audio = GetComponent<AudioSource>();
+        audio.Play();
+
         anim.SetBool("Fire", true);
         GetComponentInParent<Collider2D>().enabled = false;
         GetComponent<Collider2D>().enabled = false;
