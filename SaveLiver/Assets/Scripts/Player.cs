@@ -204,7 +204,7 @@ public class Player : MonoBehaviour
                 playerSpriteRenderer.color = new Color32(255, 255, 255, 180);
             }
 
-            yield return new WaitForSeconds(0.2f);
+            yield return new WaitForSeconds(0.16f);
             count += 1;
         }
 

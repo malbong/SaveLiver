@@ -27,7 +27,7 @@ public class Swirl : MonoBehaviour
     public void Update()
     {
         currentTime += Time.deltaTime;
-        transform.Rotate(0, 0, -720 * Time.deltaTime);
+        transform.Rotate(0, 0, -1080 * Time.deltaTime);
 
         if (currentTime < toMaxForceTime)
         {
