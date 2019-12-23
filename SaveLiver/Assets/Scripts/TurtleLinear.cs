@@ -46,7 +46,7 @@ public class TurtleLinear : Enemy
 
         base.isAlive = false; // died
 
-        transform.GetComponent<BoxCollider2D>().enabled = false;
+        transform.GetComponent<CircleCollider2D>().enabled = false;
         transform.GetChild(0).gameObject.SetActive(false);
 
         if (getLiver == true)

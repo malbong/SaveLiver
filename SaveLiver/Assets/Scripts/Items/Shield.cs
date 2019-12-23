@@ -12,8 +12,8 @@ public class Shield : ItemManager, IItem
     void Start()
     {
         parent = transform.GetComponentInParent<Rigidbody2D>();
-        shield = Player.instance.gameObject.transform.GetChild(3).gameObject;
-        // GetChild(3) : Hare Shield
+        shield = Player.instance.gameObject.transform.GetChild(2).gameObject;
+        // GetChild(2) : Hare Shield
         StartCoroutine("TimeCheckAndDestroy");
     }
 
