@@ -154,7 +154,7 @@ public class Player : MonoBehaviour
         GameManager.instance.UpdateLiverIcon(hp);
         if(hp <= 0)
         {
-            OnDead();
+            //OnDead();
         }
 
     }
@@ -164,6 +164,7 @@ public class Player : MonoBehaviour
         if (HasShield)
         {
             HasShield = false;
+
             return;
         }
         if (isFevered)
@@ -175,7 +176,7 @@ public class Player : MonoBehaviour
         {
             hp = 0;
             GameManager.instance.UpdateLiverIcon(hp);
-            OnDead();
+            //OnDead();
         }
     }
 

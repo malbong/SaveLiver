@@ -21,7 +21,7 @@ public abstract class Enemy : MonoBehaviour
     }
 
 
-    private void FixedUpdate()
+    private void Update()
     {
         if (isAlive)
         {
@@ -76,7 +76,7 @@ public abstract class Enemy : MonoBehaviour
         {
             HitOnPlayer();
         }
-        else if (other.tag == "Enemy" || other.tag == "Dragon" || other.tag == "BoomEffect")
+        else if (other.tag == "Enemy" || other.tag == "Dragon" || other.tag == "Spear")
         {
             OnDead(false);
         }
@@ -100,5 +100,6 @@ public abstract class Enemy : MonoBehaviour
         Rigidbody2D rigid = rigEnemy.AddComponent<Rigidbody2D>();
         rigid.gravityScale = 0;
         enemySpriteRenderer.sprite = sprite;
+        enemySpriteRenderer.sortingLayerName = "Enemy";
     }
 }
