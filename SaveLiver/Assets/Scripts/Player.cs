@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
@@ -34,8 +35,10 @@ public class Player : MonoBehaviour
 
     public Transform arrowRotate; // 화살표 회전 컨트롤
 
-    private Rigidbody2D playerRigid;    
-    public Animator anim;
+    private Rigidbody2D playerRigid;
+    public Animator feverAni;
+    private SpriteRenderer playerSpriteRenderer;
+    private BoxCollider2D playerCollider;
     
     public bool isAlive = true;
 
@@ -50,6 +53,8 @@ public class Player : MonoBehaviour
     void Start()
     {
         playerRigid = GetComponent<Rigidbody2D>();
+        playerCollider = GetComponent<BoxCollider2D>();
+        playerSpriteRenderer = GetComponent<SpriteRenderer>();
         runningCoroutine = StartCoroutine(RotateAngle(180, -1)); // 시작하면 Player를 180도 오른쪽으로 돌리기.
     }
 
@@ -119,30 +124,13 @@ public class Player : MonoBehaviour
 
 
     /**************************************
-    * @함수명: OnTriggerEnter2D(Collider2D other)
-    * @작성자: zeli
-    * @입력: other
-    * @출력: void
-    * @설명: collider와 충돌하면 어떤 종류인지 검사하고 사용
-    */
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        IItem item = other.GetComponent<IItem>();
-        if (item != null)
-        {
-            item.Use();
-        }
-    }
-
-
-
-    /**************************************
     * @함수명: TakeDamage
     * @작성자: zeli
-    * @입력: damage
+    * @입력: damage, isDragon (overload)
     * @출력: void
-    * @설명: Turtle로부터 받은 데미지를 받은 후 계산
+    * @설명: 적들로부터 받은 데미지를 받은 후 계산
     *        hp(Liver)가 없으면 OnDead 처리
+    *        피격효과 실행
     */
     public void TakeDamage(int damage)
     {
@@ -157,7 +145,13 @@ public class Player : MonoBehaviour
             return;
         }
 
+        if(hp > 1)
+        {
+            StartCoroutine("PlayerBeat");
+        }
+
         hp -= damage;
+        GameManager.instance.UpdateLiverIcon(hp);
         if(hp <= 0)
         {
             OnDead();
@@ -179,8 +173,43 @@ public class Player : MonoBehaviour
 
         if(isDragon)
         {
+            hp = 0;
+            GameManager.instance.UpdateLiverIcon(hp);
             OnDead();
         }
+    }
+
+
+
+    /**************************************
+    * @함수명: PlayerBeat
+    * @작성자: zeli
+    * @입력: void
+    * @출력: IEnumertor
+    * @설명: Player가 피격될 시 깜빡임 효과
+    */
+    IEnumerator PlayerBeat()
+    {
+        playerCollider.enabled = false;
+        int count = 0;
+
+        while(count < 10)
+        {
+            if(count%2 == 0)
+            {
+                playerSpriteRenderer.color = new Color32(255, 255, 255, 90);
+            }
+            else
+            {
+                playerSpriteRenderer.color = new Color32(255, 255, 255, 180);
+            }
+
+            yield return new WaitForSeconds(0.2f);
+            count += 1;
+        }
+
+        playerSpriteRenderer.color = new Color32(255, 255, 255, 255);
+        playerCollider.enabled = true;
     }
 
 
@@ -210,16 +239,21 @@ public class Player : MonoBehaviour
         Destroy(instance.gameObject, instance.main.startLifetime.constant);
 
         transform.gameObject.SetActive(false);
-        
+
+
+        Invoke("Respawn", 2f); // test용. 죽으면 살아나기.
 
         //once used destroy instead SetActive(false);
         //transform.parent.gameObject.SetActive(false);
-
-
     }
 
 
 
+    // test용 재식작
+    private void Respawn()
+    {
+        SceneManager.LoadScene(0);
+    }
 
 
     /**************************************
@@ -234,7 +268,7 @@ public class Player : MonoBehaviour
     public void FeverTime()
     {
         isFevered = true;
-        anim.SetBool("feverAnimation", true);
+        feverAni.SetBool("feverAnimation", true);
     }
 
 
@@ -250,6 +284,6 @@ public class Player : MonoBehaviour
     public void EndFeverTime()
     {
         isFevered = false;
-        anim.SetBool("feverAnimation", false);
+        feverAni.SetBool("feverAnimation", false);
     }
 }
