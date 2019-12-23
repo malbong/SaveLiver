@@ -8,4 +8,12 @@ public class Boom : MonoBehaviour
     {
         Destroy(gameObject, 0.68f);
     }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if(other.tag == "Player")
+        {
+            Player.instance.TakeDamage(1);
+        }
+    }
 }

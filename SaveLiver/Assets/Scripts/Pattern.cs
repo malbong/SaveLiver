@@ -162,12 +162,12 @@ public class Pattern : MonoBehaviour
         {
             if (isOver == 1) // create over player
             {
-                Vector3 createPosition = playerPosition + new Vector3(25, interval, 0);
+                Vector3 createPosition = playerPosition + new Vector3(20, interval, 0);
                 Dragon instance = Instantiate(dragon, createPosition, Quaternion.identity);
             }
             else // create under player
             {
-                Vector3 createPosition = playerPosition + new Vector3(25, -interval, 0);
+                Vector3 createPosition = playerPosition + new Vector3(20, -interval, 0);
                 Dragon instance = Instantiate(dragon, createPosition, Quaternion.identity);
             }
         }
@@ -175,17 +175,18 @@ public class Pattern : MonoBehaviour
         {
             if (isOver == 1) // create over player
             {
-                Vector3 createPosition = playerPosition + new Vector3(-25, interval, 0);
+                Vector3 createPosition = playerPosition + new Vector3(-20, interval, 0);
                 Dragon instance = Instantiate(dragon, createPosition, Quaternion.identity);
                 instance.transform.Rotate(0, 180, 0);
             }
             else // create under player
             {
-                Vector3 createPosition = playerPosition + new Vector3(-25, -interval, 0);
+                Vector3 createPosition = playerPosition + new Vector3(-20, -interval, 0);
                 Dragon instance = Instantiate(dragon, createPosition, Quaternion.identity);
                 instance.transform.Rotate(0, 180, 0);
             }
         }
+
     }
     
 

@@ -129,8 +129,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5799928006719109340}
-  - component: {fileID: 823443494114951310}
   - component: {fileID: 345826668470470104}
+  - component: {fileID: 823443494114951310}
   - component: {fileID: 3018999916095156241}
   m_Layer: 0
   m_Name: Rotate Collider
@@ -153,6 +153,19 @@ Transform:
   m_Father: {fileID: 5478738383625448928}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &345826668470470104
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8093252316628699636}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80ceb6e44e295c14288fef25154df51e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemDuration: 8
 --- !u!58 &823443494114951310
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -169,19 +182,6 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.23
---- !u!114 &345826668470470104
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8093252316628699636}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 80ceb6e44e295c14288fef25154df51e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  itemDuration: 8
 --- !u!82 &3018999916095156241
 AudioSource:
   m_ObjectHideFlags: 0
