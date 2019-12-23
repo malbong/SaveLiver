@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Shield : ItemManager, IItem
+public class Shield : MonoBehaviour, IItem
 {
     public float itemDuration = 5f;
     private bool hasItem = false;
@@ -12,8 +12,8 @@ public class Shield : ItemManager, IItem
     void Start()
     {
         parent = transform.GetComponentInParent<Rigidbody2D>();
-        shield = Player.instance.gameObject.transform.GetChild(3).gameObject;
-        // GetChild(3) : Hare Shield
+        shield = Player.instance.gameObject.transform.GetChild(2).gameObject;
+        // GetChild(2) : Hare Shield
         StartCoroutine("TimeCheckAndDestroy");
     }
 
@@ -29,18 +29,12 @@ public class Shield : ItemManager, IItem
     * @입력: void
     * @출력: void
     * @설명: 쉴드의 지속시간이 지나면 쉴드 해제
+    *        Update에서 실행
     */
     private void ItemDurationAndDestroy()
     {
         if (!Player.instance.HasShield && hasItem)
         {
-            hasItem = false;
-            shield.SetActive(false);
-            Destroy(parent.gameObject);
-        }
-        if (Time.time - shieldItemTime >= itemDuration && hasItem)
-        {
-            Player.instance.HasShield = false;
             hasItem = false;
             shield.SetActive(false);
             Destroy(parent.gameObject);
@@ -59,15 +53,13 @@ public class Shield : ItemManager, IItem
     */
     public void Use()
     {
-        AudioSource audio = GetComponent<AudioSource>();
-        audio.Play();
+        ItemManager.instance.AudioPlay();
 
         GetComponentInParent<Collider2D>().enabled = false;
         GetComponentInParent<SpriteRenderer>().enabled = false;
         GetComponent<Collider2D>().enabled = false;
         Player.instance.HasShield = true;
         shield.SetActive(true); // 쉴드막 생성 (플레이어 자식 스프라이트 On)
-        shieldItemTime = Time.time;
         hasItem = true;
     }
 
@@ -81,7 +73,7 @@ public class Shield : ItemManager, IItem
     */
     IEnumerator TimeCheckAndDestroy()
     {
-        yield return new WaitForSeconds(itemLifeTime);
+        yield return new WaitForSeconds(ItemManager.instance.itemLifeTime);
         if (!hasItem)
         {
             Destroy(parent.gameObject);

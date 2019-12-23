@@ -46,6 +46,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemDuration: 8
+  amountSpeedUp: 1
 --- !u!58 &3771132104283902444
 CircleCollider2D:
   m_ObjectHideFlags: 0

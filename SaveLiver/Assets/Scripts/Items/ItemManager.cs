@@ -4,10 +4,34 @@ using UnityEngine;
 
 public class ItemManager: MonoBehaviour
 {
+    public static ItemManager instance;
 
-    public static float itemLifeTime = 20.0f;
+    private void Awake()
+    {
+        if(instance == null)
+        {
+            instance = this;
+        }
+        else if(instance != this)
+        {
+            Destroy(this);
+        }
+    }
 
-    public static float shieldItemTime { get; set; } = 0f;
-    public static float rotateUpItemTime { get; set; } = 0f;
 
+    public float itemLifeTime = 20.0f;
+
+    private AudioSource itemAudio;
+
+
+    void Start()
+    {
+        itemAudio = GetComponent<AudioSource>();
+    }
+
+
+    public void AudioPlay()
+    {
+        itemAudio.Play();
+    }
 }

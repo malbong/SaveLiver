@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Bomb : ItemManager, IItem
+public class Bomb : MonoBehaviour, IItem
 {
     public float itemDuration = 2f;
     private float bombItemTime = 0f;
@@ -51,6 +51,7 @@ public class Bomb : ItemManager, IItem
     */
     public void Use()
     {
+        ItemManager.instance.AudioPlay();
         AudioSource audio = GetComponent<AudioSource>();
         audio.Play();
 
@@ -67,7 +68,7 @@ public class Bomb : ItemManager, IItem
     */
     IEnumerator TimeCheckAndDestroy()
     {
-        yield return new WaitForSeconds(itemLifeTime);
+        yield return new WaitForSeconds(ItemManager.instance.itemLifeTime);
         if (!hasItem)
         {
             Destroy(parent.gameObject);

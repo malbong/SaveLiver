@@ -62,7 +62,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemDuration: 8
-  amountSpeedUp: 2
+  amountSpeedUp: 1
 --- !u!82 &1865469608387685122
 AudioSource:
   m_ObjectHideFlags: 0

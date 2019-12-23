@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Fever : ItemManager, IItem
+public class Fever : MonoBehaviour, IItem
 {
     public float itemDuration = 8f;
     private bool hasItem = false;
-    private float amountSpeedUp = 2f;
+    public float amountSpeedUp = 2f;
     private float feverItemTime = 0f;
 
     private Rigidbody2D parent;
@@ -50,8 +50,7 @@ public class Fever : ItemManager, IItem
     */
     public void Use()
     {
-        AudioSource audio = GetComponent<AudioSource>();
-        audio.Play();
+        ItemManager.instance.AudioPlay();
 
 
         GetComponentInParent<Collider2D>().enabled = false;
@@ -71,7 +70,7 @@ public class Fever : ItemManager, IItem
     */
     IEnumerator TimeCheckAndDestroy()
     {
-        yield return new WaitForSeconds(itemLifeTime);
+        yield return new WaitForSeconds(ItemManager.instance.itemLifeTime);
         if (!hasItem)
         {
             Destroy(parent.gameObject);

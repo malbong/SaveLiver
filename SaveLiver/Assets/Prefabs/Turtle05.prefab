@@ -56,8 +56,8 @@ MonoBehaviour:
   getLiverSprite: {fileID: 21300000, guid: 9988728e8894c8a449c21ae039fbe54f, type: 3}
   score: 5
   hitCount: 1
-  speed: 5.5
-  rotateSpeed: 3
+  speed: 6.5
+  rotateSpeed: 3.4
 --- !u!96 &3512060300423802652
 TrailRenderer:
   serializedVersion: 2

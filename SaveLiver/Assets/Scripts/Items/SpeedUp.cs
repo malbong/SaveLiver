@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SpeedUp : ItemManager, IItem
+public class SpeedUp : MonoBehaviour, IItem
 {
     public float itemDuration = 8f;
     private bool hasItem = false;
@@ -48,8 +48,7 @@ public class SpeedUp : ItemManager, IItem
     */
     public void Use()
     {
-        AudioSource audio = GetComponent<AudioSource>();
-        audio.Play();
+        ItemManager.instance.AudioPlay();
 
         transform.GetComponentInParent<Collider2D>().enabled = false;
         transform.GetComponentInParent<SpriteRenderer>().enabled = false;
@@ -67,7 +66,7 @@ public class SpeedUp : ItemManager, IItem
     */
     IEnumerator TimeCheckAndDestroy()
     {
-        yield return new WaitForSeconds(itemLifeTime);
+        yield return new WaitForSeconds(ItemManager.instance.itemLifeTime);
         if (!hasItem)
         {
             Destroy(parent.gameObject);

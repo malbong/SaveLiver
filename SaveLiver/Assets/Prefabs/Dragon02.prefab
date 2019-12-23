@@ -10053,7 +10053,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d009b97d29d18ff4f97bee75fef0bad6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 10
+  speed: 12
   lifeTime: 10
   DeadAnim: {fileID: 1560612496714406679}
 --- !u!1 &6190419180841013691

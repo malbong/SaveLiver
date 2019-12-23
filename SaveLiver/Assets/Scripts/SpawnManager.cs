@@ -118,28 +118,24 @@ public class SpawnManager : MonoBehaviour
      */
     IEnumerator CreateEnemy()
     {
-        RandomSpawn(items[GetRandomItemIndex()]);
-        RandomSpawn(items[GetRandomItemIndex()]);
-        RandomSpawn(items[GetRandomItemIndex()]);
-        RandomSpawn(items[GetRandomItemIndex()]);
-        RandomSpawn(enemies[0]);
-        yield return new WaitForSeconds(3.0f);
-        RandomSpawn(enemies[1]);
-        yield return new WaitForSeconds(3.0f);
-        RandomSpawn(items[GetRandomItemIndex()]);
-        RandomSpawn(enemies[2]);
-        yield return new WaitForSeconds(3.0f);
-        RandomSpawn(items[GetRandomItemIndex()]);
-        RandomSpawn(items[GetRandomItemIndex()]);
-        RandomSpawn(items[GetRandomItemIndex()]);
-        RandomSpawn(enemies[3]);
-        RandomSpawn(items[GetRandomItemIndex()]);
-        yield return new WaitForSeconds(3.0f);
-        RandomSpawn(enemies[4]);
-        RandomSpawn(items[GetRandomItemIndex()]);
-        RandomSpawn(items[GetRandomItemIndex()]);
-        yield return new WaitForSeconds(3.0f);
-        RandomSpawn(enemies[5]);
-        yield return new WaitForSeconds(3.0f);
+        while (true)
+        {
+            RandomSpawn(items[GetRandomItemIndex()]);
+            RandomSpawn(enemies[0]);
+            yield return new WaitForSeconds(3.0f);
+            RandomSpawn(enemies[1]);
+            yield return new WaitForSeconds(3.0f);
+            RandomSpawn(items[GetRandomItemIndex()]);
+            RandomSpawn(enemies[2]);
+            yield return new WaitForSeconds(3.0f);
+            RandomSpawn(enemies[3]);
+            RandomSpawn(items[GetRandomItemIndex()]);
+            yield return new WaitForSeconds(3.0f);
+            RandomSpawn(enemies[4]);
+            RandomSpawn(items[GetRandomItemIndex()]);
+            yield return new WaitForSeconds(3.0f);
+            RandomSpawn(enemies[5]);
+            yield return new WaitForSeconds(3.0f);
+        }
     }
 }

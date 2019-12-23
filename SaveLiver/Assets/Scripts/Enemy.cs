@@ -76,7 +76,7 @@ public abstract class Enemy : MonoBehaviour
         {
             HitOnPlayer();
         }
-        else if (other.tag == "Enemy" || other.tag == "Dragon")
+        else if (other.tag == "Enemy" || other.tag == "Dragon" || other.tag == "BoomEffect")
         {
             OnDead(false);
         }

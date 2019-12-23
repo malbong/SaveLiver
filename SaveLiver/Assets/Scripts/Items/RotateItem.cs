@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RotateItem : ItemManager, IItem
+public class RotateItem : MonoBehaviour, IItem
 {
     public float itemDuration = 8f;
     private bool hasItem = false;
-    private float amountRotateUp = 2f;
+    public float amountRotateUp = 2f;
+    private float rotateUpItemTime = 0f;
 
     private Rigidbody2D parent;
 
@@ -48,17 +49,11 @@ public class RotateItem : ItemManager, IItem
     */
     public void Use()
     {
-        AudioSource audio = GetComponent<AudioSource>();
-        audio.Play();
+        ItemManager.instance.AudioPlay();
 
         GetComponentInParent<Collider2D>().enabled = false;
         GetComponentInParent<SpriteRenderer>().enabled = false;
         GetComponent<Collider2D>().enabled = false;
-        if (Player.instance.HasRotateUp)
-        {
-            Player.instance.rotateSpeed -= amountRotateUp;
-            Destroy(parent.gameObject);
-        }
         Player.instance.rotateSpeed += amountRotateUp;
         Player.instance.HasRotateUp = true;
         rotateUpItemTime = Time.time;
@@ -71,7 +66,7 @@ public class RotateItem : ItemManager, IItem
     */
     IEnumerator TimeCheckAndDestroy()
     {
-        yield return new WaitForSeconds(itemLifeTime);
+        yield return new WaitForSeconds(ItemManager.instance.itemLifeTime);
         if (!hasItem)
         {
             Destroy(parent.gameObject);

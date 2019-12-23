@@ -2,14 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LiverItem : ItemManager, IItem
+public class LiverItem : MonoBehaviour, IItem
 {
     private Rigidbody2D parent;
+    
 
     void Start()
     {
         parent = GetComponentInParent<Rigidbody2D>();
-        Destroy(parent.gameObject, itemLifeTime);
+        Destroy(parent.gameObject, ItemManager.instance.itemLifeTime);
     }
 
 
@@ -25,15 +26,13 @@ public class LiverItem : ItemManager, IItem
     */
     public void Use()
     {
-        AudioSource audio = GetComponent<AudioSource>();
-        audio.Play();
-
         if (Player.instance.hp < 3)
         {
             Player.instance.hp += 1;
             GameManager.instance.UpdateLiverIcon(Player.instance.hp);
         }
 
+        ItemManager.instance.AudioPlay();
         Destroy(parent.gameObject);
     }
 }
