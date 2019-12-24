@@ -39,6 +39,8 @@ public class Player : MonoBehaviour
     public Animator feverAni;
     private SpriteRenderer playerSpriteRenderer;
     private BoxCollider2D playerCollider;
+
+    public GameObject shield;
     
     public bool isAlive = true;
 
@@ -56,6 +58,7 @@ public class Player : MonoBehaviour
         playerCollider = GetComponent<BoxCollider2D>();
         playerSpriteRenderer = GetComponent<SpriteRenderer>();
         runningCoroutine = StartCoroutine(RotateAngle(180, -1)); // 시작하면 Player를 180도 오른쪽으로 돌리기.
+
     }
 
     void Update()
@@ -137,6 +140,7 @@ public class Player : MonoBehaviour
         if (HasShield) 
         {
             HasShield = false;
+            ShieldEnd();
             return;
         }
 
@@ -156,7 +160,6 @@ public class Player : MonoBehaviour
         {
             OnDead();
         }
-
     }
 
     public void TakeDamage(bool isDragon)
@@ -164,7 +167,7 @@ public class Player : MonoBehaviour
         if (HasShield)
         {
             HasShield = false;
-
+            ShieldEnd();
             return;
         }
         if (isFevered)
@@ -197,13 +200,9 @@ public class Player : MonoBehaviour
         while(count < 10)
         {
             if(count%2 == 0)
-            {
                 playerSpriteRenderer.color = new Color32(255, 255, 255, 90);
-            }
             else
-            {
                 playerSpriteRenderer.color = new Color32(255, 255, 255, 180);
-            }
 
             yield return new WaitForSeconds(0.16f);
             count += 1;
@@ -290,6 +289,7 @@ public class Player : MonoBehaviour
         feverAni.SetBool("feverAnimation", false);
     }
 
+
     private void KeepOnTrail()
     {
         Transform rotator = transform.Find("Rotator");
@@ -317,6 +317,27 @@ public class Player : MonoBehaviour
         {
             Debug.Log("Not Find Rotator");
         }
+    }
 
+
+    public void ShieldStart()
+    {
+        HasShield = true;
+        shield.SetActive(true);
+    }
+
+
+    public void ShieldEnd()
+    {
+        shield.GetComponent<Animator>().SetTrigger("Broken");
+        StartCoroutine("tmp");
+    }
+
+
+    IEnumerator tmp()
+    {
+        shield.GetComponent<AudioSource>().Play();
+        yield return new WaitForSeconds(0.2f);
+        shield.SetActive(false);
     }
 }

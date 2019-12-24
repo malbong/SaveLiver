@@ -23,7 +23,6 @@ public class ItemManager: MonoBehaviour
 
     private AudioSource itemAudio;
 
-
     void Start()
     {
         itemAudio = GetComponent<AudioSource>();
