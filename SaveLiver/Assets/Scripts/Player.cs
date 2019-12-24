@@ -238,10 +238,12 @@ public class Player : MonoBehaviour
         instance.GetComponent<AudioSource>().Play();
         Destroy(instance.gameObject, instance.main.startLifetime.constant);
 
+        KeepOnTrail();
+
         transform.gameObject.SetActive(false);
 
 
-        Invoke("Respawn", 2f); // test용. 죽으면 살아나기.
+        //Invoke("Respawn", 2f);// test용. 죽으면 살아나기.
 
         //once used destroy instead SetActive(false);
         //transform.parent.gameObject.SetActive(false);
@@ -288,6 +290,35 @@ public class Player : MonoBehaviour
     }
 
 
+    private void KeepOnTrail()
+    {
+        Transform rotator = transform.Find("Rotator");
+        if (rotator != null)
+        {
+            Transform trailWaveLeft = rotator.Find("Trail Wave Left");
+            Transform trailWaveRight = rotator.Find("Trail Wave Right");
+            if (trailWaveLeft != null && trailWaveRight != null)
+            {
+                trailWaveLeft.parent = null;
+                trailWaveRight.parent = null;
+
+                ParticleSystem trailWaveLeftParticle = trailWaveLeft.GetComponent<ParticleSystem>();
+                ParticleSystem trailWaveRightParticle = trailWaveRight.GetComponent<ParticleSystem>();
+
+                Destroy(trailWaveLeftParticle.gameObject, trailWaveLeftParticle.main.duration);
+                Destroy(trailWaveRightParticle.gameObject, trailWaveLeftParticle.main.duration);
+            }
+            else
+            {
+                Debug.Log("Not Find Trail Wave");
+            }
+        }
+        else
+        {
+            Debug.Log("Not Find Rotator");
+        }
+    }
+
 
     public void ShieldStart()
     {
@@ -295,11 +326,13 @@ public class Player : MonoBehaviour
         shield.SetActive(true);
     }
 
+
     public void ShieldEnd()
     {
         shield.GetComponent<Animator>().SetTrigger("Broken");
         StartCoroutine("tmp");
     }
+
 
     IEnumerator tmp()
     {
