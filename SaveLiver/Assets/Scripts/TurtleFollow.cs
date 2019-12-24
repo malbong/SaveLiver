@@ -76,18 +76,20 @@ public class TurtleFollow : Enemy
 
         base.isAlive = false; // died
 
+        base.KeepOnTrail();
+
         transform.GetComponent<CircleCollider2D>().enabled = false;
         transform.GetChild(0).gameObject.SetActive(false);
 
         if (getLiver == true)
         {
             PlayParticle(onDeadParticleGetLiver);
-            StartCoroutine(FadeOut());
+            StartCoroutine(GetLiverFadeOut());
         }
         else
         {
             PlayParticle(onDeadParticle);
-            transform.parent.gameObject.SetActive(false);
+            StartCoroutine(FadeOut(onDeadParticle.main.duration));
         }
         //add score
 
@@ -100,7 +102,7 @@ public class TurtleFollow : Enemy
     }
 
 
-    private IEnumerator FadeOut()
+    private IEnumerator GetLiverFadeOut()
     {
         SpriteRenderer spriteRenderer = transform.parent.GetComponent<SpriteRenderer>();
         spriteRenderer.sprite = getLiverSprite;
@@ -112,6 +114,17 @@ public class TurtleFollow : Enemy
             yield return null;
             if (targetColor.a <= 0) break;
         }
+        transform.parent.gameObject.SetActive(false);
+    }
+
+
+    private IEnumerator FadeOut(float waitTime)
+    {
+        SpriteRenderer spriteRenderer = transform.parent.GetComponent<SpriteRenderer>();
+        Color targetColor = spriteRenderer.color;
+        targetColor.a = 0;
+        spriteRenderer.color = targetColor;
+        yield return new WaitForSeconds(waitTime);
         transform.parent.gameObject.SetActive(false);
     }
 

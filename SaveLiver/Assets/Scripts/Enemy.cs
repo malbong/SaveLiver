@@ -102,4 +102,17 @@ public abstract class Enemy : MonoBehaviour
         enemySpriteRenderer.sprite = sprite;
         enemySpriteRenderer.sortingLayerName = "Enemy";
     }
+
+
+    protected void KeepOnTrail()
+    {
+        Transform trailWave = transform.Find("Trail Wave");
+        if (trailWave != null)
+        {
+            ParticleSystem trailWaveParticle = trailWave.GetComponent<ParticleSystem>();
+
+            trailWaveParticle.Stop();
+        }
+    }
+    
 }
