@@ -14,7 +14,7 @@ public class TurtleLinear : Enemy
     private void Start()
     {
         enemyRigid = GetComponent<Rigidbody2D>();
-        Destroy(transform.GetChild(1).gameObject, 1f);
+        Destroy(transform.GetChild(1).gameObject, 1.5f);
     }
 
 
