@@ -859,7 +859,7 @@ GameObject:
   - component: {fileID: 309020063}
   - component: {fileID: 309020062}
   m_Layer: 0
-  m_Name: Trail Wave
+  m_Name: Trail Wave Left
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6355,7 +6355,7 @@ GameObject:
   - component: {fileID: 767232444}
   - component: {fileID: 767232443}
   m_Layer: 0
-  m_Name: Trail Wave (1)
+  m_Name: Trail Wave Right
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
