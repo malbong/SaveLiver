@@ -12,7 +12,7 @@ public class Shield : MonoBehaviour, IItem
     void Start()
     {
         parent = transform.GetComponentInParent<Rigidbody2D>();
-        shield = Player.instance.gameObject.transform.GetChild(2).gameObject;
+        //shield = Player.instance.gameObject.transform.GetChild(2).gameObject;
         // GetChild(2) : Hare Shield
         StartCoroutine("TimeCheckAndDestroy");
     }
@@ -36,7 +36,7 @@ public class Shield : MonoBehaviour, IItem
         if (!Player.instance.HasShield && hasItem)
         {
             hasItem = false;
-            shield.SetActive(false);
+            //shield.SetActive(false);
             Destroy(parent.gameObject);
         }
     }
@@ -58,8 +58,7 @@ public class Shield : MonoBehaviour, IItem
         GetComponentInParent<Collider2D>().enabled = false;
         GetComponentInParent<SpriteRenderer>().enabled = false;
         GetComponent<Collider2D>().enabled = false;
-        Player.instance.HasShield = true;
-        shield.SetActive(true); // 쉴드막 생성 (플레이어 자식 스프라이트 On)
+        Player.instance.ShieldStart(); // 쉴드막 생성 (플레이어 자식 스프라이트 On)
         hasItem = true;
     }
 
