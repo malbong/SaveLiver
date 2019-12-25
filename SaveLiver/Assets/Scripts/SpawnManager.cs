@@ -38,13 +38,13 @@ public class SpawnManager : MonoBehaviour
      * @설명 : Player을 중심으로 거리가 10인 enemy위치를 랜덤생성
      *         그중에 플레이화면 하단은 제외
      */
-    public Vector3 GetRandomPosition()
+    public Vector3 GetRandomPosition(bool isItem = false)
     {
         float posX, posY;
         while (true)
         {
             Vector3 targetPosition = Player.instance.transform.position; //player위치 정보얻기
-            float tarX = targetPosition.x; //player의 좌표중 x좌표얻기
+            float tarX = targetPosition.x; //player의 좌표 (원 중심)
             float tarY = targetPosition.y;
             posX = Random.Range(tarX - radius, tarX + radius); // x-10 ~  x+10 중 랜덤 x값 얻기
             posY = Mathf.Sqrt(Mathf.Pow(radius, 2) - Mathf.Pow(posX-tarX, 2)); // 얻은 x값을 이용해 y값도 얻기
@@ -52,7 +52,8 @@ public class SpawnManager : MonoBehaviour
             if (Random.Range(0f, 1f) < 0.5) randomSignPosY = -1; //posY 부호도 랜덤으로 정하기
             posY *= randomSignPosY;
             posY += tarY;
-            if (posY > tarY - 5) break; //플레이화면 하단이 아닐 때 break
+            if (isItem == true) break;
+            if (posY > tarY - 5) break; //플레이화면 하단이 아닐 때 break (enemy라면 하단으로 주지않음)
         }
         Vector3 randomPosition = new Vector3(posX, posY, 0);
         return randomPosition;
@@ -80,16 +81,16 @@ public class SpawnManager : MonoBehaviour
      */
     public void RandomSpawn(Object objects)
     {   
-        Vector3 randomPosition = GetRandomPosition();
-
         if(objects.GetType() == typeof(TurtleFollow))
         {
+            Vector3 randomPosition = GetRandomPosition(false);
             Vector3 targetPosition = Player.instance.transform.position;
             Quaternion rotation = GetAngleWithTargetFromY(randomPosition, targetPosition);
             Instantiate(objects, randomPosition, rotation);
         }
         else
         {
+            Vector3 randomPosition = GetRandomPosition(true);
             Instantiate(objects, randomPosition, Quaternion.identity);
         }
     }
