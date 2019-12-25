@@ -5,12 +5,12 @@ using UnityEngine;
 public class LiverItem : MonoBehaviour, IItem
 {
     private Rigidbody2D parent;
-    
+
 
     void Start()
     {
         parent = GetComponentInParent<Rigidbody2D>();
-        Destroy(parent.gameObject, ItemManager.instance.itemLifeTime);
+        StartCoroutine("TimeCheckAndDestroy");
     }
 
 
@@ -33,6 +33,21 @@ public class LiverItem : MonoBehaviour, IItem
         }
 
         ItemManager.instance.AudioPlay();
+        Destroy(parent.gameObject);
+    }
+
+    IEnumerator TimeCheckAndDestroy()
+    {
+        yield return new WaitForSeconds(ItemManager.instance.itemLifeTime);
+        SpriteRenderer spriteRenderer = transform.parent.GetComponent<SpriteRenderer>();
+        while (true)
+        {
+            Color color = spriteRenderer.color;
+            color.a -= 0.01f;
+            spriteRenderer.color = color;
+            yield return new WaitForSeconds(0.01f);
+            if (spriteRenderer.color.a <= 0f) break;
+        }
         Destroy(parent.gameObject);
     }
 }

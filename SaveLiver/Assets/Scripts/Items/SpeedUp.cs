@@ -67,8 +67,17 @@ public class SpeedUp : MonoBehaviour, IItem
     IEnumerator TimeCheckAndDestroy()
     {
         yield return new WaitForSeconds(ItemManager.instance.itemLifeTime);
+        SpriteRenderer spriteRenderer = transform.parent.GetComponent<SpriteRenderer>();
         if (!hasItem)
         {
+            while (true)
+            {
+                Color color = spriteRenderer.color;
+                color.a -= 0.01f;
+                spriteRenderer.color = color;
+                yield return new WaitForSeconds(0.01f);
+                if (spriteRenderer.color.a <= 0f) break;
+            }
             Destroy(parent.gameObject);
         }
     }
