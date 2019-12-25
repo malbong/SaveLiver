@@ -9,6 +9,7 @@ TagManager:
   - Dragon
   - BoomEffect
   - Shark
+  - Spear
   layers:
   - Default
   - TransparentFX
@@ -21,7 +22,7 @@ TagManager:
   - Enemy
   - Player
   - Item
-  - Spear
+  - 
   - 
   - 
   - 
