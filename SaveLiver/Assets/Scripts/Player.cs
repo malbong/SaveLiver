@@ -305,6 +305,9 @@ public class Player : MonoBehaviour
                 ParticleSystem trailWaveLeftParticle = trailWaveLeft.GetComponent<ParticleSystem>();
                 ParticleSystem trailWaveRightParticle = trailWaveRight.GetComponent<ParticleSystem>();
 
+                trailWaveLeftParticle.Stop();
+                trailWaveRightParticle.Stop();
+
                 Destroy(trailWaveLeftParticle.gameObject, trailWaveLeftParticle.main.duration);
                 Destroy(trailWaveRightParticle.gameObject, trailWaveLeftParticle.main.duration);
             }
