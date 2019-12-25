@@ -243,7 +243,7 @@ public class Player : MonoBehaviour
         transform.gameObject.SetActive(false);
 
 
-        //Invoke("Respawn", 2f);// test용. 죽으면 살아나기.
+        Invoke("Respawn", 2f);// test용. 죽으면 살아나기.
 
         //once used destroy instead SetActive(false);
         //transform.parent.gameObject.SetActive(false);

@@ -121,9 +121,14 @@ public class TurtleFollow : Enemy
     private IEnumerator FadeOut(float waitTime)
     {
         SpriteRenderer spriteRenderer = transform.parent.GetComponent<SpriteRenderer>();
-        Color targetColor = spriteRenderer.color;
-        targetColor.a = 0;
-        spriteRenderer.color = targetColor;
+        while (true)
+        {
+            Color targetColor = spriteRenderer.color;
+            targetColor.a -= Time.deltaTime;
+            spriteRenderer.color = targetColor;
+            yield return null;
+            if (targetColor.a <= 0) break;
+        }
         yield return new WaitForSeconds(waitTime);
         transform.parent.gameObject.SetActive(false);
     }
