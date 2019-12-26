@@ -20,6 +20,7 @@ public class Player : MonoBehaviour
         }
     }
 
+
     public int hp;
     public int breath;
     public float speed;
@@ -100,9 +101,7 @@ public class Player : MonoBehaviour
         }
         runningCoroutine = StartCoroutine(RotateAngle(angle, sign));
     }
-
-
-
+    
 
     /**************************************
     * @함수명: RotateAngle(float angle, int sign)
