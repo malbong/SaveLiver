@@ -6,6 +6,8 @@ using UnityEngine.UI;
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance { get; set; }
+    public Image[] liverIconImage;
+
 
     private void Awake()
     {
@@ -20,14 +22,10 @@ public class GameManager : MonoBehaviour
     }
 
 
-    public Image[] liverIconImage;
-
-
     void Update()
     {
 
     }
-
 
 
     /**************************************
