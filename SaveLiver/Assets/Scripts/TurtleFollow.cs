@@ -129,7 +129,6 @@ public class TurtleFollow : Enemy
             yield return null;
             if (targetColor.a <= 0) break;
         }
-        yield return new WaitForSeconds(waitTime);
         transform.parent.gameObject.SetActive(false);
     }
 

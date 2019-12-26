@@ -35,7 +35,7 @@ public class Bomb : MonoBehaviour, IItem
         {
             hasItem = false;
             Instantiate(boomEffect, transform.position, Quaternion.identity); // 폭발효과
-            Destroy(parent.gameObject);
+            parent.gameObject.SetActive(false);
         }
     }
 
@@ -80,7 +80,7 @@ public class Bomb : MonoBehaviour, IItem
                 yield return new WaitForSeconds(0.01f);
                 if (spriteRenderer.color.a <= 0f) break;
             }
-            Destroy(parent.gameObject);
+            parent.gameObject.SetActive(false);
         }
     }
 }

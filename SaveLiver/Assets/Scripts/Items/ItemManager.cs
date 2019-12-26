@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class ItemManager: MonoBehaviour
 {
+    
     public static ItemManager instance;
 
     private void Awake()
@@ -19,7 +20,7 @@ public class ItemManager: MonoBehaviour
     }
 
 
-    public float itemLifeTime = 20.0f;
+    public float itemLifeTime = 15.0f;
 
     private AudioSource itemAudio;
 
@@ -41,5 +42,5 @@ public class ItemManager: MonoBehaviour
     {
         itemAudio.Play();
     }
-
+    
 }

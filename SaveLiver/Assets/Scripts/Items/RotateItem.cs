@@ -33,7 +33,7 @@ public class RotateItem : MonoBehaviour, IItem
             hasItem = false;
             Player.instance.rotateSpeed -= amountRotateUp;
             Player.instance.HasRotateUp = false;
-            Destroy(parent.gameObject);
+            parent.gameObject.SetActive(false);
         }
     }
 
@@ -78,7 +78,7 @@ public class RotateItem : MonoBehaviour, IItem
                 yield return new WaitForSeconds(0.01f);
                 if (spriteRenderer.color.a <= 0f) break;
             }
-            Destroy(parent.gameObject);
+            parent.gameObject.SetActive(false);
         }
     }
 }

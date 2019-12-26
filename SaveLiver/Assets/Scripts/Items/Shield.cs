@@ -6,7 +6,7 @@ public class Shield : MonoBehaviour, IItem
 {
     public float itemDuration = 5f;
     private bool hasItem = false;
-    private GameObject shield;
+    //private GameObject shield;
     private Rigidbody2D parent;
 
     void Start()
@@ -37,7 +37,7 @@ public class Shield : MonoBehaviour, IItem
         {
             hasItem = false;
             //shield.SetActive(false);
-            Destroy(parent.gameObject);
+            parent.gameObject.SetActive(false);
         }
     }
 
@@ -84,7 +84,7 @@ public class Shield : MonoBehaviour, IItem
                 yield return new WaitForSeconds(0.01f);
                 if (spriteRenderer.color.a <= 0f) break;
             }
-            Destroy(parent.gameObject);
+            parent.gameObject.SetActive(false);
         }
     }
 }
