@@ -33,7 +33,7 @@ public class LiverItem : MonoBehaviour, IItem
         }
 
         ItemManager.instance.AudioPlay();
-        Destroy(parent.gameObject);
+        parent.gameObject.SetActive(false);
     }
 
     IEnumerator TimeCheckAndDestroy()
@@ -48,6 +48,6 @@ public class LiverItem : MonoBehaviour, IItem
             yield return new WaitForSeconds(0.01f);
             if (spriteRenderer.color.a <= 0f) break;
         }
-        Destroy(parent.gameObject);
+        parent.gameObject.SetActive(false);
     }
 }

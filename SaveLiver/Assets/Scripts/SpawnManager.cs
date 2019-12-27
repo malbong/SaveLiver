@@ -6,11 +6,6 @@ public class SpawnManager : MonoBehaviour
 {
     public static SpawnManager instance;
 
-    public float radius = 10.0f;
-    public Enemy[] enemies;
-    public GameObject[] items;
-
-
     private void Awake()
     {
         if (instance == null)
@@ -23,6 +18,11 @@ public class SpawnManager : MonoBehaviour
         }
     }
 
+
+    public float radius = 10.0f;
+
+    public ObjectPooler objectPooler;
+    
 
     private void Start()
     {
@@ -47,7 +47,7 @@ public class SpawnManager : MonoBehaviour
             float tarX = targetPosition.x; //player의 좌표 (원 중심)
             float tarY = targetPosition.y;
             posX = Random.Range(tarX - radius, tarX + radius); // x-10 ~  x+10 중 랜덤 x값 얻기
-            posY = Mathf.Sqrt(Mathf.Pow(radius, 2) - Mathf.Pow(posX-tarX, 2)); // 얻은 x값을 이용해 y값도 얻기
+            posY = Mathf.Sqrt(Mathf.Pow(radius, 2) - Mathf.Pow(posX - tarX, 2)); // 얻은 x값을 이용해 y값도 얻기
             int randomSignPosY = 1;
             if (Random.Range(0f, 1f) < 0.5) randomSignPosY = -1; //posY 부호도 랜덤으로 정하기
             posY *= randomSignPosY;
@@ -58,7 +58,7 @@ public class SpawnManager : MonoBehaviour
         Vector3 randomPosition = new Vector3(posX, posY, 0);
         return randomPosition;
     }
-    
+
 
     public Quaternion GetAngleWithTargetFromY(Vector3 currentPosition, Vector3 targetPosition)
     {
@@ -69,43 +69,45 @@ public class SpawnManager : MonoBehaviour
         return rotation;
     }
 
+
     /********************************************
-     * @함수명 : RandomSpawn()
+     * @함수명 : EnemySpawn(int index)
      * @작성자 : Malbong, zeli
-     * @입력 : Object
+     * @입력 : int
      * @출력 : void
      * @설명 : 임의의 위치에서 Spawn하기
      *         CreateEnemy()라는 코루틴함수에서 계속 사용
-     *         입력된 오브젝트를 생성함
+     *         입력된 인덱스의 Enemy를 생성함
      *         Turtle: 캐릭터를 향해 회전한 상태로 생성
      */
-    public void RandomSpawn(Object objects)
-    {   
-        if(objects.GetType() == typeof(TurtleFollow))
-        {
-            Vector3 randomPosition = GetRandomPosition(false);
-            Vector3 targetPosition = Player.instance.transform.position;
-            Quaternion rotation = GetAngleWithTargetFromY(randomPosition, targetPosition);
-            Instantiate(objects, randomPosition, rotation);
-        }
-        else
-        {
-            Vector3 randomPosition = GetRandomPosition(true);
-            Instantiate(objects, randomPosition, Quaternion.identity);
-        }
+    private void EnemySpawn(int index)
+    {
+        Vector3 randomPosition = GetRandomPosition(false);
+        Vector3 targetPosition = Player.instance.transform.position;
+        Quaternion rotation = GetAngleWithTargetFromY(randomPosition, targetPosition);
+        GameObject obj = objectPooler.GetEnemyObject(index);
+
+        obj.transform.GetChild(0).transform.position = randomPosition;
+        obj.transform.GetChild(0).rotation = rotation;
+        obj.SetActive(true);
     }
 
 
     /********************************************
-     * @함수명 : GetRandomItemIndex()
+     * @함수명 : SpawnRandomItem()
      * @작성자 : zeli
      * @입력 : void
-     * @출력 : int
-     * @설명 : item을 랜덤으로 생성하기 위한 Index값 랜덤 생성
+     * @출력 : void
+     * @설명 : item을 랜덤으로 생성
+     *         위치는 GetRandomPosition 함수를 이용해 랜덤위치를 받아옴
      */
-    public int GetRandomItemIndex()
+    private void ItemRandomSpawn()
     {
-        return Random.Range(0, items.Length);
+        Vector3 randomPosition = GetRandomPosition(true);
+        int index = Random.Range(0, objectPooler.Items.Count);
+        GameObject obj = objectPooler.GetItemObject(index);
+        obj.transform.position = randomPosition;
+        obj.SetActive(true);
     }
 
 
@@ -121,21 +123,25 @@ public class SpawnManager : MonoBehaviour
     {
         while (true)
         {
-            RandomSpawn(items[GetRandomItemIndex()]);
-            RandomSpawn(enemies[0]);
+            yield return new WaitForSeconds(0.1f);
+            EnemySpawn(0);
+            ItemRandomSpawn();
+            ItemRandomSpawn();
             yield return new WaitForSeconds(3.0f);
-            RandomSpawn(enemies[1]);
+            ItemRandomSpawn();
+            EnemySpawn(1);
             yield return new WaitForSeconds(3.0f);
-            RandomSpawn(items[GetRandomItemIndex()]);
-            RandomSpawn(enemies[2]);
+            ItemRandomSpawn();
+            EnemySpawn(2);
             yield return new WaitForSeconds(3.0f);
-            RandomSpawn(enemies[3]);
-            RandomSpawn(items[GetRandomItemIndex()]);
+            ItemRandomSpawn();
+            EnemySpawn(3);
             yield return new WaitForSeconds(3.0f);
-            RandomSpawn(enemies[4]);
-            RandomSpawn(items[GetRandomItemIndex()]);
+            ItemRandomSpawn();
+            EnemySpawn(4);
             yield return new WaitForSeconds(3.0f);
-            RandomSpawn(enemies[5]);
+            ItemRandomSpawn();
+            EnemySpawn(5);
             yield return new WaitForSeconds(3.0f);
         }
     }

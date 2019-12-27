@@ -34,7 +34,7 @@ public class Fever : MonoBehaviour, IItem
             Player.instance.feverNum -= 1;
             if(Player.instance.feverNum == 0) Player.instance.EndFeverTime(); // Item 소진 시 무적종료 알림
             Player.instance.speed -= amountSpeedUp;
-            Destroy(parent.gameObject);
+            parent.gameObject.SetActive(false);
         }
     }
 
@@ -82,7 +82,7 @@ public class Fever : MonoBehaviour, IItem
                 yield return new WaitForSeconds(0.01f);
                 if (spriteRenderer.color.a <= 0f) break;
             }
-            Destroy(parent.gameObject);
+            parent.gameObject.SetActive(false);
         }
     }
 }

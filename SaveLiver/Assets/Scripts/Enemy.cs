@@ -17,8 +17,23 @@ public abstract class Enemy : MonoBehaviour
 
     private void Start()
     {
+        isAlive = true;
+        SpriteRenderer spriteRenderer = transform.parent.GetComponent<SpriteRenderer>();
+        CircleCollider2D collider = transform.GetComponent<CircleCollider2D>();
+        transform.GetChild(0).gameObject.SetActive(true);
+        collider.enabled = true;
+        spriteRenderer.color = new Color32(255, 255, 255, 255);
+        spriteRenderer.sprite = sprite;
+
         //Invoke("OnDead", lifeTime);
     }
+
+
+    private void OnEnable()
+    {
+        Start();
+    }
+
 
 
     private void Update()

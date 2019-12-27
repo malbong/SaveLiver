@@ -21,9 +21,8 @@ public class Dragon : MonoBehaviour
         // GetChild(5) : Dragon Track
         enemyRigid = GetComponent<Rigidbody2D>();
 
-
+        StartCoroutine("TimeCheckAndDestroy");
         Destroy(dragonTrackRenderer.gameObject, 1.5f);
-        //Destroy(gameObject, lifeTime);
     }
 
 
@@ -77,7 +76,7 @@ public class Dragon : MonoBehaviour
     * @출력: void
     * @설명: 제자리 정지
     *        Dead Animation 실행
-    *        페이드 아웃
+    *        페이드 아웃 코루틴 호출
     */
     private void OnDead()
     {
@@ -93,7 +92,7 @@ public class Dragon : MonoBehaviour
     * @함수명: FadeOutAndDead
     * @작성자: zeli
     * @입력: void
-    * @출력: void
+    * @출력: IEnumerator
     * @설명: OnDead에서 부름
     *        0.01씩 알파값 감소 후 삭제
     */
@@ -106,6 +105,20 @@ public class Dragon : MonoBehaviour
             dragonRenderer.material.color = color;
             yield return new WaitForSeconds(0.01f);
         }
-        Destroy(gameObject);
+        gameObject.SetActive(false);
+    }
+
+
+    /**************************************
+    * @함수명: TimeCheckAndDestroy()
+    * @작성자: zeli
+    * @입력: void
+    * @출력: IEnumerator
+    * @설명: lifeTime이 지난 후 비활성화
+    */
+    IEnumerator TimeCheckAndDestroy()
+    {
+        yield return new WaitForSeconds(lifeTime);
+        gameObject.SetActive(false);
     }
 }

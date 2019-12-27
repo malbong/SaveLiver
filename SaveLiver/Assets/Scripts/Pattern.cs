@@ -11,6 +11,8 @@ public class Pattern : MonoBehaviour
     private float spawnRadius;
     private float angle45Length;
 
+    public ObjectPooler objectPooler;
+
     private void Start()
     {
         spawnRadius = SpawnManager.instance.radius;
@@ -26,7 +28,6 @@ public class Pattern : MonoBehaviour
         //Swirl(-250f, 3, true);
         Swirl(-250f);
         
-        AllDirection4();
         Dragon(-1, 1, 2.5f);
         yield return new WaitForSeconds(3.0f);
         AllDirection8();
@@ -43,12 +44,17 @@ public class Pattern : MonoBehaviour
     }
 
 
-    public Enemy CreateLinearTurtle(Vector3 diffPosition, Vector3 targetPosition)
+    public GameObject CreateLinearTurtle(Vector3 diffPosition, Vector3 targetPosition)
     {
         Vector3 createPosition = targetPosition + diffPosition;
         Quaternion rotation = SpawnManager.instance.GetAngleWithTargetFromY(createPosition, targetPosition);
-        Enemy instance = Instantiate(linearTutle, createPosition, rotation);
-        return instance;
+
+        GameObject obj = objectPooler.GetEnemyObject(6); // 6:Linear Turtle
+        obj.transform.GetChild(0).transform.position = createPosition;
+        obj.transform.GetChild(0).rotation = rotation;
+        obj.SetActive(true);
+
+        return obj;
     }
 
 

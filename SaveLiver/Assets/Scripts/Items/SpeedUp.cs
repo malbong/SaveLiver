@@ -32,7 +32,7 @@ public class SpeedUp : MonoBehaviour, IItem
             hasItem = false;
             Player.instance.speed -= amountSpeedUp;
             Player.instance.HasSpeedUp = false;
-            Destroy(parent.gameObject);
+            parent.gameObject.SetActive(false);
         }
     }
 
@@ -78,7 +78,7 @@ public class SpeedUp : MonoBehaviour, IItem
                 yield return new WaitForSeconds(0.01f);
                 if (spriteRenderer.color.a <= 0f) break;
             }
-            Destroy(parent.gameObject);
+            parent.gameObject.SetActive(false);
         }
     }
 }
