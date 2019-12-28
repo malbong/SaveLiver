@@ -75,9 +75,9 @@ public class Bomb : MonoBehaviour, IItem
             while (true)
             {
                 Color color = spriteRenderer.color;
-                color.a -= 0.01f;
+                color.a -= 0.05f;
                 spriteRenderer.color = color;
-                yield return new WaitForSeconds(0.01f);
+                yield return new WaitForSeconds(0.05f);
                 if (spriteRenderer.color.a <= 0f) break;
             }
             parent.gameObject.SetActive(false);
