@@ -24,14 +24,22 @@ public class Pattern : MonoBehaviour
 
     IEnumerator tmp()
     {
+        yield return new WaitForSeconds(3.0f);
+        //Swirl(-250f, 3, true);
+        Swirl(-250f);
+
+        Dragon(-1, 1, 2.5f);
+        yield return new WaitForSeconds(3.0f);
         AllDirection8();
-        yield return new WaitForSeconds(0.1f);
+        Dragon(1, 1, 2f);
+        yield return new WaitForSeconds(3.0f);
+        Dragon(1, -1, 2f);
         DiagonalLeft(2f);
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(3.0f);
+        Dragon(-1, -1, 2.5f);
         DiagonalRight(2f);
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(3.0f);
         DiagonalBothSide(2f);
-        
     }
 
 
