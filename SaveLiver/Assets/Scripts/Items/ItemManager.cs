@@ -23,9 +23,15 @@ public class ItemManager: MonoBehaviour
     public float itemLifeTime = 15.0f;
 
     private AudioSource itemAudio;
+    public AudioClip getItemAudioClip;
+    public AudioClip shieldBrokenAudioClip;
+
+    private Animator itemAnimator;
+
 
     void Start()
     {
+        itemAnimator = GetComponent<Animator>();
         itemAudio = GetComponent<AudioSource>();
     }
 
@@ -40,7 +46,15 @@ public class ItemManager: MonoBehaviour
      */
     public void AudioPlay()
     {
+        itemAudio.clip = getItemAudioClip;
         itemAudio.Play();
     }
-    
+
+
+    public void ShieldBrokenPlay()
+    {
+        itemAudio.clip = shieldBrokenAudioClip;
+        itemAudio.Play();
+    }
+
 }

@@ -42,6 +42,7 @@ public class Player : MonoBehaviour
     private BoxCollider2D playerCollider;
 
     public GameObject shield;
+    public Sprite shieldSprite;
     
     public bool isAlive = true;
 
@@ -55,6 +56,7 @@ public class Player : MonoBehaviour
 
     void Start()
     {
+        
         playerRigid = GetComponent<Rigidbody2D>();
         playerCollider = GetComponent<BoxCollider2D>();
         playerSpriteRenderer = GetComponent<SpriteRenderer>();
@@ -62,7 +64,7 @@ public class Player : MonoBehaviour
 
     }
 
-    void Update()
+    void FixedUpdate()
     {
         if (isAlive)
         {
@@ -138,7 +140,6 @@ public class Player : MonoBehaviour
     {
         if (HasShield) 
         {
-            HasShield = false;
             ShieldEnd();
             return;
         }
@@ -165,7 +166,6 @@ public class Player : MonoBehaviour
     {
         if (HasShield)
         {
-            HasShield = false;
             ShieldEnd();
             return;
         }
@@ -250,7 +250,7 @@ public class Player : MonoBehaviour
 
 
 
-    // test용 재식작
+    // test용 재시작
     private void Respawn()
     {
         SceneManager.LoadScene(0);
@@ -331,15 +331,16 @@ public class Player : MonoBehaviour
 
     public void ShieldEnd()
     {
+        HasShield = false;
         shield.GetComponent<Animator>().SetTrigger("Broken");
+        ItemManager.instance.ShieldBrokenPlay();
         StartCoroutine("tmp");
     }
 
-
     IEnumerator tmp()
     {
-        shield.GetComponent<AudioSource>().Play();
         yield return new WaitForSeconds(0.2f);
+        shield.GetComponent<SpriteRenderer>().sprite = shieldSprite;
         shield.SetActive(false);
     }
 }

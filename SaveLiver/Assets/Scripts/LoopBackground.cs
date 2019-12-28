@@ -38,7 +38,6 @@ public class LoopBackground : MonoBehaviour
         float angle = Vector3.Angle(transform.up, dir);
         int sign = Vector3.Cross(transform.up, dir).z < 0 ? -1 : 1;
         angle *= sign;
-        Debug.Log(angle);
         if (-45 <= angle && angle <= 45)
         {
             for (int i = 0; i < 3; i++)
