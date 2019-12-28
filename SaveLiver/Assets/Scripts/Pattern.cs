@@ -24,21 +24,12 @@ public class Pattern : MonoBehaviour
 
     IEnumerator tmp()
     {
-        yield return new WaitForSeconds(3.0f);
-        //Swirl(-250f, 3, true);
-        Swirl(-250f);
-        
-        Dragon(-1, 1, 2.5f);
-        yield return new WaitForSeconds(3.0f);
         AllDirection8();
-        Dragon(1, 1, 2f);
-        yield return new WaitForSeconds(3.0f);
-        Dragon(1, -1, 2f);
+        yield return new WaitForSeconds(0.1f);
         DiagonalLeft(2f);
-        yield return new WaitForSeconds(3.0f);
-        Dragon(-1, -1, 2.5f);
+        yield return new WaitForSeconds(0.1f);
         DiagonalRight(2f);
-        yield return new WaitForSeconds(3.0f);
+        yield return new WaitForSeconds(0.1f);
         DiagonalBothSide(2f);
         
     }
@@ -50,7 +41,8 @@ public class Pattern : MonoBehaviour
         Quaternion rotation = SpawnManager.instance.GetAngleWithTargetFromY(createPosition, targetPosition);
 
         GameObject obj = objectPooler.GetEnemyObject(6); // 6:Linear Turtle
-        obj.transform.GetChild(0).transform.position = createPosition;
+        obj.transform.position = createPosition;
+        obj.transform.GetChild(0).localPosition = Vector3.zero;
         obj.transform.GetChild(0).rotation = rotation;
         obj.SetActive(true);
 
