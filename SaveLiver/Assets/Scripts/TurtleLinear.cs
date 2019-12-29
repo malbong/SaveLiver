@@ -10,11 +10,41 @@ public class TurtleLinear : Enemy
     public float speed = 7.0f;
     private Rigidbody2D enemyRigid;
     
-
+    
     private void Start()
     {
+        base.isAlive = true;
+
         enemyRigid = GetComponent<Rigidbody2D>();
-        Destroy(transform.GetChild(1).gameObject, 1.5f);
+
+        transform.parent.position = transform.position;
+        transform.localPosition = Vector3.zero;
+
+        CircleCollider2D collider = transform.GetComponent<CircleCollider2D>();
+        collider.enabled = true;
+        transform.GetChild(0).gameObject.SetActive(true);
+
+        SpriteRenderer spriteRenderer = transform.parent.GetComponent<SpriteRenderer>();
+        spriteRenderer.color = new Color32(255, 255, 255, 255);
+        spriteRenderer.sprite = sprite;
+        
+        transform.GetChild(1).gameObject.SetActive(true);
+        StartCoroutine(LinearDirectionSetActive());
+
+        //Invoke("OnDead", lifeTime);
+    }
+
+
+    private void OnEnable()
+    {
+        Start();
+    }
+
+
+    IEnumerator LinearDirectionSetActive()
+    {
+        yield return new WaitForSeconds(1.5f);
+        transform.GetChild(1).gameObject.SetActive(false);
     }
 
 

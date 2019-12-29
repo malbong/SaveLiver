@@ -15,10 +15,29 @@ public class TurtleFollow : Enemy
 
     private void Start()
     {
+        base.isAlive = true;
+
         enemyRigid = GetComponent<Rigidbody2D>();
+
+        transform.parent.position = transform.position;
+        transform.localPosition = Vector3.zero;
+        
+        CircleCollider2D collider = transform.GetComponent<CircleCollider2D>();
+        collider.enabled = true;
+        transform.GetChild(0).gameObject.SetActive(true);
+
+        SpriteRenderer spriteRenderer = transform.parent.GetComponent<SpriteRenderer>();
+        spriteRenderer.color = new Color32(255, 255, 255, 255);
+        spriteRenderer.sprite = sprite;
+
+        //Invoke("OnDead", lifeTime);
     }
 
 
+    private void OnEnable()
+    {
+        Start();
+    }
     /********************************************
      * @함수명 : Move()
      * @작성자 : Malbong

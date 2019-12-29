@@ -56,7 +56,6 @@ public class Player : MonoBehaviour
 
     void Start()
     {
-        
         playerRigid = GetComponent<Rigidbody2D>();
         playerCollider = GetComponent<BoxCollider2D>();
         playerSpriteRenderer = GetComponent<SpriteRenderer>();

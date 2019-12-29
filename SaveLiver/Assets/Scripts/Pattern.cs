@@ -24,22 +24,38 @@ public class Pattern : MonoBehaviour
 
     IEnumerator tmp()
     {
-        yield return new WaitForSeconds(3.0f);
-        //Swirl(-250f, 3, true);
-        Swirl(-250f);
-
-        Dragon(-1, 1, 2.5f);
-        yield return new WaitForSeconds(3.0f);
-        AllDirection8();
-        Dragon(1, 1, 2f);
-        yield return new WaitForSeconds(3.0f);
-        Dragon(1, -1, 2f);
-        DiagonalLeft(2f);
-        yield return new WaitForSeconds(3.0f);
-        Dragon(-1, -1, 2.5f);
-        DiagonalRight(2f);
-        yield return new WaitForSeconds(3.0f);
-        DiagonalBothSide(2f);
+        while (true)
+        {
+            yield return new WaitForSeconds(0.05f);
+            //DiagonalBothSide(2f);
+            
+            Swirl(-250f);
+            Dragon(-1, 1, 2.5f);
+            yield return new WaitForSeconds(3.0f);
+            AllDirection8();
+            Dragon(1, 1, 2f);
+            yield return new WaitForSeconds(3.0f);
+            Dragon(1, -1, 2f);
+            DiagonalLeft(2f);
+            yield return new WaitForSeconds(3.0f);
+            Dragon(-1, -1, 2.5f);
+            DiagonalRight(2f);
+            yield return new WaitForSeconds(3.0f);
+            DiagonalBothSide(2f);
+            yield return new WaitForSeconds(3.0f);
+            DiagonalBothSide(2f);
+            yield return new WaitForSeconds(3.0f);
+            DiagonalRight(2f);
+            Swirl(-250f, 3, true);
+            yield return new WaitForSeconds(3.0f);
+            AllDirection8();
+            yield return new WaitForSeconds(3.0f);
+            AllDirection4();
+            yield return new WaitForSeconds(3.0f);
+            DiagonalLeft(2f);
+            yield return new WaitForSeconds(3.0f);
+            
+        }
     }
 
 
@@ -102,33 +118,58 @@ public class Pattern : MonoBehaviour
         
         Vector3 targetPosition = playerPosition;
         Vector3 diffPosition = new Vector3(-angle45Length, angle45Length, 0);
+
         CreateLinearTurtle(diffPosition, targetPosition);
         
         targetPosition = playerPosition + new Vector3(0, interval, 0);
-        diffPosition = new Vector3(-angle45Length, angle45Length, 0);
         CreateLinearTurtle(diffPosition, targetPosition);
 
         targetPosition = playerPosition + new Vector3(0, -interval, 0);
-        diffPosition = new Vector3(-angle45Length, angle45Length, 0);
         CreateLinearTurtle(diffPosition, targetPosition);
     }
 
 
     public void DiagonalRight(float interval)
     {
+        /*
+        playerPosition = Player.instance.transform.position;
+
+        Vector3 targetPosition = playerPosition;
+        Vector3 diffPosition = new Vector3(-angle45Length, angle45Length, 0);
+        GameObject obj = CreateLinearTurtle(diffPosition, targetPosition);
+        obj.transform.Translate(obj.transform.position.x * (-2), 0, 0);
+        //obj.transform.GetChild(0).Rotate(0, 180, 0);
+        obj.transform.Rotate(0, 180, 0);
+
+        targetPosition = playerPosition + new Vector3(0, interval, 0);
+        obj = CreateLinearTurtle(diffPosition, targetPosition);
+        obj.transform.Translate(obj.transform.position.x * (-2), 0, 0);
+        //obj.transform.GetChild(0).Rotate(0, 180, 0);
+        obj.transform.Rotate(0, 180, 0);
+
+        targetPosition = playerPosition + new Vector3(0, -interval, 0);
+        obj = CreateLinearTurtle(diffPosition, targetPosition);
+        obj.transform.Translate(obj.transform.position.x * (-2), 0, 0);
+        //obj.transform.GetChild(0).Rotate(0, 180, 0);
+        obj.transform.Rotate(0, 180, 0);
+        */
+
         playerPosition = Player.instance.transform.position;
 
         Vector3 targetPosition = playerPosition;
         Vector3 diffPosition = new Vector3(angle45Length, angle45Length, 0);
-        CreateLinearTurtle(diffPosition, targetPosition);
+        GameObject obj = CreateLinearTurtle(diffPosition, targetPosition);
+        obj.transform.GetChild(0).Rotate(0, 180, 0);
 
         targetPosition = playerPosition + new Vector3(0, interval, 0);
         diffPosition = new Vector3(angle45Length, angle45Length, 0);
-        CreateLinearTurtle(diffPosition, targetPosition);
+        obj = CreateLinearTurtle(diffPosition, targetPosition);
+        obj.transform.GetChild(0).Rotate(0, 180, 0);
 
         targetPosition = playerPosition + new Vector3(0, -interval, 0);
         diffPosition = new Vector3(angle45Length, angle45Length, 0);
-        CreateLinearTurtle(diffPosition, targetPosition);
+        obj = CreateLinearTurtle(diffPosition, targetPosition);
+        obj.transform.GetChild(0).Rotate(0, 180, 0);
     }
 
 
