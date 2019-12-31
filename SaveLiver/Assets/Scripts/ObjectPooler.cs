@@ -4,8 +4,16 @@ using UnityEngine;
 
 public class ObjectPooler : MonoBehaviour
 {
-    public bool more = true;
+    public static ObjectPooler instance;
 
+    private void Awake()
+    {
+        instance = this;
+    }
+
+    public OffScreenIndicator offScreenIndicator;
+
+    public bool more = true;
 
     public List<GameObject> Items; // Kinds of Item
     public List<List<GameObject>> poolsItems; // Item Pool
@@ -27,8 +35,8 @@ public class ObjectPooler : MonoBehaviour
     void Start()
     {
         poolsItems = new List<List<GameObject>>();
-        poolsEnemies = new List<List<GameObject>>();
         poolsIndicators = new List<List<GameObject>>();
+        poolsEnemies = new List<List<GameObject>>();
         poolDragons = new List<GameObject>();
 
         for(int i=0; i<Items.Count; i++)
@@ -42,6 +50,18 @@ public class ObjectPooler : MonoBehaviour
             }
         }
 
+        for (int i = 0; i < Indicators.Count; i++)
+        {
+            poolsIndicators.Add(new List<GameObject>());
+            for (int j = 0; j < indicatorCount; j++)
+            {
+                GameObject obj = Instantiate(Indicators[i]);
+                obj.transform.SetParent(offScreenIndicator.transform);
+                obj.SetActive(false);
+                poolsIndicators[i].Add(obj);
+            }
+        }
+
         for (int i = 0; i < Enemies.Count; i++)
         {
             poolsEnemies.Add(new List<GameObject>());
@@ -50,17 +70,6 @@ public class ObjectPooler : MonoBehaviour
                 GameObject obj = Instantiate(Enemies[i]);
                 obj.transform.parent.gameObject.SetActive(false);
                 poolsEnemies[i].Add(obj.transform.parent.gameObject);
-            }
-        }
-
-        for (int i = 0; i < Indicators.Count; i++)
-        {
-            poolsIndicators.Add(new List<GameObject>());
-            for (int j = 0; j < indicatorCount; j++)
-            {
-                GameObject obj = Instantiate(Indicators[i]);
-                obj.SetActive(false);
-                poolsIndicators[i].Add(obj);
             }
         }
 
@@ -89,6 +98,22 @@ public class ObjectPooler : MonoBehaviour
         return null; // null을 반환하는 경우: 기기에 메모리가 부족할 때
     }
 
+    public GameObject GetIndicatorObject(int index)
+    {
+        foreach (GameObject obj in poolsIndicators[index])
+        {
+            if (!obj.activeInHierarchy) { return obj; }
+        }
+        if (more)
+        {
+            GameObject obj = Instantiate(Indicators[index]);
+            obj.transform.SetParent(offScreenIndicator.transform);
+            poolsIndicators[index].Add(obj);
+            return obj;
+        }
+        return null;
+    }
+
     public GameObject GetEnemyObject(int index)
     {
         foreach (GameObject obj in poolsEnemies[index])
@@ -100,21 +125,6 @@ public class ObjectPooler : MonoBehaviour
             GameObject obj = Instantiate(Enemies[index]);
             poolsEnemies[index].Add(obj.transform.parent.gameObject);
             return obj.transform.parent.gameObject;
-        }
-        return null; // null을 반환하는 경우: 기기에 메모리가 부족할 때
-    }
-
-    public GameObject GetIndicatorObject(int index)
-    {
-        foreach (GameObject obj in poolsIndicators[index])
-        {
-            if (!obj.activeInHierarchy) { return obj; }
-        }
-        if (more) // 미리 생성해준 오브젝트로 부족할 때를 대비해, 새로 생성해서 반환해줌
-        {
-            GameObject obj = Instantiate(Indicators[index]);
-            poolsIndicators[index].Add(obj);
-            return obj;
         }
         return null; // null을 반환하는 경우: 기기에 메모리가 부족할 때
     }

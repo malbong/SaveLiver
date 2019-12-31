@@ -15,6 +15,7 @@ public abstract class Enemy : MonoBehaviour
         CreateRig();
     }
 
+
     private void Start()
     {
         isAlive = true;
@@ -35,8 +36,7 @@ public abstract class Enemy : MonoBehaviour
     }
 
 
-
-    private void Update()
+    private void FixedUpdate()
     {
         if (isAlive)
         {
@@ -47,7 +47,7 @@ public abstract class Enemy : MonoBehaviour
             transform.GetComponent<Rigidbody2D>().velocity = Vector3.zero;
         }
     }
-    
+
 
     /********************************************
      * @함수명 : OnDead()

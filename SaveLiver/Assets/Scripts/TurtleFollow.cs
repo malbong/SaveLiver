@@ -11,11 +11,69 @@ public class TurtleFollow : Enemy
     public float rotateSpeed = 3.0f;
     private Rigidbody2D enemyRigid;
     private Coroutine runningCoroutine;
-    
+
+    private GameObject indicatorObj;
+    private bool hasIndicator = false;
+
 
     private void Start()
     {
         enemyRigid = GetComponent<Rigidbody2D>();
+    }
+
+
+    private void Update()
+    {
+        SetMyIndicator();
+        if (hasIndicator)
+        {
+            OffScreenIndicator.instance.DrawIndicator(gameObject, indicatorObj);
+        }
+        transform.parent.position = transform.position;
+        //parentRigid.velocity = -transform.up * speed;
+        transform.localPosition = Vector3.zero;
+    }
+
+
+    /********************************************
+     * @함수명 : SetMyIndicator()
+     * @작성자 : zeli
+     * @입력 : void
+     * @출력 : void
+     * @설명 : 나의 Indicator를 생성, 제거
+     *         Update에서 실행함
+     */
+    private void SetMyIndicator()
+    {
+        if (IsOffScreen() && !hasIndicator && isAlive) // 화면 밖인데 내 Indicator가 없으면
+        {
+            indicatorObj = ObjectPooler.instance.GetIndicatorObject(0); // 내 Indicator 생성
+            indicatorObj.SetActive(true);
+            hasIndicator = true;
+        }
+        else if (!IsOffScreen() && hasIndicator) // 화면 안인데 내 Indicator가 있으면
+        {
+            indicatorObj.SetActive(false); // 내 Indicator를 비활성화
+            hasIndicator = false;
+        }
+    }
+
+
+    /********************************************
+     * @함수명 : IsOffScreen()
+     * @작성자 : zeli
+     * @입력 : void
+     * @출력 : bool
+     * @설명 : Enemy가 화면 밖에 있는지 검사
+     *         밖: true, 안: false
+     */
+    private bool IsOffScreen()
+    {
+        Vector3 vec = Camera.main.WorldToViewportPoint(transform.position);
+        if (vec.x <= 1 && vec.y <= 1 && vec.x >= 0 && vec.y >= 0)
+            return false;
+        else
+            return true;
     }
 
 
@@ -30,9 +88,6 @@ public class TurtleFollow : Enemy
     public override void Move()
     {
         enemyRigid.velocity = -transform.up * speed;
-        transform.parent.position = transform.position;
-        //parentRigid.velocity = -transform.up * speed;
-        transform.localPosition = Vector3.zero;
 
         Vector3 currentVec = -transform.up; //현재 이동방향 단위벡터
         Vector3 diffVec = (Player.instance.transform.position - transform.position).normalized; // 적 -> 플레이어 단위벡터
@@ -51,13 +106,15 @@ public class TurtleFollow : Enemy
         //Quaternion targetRotation = Quaternion.Euler(transform.rotation.eulerAngles + rotationVec); //쿼터니언 <- 현재 회전값 + 회전해야할 값 
         //transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, 0.03f); //부드러운 회전을 위함
     }
+
+
     IEnumerator RotateAngle(float angle, int sign)
     {
 
         for (float i = angle % rotateSpeed; i < angle; i += rotateSpeed)
         {
             transform.Rotate(0, 0, rotateSpeed * sign);
-            yield return null;
+            yield return new WaitForSeconds(0.01f);
         }
 
         transform.Rotate(0, 0, angle % rotateSpeed);
@@ -79,6 +136,11 @@ public class TurtleFollow : Enemy
         base.KeepOnTrail();
 
         transform.GetComponent<CircleCollider2D>().enabled = false;
+        if (hasIndicator && indicatorObj != null)
+        {
+            hasIndicator = false;
+            indicatorObj.SetActive(false);
+        }
         transform.GetChild(0).gameObject.SetActive(false);
 
         if (getLiver == true)

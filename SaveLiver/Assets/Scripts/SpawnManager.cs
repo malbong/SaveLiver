@@ -26,7 +26,7 @@ public class SpawnManager : MonoBehaviour
 
     private void Start()
     {
-        StartCoroutine("CreateEnemy");
+        StartCoroutine(CreateEnemy());
     }
 
 
