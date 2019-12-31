@@ -33,6 +33,7 @@ public class LoopBackground : MonoBehaviour
     private void OnTriggerExit2D(Collider2D other) //충돌 Exit처리 -> 나가면 배경이 바뀌어야 함
     {
         if (other.tag != "MoveCollider") return; //다른 충돌이면 그냥 리턴
+        if (Player.instance.isAlive == false) return; //플레이어가 죽으면 바꾸지 않음
         
         Vector3 dir = other.transform.position - transform.position; //플레이어의 위치 - 타일의 중심 =>>> 타일 중심에서의 벡터가 나옴
         float angle = Vector3.Angle(transform.up, dir); //각도

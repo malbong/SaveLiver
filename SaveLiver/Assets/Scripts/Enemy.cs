@@ -19,6 +19,8 @@ public abstract class Enemy : MonoBehaviour
     private void Start()
     {
         isAlive = true;
+        transform.parent.position = transform.position;
+        transform.localPosition = Vector3.zero;
         SpriteRenderer spriteRenderer = transform.parent.GetComponent<SpriteRenderer>();
         CircleCollider2D collider = transform.GetComponent<CircleCollider2D>();
         transform.GetChild(0).gameObject.SetActive(true);
