@@ -6,8 +6,14 @@ using UnityEngine.UI;
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance { get; set; }
-    public Image[] liverIconImage;
 
+    public Text liverCountText;
+    public Text scoreText;
+    
+    private int totalScore = 0;
+
+    private float currentplayTime = 0;
+    private float secondsUnit = 0;
 
     private void Awake()
     {
@@ -22,31 +28,58 @@ public class GameManager : MonoBehaviour
     }
 
 
+    private void Start()
+    {
+        totalScore = 0;
+        UpdateLiverCountText(3);
+        UpdateScoreText();
+    }
+
+
     void Update()
     {
-
+        if (Time.timeScale == 0) return;
+        TimeScorePlus();
     }
 
 
     /**************************************
-    * @함수명: UpdateLiverIcon
-    * @작성자: zeli
+    * @함수명: UpdateLiverText
+    * @작성자: zeli, Malbong
     * @입력: liver
     * @출력: void
     * @설명: Player가 피격시마다 LiverUI를 새로 업데이트함.
     */
-    public void UpdateLiverIcon(int liver)
+    public void UpdateLiverCountText(int liverCount)
     {
-        // Liver 3개를 일단 비활성화하고,
-        for (int i = 0; i < 3; i++)
-        {
-            liverIconImage[i].gameObject.SetActive(false);
-        }
+        liverCountText.text = "x " + liverCount;
+    }
 
-        // 남아있는 Liver만큼만 활성화
-        for (int i = 0; i < liver; i++)
+
+    public void UpdateScoreText()
+    {
+        scoreText.text = "score: " + totalScore;
+    }
+    
+
+    public void AddScore(int score)
+    {
+        totalScore += score;
+        UpdateScoreText();
+    }
+
+
+    private void TimeScorePlus()
+    {
+        if (Player.instance.isAlive)
         {
-            liverIconImage[i].gameObject.SetActive(true);
+            secondsUnit += Time.deltaTime;
+            if (secondsUnit >= 0.5f)
+            {
+                secondsUnit = 0;
+                currentplayTime += 0.5f;
+                AddScore(1);
+            }
         }
     }
 }

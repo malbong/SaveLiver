@@ -19,6 +19,7 @@ public class Shield : MonoBehaviour, IItem
 
     void Update()
     {
+        if (Time.timeScale == 0) return;
         ItemDurationAndDestroy();
     }
 
@@ -68,7 +69,7 @@ public class Shield : MonoBehaviour, IItem
     * @작성자: zeli
     * @입력: void
     * @출력: IEnumerator
-    * @설명: Item의 생성시간이 끝나면, 해당 아이템의 실행여부 판단 후 파괴여부 결정
+    * @설명: Item의 lifeTime이 끝나면, 해당 아이템의 실행여부 판단 후 파괴여부 결정
     */
     IEnumerator TimeCheckAndDestroy()
     {

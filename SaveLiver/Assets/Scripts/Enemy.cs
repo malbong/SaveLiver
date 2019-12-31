@@ -10,10 +10,12 @@ public abstract class Enemy : MonoBehaviour
     public ParticleSystem onDeadParticleGetLiver;
     protected bool isAlive = true;
 
-    void Awake()
+
+    private void Awake()
     {
         CreateRig();
     }
+
 
     private void Start()
     {
@@ -21,8 +23,10 @@ public abstract class Enemy : MonoBehaviour
     }
 
 
-    private void Update()
+    protected void FixedUpdate()
     {
+        if (Time.timeScale == 0) return;
+
         if (isAlive)
         {
             Move();
@@ -79,7 +83,6 @@ public abstract class Enemy : MonoBehaviour
         else if (other.tag == "Enemy" || other.tag == "Dragon" || other.tag == "Spear" || other.tag == "BoomEffect")
         {
             OnDead(false);
-            Debug.Log(other.tag);
         }
     }
 

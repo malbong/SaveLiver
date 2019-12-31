@@ -6,12 +6,13 @@ public class Dragon : MonoBehaviour
 {
     public float speed = 10.0f;
     public float lifeTime = 10.0f;
-    private bool isDontMove = false;
+    public int score = 50;
+    private bool isNotMove = false;
     //private bool isHitOnPlayer = false;
     private Rigidbody2D enemyRigid;
     private Renderer dragonRenderer;
     private Renderer dragonTrackRenderer;
-    
+
     public Animator DeadAnim;
 
     private void Start()
@@ -28,6 +29,7 @@ public class Dragon : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (Time.timeScale == 0) return;
         Move();
     }
 
@@ -42,7 +44,7 @@ public class Dragon : MonoBehaviour
     */
     public void Move()
     {
-        if(!isDontMove) enemyRigid.velocity = -transform.right * speed;
+        if(!isNotMove) enemyRigid.velocity = -transform.right * speed;
     }
 
 
@@ -81,7 +83,8 @@ public class Dragon : MonoBehaviour
     private void OnDead()
     {
         enemyRigid.velocity = Vector2.zero;
-        isDontMove = true;
+        isNotMove = true;
+        GameManager.instance.AddScore(50);
         DeadAnim.SetTrigger("Dead");
         StartCoroutine("FadeOutAndDead");
     }

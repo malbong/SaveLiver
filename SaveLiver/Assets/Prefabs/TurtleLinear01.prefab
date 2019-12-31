@@ -156,7 +156,7 @@ MonoBehaviour:
     type: 3}
   getLiverSprite: {fileID: 21300000, guid: 971011af16b22634eb19086185a6edd3, type: 3}
   score: 5
-  hitCount: 1
+  hitCount: 2
   speed: 8
 --- !u!50 &5043526661834449657
 Rigidbody2D:
@@ -492,7 +492,7 @@ ParticleSystem:
     startSpeed:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 1
+      scalar: 1.2
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -608,7 +608,7 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0.7
+      scalar: 0.8
       minScalar: 1
       maxCurve:
         serializedVersion: 2
@@ -1306,7 +1306,7 @@ ParticleSystem:
         m_Curve:
         - serializedVersion: 3
           time: 0
-          value: 0.51136225
+          value: 1
           inSlope: 0
           outSlope: 0
           tangentMode: 0
@@ -1316,11 +1316,11 @@ ParticleSystem:
         - serializedVersion: 3
           time: 1
           value: 1
-          inSlope: 1
-          outSlope: 1
+          inSlope: 0.12697616
+          outSlope: 0.12697616
           tangentMode: 0
           weightedMode: 0
-          inWeight: 0.33333334
+          inWeight: 0.08949417
           outWeight: 0.33333334
         m_PreInfinity: 2
         m_PostInfinity: 2

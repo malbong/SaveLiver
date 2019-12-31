@@ -5,7 +5,8 @@ using System;
 
 public class LoopBackground : MonoBehaviour
 {
-    public GameObject[] tmp_tile; //임시 타일 public으로 받기
+    public Background background;
+    private GameObject[] tmp_tile; //임시 타일 public으로 받기
     public GameObject[,] tile; //임시 타일을 3x3으로 바꿀 변수
     private int currentIndex_i; //현재 나의 타일 인덱스 i
     private int currentIndex_j; //현재 나의 타일 인덱스 j
@@ -14,6 +15,7 @@ public class LoopBackground : MonoBehaviour
 
     private void Start()
     {
+        tmp_tile = background.tile;
         tile = new GameObject[3, 3]; // 3x3
         int cnt = 0; 
         for (int i = 0; i < 3; i++) 
@@ -46,16 +48,16 @@ public class LoopBackground : MonoBehaviour
             {
                 if (currentIndex_i + 1 <= 2) // 배열에 대한 예외처리, 아래의 else문은 currentIndex_i가 2일때임
                 {   // 예외 : 이미 옮긴 것을 또 옮길 수 있기 때문, position.y의 차이가 24면 옮김
-                    if (tile[currentIndex_i + 1, i].transform.position.y - transform.position.y == -24) 
+                    if (tile[currentIndex_i + 1, i].transform.localPosition.y - transform.localPosition.y == -24) 
                     {
-                        tile[currentIndex_i + 1, i].transform.position += new Vector3(0, 24 * 3, 0); //위쪽으로 가므로 아래행을 옮김
+                        tile[currentIndex_i + 1, i].transform.localPosition += new Vector3(0, 24 * 3, 0); //위쪽으로 가므로 아래행을 옮김
                     }
                 }
                 else
                 {   
-                    if (tile[0, i].transform.position.y - transform.position.y == -24) //currentIndex_i가 2일때는 아래가 0인덱스
+                    if (tile[0, i].transform.localPosition.y - transform.localPosition.y == -24) //currentIndex_i가 2일때는 아래가 0인덱스
                     {
-                        tile[0, i].transform.position += new Vector3(0, 24 * 3, 0);
+                        tile[0, i].transform.localPosition += new Vector3(0, 24 * 3, 0);
                     }
                 }
             }
@@ -66,16 +68,16 @@ public class LoopBackground : MonoBehaviour
             {
                 if (currentIndex_j + 1 <= 2)
                 {
-                    if (tile[i, currentIndex_j + 1].transform.position.x - transform.position.x ==  24)
+                    if (tile[i, currentIndex_j + 1].transform.localPosition.x - transform.localPosition.x ==  24)
                     {
-                        tile[i, currentIndex_j + 1].transform.position += new Vector3(-24 * 3, 0, 0);
+                        tile[i, currentIndex_j + 1].transform.localPosition += new Vector3(-24 * 3, 0, 0);
                     }
                 }
                 else
                 {
-                    if (tile[i, 0].transform.position.x - transform.position.x == 24)
+                    if (tile[i, 0].transform.localPosition.x - transform.localPosition.x == 24)
                     {
-                        tile[i, 0].transform.position += new Vector3(-24 * 3, 0, 0);
+                        tile[i, 0].transform.localPosition += new Vector3(-24 * 3, 0, 0);
                     }
                 }
             }
@@ -86,16 +88,16 @@ public class LoopBackground : MonoBehaviour
             {
                 if (currentIndex_i - 1 >= 0)
                 {
-                    if (tile[currentIndex_i - 1, i].transform.position.y - transform.position.y == 24)
+                    if (tile[currentIndex_i - 1, i].transform.localPosition.y - transform.localPosition.y == 24)
                     {
-                        tile[currentIndex_i - 1, i].transform.position += new Vector3(0, -24 * 3, 0);
+                        tile[currentIndex_i - 1, i].transform.localPosition += new Vector3(0, -24 * 3, 0);
                     }
                 }
                 else
                 {
-                    if (tile[2, i].transform.position.y - transform.position.y == 24)
+                    if (tile[2, i].transform.localPosition.y - transform.localPosition.y == 24)
                     {
-                        tile[2, i].transform.position += new Vector3(0, -24 * 3, 0);
+                        tile[2, i].transform.localPosition += new Vector3(0, -24 * 3, 0);
                     }
                 }
             }
@@ -106,16 +108,16 @@ public class LoopBackground : MonoBehaviour
             {
                 if (currentIndex_j - 1 >= 0)
                 {
-                    if (tile[i, currentIndex_j - 1].transform.position.x - transform.position.x == -24)
+                    if (tile[i, currentIndex_j - 1].transform.localPosition.x - transform.localPosition.x == -24)
                     {
-                        tile[i, currentIndex_j - 1].transform.position += new Vector3(24 * 3, 0, 0);
+                        tile[i, currentIndex_j - 1].transform.localPosition += new Vector3(24 * 3, 0, 0);
                     }
                 }
                 else
                 {
-                    if (tile[i, 2].transform.position.x - transform.position.x == -24)
+                    if (tile[i, 2].transform.localPosition.x - transform.localPosition.x == -24)
                     {
-                        tile[i, 2].transform.position += new Vector3(24 * 3, 0, 0);
+                        tile[i, 2].transform.localPosition += new Vector3(24 * 3, 0, 0);
                     }
                 }
             }

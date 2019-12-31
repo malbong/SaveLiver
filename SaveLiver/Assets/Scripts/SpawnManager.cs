@@ -126,7 +126,6 @@ public class SpawnManager : MonoBehaviour
             yield return new WaitForSeconds(0.1f);
             EnemySpawn(0);
             ItemRandomSpawn();
-            ItemRandomSpawn();
             yield return new WaitForSeconds(3.0f);
             ItemRandomSpawn();
             EnemySpawn(1);

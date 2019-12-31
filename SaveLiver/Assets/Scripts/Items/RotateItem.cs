@@ -19,6 +19,7 @@ public class RotateItem : MonoBehaviour, IItem
 
     void Update()
     {
+        if (Time.timeScale == 0) return;
         ItemDurationAndDestroy();
     }
 

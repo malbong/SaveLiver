@@ -18,6 +18,7 @@ public class SpeedUp : MonoBehaviour, IItem
 
     void Update()
     {
+        if (Time.timeScale == 0) return;
         ItemDurationAndDestroy();
     }
 

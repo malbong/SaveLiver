@@ -29,7 +29,7 @@ public class LiverItem : MonoBehaviour, IItem
         if (Player.instance.hp < 3)
         {
             Player.instance.hp += 1;
-            GameManager.instance.UpdateLiverIcon(Player.instance.hp);
+            GameManager.instance.UpdateLiverCountText(Player.instance.hp);
         }
 
         ItemManager.instance.AudioPlay();

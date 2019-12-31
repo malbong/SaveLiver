@@ -5,7 +5,7 @@ using UnityEngine;
 public class TurtleLinear : Enemy
 {
     public Sprite getLiverSprite;
-    public int score = 5;
+    public int score = 2;
     public int hitCount = 2;
     public float speed = 7.0f;
     private Rigidbody2D enemyRigid;
@@ -89,6 +89,7 @@ public class TurtleLinear : Enemy
         else
         {
             PlayParticle(onDeadParticle);
+            GameManager.instance.AddScore(score);
             StartCoroutine(FadeOut(onDeadParticle.main.duration));
         }
         //use AudioSource.Play()

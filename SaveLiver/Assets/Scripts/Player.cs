@@ -53,6 +53,8 @@ public class Player : MonoBehaviour
     public int feverNum { get; set; } = 0;
     public int speedUpNum { get; set; } = 0;
 
+    public Animator boatAnim;
+
 
     void Start()
     {
@@ -60,11 +62,12 @@ public class Player : MonoBehaviour
         playerCollider = GetComponent<BoxCollider2D>();
         playerSpriteRenderer = GetComponent<SpriteRenderer>();
         runningCoroutine = StartCoroutine(RotateAngle(180, -1)); // 시작하면 Player를 180도 오른쪽으로 돌리기.
-
     }
 
     void FixedUpdate()
     {
+        if (Time.timeScale == 0) return;
+
         if (isAlive)
         {
             playerRigid.velocity = arrowRotate.up * speed; // 화살표 방향으로 speed만큼 직진
@@ -115,11 +118,13 @@ public class Player : MonoBehaviour
     IEnumerator RotateAngle(float angle, int sign)
     {
         float mod = angle % rotateSpeed;
-        for (float i=mod; i<angle; i+=rotateSpeed)
+        for (float i = mod; i < angle; i += rotateSpeed)
         {
             arrowRotate.Rotate(0, 0, sign * rotateSpeed);
-            yield return null; // 1프레임 대기
+            yield return new WaitForSeconds(Time.deltaTime); // 1프레임 대기
+            Debug.Log("asdf");
         }
+        
         arrowRotate.Rotate(0, 0, sign * mod); // 남은 각도 회전
     }
 
@@ -154,7 +159,7 @@ public class Player : MonoBehaviour
         }
 
         hp -= damage;
-        GameManager.instance.UpdateLiverIcon(hp);
+        GameManager.instance.UpdateLiverCountText(hp);
         if(hp <= 0)
         {
             OnDead();
@@ -176,7 +181,7 @@ public class Player : MonoBehaviour
         if(isDragon)
         {
             hp = 0;
-            GameManager.instance.UpdateLiverIcon(hp);
+            GameManager.instance.UpdateLiverCountText(hp);
             OnDead();
         }
     }
@@ -269,6 +274,8 @@ public class Player : MonoBehaviour
     {
         isFevered = true;
         feverAni.SetBool("feverAnimation", true);
+
+        boatAnim.SetBool("feverAnimation", true);
     }
 
 
@@ -285,6 +292,8 @@ public class Player : MonoBehaviour
     {
         isFevered = false;
         feverAni.SetBool("feverAnimation", false);
+
+        boatAnim.SetBool("feverAnimation", false);
     }
 
 
@@ -333,10 +342,11 @@ public class Player : MonoBehaviour
         HasShield = false;
         shield.GetComponent<Animator>().SetTrigger("Broken");
         ItemManager.instance.ShieldBrokenPlay();
-        StartCoroutine("tmp");
+        StartCoroutine("ShieldEndWait");
     }
 
-    IEnumerator tmp()
+
+    IEnumerator ShieldEndWait()
     {
         yield return new WaitForSeconds(0.2f);
         shield.GetComponent<SpriteRenderer>().sprite = shieldSprite;
