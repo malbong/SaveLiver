@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
@@ -55,6 +56,7 @@ public class Player : MonoBehaviour
 
     public Animator boatAnim;
 
+    public Text decreaseHpText;
 
     void Start()
     {
@@ -77,8 +79,6 @@ public class Player : MonoBehaviour
             playerRigid.velocity = Vector3.zero;
         }
     }
-
-
 
 
     /**************************************
@@ -122,13 +122,10 @@ public class Player : MonoBehaviour
         {
             arrowRotate.Rotate(0, 0, sign * rotateSpeed);
             yield return new WaitForSeconds(Time.deltaTime); // 1프레임 대기
-            Debug.Log("asdf");
         }
         
         arrowRotate.Rotate(0, 0, sign * mod); // 남은 각도 회전
     }
-
-
 
 
     /**************************************
@@ -155,7 +152,8 @@ public class Player : MonoBehaviour
 
         if(hp > 1)
         {
-            StartCoroutine("PlayerBeat");
+            StartCoroutine(PlayerBeat());
+            StartCoroutine(ShowDecreaseHpText(damage));
         }
 
         hp -= damage;
@@ -342,7 +340,7 @@ public class Player : MonoBehaviour
         HasShield = false;
         shield.GetComponent<Animator>().SetTrigger("Broken");
         ItemManager.instance.ShieldBrokenPlay();
-        StartCoroutine("ShieldEndWait");
+        StartCoroutine(ShieldEndWait());
     }
 
 
@@ -351,5 +349,28 @@ public class Player : MonoBehaviour
         yield return new WaitForSeconds(0.2f);
         shield.GetComponent<SpriteRenderer>().sprite = shieldSprite;
         shield.SetActive(false);
+    }
+
+
+    public IEnumerator ShowDecreaseHpText(int damage)
+    {
+        decreaseHpText.text = "-" + damage;
+        decreaseHpText.gameObject.SetActive(true);
+        Vector3 tmpPosition = decreaseHpText.gameObject.transform.localPosition;
+
+        Color tmpColor = decreaseHpText.color;
+        while (true)
+        {
+            tmpColor.a -= Time.deltaTime;
+            decreaseHpText.color = tmpColor;
+            decreaseHpText.gameObject.transform.Translate(0, 0.002f, 0);
+            if (decreaseHpText.color.a <= 0) break;
+            yield return new WaitForSeconds(Time.deltaTime);
+        }
+
+        decreaseHpText.gameObject.SetActive(false);
+        tmpColor.a = 1.0f;
+        decreaseHpText.color = tmpColor;
+        decreaseHpText.gameObject.transform.localPosition = tmpPosition;
     }
 }

@@ -9,7 +9,7 @@ public class GameManager : MonoBehaviour
 
     public Text liverCountText;
     public Text scoreText;
-    
+
     private int totalScore = 0;
 
     private float currentplayTime = 0;
@@ -64,6 +64,7 @@ public class GameManager : MonoBehaviour
 
     public void AddScore(int score)
     {
+        if (Player.instance.isAlive == false) return;
         totalScore += score;
         UpdateScoreText();
     }

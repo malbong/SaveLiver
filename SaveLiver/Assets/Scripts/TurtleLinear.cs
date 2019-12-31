@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+
 
 public class TurtleLinear : Enemy
 {
@@ -139,7 +141,48 @@ public class TurtleLinear : Enemy
     {
         ParticleSystem particleInstance = Instantiate(targetParticle, transform.position, Quaternion.identity);
         particleInstance.Play();
+        if (targetParticle == base.onDeadParticle)
+        {
+            StartCoroutine(ShowIncreaseScoreText(particleInstance, score));
+        }
         particleInstance.GetComponent<AudioSource>().Play();
         Destroy(particleInstance.gameObject, particleInstance.main.startLifetime.constant);
+    }
+
+
+    public IEnumerator ShowIncreaseScoreText(ParticleSystem onDeadParticle, int score)
+    {
+        if (Player.instance.isAlive == true)
+        {
+            Transform canvas = onDeadParticle.transform.Find("ScoreCanvas");
+            if (canvas != null)
+            {
+                Transform scoreTextTransform = canvas.Find("ScoreText");
+                Vector3 tmpPosition = scoreTextTransform.localPosition;
+
+                if (scoreTextTransform != null)
+                {
+                    Text scoreText = scoreTextTransform.GetComponent<Text>();
+                    scoreText.text = "+" + score;
+                    scoreText.gameObject.SetActive(true);
+
+                    Color tmpColor = scoreText.color;
+                    while (true)
+                    {
+                        tmpColor.a -= Time.deltaTime;
+                        scoreText.color = tmpColor;
+                        scoreTextTransform.Translate(0, 0.002f, 0);
+                        if (scoreText.color.a <= 0) break;
+                        yield return new WaitForSeconds(Time.deltaTime);
+                    }
+
+                    scoreText.gameObject.SetActive(false);
+                    tmpColor.a = 1.0f;
+                    scoreText.color = tmpColor;
+                    scoreTextTransform.localPosition = tmpPosition;
+
+                }
+            }
+        }
     }
 }
