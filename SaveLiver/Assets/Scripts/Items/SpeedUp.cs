@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SpeedUp : MonoBehaviour, IItem
+public class SpeedUp : Item, IItem
 {
     public float itemDuration = 8f;
     private bool hasItem = false;
@@ -67,7 +67,8 @@ public class SpeedUp : MonoBehaviour, IItem
     */
     IEnumerator TimeCheckAndDestroy()
     {
-        yield return new WaitForSeconds(ItemManager.instance.itemLifeTime);
+        yield return new WaitForSeconds(3f);
+        //yield return new WaitForSeconds(ItemManager.instance.itemLifeTime);
         SpriteRenderer spriteRenderer = transform.parent.GetComponent<SpriteRenderer>();
         if (!hasItem)
         {
@@ -77,7 +78,7 @@ public class SpeedUp : MonoBehaviour, IItem
                 color.a -= 0.05f;
                 spriteRenderer.color = color;
                 yield return new WaitForSeconds(0.05f);
-                if (spriteRenderer.color.a <= 0f) break;
+                if (spriteRenderer.color.a <= 0.1f) break;
             }
             parent.gameObject.SetActive(false);
         }

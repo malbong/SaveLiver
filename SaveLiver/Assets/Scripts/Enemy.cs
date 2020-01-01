@@ -23,10 +23,9 @@ public abstract class Enemy : MonoBehaviour
     }
 
 
-    protected void FixedUpdate()
+    private void FixedUpdate()
     {
         if (Time.timeScale == 0) return;
-
         if (isAlive)
         {
             Move();
@@ -37,13 +36,12 @@ public abstract class Enemy : MonoBehaviour
         }
     }
 
-
     private void Update()
     {
         transform.parent.position = transform.position;
         transform.localPosition = Vector3.zero;
     }
-
+    
 
     /********************************************
      * @함수명 : OnDead()

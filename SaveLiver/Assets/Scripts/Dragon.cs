@@ -12,7 +12,6 @@ public class Dragon : MonoBehaviour
     private Rigidbody2D enemyRigid;
     private Renderer dragonRenderer;
     private Renderer dragonTrackRenderer;
-
     public Animator DeadAnim;
 
     private void Start()
@@ -22,7 +21,7 @@ public class Dragon : MonoBehaviour
         // GetChild(5) : Dragon Track
         enemyRigid = GetComponent<Rigidbody2D>();
 
-        StartCoroutine("TimeCheckAndDestroy");
+        StartCoroutine(TimeCheckAndDestroy());
         Destroy(dragonTrackRenderer.gameObject, 1.5f);
     }
 
@@ -32,7 +31,6 @@ public class Dragon : MonoBehaviour
         if (Time.timeScale == 0) return;
         Move();
     }
-
 
 
     /**************************************
@@ -46,7 +44,6 @@ public class Dragon : MonoBehaviour
     {
         if(!isNotMove) enemyRigid.velocity = -transform.right * speed;
     }
-
 
 
     /**************************************
@@ -86,9 +83,8 @@ public class Dragon : MonoBehaviour
         isNotMove = true;
         GameManager.instance.AddScore(50);
         DeadAnim.SetTrigger("Dead");
-        StartCoroutine("FadeOutAndDead");
+        StartCoroutine(FadeOutAndDead());
     }
-
 
 
     /**************************************

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LiverItem : MonoBehaviour, IItem
+public class LiverItem : Item, IItem
 {
     private Rigidbody2D parent;
 
@@ -12,7 +12,6 @@ public class LiverItem : MonoBehaviour, IItem
         parent = GetComponentInParent<Rigidbody2D>();
         StartCoroutine("TimeCheckAndDestroy");
     }
-
 
 
     /**************************************
@@ -36,6 +35,7 @@ public class LiverItem : MonoBehaviour, IItem
         parent.gameObject.SetActive(false);
     }
 
+
     IEnumerator TimeCheckAndDestroy()
     {
         yield return new WaitForSeconds(ItemManager.instance.itemLifeTime);
@@ -46,7 +46,7 @@ public class LiverItem : MonoBehaviour, IItem
             color.a -= 0.05f;
             spriteRenderer.color = color;
             yield return new WaitForSeconds(0.05f);
-            if (spriteRenderer.color.a <= 0f) break;
+            if (spriteRenderer.color.a <= 0.1f) break;
         }
         parent.gameObject.SetActive(false);
     }

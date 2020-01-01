@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Fever : MonoBehaviour, IItem
+public class Fever : Item, IItem
 {
     public float itemDuration = 8f;
     private bool hasItem = false;
@@ -81,7 +81,7 @@ public class Fever : MonoBehaviour, IItem
                 color.a -= 0.05f;
                 spriteRenderer.color = color;
                 yield return new WaitForSeconds(0.05f);
-                if (spriteRenderer.color.a <= 0f) break;
+                if (spriteRenderer.color.a <= 0.1f) break;
             }
             parent.gameObject.SetActive(false);
         }
