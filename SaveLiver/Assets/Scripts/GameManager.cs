@@ -128,6 +128,69 @@ public class GameManager : MonoBehaviour
     }
 
 
+    public void OnContinue() //pause panel에 play버튼에 onClick 달아줌
+    {
+        if (isPause == false)
+        {
+            Debug.Log("Already playing");
+            return;
+        }
+
+        Time.timeScale = originTimeScale; //원래의 타임스케일로 돌려줌
+        Time.fixedDeltaTime = 0.02f * Time.timeScale;
+
+        isPause = false;
+
+        StartCoroutine(PausePanelFadeOut(null)); //퍼즈 패널 꺼줌
+        StartCoroutine(PauseButtonFadeIn()); //퍼즈 버튼 다시 켜줌
+        joyStickTouchArea.SetActive(true); //조이스틱 다시 켜줌
+
+        Camera.main.backgroundColor = originColor; //카메라색 원래대로 돌려줌
+    }
+
+
+    public void OnReload() //pause panel에 reload버튼에 onClick 달아줌
+    {
+        if (!isPause)
+        {
+            Debug.Log("진행중이라 리로드 불가능");
+            return;
+        }
+
+        Time.timeScale = 1.0f; //처음의 타임스케일로 돌려줌
+        Time.fixedDeltaTime = 0.02f * Time.timeScale;
+        isPause = false;
+
+        Camera.main.backgroundColor = originColor; //카메라색 원래대로 돌려줌
+
+        StartCoroutine(PausePanelFadeOut("ReLoad")); //퍼즈패널 꺼주기
+    }
+
+
+    public void OnHomeButtonClick()
+    {
+        if (!isPause)
+        {
+            Debug.Log("진행중이라 홈 이동 불가능");
+            return;
+        }
+
+        Time.timeScale = 1.0f; //처음의 타임스케일로 돌려줌
+        Time.fixedDeltaTime = 0.02f * Time.timeScale;
+        isPause = false;
+
+        Camera.main.backgroundColor = originColor; //카메라색 원래대로 돌려줌
+
+        StartCoroutine(PausePanelFadeOut("Home"));
+    }
+
+
+    public void OnSettingsButtonClick()
+    {
+
+    }
+
+
     private IEnumerator PauseButtonFadeOut()
     {
         Image image = pauseButton.GetComponent<Image>();
@@ -147,12 +210,38 @@ public class GameManager : MonoBehaviour
         {
             //button 끄기 SetActive(false)
             pauseButton.SetActive(false);
+            pauseButton.GetComponent<Button>().enabled = false;
+        }
+    }
+
+
+    private IEnumerator PauseButtonFadeIn()
+    {
+        Image image = pauseButton.GetComponent<Image>();
+        Color tmpColor = image.color;
+
+        if (!isPause)
+        {
+            //button 켜기 SetActive(true)
+            pauseButton.SetActive(true);
+        }
+
+        while (!isPause)
+        {
+            pauseButton.transform.localScale += new Vector3(0.1f, 0.1f, 0.1f); //Scale과 color를 변경함
+            tmpColor.a += 0.1f;
+            image.color = tmpColor;
+
+            if (image.color.a >= 1f || pauseButton.transform.localScale.x >= 1f) break;
+
+            yield return new WaitForSecondsRealtime(0.01f); //RealTime으로 쉬면 Time.timeScale = 0 이어도 코루틴 진행가능
         }
 
         //Color 와 Scale을 원상태로 둠
         tmpColor.a = 1.0f;
         image.color = tmpColor;
         pauseButton.transform.localScale = new Vector3(1f, 1f, 1f);
+        pauseButton.GetComponent<Button>().enabled = true;
     }
 
 
@@ -195,29 +284,7 @@ public class GameManager : MonoBehaviour
     }
 
 
-    public void OnContinue() //pause panel에 play버튼에 onClick 달아줌
-    {
-        if (isPause == false)
-        {
-            Debug.Log("Already playing");
-            return;
-        }
-
-        Time.timeScale = originTimeScale; //원래의 타임스케일로 돌려줌
-        Time.fixedDeltaTime = 0.02f * Time.timeScale;
-
-        isPause = false;
-
-        StartCoroutine(PausePanelFadeOut()); //퍼즈 판넬 꺼줌
-
-        joyStickTouchArea.SetActive(true); //조이스틱 다시 켜줌
-        pauseButton.SetActive(true); //pause버튼 다시 활성화
-
-        Camera.main.backgroundColor = originColor; //카메라색 원래대로 돌려줌
-    }
-
-
-    private IEnumerator PausePanelFadeOut()
+    private IEnumerator PausePanelFadeOut(string where)
     {
         while (!isPause) //진행중이라면 isPause == false
         {
@@ -232,19 +299,8 @@ public class GameManager : MonoBehaviour
         {
             pausePanel.SetActive(false);
         }
-    }
 
-
-    public void OnReload()
-    {
-        if (!isPause)
-        {
-            Debug.Log("진행중이라 리로드 불가능");
-            return;
-        }
-
-        Time.timeScale = originTimeScale; //원래의 타임스케일로 돌려줌
-        Time.fixedDeltaTime = 0.02f * Time.timeScale;
-        SceneManager.LoadScene("Play Scene");
+        if (where == "ReLoad") SceneManager.LoadScene("Play Scene");
+        if (where == "Home") SceneManager.LoadScene("Menu Scene");
     }
 }
