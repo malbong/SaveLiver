@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using GooglePlayGames;
+using GooglePlayGames.BasicApi;
 
 public class GameManager : MonoBehaviour
 {
@@ -10,7 +12,7 @@ public class GameManager : MonoBehaviour
     public Text liverCountText;
     public Text scoreText;
 
-    private int totalScore = 0;
+    public int totalScore = 0;
 
     private float currentplayTime = 0;
     private float secondsUnit = 0;
@@ -82,5 +84,20 @@ public class GameManager : MonoBehaviour
                 AddScore(1);
             }
         }
+    }
+
+
+    /**************************************
+    * @함수명: ReportScore(int score)
+    * @작성자: zeli
+    * @입력: score
+    * @출력: void
+    * @설명: Player가 죽을 때 score를 받기
+    *        Google Play 리더보드에 자신의 HighScore를 기록함
+    */
+    public void ReportScore(int score)
+    {
+        // ReportScore는 현재 score와 기록된 score를 비교해 Leaderboard에 기록.
+        PlayGamesPlatform.Instance.ReportScore(score, GPGSIds.leaderboard_score, null);
     }
 }
