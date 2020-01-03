@@ -47,6 +47,8 @@ public class TurtleFollow : Enemy
 
     private void Update()
     {
+        if (GameManager.instance.isPause) return;
+
         SetMyIndicator();
         if (hasIndicator)
         {

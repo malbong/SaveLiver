@@ -25,7 +25,8 @@ public abstract class Enemy : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (Time.timeScale == 0) return;
+        if (GameManager.instance.isPause) return;
+
         if (isAlive)
         {
             Move();
@@ -38,6 +39,8 @@ public abstract class Enemy : MonoBehaviour
 
     private void Update()
     {
+        if (GameManager.instance.isPause) return;
+
         transform.parent.position = transform.position;
         transform.localPosition = Vector3.zero;
     }

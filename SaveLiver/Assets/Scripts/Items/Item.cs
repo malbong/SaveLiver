@@ -14,6 +14,8 @@ public class Item : MonoBehaviour
 
     void FixedUpdate()
     {
+        if (GameManager.instance.isPause) return;
+
         SetMyIndicator();
         if (hasIndicator)
         {
