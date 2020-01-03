@@ -19,6 +19,8 @@ public class GameManager : MonoBehaviour
 
     public bool isPause;
 
+    public GameObject buttonLockObject;
+
     public GameObject joyStickTouchArea;
 
     public GameObject pauseButton;
@@ -27,14 +29,17 @@ public class GameManager : MonoBehaviour
 
     public float originTimeScale; //Time.timeScale 저장 변수 -> 원상태로 돌리기 위함 (timescale값을 잃어버리기 때문)
 
-    private Color originColor; //원래 카메라 색 임시저장
+    //private Color originColor; //원래 카메라 색 임시저장
+
+    public GameObject settingsOuterPanel;
 
     private bool pauseButtonFadeOutRunning = false;
     private bool pauseButtonFadeInRunning = false;
     private bool joyStickFadeOutRunning = false;
     private bool pausePanelFadeInRunning = false;
     private bool pausePanelFadeOutRunning = false;
-
+    private bool settingsPanelFadeInRunning = false;
+    private bool settingsPanelFadeOutRunning = false;
 
     private void Awake()
     {
@@ -98,10 +103,10 @@ public class GameManager : MonoBehaviour
         if (Player.instance.isAlive)
         {
             secondsUnit += Time.deltaTime;
+            currentplayTime += secondsUnit;
             if (secondsUnit >= 0.5f)
             {
-                secondsUnit = 0;
-                currentplayTime += 0.5f;
+                secondsUnit = secondsUnit - 0.5f;
                 AddScore(1);
             }
         }
@@ -135,10 +140,10 @@ public class GameManager : MonoBehaviour
 
         isPause = true;
 
-        originColor = Camera.main.backgroundColor; //임시 저장 Color
-        Camera.main.backgroundColor = new Color(0.5f, 0.5f, 0.5f); //컬러를 회색으로 바꿈
+        //originColor = Camera.main.backgroundColor; //원래 색 임시 저장 Color
+        //Camera.main.backgroundColor = new Color(0.5f, 0.5f, 0.5f); //컬러를 회색으로 바꿈
 
-        pauseButton.GetComponent<AudioSource>().Play();
+        //pauseButton.GetComponent<AudioSource>().Play(); //오디오 처리
 
         //다른 탭 동작 처리
         StartCoroutine(PauseButtonFadeOut());//PauseButton 닫기
@@ -162,7 +167,7 @@ public class GameManager : MonoBehaviour
         StartCoroutine(PauseButtonFadeIn()); //퍼즈 버튼 다시 켜줌
         joyStickTouchArea.SetActive(true); //조이스틱 다시 켜줌
 
-        Camera.main.backgroundColor = originColor; //카메라색 원래대로 돌려줌
+        //Camera.main.backgroundColor = originColor; //카메라색 원래대로 돌려줌
     }
 
 
@@ -174,7 +179,7 @@ public class GameManager : MonoBehaviour
         Time.fixedDeltaTime = 0.02f * Time.timeScale;
         isPause = false;
 
-        Camera.main.backgroundColor = originColor; //카메라색 원래대로 돌려줌
+        //Camera.main.backgroundColor = originColor; //카메라색 원래대로 돌려줌
 
         StartCoroutine(PausePanelFadeOut()); //퍼즈패널 꺼주기
 
@@ -188,19 +193,32 @@ public class GameManager : MonoBehaviour
 
         Time.timeScale = 1.0f; //처음의 타임스케일로 돌려줌
         Time.fixedDeltaTime = 0.02f * Time.timeScale;
+
         isPause = false;
 
-        Camera.main.backgroundColor = originColor; //카메라색 원래대로 돌려줌
+        //Camera.main.backgroundColor = originColor; //카메라색 원래대로 돌려줌
 
         StartCoroutine(PausePanelFadeOut());
 
         StartCoroutine(LoadSceneAfterWaiting("Menu Scene"));
     }
-
+    
 
     public void OnSettingsButtonClick()
     {
+        if (!isPause) return;
 
+        //Settings Panel Fade In
+        StartCoroutine(SettingsPanelFadeIn());
+    }
+
+
+    public void OnSettingsExitButton()
+    {
+        if (!isPause) return;
+
+        //Settings Panel Fade Out
+        StartCoroutine(SettingsPanelFadeOut());
     }
 
 
@@ -304,18 +322,27 @@ public class GameManager : MonoBehaviour
         }
 
         pausePanelFadeInRunning = true;
-
-        pausePanel.SetActive(true);
         
+        pausePanel.SetActive(true);
+
+        Image pausePanelImage = pausePanel.GetComponent<Image>();
+        Color tmpColor = pausePanelImage.color;
+
         while (true)
         {
-            //pausePanel Scale(0 -> 1)
-            pausePanel.transform.localScale += new Vector3(0.2f, 0.2f, 0.2f);
+            pausePanel.transform.localScale -= new Vector3(0.2f, 0.2f, 0.2f);
 
-            if (pausePanel.transform.localScale.x >= 1) break;
+            tmpColor.a += 0.1f;
+            pausePanelImage.color = tmpColor;
+
+            if (pausePanel.transform.localScale.x <= 1) break;
 
             yield return new WaitForSecondsRealtime(0.01f);
         }
+
+        pausePanel.transform.localScale = new Vector3(1, 1, 1);
+        tmpColor.a = 0.5f;
+        pausePanelImage.color = tmpColor;
 
         pausePanelFadeInRunning = false;
     }
@@ -330,16 +357,26 @@ public class GameManager : MonoBehaviour
 
         pausePanelFadeOutRunning = true;
 
+        Image pausePanelImage = pausePanel.GetComponent<Image>();
+        Color tmpColor = pausePanelImage.color;
+
         while (true) //진행중이라면 isPause == false
         {
-            //pausePanel Scale(1 -> 0)
             pausePanel.transform.localScale -= new Vector3(0.2f, 0.2f, 0.2f);
 
+            tmpColor.a -= 0.1f;
+            pausePanelImage.color = tmpColor;
+
             if (pausePanel.transform.localScale.x <= 0) break;
+
             yield return new WaitForSecondsRealtime(0.01f);
         }
 
         pausePanel.SetActive(false);
+
+        pausePanel.transform.localScale = new Vector3(2, 2, 2);
+        tmpColor.a = 0;
+        pausePanelImage.color = tmpColor;
 
         pausePanelFadeOutRunning = false;
     }
@@ -366,5 +403,89 @@ public class GameManager : MonoBehaviour
             }
             yield return new WaitForSecondsRealtime(0.01f);
         }
+    }
+
+
+    private IEnumerator SettingsPanelFadeIn()
+    {
+        if (settingsPanelFadeOutRunning) yield break;
+
+        settingsPanelFadeInRunning = true;
+
+        settingsOuterPanel.SetActive(true);
+
+        Transform settingsInnerPanel = settingsOuterPanel.transform.GetChild(0);
+
+        Image settingsOuterPanelImage = settingsOuterPanel.GetComponent<Image>();
+        Color tmpOuterColor = settingsOuterPanelImage.color;
+
+        Image settingsInnerPanelImage = settingsInnerPanel.GetComponent<Image>();
+        Color tmpInnerColor = settingsInnerPanelImage.color;
+
+        while (true)
+        {
+            settingsOuterPanel.transform.localScale -= new Vector3(0.2f, 0.2f, 0.2f);
+
+            tmpOuterColor.a += 0.1f;
+            tmpInnerColor.a += 0.2f;
+            settingsInnerPanelImage.color = tmpInnerColor;
+            settingsOuterPanelImage.color = tmpOuterColor;
+
+            if (settingsOuterPanel.transform.localScale.x <= 1) break;
+
+            yield return new WaitForSecondsRealtime(0.01f);
+        }
+
+        settingsOuterPanel.transform.localScale = new Vector3(1, 1, 1);
+
+        tmpOuterColor.a = 0.5f;
+        settingsOuterPanelImage.color = tmpOuterColor;
+
+        tmpInnerColor.a = 1f;
+        settingsInnerPanelImage.color = tmpInnerColor;
+
+        settingsPanelFadeInRunning = false;
+    }
+
+
+    private IEnumerator SettingsPanelFadeOut()
+    {
+        if (settingsPanelFadeInRunning) yield break;
+
+        settingsPanelFadeOutRunning = true;
+
+        Transform settingsInnerPanel = settingsOuterPanel.transform.GetChild(0);
+
+        Image settingsOuterPanelImage = settingsOuterPanel.GetComponent<Image>();
+        Color tmpOuterColor = settingsOuterPanelImage.color;
+
+        Image settingsInnerPanelImage = settingsInnerPanel.GetComponent<Image>();
+        Color tmpInnerColor = settingsInnerPanelImage.color;
+
+        while (true)
+        {
+            settingsOuterPanel.transform.localScale -= new Vector3(0.2f, 0.2f, 0.2f);
+
+            tmpOuterColor.a -= 0.1f;
+            tmpInnerColor.a -= 0.2f;
+            settingsInnerPanelImage.color = tmpInnerColor;
+            settingsOuterPanelImage.color = tmpOuterColor;
+
+            if (settingsOuterPanel.transform.localScale.x <= 0) break;
+
+            yield return new WaitForSecondsRealtime(0.01f);
+        }
+
+        settingsOuterPanel.SetActive(false);
+
+        settingsOuterPanel.transform.localScale = new Vector3(2, 2, 2);
+
+        tmpOuterColor.a = 0f;
+        settingsOuterPanelImage.color = tmpOuterColor;
+
+        tmpInnerColor.a = 0f;
+        settingsInnerPanelImage.color = tmpInnerColor;
+
+        settingsPanelFadeOutRunning = false;
     }
 }

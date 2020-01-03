@@ -20,11 +20,8 @@
 /// These are the constants defined in the Play Games Console for Game Services
 /// Resources.
 ///
-
-
 public static class GPGSIds
 {
         public const string leaderboard_score = "CgkItoawm6UIEAIQAQ"; // <GPGSID>
-
 }
 

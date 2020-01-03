@@ -18,8 +18,7 @@ public class MenuManager : MonoBehaviour
             }
         }
     }
-
-
+    
 
     public void OnBtnPlay()
     {
