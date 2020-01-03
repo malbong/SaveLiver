@@ -68,7 +68,7 @@ public class Player : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (Time.timeScale == 0) return;
+        if (GameManager.instance.isPause) return;
 
         if (isAlive)
         {

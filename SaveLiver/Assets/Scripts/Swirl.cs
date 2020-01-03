@@ -26,7 +26,7 @@ public class Swirl : MonoBehaviour
 
     public void Update()
     {
-        if (Time.timeScale == 0) return;
+        if (GameManager.instance.isPause) return;
 
         currentTime += Time.deltaTime;
         transform.Rotate(0, 0, -1080 * Time.deltaTime);

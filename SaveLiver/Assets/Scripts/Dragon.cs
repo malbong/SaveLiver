@@ -28,7 +28,7 @@ public class Dragon : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (Time.timeScale == 0) return;
+        if (GameManager.instance.isPause) return;
         Move();
     }
 

@@ -18,7 +18,7 @@ public class SpeedUp : Item, IItem
 
     void Update()
     {
-        if (Time.timeScale == 0) return;
+        if (GameManager.instance.isPause) return;
         ItemDurationAndDestroy();
     }
 
