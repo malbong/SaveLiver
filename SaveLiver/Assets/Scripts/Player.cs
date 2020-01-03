@@ -23,7 +23,6 @@ public class Player : MonoBehaviour
 
 
     public int hp;
-    public int breath;
     public float speed;
     public float rotateSpeed;
 
@@ -241,8 +240,9 @@ public class Player : MonoBehaviour
 
         KeepOnTrail();
 
-        transform.gameObject.SetActive(false);
+        GameManager.instance.ReportScore(GameManager.instance.totalScore);
 
+        transform.gameObject.SetActive(false);
 
         Invoke("Respawn", 2f);// test용. 죽으면 살아나기.
 
