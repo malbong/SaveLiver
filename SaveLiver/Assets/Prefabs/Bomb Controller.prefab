@@ -64,6 +64,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemDuration: 2
+  bombSprite: {fileID: 21300000, guid: e2098c0b856e5d0468062606867772ab, type: 3}
   anim: {fileID: 1635625524801330574}
   boomEffect: {fileID: 8688641715189491789, guid: 3114c0e14a10d3c4e8a9b58df5495e99,
     type: 3}

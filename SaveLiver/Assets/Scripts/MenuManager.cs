@@ -6,6 +6,11 @@ using UnityEngine.SceneManagement;
 
 public class MenuManager : MonoBehaviour
 {
+    public GameObject quitOuterPannel;
+    public GameObject quitPanel;
+    private bool quitFadeInRunning = false;
+    private bool quitFadeOutRunning = false;
+
     void Update()
     {
         // 안드로이드에서 뒤로가기 누르면 종료되는 처리
@@ -13,8 +18,7 @@ public class MenuManager : MonoBehaviour
         {
             if (Input.GetKey(KeyCode.Escape))
             {
-                // 종료처리
-                Application.Quit();
+                //StartCoroutine(GameQuitPanelFadeIn());
             }
         }
     }
@@ -24,4 +28,32 @@ public class MenuManager : MonoBehaviour
     {
         SceneManager.LoadScene("Play Scene");
     }
+
+
+    public void OnBtnQuitYes()
+    {
+        if (!quitFadeInRunning && !quitFadeOutRunning)
+        {
+            Application.Quit();
+        }
+    }
+
+
+    public void OnBtnQuitNo()
+    {
+        //StartCoroutine(GameQuitPanelFadeOut());
+    }
+
+    
+    /*private IEnumerator GameQuitPanelFadeIn()
+    {
+        
+    }
+
+
+    IEnumerator GameQuitPanelFadeOut()
+    {
+
+    }
+    */
 }

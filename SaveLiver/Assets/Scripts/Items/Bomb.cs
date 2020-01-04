@@ -8,7 +8,7 @@ public class Bomb : Item, IItem
     private float bombItemTime = 0f;
     private bool hasItem = false;
 
-    private Sprite bombSprite;
+    public Sprite bombSprite;
     public Animator anim;
 
     public GameObject boomEffect;
@@ -17,7 +17,6 @@ public class Bomb : Item, IItem
 
     void Start()
     {
-        transform.GetComponent<SpriteRenderer>().sprite = bombSprite;
         parent = GetComponentInParent<Rigidbody2D>();
         StartCoroutine("TimeCheckAndDestroy");
     }
@@ -33,6 +32,7 @@ public class Bomb : Item, IItem
     */
     private void OnEnable()
     {
+        transform.GetComponent<SpriteRenderer>().sprite = bombSprite;
         GetComponentInParent<Collider2D>().enabled = true;
         GetComponent<Collider2D>().enabled = true;
     }
@@ -58,7 +58,6 @@ public class Bomb : Item, IItem
         {
             hasItem = false;
             Instantiate(boomEffect, transform.position, Quaternion.identity); // 폭발효과
-            bombSprite = GetComponent<SpriteRenderer>().sprite;
             parent.gameObject.SetActive(false);
         }
     }
