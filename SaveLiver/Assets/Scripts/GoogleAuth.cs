@@ -22,7 +22,7 @@ public class GoogleAuth : MonoBehaviour
         else logText.text = "Log In";
     }
 
-
+    
     public void TryGoogleLoginOrLogout()
     {
         InitializedGooglePlay(); // 구글 플레이 플랫폼 활성화(초기화)

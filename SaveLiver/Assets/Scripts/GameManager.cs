@@ -19,13 +19,23 @@ public class GameManager : MonoBehaviour
 
     public bool isPause;
 
-    public GameObject buttonLockObject;
+    //public GameObject buttonLockObject;
 
     public GameObject joyStickTouchArea;
 
     public GameObject pauseButton;
 
     public GameObject pausePanel;
+
+    public GameObject soundButton;
+    public Sprite soundOnSprite;
+    public Sprite soundOffSprite;
+
+    public GameObject vibeButton;
+    public Sprite vibeOnSprite;
+    public Sprite vibeOffSprite;
+
+    public static bool isVibrationOn = true;
 
     public float originTimeScale; //Time.timeScale 저장 변수 -> 원상태로 돌리기 위함 (timescale값을 잃어버리기 때문)
 
@@ -210,6 +220,133 @@ public class GameManager : MonoBehaviour
 
         //Settings Panel Fade In
         StartCoroutine(SettingsPanelFadeIn());
+        
+        //2번 Toggle하여 원래의 상태를 표현하게 함
+        OnSoundToggleButton(); OnSoundToggleButton();
+        OnVibeToggleButton(); OnVibeToggleButton();
+    }
+
+
+    public void OnSoundToggleButton()
+    {
+        if (!isPause) return;
+
+        bool isSoundOn = AudioListener.volume == 1f ? true : false;
+
+        if (isSoundOn)
+        {
+            AudioListener.volume = 0;
+            isSoundOn = false;
+
+            Transform soundImage = soundButton.transform.Find("Sound Image");
+            Transform soundText = soundButton.transform.Find("Sound Text");
+
+            if (soundImage == null)
+            {
+                Debug.Log("can't find Sound Image");
+                return;
+            }
+            if (soundText == null)
+            {
+                Debug.Log("can't find Sound Text");
+                return;
+            }
+
+            soundImage.GetComponent<Image>().sprite = soundOffSprite;
+            soundText.GetComponent<Text>().text = "Sound Off";
+        }
+        else //Sound Off
+        {
+            AudioListener.volume = 1;
+            isSoundOn = true;
+
+            Transform soundImage = soundButton.transform.Find("Sound Image");
+            Transform soundText = soundButton.transform.Find("Sound Text");
+
+            if (soundImage == null)
+            {
+                Debug.Log("can't find Sound Image");
+                return;
+            }
+            if (soundText == null)
+            {
+                Debug.Log("can't find Sound Text");
+                return;
+            }
+
+            soundImage.GetComponent<Image>().sprite = soundOnSprite;
+            soundText.GetComponent<Text>().text = "Sound On";
+
+        }
+    }
+
+
+    public void OnVibeToggleButton()
+    {
+        if (!isPause) return;
+
+        if (GameManager.isVibrationOn)
+        {
+            Debug.Log("current On -> Off " + isVibrationOn);
+            GameManager.isVibrationOn = false;
+
+            Transform vibeImage = vibeButton.transform.Find("Vibe Image");
+            Transform vibeText = vibeButton.transform.Find("Vibe Text");
+
+            if (vibeImage == null)
+            {
+                Debug.Log("can't find Vibe Image");
+                return;
+            }
+            if (vibeText == null)
+            {
+                Debug.Log("can't find Vibe Text");
+                return;
+            }
+
+            vibeImage.GetComponent<Image>().sprite = vibeOffSprite;
+            vibeText.GetComponent<Text>().text = "Vibration Off";
+        }
+        else //Vibration off
+        {
+            Debug.Log("current Off -> On " +isVibrationOn);
+            GameManager.isVibrationOn = true;
+
+            Transform vibeImage = vibeButton.transform.Find("Vibe Image");
+            Transform vibeText = vibeButton.transform.Find("Vibe Text");
+
+            if (vibeImage == null)
+            {
+                Debug.Log("can't find Vibe Image");
+                return;
+            }
+            if (vibeText == null)
+            {
+                Debug.Log("can't find Vibe Text");
+                return;
+            }
+
+            vibeImage.GetComponent<Image>().sprite = vibeOnSprite;
+            vibeText.GetComponent<Text>().text = "Vibration On";
+        }
+    }
+
+
+    public void OnHelpButton()
+    {
+
+    }
+
+
+    public void OnPrivacyButton()
+    {
+
+    }
+
+
+    public void OnLogout()
+    {
+
     }
 
 

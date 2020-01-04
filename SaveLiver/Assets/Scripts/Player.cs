@@ -196,7 +196,7 @@ public class Player : MonoBehaviour
     {
         playerCollider.enabled = false;
         int count = 0;
-
+        
         while(count < 10)
         {
             if(count%2 == 0)
