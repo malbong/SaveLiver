@@ -229,7 +229,7 @@ public class TurtleFollow : Enemy
         }
         particleInstance.GetComponent<AudioSource>().Play();
 
-        WaitSetActiveFalse(obj);
+        StartCoroutine(WaitSetActiveFalse(obj));
     }
 
 

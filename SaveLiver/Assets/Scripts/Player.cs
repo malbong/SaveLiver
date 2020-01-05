@@ -138,6 +138,7 @@ public class Player : MonoBehaviour
     */
     public void TakeDamage(int damage)
     {
+        Debug.Log("z");
         if (HasShield) 
         {
             ShieldEnd();
@@ -147,6 +148,11 @@ public class Player : MonoBehaviour
         if (isFevered)
         {
             return;
+        }
+
+        if (GameManager.isVibrationOn == true)
+        {
+            Vibration.Vibrate(800);
         }
 
         if(hp > 1)
@@ -170,12 +176,18 @@ public class Player : MonoBehaviour
             ShieldEnd();
             return;
         }
+
         if (isFevered)
         {
             return;
         }
 
-        if(isDragon)
+        if (GameManager.isVibrationOn == true)
+        {
+            Vibration.Vibrate(800);
+        }
+
+        if (isDragon)
         {
             hp = 0;
             GameManager.instance.UpdateLiverCountText(hp);

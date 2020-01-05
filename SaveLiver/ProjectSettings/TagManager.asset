@@ -12,6 +12,7 @@ TagManager:
   - Spear
   - MoveCollider
   - Soul
+  - AbsorbCollider
   layers:
   - Default
   - TransparentFX

@@ -8,7 +8,7 @@ public class TurtleLinear : Enemy
 {
     public Sprite getLiverSprite;
     public int score = 2;
-    public int hitCount = 2;
+    public int hitCount = 1;
     public float speed = 7.0f;
     private Rigidbody2D enemyRigid;
 
@@ -157,7 +157,7 @@ public class TurtleLinear : Enemy
         }
         particleInstance.GetComponent<AudioSource>().Play();
 
-        WaitSetActiveFalse(obj);
+        StartCoroutine(WaitSetActiveFalse(obj));
     }
 
 
