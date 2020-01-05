@@ -170,10 +170,13 @@ public class TurtleFollow : Enemy
             PlayParticle(true);
             StartCoroutine(GetLiverFadeOut()); //end setActive(false)
         }
-        else
+        else //getLiver == false
         {
             PlayParticle(false);
             GameManager.instance.AddScore(score);
+
+            soul.CreateSoul(transform.position);
+
             StartCoroutine(FadeOut(onDeadParticle.main.duration));//end setActive(false)
         }
     }

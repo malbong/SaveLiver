@@ -11,6 +11,7 @@ TagManager:
   - Shark
   - Spear
   - MoveCollider
+  - Soul
   layers:
   - Default
   - TransparentFX

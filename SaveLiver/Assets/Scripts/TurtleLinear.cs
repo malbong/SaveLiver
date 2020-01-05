@@ -11,8 +11,8 @@ public class TurtleLinear : Enemy
     public int hitCount = 2;
     public float speed = 7.0f;
     private Rigidbody2D enemyRigid;
-    
-    
+
+
     private void Start()
     {
         base.isAlive = true;
@@ -88,10 +88,13 @@ public class TurtleLinear : Enemy
             PlayParticle(true);
             StartCoroutine(GetLiverFadeOut());
         }
-        else
+        else //getLiver == false
         {
             PlayParticle(false);
             GameManager.instance.AddScore(score);
+
+            soul.CreateSoul(transform.position);
+
             StartCoroutine(FadeOut(onDeadParticle.main.duration));
         }
         //use AudioSource.Play()
@@ -120,6 +123,7 @@ public class TurtleLinear : Enemy
         }
         transform.parent.gameObject.SetActive(false);
     }
+
 
     private IEnumerator FadeOut(float waitTime)
     {

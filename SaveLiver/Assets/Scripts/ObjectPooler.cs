@@ -15,25 +15,29 @@ public class ObjectPooler : MonoBehaviour
 
     public bool more = true;
 
-    public List<GameObject> Items; // Kinds of Item
     public List<List<GameObject>> poolsItems; // Item Pool
+    public List<GameObject> Items; // Kinds of Item
     public int itemCount = 5; // 생성할 아이템 갯수
 
-    public List<GameObject> Enemies;
     public List<List<GameObject>> poolsEnemies;
+    public List<GameObject> Enemies;
     public int enemyCount = 10;
 
-    public List<GameObject> Indicators;
     public List<List<GameObject>> poolsIndicators;
+    public List<GameObject> Indicators;
     public int indicatorCount = 10;
 
-    public GameObject dragon;
     public List<GameObject> poolDragons;
+    public GameObject dragon;
     public int dragonCount = 3;
 
-    public List<GameObject> deadParticle;
     public List<List<GameObject>> poolsDeadParticles;
+    public List<GameObject> deadParticle;
     public int deadParticleCount = 15;
+
+    public List<GameObject> poolSoul;
+    public GameObject soul;
+    public int soulCount = 15;
 
     void Start()
     {
@@ -42,7 +46,8 @@ public class ObjectPooler : MonoBehaviour
         poolsEnemies = new List<List<GameObject>>();
         poolDragons = new List<GameObject>();
         poolsDeadParticles = new List<List<GameObject>>();
-        
+        poolSoul = new List<GameObject>();
+
         for(int i = 0; i < Items.Count; i++)
         {
             poolsItems.Add(new List<GameObject>());
@@ -94,6 +99,13 @@ public class ObjectPooler : MonoBehaviour
                 obj.SetActive(false);
                 poolsDeadParticles[i].Add(obj);
             }
+        }
+
+        for (int i = 0; i < soulCount; i++)
+        {
+            GameObject obj = Instantiate(soul);
+            obj.SetActive(false);
+            poolSoul.Add(obj);
         }
     }
     
@@ -173,6 +185,22 @@ public class ObjectPooler : MonoBehaviour
         {
             GameObject obj = Instantiate(deadParticle[index]);
             poolsDeadParticles[index].Add(obj);
+            return obj;
+        }
+        return null;
+    }
+
+
+    public GameObject GetSoul()
+    {
+        foreach (GameObject obj in poolSoul)
+        {
+            if (!obj.activeInHierarchy) { return obj; }
+        }
+        if (more)
+        {
+            GameObject obj = Instantiate(soul);
+            poolSoul.Add(obj);
             return obj;
         }
         return null;

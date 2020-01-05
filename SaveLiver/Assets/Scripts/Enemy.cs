@@ -9,7 +9,8 @@ public abstract class Enemy : MonoBehaviour
     public ParticleSystem onDeadParticle;
     public ParticleSystem onDeadParticleGetLiver;
     protected bool isAlive = true;
-    public GameObject soul;
+    public Soul soul;
+
 
     private void Awake()
     {

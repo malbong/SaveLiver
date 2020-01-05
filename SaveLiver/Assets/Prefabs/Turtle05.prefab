@@ -4806,6 +4806,7 @@ MonoBehaviour:
     type: 3}
   onDeadParticleGetLiver: {fileID: 1233760811648962126, guid: c9e0995724b123447a193dae5be43b23,
     type: 3}
+  soul: {fileID: 224461072, guid: f224553a2a091f544ad242e376a0bb23, type: 3}
   getLiverSprite: {fileID: 21300000, guid: 9988728e8894c8a449c21ae039fbe54f, type: 3}
   score: 5
   hitCount: 1
