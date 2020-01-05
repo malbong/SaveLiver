@@ -164,26 +164,18 @@ public class TurtleFollow : Enemy
             indicatorObj.SetActive(false);
         }
         transform.GetChild(0).gameObject.SetActive(false);
-
+        
         if (getLiver == true)
         {
-            PlayParticle(onDeadParticleGetLiver);
-            StartCoroutine(GetLiverFadeOut());
+            PlayParticle(true);
+            StartCoroutine(GetLiverFadeOut()); //end setActive(false)
         }
         else
         {
-            PlayParticle(onDeadParticle);
+            PlayParticle(false);
             GameManager.instance.AddScore(score);
-            StartCoroutine(FadeOut(onDeadParticle.main.duration));
+            StartCoroutine(FadeOut(onDeadParticle.main.duration));//end setActive(false)
         }
-        //add score
-
-        //add List
-
-        //once used destroy instead SetActive(false);
-        //transform.parent.gameObject.SetActive(false);
-
-
     }
 
 
@@ -218,16 +210,23 @@ public class TurtleFollow : Enemy
     }
 
 
-    private void PlayParticle(ParticleSystem targetParticle)
+    private void PlayParticle(bool isGetLiver = false)
     {
-        ParticleSystem particleInstance = Instantiate(targetParticle, transform.position, Quaternion.identity);
+        int index = isGetLiver == true ? 1 : 0;
+
+        GameObject obj = ObjectPooler.instance.GetDeadParticle(index);
+        obj.transform.position = transform.position;
+        obj.SetActive(true);
+
+        ParticleSystem particleInstance = obj.GetComponent<ParticleSystem>();
         particleInstance.Play();
-        if (targetParticle == base.onDeadParticle)
+        if (particleInstance == base.onDeadParticle)
         {
             StartCoroutine(ShowIncreaseScoreText(particleInstance, score));
         }
         particleInstance.GetComponent<AudioSource>().Play();
-        Destroy(particleInstance.gameObject, particleInstance.main.startLifetime.constant);
+
+        WaitSetActiveFalse(obj);
     }
 
 
@@ -264,5 +263,18 @@ public class TurtleFollow : Enemy
                 }
             }
         }
+    }
+
+
+    private IEnumerator WaitSetActiveFalse(GameObject obj)
+    {
+        yield return new WaitForSeconds(2.0f);
+        obj.SetActive(false);
+    }
+
+
+    private void CreateSoul()
+    {
+        //Instantiate()
     }
 }

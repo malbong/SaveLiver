@@ -85,12 +85,12 @@ public class TurtleLinear : Enemy
 
         if (getLiver == true)
         {
-            PlayParticle(onDeadParticleGetLiver);
+            PlayParticle(true);
             StartCoroutine(GetLiverFadeOut());
         }
         else
         {
-            PlayParticle(onDeadParticle);
+            PlayParticle(false);
             GameManager.instance.AddScore(score);
             StartCoroutine(FadeOut(onDeadParticle.main.duration));
         }
@@ -137,16 +137,30 @@ public class TurtleLinear : Enemy
     }
 
 
-    private void PlayParticle(ParticleSystem targetParticle)
+    private void PlayParticle(bool isGetLiver = false)
     {
-        ParticleSystem particleInstance = Instantiate(targetParticle, transform.position, Quaternion.identity);
+        int index = isGetLiver == true ? 1 : 0;
+
+        GameObject obj = ObjectPooler.instance.GetDeadParticle(index);
+        obj.transform.position = transform.position;
+        obj.SetActive(true);
+
+        ParticleSystem particleInstance = obj.GetComponent<ParticleSystem>();
         particleInstance.Play();
-        if (targetParticle == base.onDeadParticle)
+        if (particleInstance == base.onDeadParticle)
         {
             StartCoroutine(ShowIncreaseScoreText(particleInstance, score));
         }
         particleInstance.GetComponent<AudioSource>().Play();
-        Destroy(particleInstance.gameObject, particleInstance.main.startLifetime.constant);
+
+        WaitSetActiveFalse(obj);
+    }
+
+
+    private IEnumerator WaitSetActiveFalse(GameObject obj)
+    {
+        yield return new WaitForSeconds(2.0f);
+        obj.SetActive(false);
     }
 
 

@@ -31,6 +31,9 @@ public class ObjectPooler : MonoBehaviour
     public List<GameObject> poolDragons;
     public int dragonCount = 3;
 
+    public List<GameObject> deadParticle;
+    public List<List<GameObject>> poolsDeadParticles;
+    public int deadParticleCount = 15;
 
     void Start()
     {
@@ -38,17 +41,19 @@ public class ObjectPooler : MonoBehaviour
         poolsIndicators = new List<List<GameObject>>();
         poolsEnemies = new List<List<GameObject>>();
         poolDragons = new List<GameObject>();
-
-        for(int i=0; i<Items.Count; i++)
+        poolsDeadParticles = new List<List<GameObject>>();
+        
+        for(int i = 0; i < Items.Count; i++)
         {
             poolsItems.Add(new List<GameObject>());
-            for(int j=0; j<itemCount; j++)
+            for (int j = 0; j < itemCount; j++)
             {
                 GameObject obj = Instantiate(Items[i]); // i번째 아이템 생성
                 obj.SetActive(false); // 생성하자마자 비활성화
                 poolsItems[i].Add(obj); // 생성한 아이템 pool에 넣어주기
             }
         }
+        
 
         for (int i = 0; i < Indicators.Count; i++)
         {
@@ -80,8 +85,18 @@ public class ObjectPooler : MonoBehaviour
             poolDragons.Add(obj);
         }
 
+        for (int i = 0; i < deadParticle.Count; i++)
+        {
+            poolsDeadParticles.Add(new List<GameObject>());
+            for (int j = 0; j < deadParticleCount; j++)
+            {
+                GameObject obj = Instantiate(deadParticle[i]);
+                obj.SetActive(false);
+                poolsDeadParticles[i].Add(obj);
+            }
+        }
     }
-
+    
 
     public GameObject GetItemObject(int index)
     {
@@ -97,6 +112,7 @@ public class ObjectPooler : MonoBehaviour
         }
         return null; // null을 반환하는 경우: 기기에 메모리가 부족할 때
     }
+
 
     public GameObject GetIndicatorObject(int index)
     {
@@ -114,6 +130,7 @@ public class ObjectPooler : MonoBehaviour
         return null;
     }
 
+
     public GameObject GetEnemyObject(int index)
     {
         foreach (GameObject obj in poolsEnemies[index])
@@ -128,6 +145,7 @@ public class ObjectPooler : MonoBehaviour
         }
         return null; // null을 반환하는 경우: 기기에 메모리가 부족할 때
     }
+
 
     public GameObject GetDragonObject()
     {
@@ -144,4 +162,19 @@ public class ObjectPooler : MonoBehaviour
         return null; // null을 반환하는 경우: 기기에 메모리가 부족할 때
     }
 
+
+    public GameObject GetDeadParticle(int index)
+    {
+        foreach (GameObject obj in poolsDeadParticles[index])
+        {
+            if (!obj.activeInHierarchy) { return obj; }
+        }
+        if (more)
+        {
+            GameObject obj = Instantiate(deadParticle[index]);
+            poolsDeadParticles[index].Add(obj);
+            return obj;
+        }
+        return null;
+    }
 }

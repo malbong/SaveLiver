@@ -222,8 +222,11 @@ public class GameManager : MonoBehaviour
         StartCoroutine(SettingsPanelFadeIn());
         
         //2번 Toggle하여 원래의 상태를 표현하게 함
-        OnSoundToggleButton(); OnSoundToggleButton();
-        OnVibeToggleButton(); OnVibeToggleButton();
+        OnSoundToggleButton();
+        OnSoundToggleButton();
+
+        OnVibeToggleButton();
+        OnVibeToggleButton();
     }
 
 
