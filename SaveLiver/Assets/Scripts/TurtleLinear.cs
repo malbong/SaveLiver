@@ -8,11 +8,11 @@ public class TurtleLinear : Enemy
 {
     public Sprite getLiverSprite;
     public int score = 2;
-    public int hitCount = 2;
+    public int hitCount = 1;
     public float speed = 7.0f;
     private Rigidbody2D enemyRigid;
-    
-    
+
+
     private void Start()
     {
         base.isAlive = true;
@@ -85,13 +85,16 @@ public class TurtleLinear : Enemy
 
         if (getLiver == true)
         {
-            PlayParticle(onDeadParticleGetLiver);
+            PlayParticle(true);
             StartCoroutine(GetLiverFadeOut());
         }
-        else
+        else //getLiver == false
         {
-            PlayParticle(onDeadParticle);
+            PlayParticle(false);
             GameManager.instance.AddScore(score);
+
+            soul.CreateSoul(transform.position);
+
             StartCoroutine(FadeOut(onDeadParticle.main.duration));
         }
         //use AudioSource.Play()
@@ -121,6 +124,7 @@ public class TurtleLinear : Enemy
         transform.parent.gameObject.SetActive(false);
     }
 
+
     private IEnumerator FadeOut(float waitTime)
     {
         SpriteRenderer spriteRenderer = transform.parent.GetComponent<SpriteRenderer>();
@@ -137,16 +141,30 @@ public class TurtleLinear : Enemy
     }
 
 
-    private void PlayParticle(ParticleSystem targetParticle)
+    private void PlayParticle(bool isGetLiver = false)
     {
-        ParticleSystem particleInstance = Instantiate(targetParticle, transform.position, Quaternion.identity);
+        int index = isGetLiver == true ? 1 : 0;
+
+        GameObject obj = ObjectPooler.instance.GetDeadParticle(index);
+        obj.transform.position = transform.position;
+        obj.SetActive(true);
+
+        ParticleSystem particleInstance = obj.GetComponent<ParticleSystem>();
         particleInstance.Play();
-        if (targetParticle == base.onDeadParticle)
+        if (particleInstance == base.onDeadParticle)
         {
             StartCoroutine(ShowIncreaseScoreText(particleInstance, score));
         }
         particleInstance.GetComponent<AudioSource>().Play();
-        Destroy(particleInstance.gameObject, particleInstance.main.startLifetime.constant);
+
+        StartCoroutine(WaitSetActiveFalse(obj));
+    }
+
+
+    private IEnumerator WaitSetActiveFalse(GameObject obj)
+    {
+        yield return new WaitForSeconds(2.0f);
+        obj.SetActive(false);
     }
 
 

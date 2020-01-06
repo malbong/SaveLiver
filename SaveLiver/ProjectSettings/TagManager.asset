@@ -11,6 +11,8 @@ TagManager:
   - Shark
   - Spear
   - MoveCollider
+  - Soul
+  - AbsorbCollider
   layers:
   - Default
   - TransparentFX
@@ -23,7 +25,7 @@ TagManager:
   - Enemy
   - Player
   - Item
-  - 
+  - Soul
   - 
   - 
   - 
