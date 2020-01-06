@@ -10,7 +10,7 @@ public class LiverItem : Item, IItem
     void Start()
     {
         parent = GetComponentInParent<Rigidbody2D>();
-        StartCoroutine("TimeCheckAndDestroy");
+        StartCoroutine(TimeCheckAndDestroy());
     }
 
 

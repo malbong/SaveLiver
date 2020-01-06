@@ -200,7 +200,9 @@ public class Player : MonoBehaviour
         while(count < 10)
         {
             if(count%2 == 0)
+            {
                 playerSpriteRenderer.color = new Color32(255, 255, 255, 90);
+            }
             else
                 playerSpriteRenderer.color = new Color32(255, 255, 255, 180);
 
@@ -211,8 +213,6 @@ public class Player : MonoBehaviour
         playerSpriteRenderer.color = new Color32(255, 255, 255, 255);
         playerCollider.enabled = true;
     }
-
-
 
 
     /**************************************

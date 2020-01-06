@@ -24,6 +24,19 @@ public class Item : MonoBehaviour
     }
 
 
+    private void OnEnable()
+    {
+        SpriteRenderer spriteRenderer = transform.parent.GetComponent<SpriteRenderer>();
+        Color color = spriteRenderer.color;
+        color.a = 255f;
+        spriteRenderer.color = color;
+        
+        GetComponentInParent<SpriteRenderer>().enabled = true;
+        GetComponentInParent<Collider2D>().enabled = true;
+        GetComponent<Collider2D>().enabled = true;
+    }
+
+
     /********************************************
      * @함수명 : SetMyIndicator()
      * @작성자 : zeli

@@ -8,10 +8,8 @@
 
     <uses-sdk android:minSdkVersion="14" />
 
-     
 
-    <application>
-
+  <application>
      
 
         <!-- The space in these forces it to be interpreted as a string vs. int -->

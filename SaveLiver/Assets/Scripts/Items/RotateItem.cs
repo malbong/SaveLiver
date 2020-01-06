@@ -14,7 +14,7 @@ public class RotateItem : Item, IItem
     void Start()
     {
         parent = GetComponentInParent<Rigidbody2D>();
-        StartCoroutine("TimeCheckAndDestroy");
+        StartCoroutine(TimeCheckAndDestroy());
     }
 
     void Update()
