@@ -9,12 +9,13 @@ public class Fever : Item, IItem
     public float amountSpeedUp = 2f;
     private float feverItemTime = 0f;
 
+    public Sprite feverSprite;
     private Rigidbody2D parent;
 
     void Start()
     {
         parent = GetComponentInParent<Rigidbody2D>();
-        StartCoroutine("TimeCheckAndDestroy");
+        StartCoroutine(TimeCheckAndDestroy());
     }
 
     void Update()
@@ -35,6 +36,7 @@ public class Fever : Item, IItem
             Player.instance.feverNum -= 1;
             if(Player.instance.feverNum == 0) Player.instance.EndFeverTime(); // Item 소진 시 무적종료 알림
             Player.instance.speed -= amountSpeedUp;
+            GetComponentInParent<SpriteRenderer>().sprite = feverSprite;
             parent.gameObject.SetActive(false);
         }
     }

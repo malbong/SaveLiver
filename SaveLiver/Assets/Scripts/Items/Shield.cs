@@ -14,7 +14,7 @@ public class Shield : Item, IItem
         parent = transform.GetComponentInParent<Rigidbody2D>();
         //shield = Player.instance.gameObject.transform.GetChild(2).gameObject;
         // GetChild(2) : Hare Shield
-        StartCoroutine("TimeCheckAndDestroy");
+        StartCoroutine(TimeCheckAndDestroy());
     }
 
     void Update()
@@ -38,7 +38,6 @@ public class Shield : Item, IItem
         if (!Player.instance.HasShield && hasItem)
         {
             hasItem = false;
-            //shield.SetActive(false);
             parent.gameObject.SetActive(false);
         }
     }

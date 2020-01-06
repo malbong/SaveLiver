@@ -13,7 +13,7 @@ public class SpeedUp : Item, IItem
     void Start()
     {
         parent = gameObject.GetComponentInParent<Rigidbody2D>();
-        StartCoroutine("TimeCheckAndDestroy");
+        StartCoroutine(TimeCheckAndDestroy());
     }
 
     void Update()
@@ -67,8 +67,7 @@ public class SpeedUp : Item, IItem
     */
     IEnumerator TimeCheckAndDestroy()
     {
-        yield return new WaitForSeconds(3f);
-        //yield return new WaitForSeconds(ItemManager.instance.itemLifeTime);
+        yield return new WaitForSeconds(ItemManager.instance.itemLifeTime);
         SpriteRenderer spriteRenderer = transform.parent.GetComponent<SpriteRenderer>();
         if (!hasItem)
         {
