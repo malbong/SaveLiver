@@ -7,12 +7,21 @@ public class Soul : MonoBehaviour
     public float lifeTime = 10f;
     private bool isAbsorbed = false;
 
+
     private void Start()
     {
+        isAbsorbed = false;
         StartCoroutine(EndLifeTime());
     }
 
-    public void CreateSoul(Vector3 createPosition)
+
+    private void OnEnable()
+    {
+        Start();
+    }
+
+
+    public void CreateSoul(Vector3 createPosition, float percentage = 0.6f)
     {
         float random = Random.Range(0f, 1f);
         if (random < 0.6f) // 60%
@@ -31,6 +40,8 @@ public class Soul : MonoBehaviour
         if (isAbsorbed) return;
 
         isAbsorbed = true;
+
+        GameManager.instance.AddSoul(1);
 
         GetComponent<AudioSource>().Play();
 

@@ -13,6 +13,11 @@ public class GameManager : MonoBehaviour
     public Text scoreText;
 
     public int totalScore = 0;
+    
+    public int totalSoulCount = 0;
+    public int maxSoulCount = 100;
+    public Text soulText;
+    public Image soulFilled;
 
     private float currentplayTime = 0;
     private float secondsUnit = 0;
@@ -67,17 +72,31 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         originTimeScale = Time.timeScale;
+
         isPause = false;
+
         totalScore = 0;
         UpdateLiverCountText(3);
         UpdateScoreText();
+
+        totalSoulCount = 0;
+        AddSoul(0);
     }
 
 
     void Update()
     {
         if (isPause) return;
+
         TimeScorePlus();
+
+        if (Application.platform == RuntimePlatform.Android)
+        {
+            if (Input.GetKey(KeyCode.Escape))
+            {
+                OnPause();
+            }
+        }
     }
 
 
@@ -135,6 +154,19 @@ public class GameManager : MonoBehaviour
     {
         // ReportScore는 현재 score와 기록된 score를 비교해 Leaderboard에 기록.
         PlayGamesPlatform.Instance.ReportScore(score, GPGSIds.leaderboard_score, null);
+    }
+
+
+    public void AddSoul(int soulCount)
+    {
+        if (Player.instance.isAlive == false) return;
+
+        if (totalSoulCount >= maxSoulCount) return;
+
+        totalSoulCount += soulCount;
+
+        soulFilled.fillAmount = totalSoulCount / 100.0f;
+        soulText.text = totalSoulCount + " / 100";
     }
 
 

@@ -13,6 +13,7 @@ public class Dragon : MonoBehaviour
     private Renderer dragonRenderer;
     private Renderer dragonTrackRenderer;
     public Animator DeadAnim;
+    public Soul soul;
 
     private void Start()
     {
@@ -83,6 +84,13 @@ public class Dragon : MonoBehaviour
         isNotMove = true;
         GameManager.instance.AddScore(50);
         DeadAnim.SetTrigger("Dead");
+        soul.CreateSoul(transform.position + new Vector3(0, 0, 0));
+        soul.CreateSoul(transform.position + new Vector3(1, 0, 0));
+        soul.CreateSoul(transform.position + new Vector3(1.5f, 0, 0));
+        soul.CreateSoul(transform.position + new Vector3(2, 0, 0));
+        soul.CreateSoul(transform.position + new Vector3(-1, 0, 0));
+        soul.CreateSoul(transform.position + new Vector3(-1.5f, 0, 0));
+        soul.CreateSoul(transform.position + new Vector3(-2f, 0, 0));
         StartCoroutine(FadeOutAndDead());
     }
 

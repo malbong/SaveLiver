@@ -10055,7 +10055,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 12
   lifeTime: 10
+  score: 50
   DeadAnim: {fileID: 1560612496714406679}
+  soul: {fileID: 224461072, guid: f224553a2a091f544ad242e376a0bb23, type: 3}
 --- !u!1 &6190419180841013691
 GameObject:
   m_ObjectHideFlags: 0

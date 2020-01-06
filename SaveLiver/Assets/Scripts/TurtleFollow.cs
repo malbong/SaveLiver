@@ -223,9 +223,9 @@ public class TurtleFollow : Enemy
 
         ParticleSystem particleInstance = obj.GetComponent<ParticleSystem>();
         particleInstance.Play();
-        if (particleInstance == base.onDeadParticle)
+        if (!isGetLiver)
         {
-            StartCoroutine(ShowIncreaseScoreText(particleInstance, score));
+            //StartCoroutine(ShowIncreaseScoreText(particleInstance, score));
         }
         particleInstance.GetComponent<AudioSource>().Play();
 
@@ -250,6 +250,8 @@ public class TurtleFollow : Enemy
                     scoreText.gameObject.SetActive(true);
 
                     Color tmpColor = scoreText.color;
+                    tmpColor.a = 1.0f;
+                    scoreText.color = tmpColor;
                     while (true)
                     {
                         tmpColor.a -= Time.deltaTime;
