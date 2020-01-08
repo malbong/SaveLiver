@@ -91,9 +91,8 @@ public class TurtleLinear : Enemy
         else //getLiver == false
         {
             PlayParticle(false);
-            GameManager.instance.AddScore(score);
 
-            soul.CreateSoul(transform.position);
+            soul.CreateSoul(transform.position, 0.3f);
 
             StartCoroutine(FadeOut(onDeadParticle.main.duration));
         }

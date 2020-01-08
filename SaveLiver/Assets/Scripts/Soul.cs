@@ -24,7 +24,7 @@ public class Soul : MonoBehaviour
     public void CreateSoul(Vector3 createPosition, float percentage = 0.6f)
     {
         float random = Random.Range(0f, 1f);
-        if (random < 0.6f) // 60%
+        if (random < percentage) // default 60%
         {
             GameObject obj = ObjectPooler.instance.GetSoul();
             obj.transform.position = createPosition;
@@ -41,7 +41,8 @@ public class Soul : MonoBehaviour
 
         isAbsorbed = true;
 
-        GameManager.instance.AddSoul(1);
+        GameManager.instance.UpdateSoulCount(1);
+        GameManager.instance.AddScore(10);
 
         GetComponent<AudioSource>().Play();
 

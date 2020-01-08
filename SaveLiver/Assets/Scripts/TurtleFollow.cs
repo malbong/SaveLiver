@@ -173,9 +173,8 @@ public class TurtleFollow : Enemy
         else //getLiver == false
         {
             PlayParticle(false);
-            GameManager.instance.AddScore(score);
 
-            soul.CreateSoul(transform.position);
+            soul.CreateSoul(transform.position, 1);
 
             StartCoroutine(FadeOut(onDeadParticle.main.duration));//end setActive(false)
         }
