@@ -49,6 +49,8 @@ public class SpeedUp : Item, IItem
     */
     public void Use()
     {
+        GameManager.instance.AddScore(30);
+        GameManager.instance.totalGetItemCount += 1;
         ItemManager.instance.AudioPlay();
 
         transform.GetComponentInParent<Collider2D>().enabled = false;

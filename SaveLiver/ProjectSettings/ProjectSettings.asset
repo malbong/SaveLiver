@@ -716,10 +716,10 @@ PlayerSettings:
   facebookXfbml: 0
   facebookFrictionlessRequests: 1
   apiCompatibilityLevel: 6
-  cloudProjectId: 13ef0368-ff94-429b-b207-a8b87d55910b
+  cloudProjectId: d95f492c-c805-4a59-a8fd-fa64e7c68478
   framebufferDepthMemorylessMode: 0
-  projectName: SaveLiver (4)
-  organizationId: sininyong
+  projectName: SaveLiver
+  organizationId: gon3578
   cloudEnabled: 0
   enableNativePlatformBackendsForNewInputSystem: 0
   disableOldInputManagerSupport: 0

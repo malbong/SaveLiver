@@ -55,7 +55,9 @@ public class Player : MonoBehaviour
 
     public Animator boatAnim;
 
+    public Image decreaseHpImage;
     public Text decreaseHpText;
+
 
     void Start()
     {
@@ -255,14 +257,10 @@ public class Player : MonoBehaviour
 
         transform.gameObject.SetActive(false);
 
-        Invoke("Respawn", 2f);// test용. 죽으면 살아나기.
-
-        //once used destroy instead SetActive(false);
-        //transform.parent.gameObject.SetActive(false);
+        GameManager.instance.PlayerDied();
     }
 
-
-
+    
     // test용 재시작
     private void Respawn()
     {
@@ -367,21 +365,32 @@ public class Player : MonoBehaviour
     {
         decreaseHpText.text = "-" + damage;
         decreaseHpText.gameObject.SetActive(true);
-        Vector3 tmpPosition = decreaseHpText.gameObject.transform.localPosition;
+        decreaseHpImage.gameObject.SetActive(true);
 
         Color tmpColor = decreaseHpText.color;
+
+        Vector3 tmpPosition = decreaseHpImage.gameObject.transform.localPosition;
+
         while (true)
         {
             tmpColor.a -= Time.deltaTime;
+            tmpColor.a -= Time.deltaTime;
+
             decreaseHpText.color = tmpColor;
-            decreaseHpText.gameObject.transform.Translate(0, 0.002f, 0);
+            decreaseHpImage.color = tmpColor;
+
+            decreaseHpImage.gameObject.transform.Translate(0, 0.005f, 0);
             if (decreaseHpText.color.a <= 0) break;
             yield return new WaitForSeconds(Time.deltaTime);
         }
 
+        decreaseHpImage.gameObject.SetActive(false);
         decreaseHpText.gameObject.SetActive(false);
+
         tmpColor.a = 1.0f;
         decreaseHpText.color = tmpColor;
-        decreaseHpText.gameObject.transform.localPosition = tmpPosition;
+        decreaseHpImage.color = tmpColor;
+
+        decreaseHpImage.gameObject.transform.localPosition = tmpPosition;
     }
 }

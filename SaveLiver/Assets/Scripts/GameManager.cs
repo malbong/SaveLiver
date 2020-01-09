@@ -10,16 +10,15 @@ public class GameManager : MonoBehaviour
     public static GameManager instance { get; set; }
 
     public Text liverCountText;
-    public Text scoreText;
 
     public int totalScore = 0;
+
+    public int totalGetItemCount = 0;
     
     public int totalSoulCount = 0;
-    public int maxSoulCount = 100;
-    public Text soulText;
-    public Image soulFilled;
+    public Text playingPanelSoulCountText;
 
-    private float currentplayTime = 0;
+    private int totalPlayTime = 0;
     private float secondsUnit = 0;
 
     public bool isPause;
@@ -48,6 +47,19 @@ public class GameManager : MonoBehaviour
 
     public GameObject settingsOuterPanel;
 
+    public GameObject helpOuterPanel;
+    public GameObject pagePanel; //옮길 pagePanel
+    public Text helpPageText;
+    private int helpPanelPage = 1;
+
+    public GameObject diedPanel;
+    public GameObject diedInnerPanel;
+
+    public Text totalTimeText;
+    public Text totalItemText;
+    public Text totalSoulText;
+    public Text totalScoreText;
+
     private bool pauseButtonFadeOutRunning = false;
     private bool pauseButtonFadeInRunning = false;
     private bool joyStickFadeOutRunning = false;
@@ -55,6 +67,13 @@ public class GameManager : MonoBehaviour
     private bool pausePanelFadeOutRunning = false;
     private bool settingsPanelFadeInRunning = false;
     private bool settingsPanelFadeOutRunning = false;
+    private bool helpPanelFadeInRunning = false;
+    private bool helpPanelFadeOutRunning = false;
+    private bool nextPageFadeRunning = false;
+    private bool previousPageFadeRunning = false;
+    private bool scoreUpRunning = false;
+
+    public AudioClip scoreUpClip;
 
     private void Awake()
     {
@@ -75,12 +94,20 @@ public class GameManager : MonoBehaviour
 
         isPause = false;
 
+        secondsUnit = 0;
         totalScore = 0;
+
         UpdateLiverCountText(3);
-        UpdateScoreText();
+
+        totalGetItemCount = 0;
 
         totalSoulCount = 0;
-        AddSoul(0);
+        UpdateSoulCount(0);
+
+        totalPlayTime = 0;
+
+        helpPanelPage = 1;
+        helpPageText.text = helpPanelPage + " / 3";
     }
 
 
@@ -88,7 +115,7 @@ public class GameManager : MonoBehaviour
     {
         if (isPause) return;
 
-        TimeScorePlus();
+        AddTimeScore();
 
         if (Application.platform == RuntimePlatform.Android)
         {
@@ -113,9 +140,27 @@ public class GameManager : MonoBehaviour
     }
 
 
-    public void UpdateScoreText()
+    private void AddTimeScore()
     {
-        scoreText.text = "score: " + totalScore;
+        if (Player.instance.isAlive)
+        {
+            secondsUnit += Time.deltaTime; //1초 기록 Unit
+            if (secondsUnit > 1.0f)
+            {
+                totalPlayTime += 1;
+                AddScore(1);
+                secondsUnit = secondsUnit % 1.0f; //나머지 넣어 주기
+            }
+        }
+    }
+
+
+    public void UpdateSoulCount(int soulCount)
+    {
+        if (Player.instance.isAlive == false) return;
+
+        totalSoulCount += soulCount;
+        playingPanelSoulCountText.text = totalSoulCount.ToString();
     }
 
 
@@ -123,22 +168,6 @@ public class GameManager : MonoBehaviour
     {
         if (Player.instance.isAlive == false) return;
         totalScore += score;
-        UpdateScoreText();
-    }
-
-
-    private void TimeScorePlus()
-    {
-        if (Player.instance.isAlive)
-        {
-            secondsUnit += Time.deltaTime;
-            currentplayTime += secondsUnit;
-            if (secondsUnit >= 0.5f)
-            {
-                secondsUnit = secondsUnit - 0.5f;
-                AddScore(1);
-            }
-        }
     }
 
 
@@ -154,19 +183,6 @@ public class GameManager : MonoBehaviour
     {
         // ReportScore는 현재 score와 기록된 score를 비교해 Leaderboard에 기록.
         PlayGamesPlatform.Instance.ReportScore(score, GPGSIds.leaderboard_score, null);
-    }
-
-
-    public void AddSoul(int soulCount)
-    {
-        if (Player.instance.isAlive == false) return;
-
-        if (totalSoulCount >= maxSoulCount) return;
-
-        totalSoulCount += soulCount;
-
-        soulFilled.fillAmount = totalSoulCount / 100.0f;
-        soulText.text = totalSoulCount + " / 100";
     }
 
 
@@ -322,7 +338,6 @@ public class GameManager : MonoBehaviour
 
         if (GameManager.isVibrationOn)
         {
-            Debug.Log("current On -> Off " + isVibrationOn);
             GameManager.isVibrationOn = false;
 
             Transform vibeImage = vibeButton.transform.Find("Vibe Image");
@@ -344,7 +359,6 @@ public class GameManager : MonoBehaviour
         }
         else //Vibration off
         {
-            Debug.Log("current Off -> On " +isVibrationOn);
             GameManager.isVibrationOn = true;
 
             Transform vibeImage = vibeButton.transform.Find("Vibe Image");
@@ -367,9 +381,70 @@ public class GameManager : MonoBehaviour
     }
 
 
+    public void OnSettingsExitButton()
+    {
+        if (!isPause) return;
+
+        //Settings Panel Fade Out
+        StartCoroutine(SettingsPanelFadeOut());
+    }
+
+
     public void OnHelpButton()
     {
+        if (!isPause) return;
 
+        //help page 초기화
+        helpPanelPage = 1;
+        helpPageText.text = helpPanelPage + " / 3";
+        pagePanel.transform.localPosition = new Vector3(0, 0, 0);
+
+        //Help Panel Fade In
+        StartCoroutine(HelpPanelFadeIn());
+    }
+
+
+    public void OnHelpPanelExitButton()
+    {
+        if (!isPause) return;
+
+        //Help Panel Fade Out
+        StartCoroutine(HelpPanelFadeOut());
+    }
+
+
+    public void OnHelpPanelNextButton()
+    {
+        if (helpPanelPage >= 3) //page 3 -> ignored
+        {
+            helpPanelPage = 3;
+            helpPageText.text = helpPanelPage + " / 3";
+            StartCoroutine(HelpPanelFadeOut());
+        }
+        else if (helpPanelPage >= 1) //page 1 2
+        {
+            helpPanelPage += 1;
+            helpPageText.text = helpPanelPage + " / 3";
+            //Slide Page
+            StartCoroutine(NextPageFadeIn());
+        }
+    }
+
+
+    public void OnHelpPanelPreviousButton()
+    {
+        if (helpPanelPage <= 1) //page 1 -> ignored
+        {
+            helpPanelPage = 1;
+            helpPageText.text = helpPanelPage + " / 3";
+        }
+        else if (helpPanelPage <= 3) //page 2 3
+        {
+            helpPanelPage -= 1;
+            helpPageText.text = helpPanelPage + " / 3";
+            //Slider Page
+            StartCoroutine(PreviousPageFadeIn());
+        }
     }
 
 
@@ -385,12 +460,9 @@ public class GameManager : MonoBehaviour
     }
 
 
-    public void OnSettingsExitButton()
+    public void PlayerDied()
     {
-        if (!isPause) return;
-
-        //Settings Panel Fade Out
-        StartCoroutine(SettingsPanelFadeOut());
+        StartCoroutine(ShowDiedPanelFadeIn());
     }
 
 
@@ -626,6 +698,8 @@ public class GameManager : MonoBehaviour
 
         settingsPanelFadeOutRunning = true;
 
+        settingsOuterPanel.SetActive(true);
+
         Transform settingsInnerPanel = settingsOuterPanel.transform.GetChild(0);
 
         Image settingsOuterPanelImage = settingsOuterPanel.GetComponent<Image>();
@@ -659,5 +733,306 @@ public class GameManager : MonoBehaviour
         settingsInnerPanelImage.color = tmpInnerColor;
 
         settingsPanelFadeOutRunning = false;
+    }
+
+
+    private IEnumerator HelpPanelFadeIn()
+    {
+        if (helpPanelFadeOutRunning) yield break;
+
+        helpPanelFadeInRunning = true;
+
+        helpOuterPanel.SetActive(true);
+
+        Transform helpInnerPanel = helpOuterPanel.transform.GetChild(0);
+
+        Image helpOuterImage = helpOuterPanel.GetComponent<Image>();
+        Color tmpOuterColor = helpOuterImage.color;
+
+        Image helpInnerImage = helpInnerPanel.GetComponent<Image>();
+        Color tmpInnerColor = helpInnerImage.color;
+        
+        while (true)
+        {
+            helpOuterPanel.transform.localScale -= new Vector3(0.2f, 0.2f, 0.2f);
+
+            tmpOuterColor.a += 0.1f;
+            tmpInnerColor.a += 0.2f;
+            helpOuterImage.color = tmpOuterColor;
+            helpInnerImage.color = tmpInnerColor;
+
+            if (helpOuterPanel.transform.localScale.x <= 1) break;
+
+            yield return new WaitForSecondsRealtime(0.01f);
+        }
+
+        helpOuterPanel.transform.localScale = new Vector3(1, 1, 1);
+
+        tmpOuterColor.a = 0.5f;
+        helpOuterImage.color = tmpOuterColor;
+
+        tmpInnerColor.a = 1f;
+        helpInnerImage.color = tmpInnerColor;
+
+        helpPanelFadeInRunning = false;
+    }
+
+
+    private IEnumerator HelpPanelFadeOut()
+    {
+        if (helpPanelFadeInRunning) yield break;
+
+        helpPanelFadeOutRunning = true;
+
+        Transform helpInnerPanel = helpOuterPanel.transform.GetChild(0);
+
+        Image helpOuterImage = helpOuterPanel.GetComponent<Image>();
+        Color tmpOuterColor = helpOuterImage.color;
+
+        Image helpInnerImage = helpInnerPanel.GetComponent<Image>();
+        Color tmpInnerColor = helpInnerImage.color;
+
+        while (true)
+        {
+            helpOuterPanel.transform.localScale -= new Vector3(0.2f, 0.2f, 0.2f);
+
+            tmpOuterColor.a -= 0.1f;
+            tmpInnerColor.a -= 0.2f;
+            helpOuterImage.color = tmpOuterColor;
+            helpInnerImage.color = tmpInnerColor;
+
+            if (helpOuterPanel.transform.localScale.x <= 0) break;
+
+            yield return new WaitForSecondsRealtime(0.01f);
+        }
+
+        helpOuterPanel.SetActive(false);
+
+        helpOuterPanel.transform.localScale = new Vector3(2, 2, 2);
+
+        tmpOuterColor.a = 0f;
+        helpOuterImage.color = tmpOuterColor;
+
+        tmpInnerColor.a = 0f;
+        helpInnerImage.color = tmpInnerColor;
+
+        helpPanelFadeOutRunning = false;
+    }
+
+
+    private IEnumerator NextPageFadeIn()
+    {
+        if (previousPageFadeRunning) yield break;
+
+        nextPageFadeRunning = true;
+
+        Vector3 originPosition = pagePanel.transform.localPosition;
+        
+        while (true)
+        {
+            pagePanel.transform.localPosition += new Vector3(-100, 0, 0);
+            if (pagePanel.transform.localPosition.x - originPosition.x <= -1200)
+            {
+                break;
+            }
+
+            yield return new WaitForSecondsRealtime(0.01f);
+        }
+
+        pagePanel.transform.localPosition = originPosition - new Vector3(1200, 0, 0);
+
+        nextPageFadeRunning = false;
+    }
+
+
+    private IEnumerator PreviousPageFadeIn()
+    {
+        if (nextPageFadeRunning) yield break;
+
+        previousPageFadeRunning = true; 
+
+        Vector3 originPosition = pagePanel.transform.localPosition;
+
+        while (true)
+        {
+            pagePanel.transform.localPosition += new Vector3(+100, 0, 0);
+
+            if (pagePanel.transform.localPosition.x - originPosition.x >= +1200)
+            {
+                break;
+            }
+
+            yield return new WaitForSecondsRealtime(0.01f);
+        }
+
+        pagePanel.transform.localPosition = originPosition + new Vector3(1200, 0, 0);
+
+        previousPageFadeRunning = false;
+    }
+
+
+    private IEnumerator ShowDiedPanelFadeIn()
+    {
+        if (Player.instance.isAlive) yield break;
+
+        StartCoroutine(PauseButtonFadeOut());
+        StartCoroutine(JoyStickFadeOut());
+        yield return new WaitForSecondsRealtime(2.0f); //wait for plyer died
+        
+        Time.timeScale = 0f;
+        GameManager.instance.isPause = true;
+
+        diedPanel.SetActive(true);
+
+        Image diedPanelImage = diedPanel.GetComponent<Image>();
+        Color tmpColor = diedPanelImage.color;
+
+        while (true)
+        {
+            diedPanel.transform.localScale -= new Vector3(0.2f, 0.2f, 0);
+
+            tmpColor.a += 0.15f;
+            diedPanelImage.color = tmpColor;
+
+            if (diedPanel.transform.localScale.x <= 1.0f)
+            {
+                break;
+            }
+
+            yield return new WaitForSecondsRealtime(0.01f);
+        }
+
+        StartCoroutine("ScoreUp");
+    }
+
+
+    private string GetTimeToString(int time)
+    {   //01:04:01  3600 + 240 + 1
+        string hour, minute, seconds;
+        if (time >= 3600) //hour
+        {
+            hour = (time / 3600).ToString();
+            time = time % 3600;
+            if (hour.Length == 1) // 1 ~ 9 -> 01 ~ 09
+            {
+                hour = "0" + hour;
+            }
+        }
+        else
+        {
+            hour = "00";
+        }
+
+        if (time >= 60) //minute
+        {
+            minute = (time / 60).ToString();
+            time = time % 60;
+            if (minute.Length == 1) //1 ~ 9 ~ 01 ~ 09
+            {
+                minute = "0" + minute;
+            }
+        }
+        else
+        {
+            minute = "00";
+        }
+
+        if (time > 0) //seconds
+        {
+            seconds = time.ToString();
+            if (seconds.Length == 1)
+            {
+                seconds = "0" + seconds;
+            }
+        }
+        else
+        {
+            seconds = "00";
+        }
+
+        string ret = minute + ":" + seconds;
+        if (hour != "00") ret = hour + ":" + ret;
+        return ret;
+    }
+
+
+    private IEnumerator ScoreUp()
+    {
+        scoreUpRunning = true;
+
+        AudioSource audioSystem = GetComponent<AudioSource>();
+        audioSystem.clip = scoreUpClip;
+        audioSystem.Play();
+
+        //time
+        int tmpTotalTime = 0;
+        while (true)
+        {
+            totalTimeText.text = GetTimeToString(tmpTotalTime);
+            if (tmpTotalTime == totalPlayTime) break;
+            tmpTotalTime += 1;
+            yield return new WaitForSecondsRealtime(0.03f);
+        }
+
+        //item
+        int tmpItemCount = 0;
+        while (true)
+        {
+            totalItemText.text = "X " + tmpItemCount.ToString();
+            if (tmpItemCount == totalGetItemCount) break;
+            tmpItemCount += 1;
+            yield return new WaitForSecondsRealtime(0.03f);
+        }
+
+        //soul
+        int tmpSoulCount = 0;
+        while (true)
+        {
+            totalSoulText.text = "X " + tmpSoulCount.ToString();
+            if (tmpSoulCount == totalSoulCount) break;
+            tmpSoulCount += 1;
+            yield return new WaitForSecondsRealtime(0.03f);
+        }
+
+        //total score
+        int tmpTotalScore = 0;
+        while (true)
+        {
+            totalScoreText.text = "Total Score: " + tmpTotalScore.ToString();
+            if (tmpTotalScore >= totalScore)
+            {
+                totalScoreText.text = "Total Score: " + totalScore.ToString();
+                break;
+            }
+
+            tmpTotalScore += 3;
+            yield return new WaitForSecondsRealtime(0.001f);
+        }
+
+        diedInnerPanel.SetActive(false);
+
+        scoreUpRunning = false;
+    }
+
+
+    public void SkipScoreUp()
+    {
+        if (!scoreUpRunning)
+        {
+            diedInnerPanel.SetActive(false);
+            return;
+        }
+        
+
+        StopCoroutine("ScoreUp");
+
+        Debug.Log("StopCoroutine");
+        totalTimeText.text = GetTimeToString(totalPlayTime);
+        totalItemText.text = "X " + totalGetItemCount.ToString();
+        totalSoulText.text = "X " + totalSoulCount.ToString();
+        totalScoreText.text = "Total Score: " + totalScore.ToString();
+
+        scoreUpRunning = false;
+        diedInnerPanel.SetActive(false);
     }
 }
