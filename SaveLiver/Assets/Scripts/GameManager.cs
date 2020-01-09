@@ -54,6 +54,7 @@ public class GameManager : MonoBehaviour
 
     public GameObject diedPanel;
     public GameObject diedInnerPanel;
+    public ParticleSystem diedSoulParticle;
 
     public Text totalTimeText;
     public Text totalItemText;
@@ -964,6 +965,9 @@ public class GameManager : MonoBehaviour
         audioSystem.clip = scoreUpClip;
         audioSystem.Play();
 
+        StartCoroutine(IndependentTimeScaleParticle());
+        
+
         //time
         int tmpTotalTime = 0;
         while (true)
@@ -1034,5 +1038,16 @@ public class GameManager : MonoBehaviour
 
         scoreUpRunning = false;
         diedInnerPanel.SetActive(false);
+    }
+
+
+    private IEnumerator IndependentTimeScaleParticle()
+    {
+        while (true)
+        {
+            diedSoulParticle.Simulate(Time.unscaledDeltaTime, true, false);
+
+            yield return new WaitForSecondsRealtime(0.01f);
+        }
     }
 }

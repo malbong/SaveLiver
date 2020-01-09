@@ -50,7 +50,7 @@ public class RotateItem : Item, IItem
     */
     public void Use()
     {
-        GameManager.instance.AddScore(30);
+        GameManager.instance.AddScore(20);
         GameManager.instance.totalGetItemCount += 1;
         ItemManager.instance.AudioPlay();
 
