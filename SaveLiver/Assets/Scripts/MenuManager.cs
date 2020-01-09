@@ -76,12 +76,12 @@ public class MenuManager : MonoBehaviour
 
             tmpColor.a += 0.1f;
             quitPanelImage.color = tmpColor;
-            if (quitPanel.transform.localScale.x <= 1.4f) break;
+            if (quitPanel.transform.localScale.x <= 1.6f) break;
 
             yield return new WaitForSecondsRealtime(0.01f);
         }
 
-        quitPanel.transform.localScale = new Vector3(1.4f, 1.25f, 1.4f);
+        quitPanel.transform.localScale = new Vector3(1.6f, 1.25f, 1.4f);
         tmpColor.a = 0.5f;
         quitPanelImage.color = tmpColor;
 

@@ -105,6 +105,8 @@ public class Dragon : MonoBehaviour
     */
     IEnumerator FadeOutAndDead()
     {
+        BoxCollider2D collider = GetComponent<BoxCollider2D>();
+        collider.enabled = false;
         Color color = GetComponent<SpriteRenderer>().color;
         for (int i = 0; i < 100; i++)
         {
@@ -112,6 +114,7 @@ public class Dragon : MonoBehaviour
             dragonRenderer.material.color = color;
             yield return new WaitForSeconds(0.01f);
         }
+        collider.enabled = true;
         gameObject.SetActive(false);
     }
 
