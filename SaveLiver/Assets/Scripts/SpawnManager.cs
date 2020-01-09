@@ -20,6 +20,7 @@ public class SpawnManager : MonoBehaviour
 
 
     public float radius = 10.0f;
+    public float itemRadius = 5.0f;
 
     public ObjectPooler objectPooler;
     
@@ -46,8 +47,16 @@ public class SpawnManager : MonoBehaviour
             Vector3 targetPosition = Player.instance.transform.position; //player위치 정보얻기
             float tarX = targetPosition.x; //player의 좌표 (원 중심)
             float tarY = targetPosition.y;
-            posX = Random.Range(tarX - radius, tarX + radius); // x-10 ~  x+10 중 랜덤 x값 얻기
-            posY = Mathf.Sqrt(Mathf.Pow(radius, 2) - Mathf.Pow(posX - tarX, 2)); // 얻은 x값을 이용해 y값도 얻기
+            if (!isItem)
+            {
+                posX = Random.Range(tarX - radius, tarX + radius); // x-10 ~  x+10 중 랜덤 x값 얻기
+                posY = Mathf.Sqrt(Mathf.Pow(radius, 2) - Mathf.Pow(posX - tarX, 2)); // 얻은 x값을 이용해 y값도 얻기
+            }
+            else
+            {
+                posX = Random.Range(tarX - itemRadius, tarX + itemRadius); // x-10 ~  x+10 중 랜덤 x값 얻기
+                posY = Mathf.Sqrt(Mathf.Pow(itemRadius, 2) - Mathf.Pow(posX - tarX, 2)); // 얻은 x값을 이용해 y값도 얻기
+            }
             int randomSignPosY = 1;
             if (Random.Range(0f, 1f) < 0.5) randomSignPosY = -1; //posY 부호도 랜덤으로 정하기
             posY *= randomSignPosY;
@@ -100,16 +109,32 @@ public class SpawnManager : MonoBehaviour
      * @출력 : void
      * @설명 : item을 랜덤으로 생성
      *         위치는 GetRandomPosition 함수를 이용해 랜덤위치를 받아옴
+     *         
+     *         index에 따른 아이템 =>
+     *         0:Bomb  1:Fever  2:Liver  3:Rotate  4:Shield  5:SpeedUp
      */
     private void ItemRandomSpawn()
     {
+        int percentage = Random.Range(0, 15);
+        int index;
+        if (percentage < 1)
+            index = 0; // Bomb
+        else if (percentage >= 1 && percentage < 3)
+            index = 1; // Fever
+        else if (percentage >= 3 && percentage < 6)
+            index = 2; // Liver
+        else if (percentage >= 6 && percentage < 9)
+            index = 3; // Rotate
+        else if (percentage >= 9 && percentage < 12)
+            index = 4;
+        else
+            index = 5; // SpeedUp
         Vector3 randomPosition = GetRandomPosition(true);
-        int index = Random.Range(0, objectPooler.Items.Count);
         GameObject obj = objectPooler.GetItemObject(index);
         obj.transform.position = randomPosition;
         obj.SetActive(true);
     }
-
+    
 
     /********************************************
      * @함수명 : CreateEnemy()
