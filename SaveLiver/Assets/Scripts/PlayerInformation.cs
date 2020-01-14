@@ -12,7 +12,7 @@ public static class PlayerInformation
     public static bool isLogin { get; set; } = false;
 
     public static Firebase.Auth.FirebaseAuth auth;
-    
+
     public static DatabaseReference GetDatabaseReference()
     {
         DatabaseReference reference;

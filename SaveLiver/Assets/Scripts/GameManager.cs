@@ -183,7 +183,7 @@ public class GameManager : MonoBehaviour
     public void ReportScore(int score)
     {
         // ReportScore는 현재 score와 기록된 score를 비교해 Leaderboard에 기록.
-        PlayGamesPlatform.Instance.ReportScore(score, GPGSIds.leaderboard_score, null);
+        PlayGamesPlatform.Instance.ReportScore(score, GPGSIds.leaderboard_ranking, null);
     }
 
 

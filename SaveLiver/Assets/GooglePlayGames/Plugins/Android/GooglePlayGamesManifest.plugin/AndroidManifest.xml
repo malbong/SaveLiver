@@ -8,13 +8,15 @@
 
     <uses-sdk android:minSdkVersion="14" />
 
+     
 
-  <application>
+    <application>
+
      
 
         <!-- The space in these forces it to be interpreted as a string vs. int -->
         <meta-data android:name="com.google.android.gms.games.APP_ID"
-            android:value="\u003284867429174" />
+            android:value="\u003938431771678" />
 
         <!-- Keep track of which plugin is being used -->
         <meta-data android:name="com.google.android.gms.games.unityVersion"
