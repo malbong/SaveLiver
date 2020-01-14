@@ -30,7 +30,7 @@ public class LiverItem : Item, IItem
             Player.instance.hp += 1;
             GameManager.instance.UpdateLiverCountText(Player.instance.hp);
         }
-        GameManager.instance.AddScore(30);
+        GameManager.instance.AddScore(20);
         GameManager.instance.totalGetItemCount += 1;
         ItemManager.instance.AudioPlay();
         parent.gameObject.SetActive(false);

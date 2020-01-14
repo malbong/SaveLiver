@@ -41,10 +41,10 @@ public class Soul : MonoBehaviour
 
         isAbsorbed = true;
 
+        GetComponent<AudioSource>().Play();
+        
         GameManager.instance.UpdateSoulCount(1);
         GameManager.instance.AddScore(10);
-
-        GetComponent<AudioSource>().Play();
 
         StartCoroutine(FadeOut());
     }

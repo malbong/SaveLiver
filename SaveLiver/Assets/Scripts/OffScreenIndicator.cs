@@ -70,8 +70,8 @@ public class OffScreenIndicator : MonoBehaviour
 
         if (upAngle < targetAngle && rightAngle >= targetAngle) // Right
         {
-            anchorMinX = 0.975f;
-            anchorMaxX = 0.975f;
+            anchorMinX = 0.965f;
+            anchorMaxX = 0.965f;
             anchorMinY = 0.528f;
             anchorMaxY = 0.528f;
             
@@ -81,8 +81,8 @@ public class OffScreenIndicator : MonoBehaviour
                 anchorMinY = playerToScreenBottom + posY;
                 anchorMaxY = playerToScreenBottom + posY;
 
-                if (anchorMinY > 0.985f) anchorMinY = 0.985f;
-                if (anchorMaxY > 0.985f) anchorMaxY = 0.985f;
+                if (anchorMinY > 0.982f) anchorMinY = 0.982f;
+                if (anchorMaxY > 0.982f) anchorMaxY = 0.982f;
 
                 indicator.rectTransform.anchorMin = new Vector2(anchorMinX, anchorMinY);
                 indicator.rectTransform.anchorMax = new Vector2(anchorMaxX, anchorMaxY);
@@ -92,8 +92,8 @@ public class OffScreenIndicator : MonoBehaviour
                 anchorMinY = playerToScreenBottom - posY;
                 anchorMaxY = playerToScreenBottom - posY;
 
-                if (anchorMinY < 0.015f) anchorMinY = 0.015f;
-                if (anchorMaxY < 0.015f) anchorMaxY = 0.015f;
+                if (anchorMinY < 0.018f) anchorMinY = 0.018f;
+                if (anchorMaxY < 0.018f) anchorMaxY = 0.018f;
 
                 indicator.rectTransform.anchorMin = new Vector2(anchorMinX, anchorMinY);
                 indicator.rectTransform.anchorMax = new Vector2(anchorMaxX, anchorMaxY);
@@ -104,8 +104,8 @@ public class OffScreenIndicator : MonoBehaviour
         {
             anchorMinX = 0.5f;
             anchorMaxX = 0.5f;
-            anchorMinY = 0.985f;
-            anchorMaxY = 0.985f;
+            anchorMinY = 0.982f;
+            anchorMaxY = 0.982f;
 
             float posX = (Mathf.Abs(xPrime) * playerToScreenTop) / yPrime;
 
@@ -114,8 +114,8 @@ public class OffScreenIndicator : MonoBehaviour
                 anchorMinX = screenHalfWidth + posX;
                 anchorMaxX = screenHalfWidth + posX;
 
-                if (anchorMinX > 0.975f) anchorMinX = 0.975f;
-                if (anchorMaxX > 0.975f) anchorMaxX = 0.975f;
+                if (anchorMinX > 0.965f) anchorMinX = 0.965f;
+                if (anchorMaxX > 0.965f) anchorMaxX = 0.965f;
 
                 indicator.rectTransform.anchorMin = new Vector2(anchorMinX, anchorMinY);
                 indicator.rectTransform.anchorMax = new Vector2(anchorMaxX, anchorMaxY);
@@ -125,8 +125,8 @@ public class OffScreenIndicator : MonoBehaviour
                 anchorMinX = screenHalfWidth - posX;
                 anchorMaxX = screenHalfWidth - posX;
 
-                if (anchorMinX < 0.025f) anchorMinX = 0.025f;
-                if (anchorMaxX < 0.025f) anchorMaxX = 0.025f;
+                if (anchorMinX < 0.035f) anchorMinX = 0.035f;
+                if (anchorMaxX < 0.035f) anchorMaxX = 0.035f;
 
                 indicator.rectTransform.anchorMin = new Vector2(anchorMinX, anchorMinY);
                 indicator.rectTransform.anchorMax = new Vector2(anchorMaxX, anchorMaxY);
@@ -136,8 +136,8 @@ public class OffScreenIndicator : MonoBehaviour
         {
             anchorMinX = 0.5f;
             anchorMaxX = 0.5f;
-            anchorMinY = 0.015f;
-            anchorMaxY = 0.015f;
+            anchorMinY = 0.018f;
+            anchorMaxY = 0.018f;
 
             float posX = (Mathf.Abs(xPrime) * playerToScreenBottom) / -yPrime;
 
@@ -146,8 +146,8 @@ public class OffScreenIndicator : MonoBehaviour
                 anchorMinX = screenHalfWidth + posX;
                 anchorMaxX = screenHalfWidth + posX;
 
-                if (anchorMinX > 0.975f) anchorMinX = 0.975f;
-                if (anchorMaxX > 0.975f) anchorMaxX = 0.975f;
+                if (anchorMinX > 0.965f) anchorMinX = 0.965f;
+                if (anchorMaxX > 0.965f) anchorMaxX = 0.965f;
 
                 indicator.rectTransform.anchorMin = new Vector2(anchorMinX, anchorMinY);
                 indicator.rectTransform.anchorMax = new Vector2(anchorMaxX, anchorMaxY);
@@ -157,8 +157,8 @@ public class OffScreenIndicator : MonoBehaviour
                 anchorMinX = screenHalfWidth - posX;
                 anchorMaxX = screenHalfWidth - posX;
 
-                if (anchorMinX < 0.025f) anchorMinX = 0.025f;
-                if (anchorMaxX < 0.025f) anchorMaxX = 0.025f;
+                if (anchorMinX < 0.035f) anchorMinX = 0.035f;
+                if (anchorMaxX < 0.035f) anchorMaxX = 0.035f;
 
                 indicator.rectTransform.anchorMin = new Vector2(anchorMinX, anchorMinY);
                 indicator.rectTransform.anchorMax = new Vector2(anchorMaxX, anchorMaxY);
@@ -166,8 +166,8 @@ public class OffScreenIndicator : MonoBehaviour
         }
         else if(-upAngle >= targetAngle && -rightAngle < targetAngle) // Left
         {
-            anchorMinX = 0.025f;
-            anchorMaxX = 0.025f;
+            anchorMinX = 0.035f;
+            anchorMaxX = 0.035f;
             anchorMinY = 0.528f;
             anchorMaxY = 0.528f;
 
@@ -178,8 +178,8 @@ public class OffScreenIndicator : MonoBehaviour
                 anchorMinY = playerToScreenBottom + posY;
                 anchorMaxY = playerToScreenBottom + posY;
 
-                if (anchorMinY > 0.985f) anchorMinY = 0.985f;
-                if (anchorMaxY > 0.985f) anchorMaxY = 0.985f;
+                if (anchorMinY > 0.982f) anchorMinY = 0.982f;
+                if (anchorMaxY > 0.982f) anchorMaxY = 0.982f;
 
                 indicator.rectTransform.anchorMin = new Vector2(anchorMinX, anchorMinY);
                 indicator.rectTransform.anchorMax = new Vector2(anchorMaxX, anchorMaxY);
@@ -189,8 +189,8 @@ public class OffScreenIndicator : MonoBehaviour
                 anchorMinY = playerToScreenBottom - posY;
                 anchorMaxY = playerToScreenBottom - posY;
 
-                if (anchorMinY < 0.015f) anchorMinY = 0.015f;
-                if (anchorMaxY < 0.015f) anchorMaxY = 0.015f;
+                if (anchorMinY < 0.018f) anchorMinY = 0.018f;
+                if (anchorMaxY < 0.018f) anchorMaxY = 0.018f;
 
                 indicator.rectTransform.anchorMin = new Vector2(anchorMinX, anchorMinY);
                 indicator.rectTransform.anchorMax = new Vector2(anchorMaxX, anchorMaxY);
