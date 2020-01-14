@@ -12,26 +12,60 @@ public class MenuManager : MonoBehaviour
     private bool quitFadeOutRunning = false;
     private bool seeingQuitPanel = false;
 
+    public GameObject rewardOuterPannel;
+    public GameObject rewardPanel;
+    private bool rewardFadeInRunning = false;
+    private bool rewardFadeOutRunning = false;
+    private bool seeingRewardPanel = false;
+
+    public GameObject getSoulOuterPanel;
+    public GameObject getSoulPanel;
+    private bool getSoulFadeInRunning = false;
+    private bool getSoulFadeOutRunning = false;
+    private bool seeingGetSoulPanel = false;
+    public Text getSoulPanelText;
+
     public AbsManager absManager;
 
     void Update()
     {
         // 안드로이드에서 뒤로가기 누르면 종료되는 처리
-        if(Application.platform == RuntimePlatform.Android)
-        {
-            if (Input.GetKey(KeyCode.Escape))
+        //if(Application.platform == RuntimePlatform.Android)
+        //{
+            if (Input.GetKeyDown(KeyCode.Escape))
             {
+                // Get Soul 창 보고 있다면
+                if (seeingGetSoulPanel)
+                {
+                    StartCoroutine(GetSoulPanelFadeOut());
+                    return;
+                }
+                // reward Ad 창 보고 있다면
+                if (seeingRewardPanel)
+                {
+                    StartCoroutine(GameRewardPanelFadeOut());
+                    return;
+                }
+                // Quit 창을 보고 있다면
+                if (seeingQuitPanel)
+                {
+                    StartCoroutine(GameQuitPanelFadeOut());
+                    return;
+                }
                 StartCoroutine(GameQuitPanelFadeIn());
             }
-        }
+        //}
     }
     
 
     public void OnBtnPlay()
     {
-        SceneManager.LoadScene("Play Scene");
+        SceneManager.LoadScene(1);
     }
 
+
+
+    // Quit Pannel
 
     public void OnBtnQuitYes()
     {
@@ -41,7 +75,6 @@ public class MenuManager : MonoBehaviour
         }
     }
 
-
     public void OnBtnQuitNo()
     {
         if (!quitFadeInRunning && !quitFadeOutRunning)
@@ -49,8 +82,6 @@ public class MenuManager : MonoBehaviour
             StartCoroutine(GameQuitPanelFadeOut());
         }
     }
-
-
     public void OnBtnOuterQuitNo()
     {
         if (seeingQuitPanel)
@@ -59,7 +90,60 @@ public class MenuManager : MonoBehaviour
         }
     }
 
-    
+
+
+    // Reward Panel
+
+    public void OnBtnRewardPanel()
+    {
+        if (!seeingRewardPanel)
+        {
+            StartCoroutine(GameRewardPanelFadeIn());
+        }
+    }
+
+    public void OnBtnRewardWatchAd()
+    {
+        if (!rewardFadeInRunning && !rewardFadeOutRunning)
+        {
+            absManager.ShowRewardAd();
+        }
+    }
+
+    public void OnBtnRewardNo()
+    {
+        if (!rewardFadeInRunning && !rewardFadeOutRunning)
+        {
+            StartCoroutine(GameRewardPanelFadeOut());
+        }
+    }
+
+    public void OnBtnOuterRewardNo()
+    {
+        if (seeingRewardPanel)
+        {
+            StartCoroutine(GameRewardPanelFadeOut());
+        }
+    }
+
+
+
+    // Get Soul Panel
+
+    public void RunGetSoulPanelFadeIn()
+    {
+        StartCoroutine(GetSoulPanelFadeIn());
+    }
+
+    public void OnBtnGetSoulOK()
+    {
+        if (seeingGetSoulPanel)
+        {
+            StartCoroutine(GetSoulPanelFadeOut());
+        }
+    }
+
+
     IEnumerator GameQuitPanelFadeIn()
     {
         if (quitFadeOutRunning) yield break;
@@ -74,7 +158,7 @@ public class MenuManager : MonoBehaviour
         {
             quitPanel.transform.localScale -= new Vector3(0.2f, 0.25f, 0.2f);
 
-            tmpColor.a += 0.1f;
+            tmpColor.a += 0.2f;
             quitPanelImage.color = tmpColor;
             if (quitPanel.transform.localScale.x <= 1.6f) break;
 
@@ -82,7 +166,7 @@ public class MenuManager : MonoBehaviour
         }
 
         quitPanel.transform.localScale = new Vector3(1.6f, 1.25f, 1.4f);
-        tmpColor.a = 0.5f;
+        tmpColor.a = 1f;
         quitPanelImage.color = tmpColor;
 
         absManager.ToggleAd(true);
@@ -109,7 +193,7 @@ public class MenuManager : MonoBehaviour
         {
             quitPanel.transform.localScale -= new Vector3(0.2f, 0.2f, 0.2f);
 
-            tmpColor.a -= 0.1f;
+            tmpColor.a -= 0.2f;
             quitPanelImage.color = tmpColor;
 
             if (quitPanel.transform.localScale.x <= 0) break;
@@ -123,5 +207,133 @@ public class MenuManager : MonoBehaviour
 
         quitFadeOutRunning = false;
         quitPanel.SetActive(false);
+    }
+
+
+    IEnumerator GameRewardPanelFadeIn()
+    {
+        if (rewardFadeOutRunning) yield break;
+
+        rewardPanel.SetActive(true);
+        rewardFadeInRunning = true;
+
+        Image rewardPanelImage = rewardPanel.GetComponent<Image>();
+        Color tmpColor = rewardPanelImage.color;
+
+        while (true)
+        {
+            rewardPanel.transform.localScale -= new Vector3(0.2f, 0.2f, 0.2f);
+
+            tmpColor.a += 0.2f;
+            rewardPanelImage.color = tmpColor;
+            if (rewardPanel.transform.localScale.x <= 1f) break;
+
+            yield return new WaitForSecondsRealtime(0.01f);
+        }
+
+        rewardPanel.transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
+        tmpColor.a = 1f;
+        rewardPanelImage.color = tmpColor;
+
+        seeingRewardPanel = true;
+        rewardOuterPannel.SetActive(true);
+
+        rewardFadeInRunning = false;
+    }
+
+
+    IEnumerator GameRewardPanelFadeOut()
+    {
+        if (rewardFadeInRunning) yield break;
+
+        rewardFadeOutRunning = true;
+        seeingRewardPanel = false;
+        rewardOuterPannel.SetActive(false);
+
+        Image rewardPanelImage = rewardPanel.GetComponent<Image>();
+        Color tmpColor = rewardPanelImage.color;
+
+        while (true)
+        {
+            rewardPanel.transform.localScale -= new Vector3(0.2f, 0.2f, 0.2f);
+
+            tmpColor.a -= 0.2f;
+            rewardPanelImage.color = tmpColor;
+
+            if (rewardPanel.transform.localScale.x <= 0) break;
+
+            yield return new WaitForSecondsRealtime(0.01f);
+        }
+
+        rewardPanel.transform.localScale = new Vector3(2, 2, 2);
+        tmpColor.a = 0f;
+        rewardPanelImage.color = tmpColor;
+
+        rewardFadeOutRunning = false;
+        rewardPanel.SetActive(false);
+    }
+
+
+    IEnumerator GetSoulPanelFadeIn()
+    {
+        if (getSoulFadeOutRunning) yield break;
+
+        getSoulPanel.SetActive(true);
+        getSoulFadeInRunning = true;
+
+        Image getSoulPanelImage = getSoulPanel.GetComponent<Image>();
+        Color tmpColor = getSoulPanelImage.color;
+
+        while (true)
+        {
+            getSoulPanel.transform.localScale -= new Vector3(0.2f, 0.2f, 0.2f);
+
+            tmpColor.a += 0.2f;
+            getSoulPanelImage.color = tmpColor;
+            if (getSoulPanel.transform.localScale.x <= 1f) break;
+
+            yield return new WaitForSecondsRealtime(0.01f);
+        }
+
+        getSoulPanel.transform.localScale = new Vector3(1f, 1f, 1f);
+        tmpColor.a = 1f;
+        getSoulPanelImage.color = tmpColor;
+
+        seeingGetSoulPanel = true;
+        getSoulOuterPanel.SetActive(true);
+
+        getSoulFadeInRunning = false;
+    }
+
+
+    IEnumerator GetSoulPanelFadeOut()
+    {
+        if (getSoulFadeInRunning) yield break;
+
+        getSoulFadeOutRunning = true;
+        seeingGetSoulPanel = false;
+        getSoulOuterPanel.SetActive(false);
+
+        Image getSoulPanelImage = getSoulPanel.GetComponent<Image>();
+        Color tmpColor = getSoulPanelImage.color;
+
+        while (true)
+        {
+            getSoulPanel.transform.localScale -= new Vector3(0.2f, 0.2f, 0.2f);
+
+            tmpColor.a -= 0.2f;
+            getSoulPanelImage.color = tmpColor;
+
+            if (getSoulPanel.transform.localScale.x <= 0) break;
+
+            yield return new WaitForSecondsRealtime(0.01f);
+        }
+
+        getSoulPanel.transform.localScale = new Vector3(2, 2, 2);
+        tmpColor.a = 0f;
+        getSoulPanelImage.color = tmpColor;
+
+        getSoulFadeOutRunning = false;
+        getSoulPanel.SetActive(false);
     }
 }

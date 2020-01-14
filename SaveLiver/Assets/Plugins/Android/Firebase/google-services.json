@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "938431771678",
+    "firebase_url": "https://save-liver-d0f47.firebaseio.com",
+    "project_id": "save-liver-d0f47",
+    "storage_bucket": "save-liver-d0f47.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:938431771678:android:d6f3a49502f40663c32a0f",
+        "android_client_info": {
+          "package_name": "com.hosan.saveliver"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "938431771678-4974tt5oj03t6igbrjjvv3i9jits442u.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.hosan.saveliver",
+            "certificate_hash": "7a0cfdf120d7f57d64854c6f45bf77093b4ef018"
+          }
+        },
+        {
+          "client_id": "938431771678-kik4nehm0u8teupsega4mpc2ubgugjg0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAE5MASL7YeidoBZiWpFlAd9PLmFiJ2meI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "938431771678-kik4nehm0u8teupsega4mpc2ubgugjg0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
