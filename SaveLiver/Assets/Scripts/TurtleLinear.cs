@@ -145,6 +145,8 @@ public class TurtleLinear : Enemy
             if (targetColor.a <= 0) break;
         }
 
+        base.isAlive = false;
+
         transform.parent.gameObject.SetActive(false);
     }
 
@@ -164,6 +166,9 @@ public class TurtleLinear : Enemy
         }
 
         isFadeOutRunning = false;
+
+        base.isAlive = false;
+
         transform.parent.gameObject.SetActive(false);
     }
 
@@ -239,8 +244,6 @@ public class TurtleLinear : Enemy
         yield return new WaitForSeconds(lifeTime);
 
         if (base.isAlive == false) yield break; // dont re died
-
-        base.isAlive = false; // died
 
         base.KeepOnTrail();
 

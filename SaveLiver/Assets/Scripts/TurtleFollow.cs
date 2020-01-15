@@ -198,6 +198,8 @@ public class TurtleFollow : Enemy
             if (targetColor.a <= 0) break;
         }
 
+        base.isAlive = false;
+
         transform.parent.gameObject.SetActive(false);
     }
 
@@ -217,9 +219,11 @@ public class TurtleFollow : Enemy
             if (targetColor.a <= 0) break;
         }
 
-        transform.parent.gameObject.SetActive(false);
+        base.isAlive = false;
 
         isFadeOutRunning = false;
+
+        transform.parent.gameObject.SetActive(false);
     }
 
 
@@ -293,8 +297,6 @@ public class TurtleFollow : Enemy
         yield return new WaitForSeconds(lifeTime);
 
         if (base.isAlive == false) yield break; // dont re died
-
-        base.isAlive = false; // died
 
         base.KeepOnTrail();
 
