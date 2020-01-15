@@ -19,10 +19,17 @@ public class Dragon : MonoBehaviour
 
     private void Start()
     {
-        isAlive = true;
-
+        BoxCollider2D collider = GetComponent<BoxCollider2D>();
+        collider.enabled = true;
+        Color color = GetComponent<SpriteRenderer>().color;
         dragonRenderer = GetComponent<Renderer>();
-
+        //원상태
+        color.a = 1.0f;
+        dragonRenderer.material.color = color;
+        
+        isNotMove = false;
+        isAlive = true;
+        
         enemyRigid = GetComponent<Rigidbody2D>();
 
         StartCoroutine(TimeCheckAndDestroy());
