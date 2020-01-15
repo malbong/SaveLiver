@@ -26,6 +26,7 @@ public class MenuManager : MonoBehaviour
     public Text getSoulPanelText;
 
     public AbsManager absManager;
+    public SceneTransition sceneTransition;
 
     void Update()
     {
@@ -60,7 +61,7 @@ public class MenuManager : MonoBehaviour
 
     public void OnBtnPlay()
     {
-        SceneManager.LoadScene(1);
+        sceneTransition.LoadPlayScene();
     }
 
 
