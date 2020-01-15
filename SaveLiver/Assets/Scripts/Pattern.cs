@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class Pattern : MonoBehaviour
 {
-    public TurtleLinear linearTutle;
-    public Dragon dragon;
+    
+    
     public Swirl swirl;
     private Vector3 playerPosition;
     private float spawnRadius;
@@ -33,7 +33,9 @@ public class Pattern : MonoBehaviour
             Dragon(-1, 1, 2.5f);
             yield return new WaitForSeconds(3.0f);
             AllDirection8();
+            Dragon(-1, 1, 2.5f);
             Dragon(1, 1, 2f);
+            Dragon(1, -1, 2f);
             yield return new WaitForSeconds(3.0f);
             Dragon(1, -1, 2f);
             DiagonalLeft(2f);
@@ -210,12 +212,16 @@ public class Pattern : MonoBehaviour
             if (isOver == 1) // create over player
             {
                 Vector3 createPosition = playerPosition + new Vector3(20, interval, 0);
-                Dragon instance = Instantiate(dragon, createPosition, Quaternion.identity);
+                GameObject obj = ObjectPooler.instance.GetDragonObject(1);
+                obj.transform.position = createPosition;
+                obj.SetActive(true);
             }
             else // create under player
             {
                 Vector3 createPosition = playerPosition + new Vector3(20, -interval, 0);
-                Dragon instance = Instantiate(dragon, createPosition, Quaternion.identity);
+                GameObject obj = ObjectPooler.instance.GetDragonObject(1);
+                obj.transform.position = createPosition;
+                obj.SetActive(true);
             }
         }
         else // create left
@@ -223,14 +229,16 @@ public class Pattern : MonoBehaviour
             if (isOver == 1) // create over player
             {
                 Vector3 createPosition = playerPosition + new Vector3(-20, interval, 0);
-                Dragon instance = Instantiate(dragon, createPosition, Quaternion.identity);
-                instance.transform.Rotate(0, 180, 0);
+                GameObject obj = ObjectPooler.instance.GetDragonObject(0);
+                obj.transform.position = createPosition;
+                obj.SetActive(true);
             }
             else // create under player
             {
                 Vector3 createPosition = playerPosition + new Vector3(-20, -interval, 0);
-                Dragon instance = Instantiate(dragon, createPosition, Quaternion.identity);
-                instance.transform.Rotate(0, 180, 0);
+                GameObject obj = ObjectPooler.instance.GetDragonObject(0);
+                obj.transform.position = createPosition;
+                obj.SetActive(true);
             }
         }
 

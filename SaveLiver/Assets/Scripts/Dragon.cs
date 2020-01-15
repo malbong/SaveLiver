@@ -4,26 +4,36 @@ using UnityEngine;
 
 public class Dragon : MonoBehaviour
 {
-    public float speed = 10.0f;
+    public float speed = 12.0f;
     public float lifeTime = 10.0f;
     public int score = 50;
     private bool isNotMove = false;
     //private bool isHitOnPlayer = false;
     private Rigidbody2D enemyRigid;
     private Renderer dragonRenderer;
-    private Renderer dragonTrackRenderer;
     public Animator DeadAnim;
     public Soul soul;
+    private bool isAlive;
+    private bool isFadeOutRunning = false;
+
 
     private void Start()
     {
+        isAlive = true;
+
         dragonRenderer = GetComponent<Renderer>();
-        dragonTrackRenderer = transform.GetChild(5).GetComponent<Renderer>();
-        // GetChild(5) : Dragon Track
+
         enemyRigid = GetComponent<Rigidbody2D>();
 
         StartCoroutine(TimeCheckAndDestroy());
-        Destroy(dragonTrackRenderer.gameObject, 1.5f);
+
+        StartCoroutine(DirectionSetActiveFalseAndFadeOut());
+    }
+
+
+    private void OnEnable()
+    {
+        Start();
     }
 
 
@@ -31,6 +41,37 @@ public class Dragon : MonoBehaviour
     {
         if (GameManager.instance.isPause) return;
         Move();
+    }
+
+
+    IEnumerator DirectionSetActiveFalseAndFadeOut()
+    {
+        if (!isAlive) yield break;
+
+        Transform direction = transform.GetChild(5);
+
+        SpriteRenderer directionSprite = direction.GetComponent<SpriteRenderer>();
+        Color tmpColor = directionSprite.color;
+
+        tmpColor.a = 1.0f;
+        directionSprite.color = tmpColor;
+
+        direction.gameObject.SetActive(true);
+
+        while (true)
+        {
+            tmpColor.a -= Time.deltaTime / 2.0f;
+            directionSprite.color = tmpColor;
+
+            if (tmpColor.a <= 0) break;
+
+            yield return null;
+        }
+
+        direction.gameObject.SetActive(false);
+
+        tmpColor.a = 1.0f;
+        directionSprite.color = tmpColor;
     }
 
 
@@ -43,7 +84,8 @@ public class Dragon : MonoBehaviour
     */
     public void Move()
     {
-        if(!isNotMove) enemyRigid.velocity = -transform.right * speed;
+        if (!isAlive) return;
+        if (!isNotMove) enemyRigid.velocity = -transform.right * speed;
     }
 
 
@@ -80,10 +122,14 @@ public class Dragon : MonoBehaviour
     */
     private void OnDead()
     {
+        if (!isAlive) return; //죽었으면 리턴
+
         enemyRigid.velocity = Vector2.zero;
         isNotMove = true;
 
         DeadAnim.SetTrigger("Dead");
+        StartCoroutine(FadeOutAndDead());
+
         soul.CreateSoul(transform.position + new Vector3(0, 0, 0), 0.5f);
         soul.CreateSoul(transform.position + new Vector3(1, 0, 0), 0.5f);
         soul.CreateSoul(transform.position + new Vector3(1.5f, 0, 0), 0.5f);
@@ -91,7 +137,8 @@ public class Dragon : MonoBehaviour
         soul.CreateSoul(transform.position + new Vector3(-1, 0, 0), 0.5f);
         soul.CreateSoul(transform.position + new Vector3(-1.5f, 0, 0), 0.5f);
         soul.CreateSoul(transform.position + new Vector3(-2f, 0, 0), 0.5f);
-        StartCoroutine(FadeOutAndDead());
+
+        isAlive = false;
     }
 
 
@@ -105,6 +152,8 @@ public class Dragon : MonoBehaviour
     */
     IEnumerator FadeOutAndDead()
     {
+        isFadeOutRunning = true;
+
         BoxCollider2D collider = GetComponent<BoxCollider2D>();
         collider.enabled = false;
         Color color = GetComponent<SpriteRenderer>().color;
@@ -114,7 +163,15 @@ public class Dragon : MonoBehaviour
             dragonRenderer.material.color = color;
             yield return new WaitForSeconds(0.01f);
         }
+
+        //원상태
+        color.a = 1.0f;
+        dragonRenderer.material.color = color;
         collider.enabled = true;
+
+        isNotMove = false;
+
+        isFadeOutRunning = false;
         gameObject.SetActive(false);
     }
 
@@ -126,9 +183,15 @@ public class Dragon : MonoBehaviour
     * @출력: IEnumerator
     * @설명: lifeTime이 지난 후 비활성화
     */
-    IEnumerator TimeCheckAndDestroy()
+    private IEnumerator TimeCheckAndDestroy()
     {
         yield return new WaitForSeconds(lifeTime);
-        gameObject.SetActive(false);
+
+        if (isAlive == false) yield break; // dont re died
+
+        if (!isFadeOutRunning)
+        {
+            StartCoroutine(FadeOutAndDead());
+        }
     }
 }

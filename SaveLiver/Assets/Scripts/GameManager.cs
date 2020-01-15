@@ -633,6 +633,7 @@ public class GameManager : MonoBehaviour
         {
             if (!pausePanelFadeOutRunning)
             {
+                ObjectPooler.instance.OnReset();
                 SceneManager.LoadScene(sceneName);
                 yield break;
             }
@@ -643,6 +644,7 @@ public class GameManager : MonoBehaviour
         {
             if (!pausePanelFadeOutRunning)
             {
+                ObjectPooler.instance.OnReset();
                 SceneManager.LoadScene(sceneName);
                 yield break;
             }

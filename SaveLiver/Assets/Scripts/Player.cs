@@ -264,6 +264,7 @@ public class Player : MonoBehaviour
     // test용 재시작
     private void Respawn()
     {
+        ObjectPooler.instance.OnReset();
         SceneManager.LoadScene(0);
     }
 

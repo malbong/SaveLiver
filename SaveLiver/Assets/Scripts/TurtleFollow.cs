@@ -17,6 +17,8 @@ public class TurtleFollow : Enemy
     private GameObject indicatorObj;
     private bool hasIndicator = false;
 
+    private bool isFadeOutRunning = false;
+
 
     private void Start()
     {
@@ -35,7 +37,7 @@ public class TurtleFollow : Enemy
         spriteRenderer.color = new Color32(255, 255, 255, 255);
         spriteRenderer.sprite = sprite;
 
-        //Invoke("OnDead", lifeTime);
+        StartCoroutine(TimeCheckAndDestroy());
     }
 
 
@@ -54,6 +56,7 @@ public class TurtleFollow : Enemy
         {
             OffScreenIndicator.instance.DrawIndicator(gameObject, indicatorObj);
         }
+
         transform.parent.position = transform.position;
         //parentRigid.velocity = -transform.up * speed;
         transform.localPosition = Vector3.zero;
@@ -73,6 +76,7 @@ public class TurtleFollow : Enemy
         if (IsOffScreen() && !hasIndicator && isAlive) // 화면 밖인데 내 Indicator가 없으면
         {
             indicatorObj = ObjectPooler.instance.GetIndicatorObject(0); // 내 Indicator 생성
+            indicatorObj.transform.SetParent(OffScreenIndicator.instance.transform);
             indicatorObj.SetActive(true);
             hasIndicator = true;
         }
@@ -175,8 +179,8 @@ public class TurtleFollow : Enemy
             PlayParticle(false);
 
             soul.CreateSoul(transform.position, 1);
-
-            StartCoroutine(FadeOut(onDeadParticle.main.duration));//end setActive(false)
+            
+            StartCoroutine(FadeOut());
         }
     }
 
@@ -193,22 +197,29 @@ public class TurtleFollow : Enemy
             yield return null;
             if (targetColor.a <= 0) break;
         }
+
         transform.parent.gameObject.SetActive(false);
     }
 
 
-    private IEnumerator FadeOut(float waitTime)
+    private IEnumerator FadeOut()
     {
+        isFadeOutRunning = true;
+
         SpriteRenderer spriteRenderer = transform.parent.GetComponent<SpriteRenderer>();
         while (true)
         {
             Color targetColor = spriteRenderer.color;
             targetColor.a -= Time.deltaTime;
+
             spriteRenderer.color = targetColor;
             yield return null;
             if (targetColor.a <= 0) break;
         }
+
         transform.parent.gameObject.SetActive(false);
+
+        isFadeOutRunning = false;
     }
 
 
@@ -228,7 +239,7 @@ public class TurtleFollow : Enemy
         }
         particleInstance.GetComponent<AudioSource>().Play();
 
-        StartCoroutine(WaitSetActiveFalse(obj));
+        StartCoroutine(WaitSetActiveFalse(obj, 2.0f));
     }
 
 
@@ -270,15 +281,35 @@ public class TurtleFollow : Enemy
     }
 
 
-    private IEnumerator WaitSetActiveFalse(GameObject obj)
+    private IEnumerator WaitSetActiveFalse(GameObject obj, float waitTime)
     {
-        yield return new WaitForSeconds(2.0f);
+        yield return new WaitForSeconds(waitTime);
         obj.SetActive(false);
     }
 
 
-    private void CreateSoul()
+    private IEnumerator TimeCheckAndDestroy()
     {
-        //Instantiate()
+        yield return new WaitForSeconds(lifeTime);
+
+        if (base.isAlive == false) yield break; // dont re died
+
+        base.isAlive = false; // died
+
+        base.KeepOnTrail();
+
+        transform.GetComponent<CircleCollider2D>().enabled = false;
+
+        if (hasIndicator && indicatorObj != null)
+        {
+            hasIndicator = false;
+            indicatorObj.SetActive(false);
+        }
+        transform.GetChild(0).gameObject.SetActive(false);
+
+        if (!isFadeOutRunning)
+        {
+            StartCoroutine(FadeOut());
+        }
     }
 }

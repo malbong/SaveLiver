@@ -50,6 +50,7 @@ public class Item : MonoBehaviour
         if (IsOffScreen() && !hasIndicator) // 화면 밖인데 내 Indicator가 없으면
         {
             indicatorObj = ObjectPooler.instance.GetIndicatorObject(1); // 내 Indicator 생성
+            indicatorObj.transform.SetParent(OffScreenIndicator.instance.transform);
             indicatorObj.SetActive(true);
             hasIndicator = true;
         }
