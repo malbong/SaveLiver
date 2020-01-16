@@ -41,6 +41,11 @@ public class GameManager : MonoBehaviour
 
     public static bool isVibrationOn = true;
 
+    public GoogleAuth googleAuthController;
+    public GameObject logButton;
+    public Sprite loginSprite;
+    public Sprite logoutSprite;
+
     public float originTimeScale; //Time.timeScale 저장 변수 -> 원상태로 돌리기 위함 (timescale값을 잃어버리기 때문)
 
     //private Color originColor; //원래 카메라 색 임시저장
@@ -60,6 +65,10 @@ public class GameManager : MonoBehaviour
     public Text totalItemText;
     public Text totalSoulText;
     public Text totalScoreText;
+    public Text totalScoreBannerText;
+
+    public Image totalScoreBannerFlashImage;
+    public Image totalScoreFlashImage;
 
     private bool pauseButtonFadeOutRunning = false;
     private bool pauseButtonFadeInRunning = false;
@@ -73,6 +82,7 @@ public class GameManager : MonoBehaviour
     private bool nextPageFadeRunning = false;
     private bool previousPageFadeRunning = false;
     private bool scoreUpRunning = false;
+    private bool isFlashScoreImageRunning = false;
 
     public AudioClip scoreUpClip;
 
@@ -80,11 +90,12 @@ public class GameManager : MonoBehaviour
     {
         if (instance == null)
         {
-            instance = this; // instance 초기화
+            instance = this;
+            DontDestroyOnLoad(instance);
         }
         else if (instance != this)
         {
-            Destroy(gameObject);
+            Destroy(this.gameObject);
         }
     }
 
@@ -109,6 +120,7 @@ public class GameManager : MonoBehaviour
 
         helpPanelPage = 1;
         helpPageText.text = helpPanelPage + " / 3";
+
     }
 
 
@@ -455,11 +467,32 @@ public class GameManager : MonoBehaviour
     }
 
 
-    public void OnLogout()
+    public void OnLogoutAndLogInButton()
     {
-
+        googleAuthController.TryGoogleLoginOrLogout();
     }
 
+
+    public void UpdateLoginAndLogout(bool isLogin)
+    {
+        Transform logImage = logButton.transform.Find("Log Image");
+        Transform logText = logButton.transform.Find("Log Text");
+
+        if (logImage == null) { Debug.Log("not found Log Image"); return; }
+        if (logText == null) { Debug.Log("not found Log Text"); return; }
+
+        if (isLogin) //로그인 되어있으면 logout 을 보여줌
+        {
+            logImage.GetComponent<Image>().sprite = logoutSprite;
+            logText.GetComponent<Text>().text = "Log Out";
+        }
+        else
+        {
+            logImage.GetComponent<Image>().sprite = loginSprite;
+            logText.GetComponent<Text>().text = "Log In";
+        }
+    }
+    
 
     public void PlayerDied()
     {
@@ -894,7 +927,7 @@ public class GameManager : MonoBehaviour
         {
             diedPanel.transform.localScale -= new Vector3(0.2f, 0.2f, 0);
 
-            tmpColor.a += 0.15f;
+            tmpColor.a += 0.17f;
             diedPanelImage.color = tmpColor;
 
             if (diedPanel.transform.localScale.x <= 1.0f)
@@ -1000,22 +1033,8 @@ public class GameManager : MonoBehaviour
             yield return new WaitForSecondsRealtime(0.03f);
         }
 
-        //total score
-        int tmpTotalScore = 0;
-        while (true)
-        {
-            totalScoreText.text = "Total Score: " + tmpTotalScore.ToString();
-            if (tmpTotalScore >= totalScore)
-            {
-                totalScoreText.text = "Total Score: " + totalScore.ToString();
-                break;
-            }
-
-            tmpTotalScore += 3;
-            yield return new WaitForSecondsRealtime(0.001f);
-        }
-
-        diedInnerPanel.SetActive(false);
+        //total score flash
+        StartCoroutine(FlashScoreImage());
 
         scoreUpRunning = false;
     }
@@ -1029,14 +1048,18 @@ public class GameManager : MonoBehaviour
             return;
         }
         
-
         StopCoroutine("ScoreUp");
-
-        Debug.Log("StopCoroutine");
+        
         totalTimeText.text = GetTimeToString(totalPlayTime);
         totalItemText.text = "X " + totalGetItemCount.ToString();
         totalSoulText.text = "X " + totalSoulCount.ToString();
-        totalScoreText.text = "Total Score: " + totalScore.ToString();
+        totalScoreText.text = "Total: " + totalScore.ToString();
+        totalScoreBannerText.text = totalScore.ToString();
+
+        if (!isFlashScoreImageRunning)
+        {
+            StartCoroutine(FlashScoreImage());
+        }
 
         scoreUpRunning = false;
         diedInnerPanel.SetActive(false);
@@ -1051,5 +1074,51 @@ public class GameManager : MonoBehaviour
 
             yield return new WaitForSecondsRealtime(0.01f);
         }
+    }
+
+
+    private IEnumerator FlashScoreImage()
+    {
+        isFlashScoreImageRunning = true;
+
+        Color tmpColor = totalScoreBannerFlashImage.color;
+
+        while (true)
+        {
+            tmpColor.a += 0.2f;
+            totalScoreFlashImage.color = tmpColor;
+            totalScoreBannerFlashImage.color = tmpColor;
+
+            totalScoreFlashImage.transform.localScale += new Vector3(0.2f, 0.2f, 0);
+            totalScoreBannerFlashImage.transform.localScale += new Vector3(0.2f, 0.2f, 0);
+            if (tmpColor.a >= 1.0f) break;
+            yield return new WaitForSecondsRealtime(0.01f);
+        }
+
+        totalScoreBannerText.text = totalScore.ToString();
+        totalScoreText.text = "Total: " + totalScore.ToString();
+
+        while (true)
+        {
+            tmpColor.a -= 0.05f;
+            totalScoreFlashImage.color = tmpColor;
+            totalScoreBannerFlashImage.color = tmpColor;
+
+            totalScoreFlashImage.transform.localScale -= new Vector3(0.05f, 0.05f, 0);
+            totalScoreBannerFlashImage.transform.localScale -= new Vector3(0.05f, 0.05f, 0);
+            if (tmpColor.a <= 0) break;
+            yield return new WaitForSecondsRealtime(0.01f);
+        }
+
+        diedInnerPanel.SetActive(false);
+
+        //원상태로
+        totalScoreFlashImage.transform.localScale = new Vector3(0, 0, 0);
+        totalScoreBannerFlashImage.transform.localScale -= new Vector3(0, 0, 0);
+        tmpColor.a = 0f;
+        totalScoreFlashImage.color = tmpColor;
+        totalScoreBannerFlashImage.color = tmpColor;
+
+        isFlashScoreImageRunning = false;
     }
 }
