@@ -25,7 +25,7 @@ public class GoogleAuth : MonoBehaviour
 
     private void Update()
     {
-        GameManager.instance.UpdateLoginAndLogout(Social.localUser.authenticated);
+        SettingsManager.instance.UpdateLoginAndLogout(Social.localUser.authenticated);
     }
 
 
