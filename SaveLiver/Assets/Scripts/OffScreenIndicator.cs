@@ -9,10 +9,18 @@ public class OffScreenIndicator : MonoBehaviour
 
     private void Awake()
     {
-        instance = this;
+        if (instance == null)
+        {
+            instance = this;
+            DontDestroyOnLoad(instance);
+        }
+        else if (instance != this)
+        {
+            instance.GetComponent<Canvas>().worldCamera = Camera.main;
+            Destroy(this.gameObject);
+        }
     }
 
-    public ObjectPooler objectPooler;
 
     public Image screen;
 
@@ -24,6 +32,7 @@ public class OffScreenIndicator : MonoBehaviour
     float playerToScreenTop;
     float playerToScreenBottom;
     float screenHalfWidth;
+
 
     void Start()
     {

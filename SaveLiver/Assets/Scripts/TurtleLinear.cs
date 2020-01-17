@@ -12,6 +12,8 @@ public class TurtleLinear : Enemy
     public float speed = 7.0f;
     private Rigidbody2D enemyRigid;
 
+    private bool isFadeOutRunning = false;
+
 
     private void Start()
     {
@@ -30,10 +32,9 @@ public class TurtleLinear : Enemy
         spriteRenderer.color = new Color32(255, 255, 255, 255);
         spriteRenderer.sprite = sprite;
         
-        transform.GetChild(1).gameObject.SetActive(true);
-        StartCoroutine(LinearDirectionSetActive());
+        StartCoroutine(DirectionSetActiveFalseAndFadeOut());
 
-        //Invoke("OnDead", lifeTime);
+        StartCoroutine(TimeCheckAndDestroy());
     }
 
 
@@ -43,10 +44,32 @@ public class TurtleLinear : Enemy
     }
 
 
-    IEnumerator LinearDirectionSetActive()
+    IEnumerator DirectionSetActiveFalseAndFadeOut()
     {
-        yield return new WaitForSeconds(1.5f);
-        transform.GetChild(1).gameObject.SetActive(false);
+        Transform direction = transform.GetChild(1);
+
+        SpriteRenderer directionSprite = direction.GetComponent<SpriteRenderer>();
+        Color tmpColor = directionSprite.color;
+
+        tmpColor.a = 1.0f;
+        directionSprite.color = tmpColor;
+
+        direction.gameObject.SetActive(true);
+        
+        while (true)
+        {
+            tmpColor.a -= Time.deltaTime;
+            directionSprite.color = tmpColor;
+            
+            if (tmpColor.a <= 0) break;
+
+            yield return new WaitForSeconds(Time.deltaTime);
+        }
+
+        direction.gameObject.SetActive(false);
+        
+        tmpColor.a = 1.0f;
+        directionSprite.color = tmpColor;
     }
 
 
@@ -86,6 +109,7 @@ public class TurtleLinear : Enemy
         if (getLiver == true)
         {
             PlayParticle(true);
+
             StartCoroutine(GetLiverFadeOut());
         }
         else //getLiver == false
@@ -94,7 +118,7 @@ public class TurtleLinear : Enemy
 
             soul.CreateSoul(transform.position, 0.3f);
 
-            StartCoroutine(FadeOut(onDeadParticle.main.duration));
+            StartCoroutine(FadeOut());
         }
         //use AudioSource.Play()
 
@@ -120,12 +144,17 @@ public class TurtleLinear : Enemy
             yield return null;
             if (targetColor.a <= 0) break;
         }
+
+        base.isAlive = false;
+
         transform.parent.gameObject.SetActive(false);
     }
 
 
-    private IEnumerator FadeOut(float waitTime)
+    private IEnumerator FadeOut()
     {
+        isFadeOutRunning = true;
+
         SpriteRenderer spriteRenderer = transform.parent.GetComponent<SpriteRenderer>();
         while (true)
         {
@@ -135,7 +164,11 @@ public class TurtleLinear : Enemy
             yield return null;
             if (targetColor.a <= 0) break;
         }
-        //yield return new WaitForSeconds(waitTime);
+
+        isFadeOutRunning = false;
+
+        base.isAlive = false;
+
         transform.parent.gameObject.SetActive(false);
     }
 
@@ -156,13 +189,13 @@ public class TurtleLinear : Enemy
         }
         particleInstance.GetComponent<AudioSource>().Play();
 
-        StartCoroutine(WaitSetActiveFalse(obj));
+        StartCoroutine(WaitSetActiveFalse(obj, 2.0f));
     }
 
 
-    private IEnumerator WaitSetActiveFalse(GameObject obj)
+    private IEnumerator WaitSetActiveFalse(GameObject obj, float waitTime)
     {
-        yield return new WaitForSeconds(2.0f);
+        yield return new WaitForSeconds(waitTime);
         obj.SetActive(false);
     }
 
@@ -202,6 +235,25 @@ public class TurtleLinear : Enemy
 
                 }
             }
+        }
+    }
+
+
+    private IEnumerator TimeCheckAndDestroy()
+    {
+        yield return new WaitForSeconds(lifeTime);
+
+        if (base.isAlive == false) yield break; // dont re died
+
+        base.KeepOnTrail();
+
+        transform.GetComponent<CircleCollider2D>().enabled = false;
+        
+        transform.GetChild(0).gameObject.SetActive(false);
+
+        if (!isFadeOutRunning)
+        {
+            StartCoroutine(FadeOut());
         }
     }
 }

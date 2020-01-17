@@ -151,7 +151,7 @@ public class Player : MonoBehaviour
             return;
         }
 
-        if (GameManager.isVibrationOn == true)
+        if (PlayerInformation.isVibrationOn == true)
         {
             Vibration.Vibrate(800);
         }
@@ -183,7 +183,7 @@ public class Player : MonoBehaviour
             return;
         }
 
-        if (GameManager.isVibrationOn == true)
+        if (PlayerInformation.isVibrationOn == true)
         {
             Vibration.Vibrate(800);
         }
@@ -264,6 +264,7 @@ public class Player : MonoBehaviour
     // test용 재시작
     private void Respawn()
     {
+        ObjectPooler.instance.OnReset();
         SceneManager.LoadScene(0);
     }
 

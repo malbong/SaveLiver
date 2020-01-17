@@ -8,9 +8,8 @@ using Firebase.Auth;
 
 public class GoogleAuth : MonoBehaviour
 {
-    public Text logText;
-
     private FirebaseAuth auth;
+    public bool isLogin = false;
 
     void Start()
     {
@@ -26,12 +25,11 @@ public class GoogleAuth : MonoBehaviour
 
     private void Update()
     {
-        if (PlayerInformation.isLogin) logText.text = "Log Out";
-        else logText.text = "Log In";
+        SettingsManager.instance.UpdateLoginAndLogout(Social.localUser.authenticated);
     }
 
-    
-    public void TryGoogleLoginOrLogout()
+
+    public bool TryGoogleLoginOrLogout()
     {
         InitializedGooglePlay(); // 구글 플레이 플랫폼 활성화(초기화)
         if (!Social.localUser.authenticated) // 로그인이 되어 있지 않다면
@@ -43,6 +41,7 @@ public class GoogleAuth : MonoBehaviour
                     StartCoroutine(TryFirebaseLogin());
                 }
             });
+            isLogin = true; //로그인함
         }
         else // 로그인 되어 있다면
         {
@@ -51,7 +50,9 @@ public class GoogleAuth : MonoBehaviour
             PlayerInformation.auth.SignOut();
             PlayGamesPlatform.Instance.SignOut();
             PlayerInformation.isLogin = false;
+            isLogin = false;
         }
+        return isLogin;
     }
 
 

@@ -31,26 +31,7 @@ public class GameManager : MonoBehaviour
 
     public GameObject pausePanel;
 
-    public GameObject soundButton;
-    public Sprite soundOnSprite;
-    public Sprite soundOffSprite;
-
-    public GameObject vibeButton;
-    public Sprite vibeOnSprite;
-    public Sprite vibeOffSprite;
-
-    public static bool isVibrationOn = true;
-
     public float originTimeScale; //Time.timeScale 저장 변수 -> 원상태로 돌리기 위함 (timescale값을 잃어버리기 때문)
-
-    //private Color originColor; //원래 카메라 색 임시저장
-
-    public GameObject settingsOuterPanel;
-
-    public GameObject helpOuterPanel;
-    public GameObject pagePanel; //옮길 pagePanel
-    public Text helpPageText;
-    private int helpPanelPage = 1;
 
     public GameObject diedPanel;
     public GameObject diedInnerPanel;
@@ -60,31 +41,31 @@ public class GameManager : MonoBehaviour
     public Text totalItemText;
     public Text totalSoulText;
     public Text totalScoreText;
+    public Text totalScoreBannerText;
+
+    public Image totalScoreBannerFlashImage;
+    public Image totalScoreFlashImage;
 
     private bool pauseButtonFadeOutRunning = false;
     private bool pauseButtonFadeInRunning = false;
     private bool joyStickFadeOutRunning = false;
     private bool pausePanelFadeInRunning = false;
     private bool pausePanelFadeOutRunning = false;
-    private bool settingsPanelFadeInRunning = false;
-    private bool settingsPanelFadeOutRunning = false;
-    private bool helpPanelFadeInRunning = false;
-    private bool helpPanelFadeOutRunning = false;
-    private bool nextPageFadeRunning = false;
-    private bool previousPageFadeRunning = false;
     private bool scoreUpRunning = false;
+    private bool isFlashScoreImageRunning = false;
 
     public AudioClip scoreUpClip;
+
 
     private void Awake()
     {
         if (instance == null)
         {
-            instance = this; // instance 초기화
+            instance = this;
         }
         else if (instance != this)
         {
-            Destroy(gameObject);
+            Destroy(this.gameObject);
         }
     }
 
@@ -106,9 +87,6 @@ public class GameManager : MonoBehaviour
         UpdateSoulCount(0);
 
         totalPlayTime = 0;
-
-        helpPanelPage = 1;
-        helpPageText.text = helpPanelPage + " / 3";
     }
 
 
@@ -262,204 +240,6 @@ public class GameManager : MonoBehaviour
         StartCoroutine(LoadSceneAfterWaiting("Menu Scene"));
     }
     
-
-    public void OnSettingsButtonClick()
-    {
-        if (!isPause) return;
-
-        //Settings Panel Fade In
-        StartCoroutine(SettingsPanelFadeIn());
-        
-        //2번 Toggle하여 원래의 상태를 표현하게 함
-        OnSoundToggleButton();
-        OnSoundToggleButton();
-
-        OnVibeToggleButton();
-        OnVibeToggleButton();
-    }
-
-
-    public void OnSoundToggleButton()
-    {
-        if (!isPause) return;
-
-        bool isSoundOn = AudioListener.volume == 1f ? true : false;
-
-        if (isSoundOn)
-        {
-            AudioListener.volume = 0;
-            isSoundOn = false;
-
-            Transform soundImage = soundButton.transform.Find("Sound Image");
-            Transform soundText = soundButton.transform.Find("Sound Text");
-
-            if (soundImage == null)
-            {
-                Debug.Log("can't find Sound Image");
-                return;
-            }
-            if (soundText == null)
-            {
-                Debug.Log("can't find Sound Text");
-                return;
-            }
-
-            soundImage.GetComponent<Image>().sprite = soundOffSprite;
-            soundText.GetComponent<Text>().text = "Sound Off";
-        }
-        else //Sound Off
-        {
-            AudioListener.volume = 1;
-            isSoundOn = true;
-
-            Transform soundImage = soundButton.transform.Find("Sound Image");
-            Transform soundText = soundButton.transform.Find("Sound Text");
-
-            if (soundImage == null)
-            {
-                Debug.Log("can't find Sound Image");
-                return;
-            }
-            if (soundText == null)
-            {
-                Debug.Log("can't find Sound Text");
-                return;
-            }
-
-            soundImage.GetComponent<Image>().sprite = soundOnSprite;
-            soundText.GetComponent<Text>().text = "Sound On";
-
-        }
-    }
-
-
-    public void OnVibeToggleButton()
-    {
-        if (!isPause) return;
-
-        if (GameManager.isVibrationOn)
-        {
-            GameManager.isVibrationOn = false;
-
-            Transform vibeImage = vibeButton.transform.Find("Vibe Image");
-            Transform vibeText = vibeButton.transform.Find("Vibe Text");
-
-            if (vibeImage == null)
-            {
-                Debug.Log("can't find Vibe Image");
-                return;
-            }
-            if (vibeText == null)
-            {
-                Debug.Log("can't find Vibe Text");
-                return;
-            }
-
-            vibeImage.GetComponent<Image>().sprite = vibeOffSprite;
-            vibeText.GetComponent<Text>().text = "Vibration Off";
-        }
-        else //Vibration off
-        {
-            GameManager.isVibrationOn = true;
-
-            Transform vibeImage = vibeButton.transform.Find("Vibe Image");
-            Transform vibeText = vibeButton.transform.Find("Vibe Text");
-
-            if (vibeImage == null)
-            {
-                Debug.Log("can't find Vibe Image");
-                return;
-            }
-            if (vibeText == null)
-            {
-                Debug.Log("can't find Vibe Text");
-                return;
-            }
-
-            vibeImage.GetComponent<Image>().sprite = vibeOnSprite;
-            vibeText.GetComponent<Text>().text = "Vibration On";
-        }
-    }
-
-
-    public void OnSettingsExitButton()
-    {
-        if (!isPause) return;
-
-        //Settings Panel Fade Out
-        StartCoroutine(SettingsPanelFadeOut());
-    }
-
-
-    public void OnHelpButton()
-    {
-        if (!isPause) return;
-
-        //help page 초기화
-        helpPanelPage = 1;
-        helpPageText.text = helpPanelPage + " / 3";
-        pagePanel.transform.localPosition = new Vector3(0, 0, 0);
-
-        //Help Panel Fade In
-        StartCoroutine(HelpPanelFadeIn());
-    }
-
-
-    public void OnHelpPanelExitButton()
-    {
-        if (!isPause) return;
-
-        //Help Panel Fade Out
-        StartCoroutine(HelpPanelFadeOut());
-    }
-
-
-    public void OnHelpPanelNextButton()
-    {
-        if (helpPanelPage >= 3) //page 3 -> ignored
-        {
-            helpPanelPage = 3;
-            helpPageText.text = helpPanelPage + " / 3";
-            StartCoroutine(HelpPanelFadeOut());
-        }
-        else if (helpPanelPage >= 1) //page 1 2
-        {
-            helpPanelPage += 1;
-            helpPageText.text = helpPanelPage + " / 3";
-            //Slide Page
-            StartCoroutine(NextPageFadeIn());
-        }
-    }
-
-
-    public void OnHelpPanelPreviousButton()
-    {
-        if (helpPanelPage <= 1) //page 1 -> ignored
-        {
-            helpPanelPage = 1;
-            helpPageText.text = helpPanelPage + " / 3";
-        }
-        else if (helpPanelPage <= 3) //page 2 3
-        {
-            helpPanelPage -= 1;
-            helpPageText.text = helpPanelPage + " / 3";
-            //Slider Page
-            StartCoroutine(PreviousPageFadeIn());
-        }
-    }
-
-
-    public void OnPrivacyButton()
-    {
-
-    }
-
-
-    public void OnLogout()
-    {
-
-    }
-
 
     public void PlayerDied()
     {
@@ -633,6 +413,7 @@ public class GameManager : MonoBehaviour
         {
             if (!pausePanelFadeOutRunning)
             {
+                ObjectPooler.instance.OnReset();
                 SceneManager.LoadScene(sceneName);
                 yield break;
             }
@@ -643,232 +424,12 @@ public class GameManager : MonoBehaviour
         {
             if (!pausePanelFadeOutRunning)
             {
+                ObjectPooler.instance.OnReset();
                 SceneManager.LoadScene(sceneName);
                 yield break;
             }
             yield return new WaitForSecondsRealtime(0.01f);
         }
-    }
-
-
-    private IEnumerator SettingsPanelFadeIn()
-    {
-        if (settingsPanelFadeOutRunning) yield break;
-
-        settingsPanelFadeInRunning = true;
-
-        settingsOuterPanel.SetActive(true);
-
-        Transform settingsInnerPanel = settingsOuterPanel.transform.GetChild(0);
-
-        Image settingsOuterPanelImage = settingsOuterPanel.GetComponent<Image>();
-        Color tmpOuterColor = settingsOuterPanelImage.color;
-
-        Image settingsInnerPanelImage = settingsInnerPanel.GetComponent<Image>();
-        Color tmpInnerColor = settingsInnerPanelImage.color;
-
-        while (true)
-        {
-            settingsOuterPanel.transform.localScale -= new Vector3(0.2f, 0.2f, 0.2f);
-
-            tmpOuterColor.a += 0.1f;
-            tmpInnerColor.a += 0.2f;
-            settingsInnerPanelImage.color = tmpInnerColor;
-            settingsOuterPanelImage.color = tmpOuterColor;
-
-            if (settingsOuterPanel.transform.localScale.x <= 1) break;
-
-            yield return new WaitForSecondsRealtime(0.01f);
-        }
-
-        settingsOuterPanel.transform.localScale = new Vector3(1, 1, 1);
-
-        tmpOuterColor.a = 0.5f;
-        settingsOuterPanelImage.color = tmpOuterColor;
-
-        tmpInnerColor.a = 1f;
-        settingsInnerPanelImage.color = tmpInnerColor;
-
-        settingsPanelFadeInRunning = false;
-    }
-
-
-    private IEnumerator SettingsPanelFadeOut()
-    {
-        if (settingsPanelFadeInRunning) yield break;
-
-        settingsPanelFadeOutRunning = true;
-
-        settingsOuterPanel.SetActive(true);
-
-        Transform settingsInnerPanel = settingsOuterPanel.transform.GetChild(0);
-
-        Image settingsOuterPanelImage = settingsOuterPanel.GetComponent<Image>();
-        Color tmpOuterColor = settingsOuterPanelImage.color;
-
-        Image settingsInnerPanelImage = settingsInnerPanel.GetComponent<Image>();
-        Color tmpInnerColor = settingsInnerPanelImage.color;
-
-        while (true)
-        {
-            settingsOuterPanel.transform.localScale -= new Vector3(0.2f, 0.2f, 0.2f);
-
-            tmpOuterColor.a -= 0.1f;
-            tmpInnerColor.a -= 0.2f;
-            settingsInnerPanelImage.color = tmpInnerColor;
-            settingsOuterPanelImage.color = tmpOuterColor;
-
-            if (settingsOuterPanel.transform.localScale.x <= 0) break;
-
-            yield return new WaitForSecondsRealtime(0.01f);
-        }
-
-        settingsOuterPanel.SetActive(false);
-
-        settingsOuterPanel.transform.localScale = new Vector3(2, 2, 2);
-
-        tmpOuterColor.a = 0f;
-        settingsOuterPanelImage.color = tmpOuterColor;
-
-        tmpInnerColor.a = 0f;
-        settingsInnerPanelImage.color = tmpInnerColor;
-
-        settingsPanelFadeOutRunning = false;
-    }
-
-
-    private IEnumerator HelpPanelFadeIn()
-    {
-        if (helpPanelFadeOutRunning) yield break;
-
-        helpPanelFadeInRunning = true;
-
-        helpOuterPanel.SetActive(true);
-
-        Transform helpInnerPanel = helpOuterPanel.transform.GetChild(0);
-
-        Image helpOuterImage = helpOuterPanel.GetComponent<Image>();
-        Color tmpOuterColor = helpOuterImage.color;
-
-        Image helpInnerImage = helpInnerPanel.GetComponent<Image>();
-        Color tmpInnerColor = helpInnerImage.color;
-        
-        while (true)
-        {
-            helpOuterPanel.transform.localScale -= new Vector3(0.2f, 0.2f, 0.2f);
-
-            tmpOuterColor.a += 0.1f;
-            tmpInnerColor.a += 0.2f;
-            helpOuterImage.color = tmpOuterColor;
-            helpInnerImage.color = tmpInnerColor;
-
-            if (helpOuterPanel.transform.localScale.x <= 1) break;
-
-            yield return new WaitForSecondsRealtime(0.01f);
-        }
-
-        helpOuterPanel.transform.localScale = new Vector3(1, 1, 1);
-
-        tmpOuterColor.a = 0.5f;
-        helpOuterImage.color = tmpOuterColor;
-
-        tmpInnerColor.a = 1f;
-        helpInnerImage.color = tmpInnerColor;
-
-        helpPanelFadeInRunning = false;
-    }
-
-
-    private IEnumerator HelpPanelFadeOut()
-    {
-        if (helpPanelFadeInRunning) yield break;
-
-        helpPanelFadeOutRunning = true;
-
-        Transform helpInnerPanel = helpOuterPanel.transform.GetChild(0);
-
-        Image helpOuterImage = helpOuterPanel.GetComponent<Image>();
-        Color tmpOuterColor = helpOuterImage.color;
-
-        Image helpInnerImage = helpInnerPanel.GetComponent<Image>();
-        Color tmpInnerColor = helpInnerImage.color;
-
-        while (true)
-        {
-            helpOuterPanel.transform.localScale -= new Vector3(0.2f, 0.2f, 0.2f);
-
-            tmpOuterColor.a -= 0.1f;
-            tmpInnerColor.a -= 0.2f;
-            helpOuterImage.color = tmpOuterColor;
-            helpInnerImage.color = tmpInnerColor;
-
-            if (helpOuterPanel.transform.localScale.x <= 0) break;
-
-            yield return new WaitForSecondsRealtime(0.01f);
-        }
-
-        helpOuterPanel.SetActive(false);
-
-        helpOuterPanel.transform.localScale = new Vector3(2, 2, 2);
-
-        tmpOuterColor.a = 0f;
-        helpOuterImage.color = tmpOuterColor;
-
-        tmpInnerColor.a = 0f;
-        helpInnerImage.color = tmpInnerColor;
-
-        helpPanelFadeOutRunning = false;
-    }
-
-
-    private IEnumerator NextPageFadeIn()
-    {
-        if (previousPageFadeRunning) yield break;
-
-        nextPageFadeRunning = true;
-
-        Vector3 originPosition = pagePanel.transform.localPosition;
-        
-        while (true)
-        {
-            pagePanel.transform.localPosition += new Vector3(-100, 0, 0);
-            if (pagePanel.transform.localPosition.x - originPosition.x <= -1200)
-            {
-                break;
-            }
-
-            yield return new WaitForSecondsRealtime(0.01f);
-        }
-
-        pagePanel.transform.localPosition = originPosition - new Vector3(1200, 0, 0);
-
-        nextPageFadeRunning = false;
-    }
-
-
-    private IEnumerator PreviousPageFadeIn()
-    {
-        if (nextPageFadeRunning) yield break;
-
-        previousPageFadeRunning = true; 
-
-        Vector3 originPosition = pagePanel.transform.localPosition;
-
-        while (true)
-        {
-            pagePanel.transform.localPosition += new Vector3(+100, 0, 0);
-
-            if (pagePanel.transform.localPosition.x - originPosition.x >= +1200)
-            {
-                break;
-            }
-
-            yield return new WaitForSecondsRealtime(0.01f);
-        }
-
-        pagePanel.transform.localPosition = originPosition + new Vector3(1200, 0, 0);
-
-        previousPageFadeRunning = false;
     }
 
 
@@ -885,6 +446,26 @@ public class GameManager : MonoBehaviour
 
         diedPanel.SetActive(true);
 
+        Transform diedTextTransform = diedPanel.transform.Find("Died Text");
+        if (diedTextTransform == null) { Debug.Log("Not Found diedText"); }
+        else
+        {
+            Text diedText = diedTextTransform.GetComponent<Text>();
+            if (CheckBestScore())
+            {
+                diedText.color = Color.yellow;
+                diedText.fontSize = 140;
+                diedText.text = "Your\n Best Score";
+
+                totalScoreBannerText.color = Color.yellow;
+            }
+            else
+            {
+                diedText.GetComponent<Text>().text = "Your Score";
+            }
+        }
+        
+
         Image diedPanelImage = diedPanel.GetComponent<Image>();
         Color tmpColor = diedPanelImage.color;
 
@@ -892,7 +473,7 @@ public class GameManager : MonoBehaviour
         {
             diedPanel.transform.localScale -= new Vector3(0.2f, 0.2f, 0);
 
-            tmpColor.a += 0.15f;
+            tmpColor.a += 0.17f;
             diedPanelImage.color = tmpColor;
 
             if (diedPanel.transform.localScale.x <= 1.0f)
@@ -998,22 +579,8 @@ public class GameManager : MonoBehaviour
             yield return new WaitForSecondsRealtime(0.03f);
         }
 
-        //total score
-        int tmpTotalScore = 0;
-        while (true)
-        {
-            totalScoreText.text = "Total Score: " + tmpTotalScore.ToString();
-            if (tmpTotalScore >= totalScore)
-            {
-                totalScoreText.text = "Total Score: " + totalScore.ToString();
-                break;
-            }
-
-            tmpTotalScore += 3;
-            yield return new WaitForSecondsRealtime(0.001f);
-        }
-
-        diedInnerPanel.SetActive(false);
+        //total score flash
+        StartCoroutine(FlashScoreImage());
 
         scoreUpRunning = false;
     }
@@ -1027,14 +594,18 @@ public class GameManager : MonoBehaviour
             return;
         }
         
-
         StopCoroutine("ScoreUp");
-
-        Debug.Log("StopCoroutine");
+        
         totalTimeText.text = GetTimeToString(totalPlayTime);
         totalItemText.text = "X " + totalGetItemCount.ToString();
         totalSoulText.text = "X " + totalSoulCount.ToString();
-        totalScoreText.text = "Total Score: " + totalScore.ToString();
+        totalScoreText.text = "Total: " + totalScore.ToString();
+        totalScoreBannerText.text = totalScore.ToString();
+
+        if (!isFlashScoreImageRunning)
+        {
+            StartCoroutine(FlashScoreImage());
+        }
 
         scoreUpRunning = false;
         diedInnerPanel.SetActive(false);
@@ -1049,5 +620,58 @@ public class GameManager : MonoBehaviour
 
             yield return new WaitForSecondsRealtime(0.01f);
         }
+    }
+
+
+    private IEnumerator FlashScoreImage()
+    {
+        isFlashScoreImageRunning = true;
+
+        Color tmpColor = totalScoreBannerFlashImage.color;
+
+        while (true)
+        {
+            tmpColor.a += 0.2f;
+            totalScoreFlashImage.color = tmpColor;
+            totalScoreBannerFlashImage.color = tmpColor;
+
+            totalScoreFlashImage.transform.localScale += new Vector3(0.2f, 0.2f, 0);
+            totalScoreBannerFlashImage.transform.localScale += new Vector3(0.2f, 0.2f, 0);
+            if (tmpColor.a >= 1.0f) break;
+            yield return new WaitForSecondsRealtime(0.01f);
+        }
+
+        totalScoreBannerText.text = totalScore.ToString();
+        totalScoreText.text = "Total: " + totalScore.ToString();
+
+        while (true)
+        {
+            tmpColor.a -= 0.05f;
+            totalScoreFlashImage.color = tmpColor;
+            totalScoreBannerFlashImage.color = tmpColor;
+
+            totalScoreFlashImage.transform.localScale -= new Vector3(0.05f, 0.05f, 0);
+            totalScoreBannerFlashImage.transform.localScale -= new Vector3(0.05f, 0.05f, 0);
+            if (tmpColor.a <= 0) break;
+            yield return new WaitForSecondsRealtime(0.01f);
+        }
+
+        diedInnerPanel.SetActive(false);
+
+        //원상태로
+        totalScoreFlashImage.transform.localScale = new Vector3(0, 0, 0);
+        totalScoreBannerFlashImage.transform.localScale -= new Vector3(0, 0, 0);
+        tmpColor.a = 0f;
+        totalScoreFlashImage.color = tmpColor;
+        totalScoreBannerFlashImage.color = tmpColor;
+
+        isFlashScoreImageRunning = false;
+    }
+
+
+    public bool CheckBestScore()
+    {
+        return true;
+        
     }
 }
