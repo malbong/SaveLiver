@@ -446,6 +446,26 @@ public class GameManager : MonoBehaviour
 
         diedPanel.SetActive(true);
 
+        Transform diedTextTransform = diedPanel.transform.Find("Died Text");
+        if (diedTextTransform == null) { Debug.Log("Not Found diedText"); }
+        else
+        {
+            Text diedText = diedTextTransform.GetComponent<Text>();
+            if (CheckBestScore())
+            {
+                diedText.color = Color.yellow;
+                diedText.fontSize = 140;
+                diedText.text = "Your\n Best Score";
+
+                totalScoreBannerText.color = Color.yellow;
+            }
+            else
+            {
+                diedText.GetComponent<Text>().text = "Your Score";
+            }
+        }
+        
+
         Image diedPanelImage = diedPanel.GetComponent<Image>();
         Color tmpColor = diedPanelImage.color;
 
@@ -646,5 +666,12 @@ public class GameManager : MonoBehaviour
         totalScoreBannerFlashImage.color = tmpColor;
 
         isFlashScoreImageRunning = false;
+    }
+
+
+    public bool CheckBestScore()
+    {
+        return true;
+        
     }
 }
