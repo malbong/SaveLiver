@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using Firebase;
+using Firebase.Database;
+using Firebase.Unity.Editor;
 
 public class MenuManager : MonoBehaviour
 {
@@ -25,39 +28,66 @@ public class MenuManager : MonoBehaviour
     private bool seeingGetSoulPanel = false;
     public Text getSoulPanelText;
 
+    public GameObject storeOuterPanel;
+    public GameObject storePanel;
+    private bool storeFadeInRunning = false;
+    private bool storeFadeOutRunning = false;
+    private bool seeingStorePanel = false;
+
     public AbsManager absManager;
     public SceneTransition sceneTransition;
 
+    public Text soulText;
+
+
     void Update()
     {
+        soulText.text = PlayerInformation.SoulMoney.ToString(); // Soul Money 표시
+
         // 안드로이드에서 뒤로가기 누르면 종료되는 처리
         //if(Application.platform == RuntimePlatform.Android)
         //{
-            if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            // Store 창 보고 있다면
+            if (seeingStorePanel)
             {
-                // Get Soul 창 보고 있다면
-                if (seeingGetSoulPanel)
-                {
-                    StartCoroutine(GetSoulPanelFadeOut());
-                    return;
-                }
-                // reward Ad 창 보고 있다면
-                if (seeingRewardPanel)
-                {
-                    StartCoroutine(GameRewardPanelFadeOut());
-                    return;
-                }
-                // Quit 창을 보고 있다면
-                if (seeingQuitPanel)
-                {
-                    StartCoroutine(GameQuitPanelFadeOut());
-                    return;
-                }
-                StartCoroutine(GameQuitPanelFadeIn());
+                StartCoroutine(storePanelFadeOut());
+                return;
             }
+            // Get Soul 창 보고 있다면
+            if (seeingGetSoulPanel)
+            {
+                StartCoroutine(GetSoulPanelFadeOut());
+                return;
+            }
+            // reward Ad 창 보고 있다면
+            if (seeingRewardPanel)
+            {
+                StartCoroutine(GameRewardPanelFadeOut());
+                return;
+            }
+            // Quit 창을 보고 있다면
+            if (seeingQuitPanel)
+            {
+                StartCoroutine(GameQuitPanelFadeOut());
+                return;
+            }
+            StartCoroutine(GameQuitPanelFadeIn());
+        }
         //}
     }
-    
+
+    public void test()
+    {
+        PlayerInformation.SoulMoney += 1;
+    }
+
+    public void test2()
+    {
+        PlayerInformation.UpdateMoney(3);
+    }
+
 
     public void OnBtnPlay()
     {
@@ -141,6 +171,23 @@ public class MenuManager : MonoBehaviour
         if (seeingGetSoulPanel)
         {
             StartCoroutine(GetSoulPanelFadeOut());
+        }
+    }
+
+
+
+    // Store Panel
+
+    public void OnBtnStorePanel()
+    {
+        StartCoroutine(StorePanelFadeIn());
+    }
+
+    public void OnBtnStoreX()
+    {
+        if (seeingStorePanel)
+        {
+            StartCoroutine(storePanelFadeOut());
         }
     }
 
@@ -336,5 +383,69 @@ public class MenuManager : MonoBehaviour
 
         getSoulFadeOutRunning = false;
         getSoulPanel.SetActive(false);
+    }
+
+
+    IEnumerator StorePanelFadeIn()
+    {
+        if (storeFadeOutRunning) yield break;
+
+        storePanel.SetActive(true);
+        storeFadeInRunning = true;
+
+        Image storePanelImage = storePanel.GetComponent<Image>();
+        Color tmpColor = storePanelImage.color;
+
+        while (true)
+        {
+            storePanel.transform.localScale -= new Vector3(0.2f, 0.2f, 0.2f);
+
+            tmpColor.a += 0.2f;
+            storePanelImage.color = tmpColor;
+            if (storePanel.transform.localScale.x <= 1f) break;
+
+            yield return new WaitForSecondsRealtime(0.01f);
+        }
+
+        storePanel.transform.localScale = new Vector3(1f, 1f, 1f);
+        tmpColor.a = 1f;
+        storePanelImage.color = tmpColor;
+
+        seeingStorePanel = true;
+        storeOuterPanel.SetActive(true);
+
+        storeFadeInRunning = false;
+    }
+
+
+    IEnumerator storePanelFadeOut()
+    {
+        if (storeFadeInRunning) yield break;
+
+        storeFadeOutRunning = true;
+        seeingStorePanel = false;
+        storeOuterPanel.SetActive(false);
+
+        Image storePanelImage = storePanel.GetComponent<Image>();
+        Color tmpColor = storePanelImage.color;
+
+        while (true)
+        {
+            storePanel.transform.localScale -= new Vector3(0.2f, 0.2f, 0.2f);
+
+            tmpColor.a -= 0.2f;
+            storePanelImage.color = tmpColor;
+
+            if (storePanel.transform.localScale.x <= 0) break;
+
+            yield return new WaitForSecondsRealtime(0.01f);
+        }
+
+        storePanel.transform.localScale = new Vector3(2, 2, 2);
+        tmpColor.a = 0f;
+        storePanelImage.color = tmpColor;
+
+        storeFadeOutRunning = false;
+        storePanel.SetActive(false);
     }
 }

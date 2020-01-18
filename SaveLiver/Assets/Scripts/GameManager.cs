@@ -669,9 +669,15 @@ public class GameManager : MonoBehaviour
     }
 
 
-    public bool CheckBestScore()
+    private bool CheckBestScore()
     {
         return true;
         
+    }
+
+
+    private void SetBestScore()
+    {
+
     }
 }

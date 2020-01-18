@@ -7,8 +7,6 @@ using UnityEngine.UI;
 
 public class AbsManager : MonoBehaviour
 {
-    public Text tmptext;
-
     public MenuManager menuManager;
 
     private readonly string unitID = "ca-app-pub-3940256099942544/6300978111";
@@ -19,7 +17,7 @@ public class AbsManager : MonoBehaviour
     private BannerView banner;
     private RewardBasedVideoAd rewardBasedVideo;
 
-    public int rewardAdAmountSoul = 20;
+    public int rewardAdAmountSoul = 30;
 
     void Start()
     {
@@ -80,24 +78,21 @@ public class AbsManager : MonoBehaviour
         {
             menuManager.OnBtnRewardNo();
             menuManager.RunGetSoulPanelFadeIn();
-            menuManager.getSoulPanelText.text = "SORRY, NOT READY AD\nTRY AGAIN";
+            menuManager.getSoulPanelText.text = "SORRY, NOT READY AD" + "\nTRY AGAIN";
         }
     }
 
 
     public void HandleRewardBasedVideoRewarded(object sender, Reward args)
     {
-        string type = args.Type;
+        //string type = args.Type;
         double amount = args.Amount; // args.Amount = 1
         int finalAmount = (int)amount * rewardAdAmountSoul;
 
         menuManager.OnBtnRewardNo();
         menuManager.RunGetSoulPanelFadeIn();
-        menuManager.getSoulPanelText.text = "GOOD !\nYOU GOT 30 SOUL !";
+        menuManager.getSoulPanelText.text = "GOOD !" + "\nYOU GOT 30 SOUL !";
 
-        //test
-        finalAmount = 20;
-        tmptext.text = finalAmount.ToString();
+        PlayerInformation.UpdateMoney(finalAmount);
     }
-
 }
