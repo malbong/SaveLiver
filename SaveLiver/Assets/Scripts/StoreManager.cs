@@ -5,9 +5,14 @@ using UnityEngine.UI;
 
 public class StoreManager : MonoBehaviour
 {
-    public Sprite[] faceSprites;
+    public DatabaseManager databaseManager;
+
     public Sprite[] boatSprites;
+    public Sprite[] faceSprites;
     public Sprite[] waveSprites;
+
+    public Image boatImage;
+    public Image faceImage;
 
     public GameObject facePanel;
     public GameObject boatPanel;
@@ -163,5 +168,81 @@ public class StoreManager : MonoBehaviour
     {
         listText.text = waveIndex + 1 + " / " + waveCount;
 
+    }
+
+    public Text tmp;
+    public void UpdateCurrentCustom()
+    {
+        int[] customs = databaseManager.GetCurrentCustom();
+        // customs[0] : boat, 1 : face, 2: wave
+        tmp.text = customs[0].ToString() + " " + customs[1].ToString() + " " + customs[2].ToString();
+
+        // boat
+        if (customs[0] == 0)
+        {
+            boatImage.sprite = boatSprites[0];
+        }
+        else if(customs[0] == 1)
+        {
+
+        }
+        else if (customs[0] == 2)
+        {
+
+        }
+        else if (customs[0] == 3)
+        {
+
+        }
+        else if (customs[0] == 4)
+        {
+
+        }
+
+
+        // face
+        if (customs[1] == 0)
+        {
+            faceImage.sprite = faceSprites[0];
+        }
+        else if(customs[1] == 1)
+        {
+            faceImage.sprite = faceSprites[1];
+        }
+        else if (customs[1] == 2)
+        {
+            
+        }
+        else if (customs[1] == 3)
+        {
+            
+        }
+        else if (customs[1] == 4)
+        {
+            
+        }
+
+
+        // wave
+        if (customs[2] == 0)
+        {
+            // default wave particle
+        }
+        else if (customs[2] == 1)
+        {
+            
+        }
+        else if (customs[2] == 2)
+        {
+            
+        }
+        else if (customs[2] == 3)
+        {
+            
+        }
+        else if (customs[2] == 4)
+        {
+            
+        }
     }
 }

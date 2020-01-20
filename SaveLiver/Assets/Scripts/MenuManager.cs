@@ -78,16 +78,6 @@ public class MenuManager : MonoBehaviour
         //}
     }
 
-    public void test()
-    {
-        PlayerInformation.SoulMoney += 1;
-    }
-
-    public void test2()
-    {
-        PlayerInformation.UpdateMoney(3);
-    }
-
 
     public void OnBtnPlay()
     {

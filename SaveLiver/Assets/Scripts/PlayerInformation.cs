@@ -21,28 +21,4 @@ public static class PlayerInformation
         reference = FirebaseDatabase.DefaultInstance.RootReference;
         return reference;
     }
-
-    public static void UpdateMoney(int amount)
-    {
-        if (!isLogin) SoulMoney -= 5; // test
-
-        DatabaseReference reference = GetDatabaseReference()
-            .Child("user")
-            .Child("pnRD68Js9kU5O4UNvRaPcoueTsy2")
-            //.Child(auth.CurrentUser.UserId)
-            .Child("money");
-
-        reference.GetValueAsync().ContinueWith(task =>
-        {
-            if (task.IsCompleted)
-            {
-                DataSnapshot snapshot = task.Result;
-                IDictionary data = (IDictionary)snapshot.Value;
-                int dataMoney = int.Parse(data["money"].ToString());
-                SoulMoney = dataMoney + amount;
-
-
-            }
-        });
-    }
 }

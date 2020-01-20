@@ -10,6 +10,8 @@ public class GoogleAuth : MonoBehaviour
 {
     private FirebaseAuth auth;
     public bool isLogin = false;
+    public DatabaseManager databaseManager;
+
 
     void Start()
     {
@@ -80,6 +82,7 @@ public class GoogleAuth : MonoBehaviour
                 FirebaseUser newUser = task.Result;
                 PlayerInformation.auth = auth;
                 PlayerInformation.isLogin = true;
+                databaseManager.SetNewUserData();
             }
         });
     }
