@@ -49,6 +49,7 @@ public class MenuManager : MonoBehaviour
         //{
         if (Input.GetKeyDown(KeyCode.Escape))
         {
+            if (sceneTransition.isSceneTransitionRunning()) return;
             // Store 창 보고 있다면
             if (seeingStorePanel)
             {

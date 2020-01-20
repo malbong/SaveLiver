@@ -9,7 +9,6 @@ using Firebase.Auth;
 public class GoogleAuth : MonoBehaviour
 {
     private FirebaseAuth auth;
-    public bool isLogin = false;
 
     void Start()
     {
@@ -41,7 +40,6 @@ public class GoogleAuth : MonoBehaviour
                     StartCoroutine(TryFirebaseLogin());
                 }
             });
-            isLogin = true; //로그인함
         }
         else // 로그인 되어 있다면
         {
@@ -50,9 +48,8 @@ public class GoogleAuth : MonoBehaviour
             PlayerInformation.auth.SignOut();
             PlayGamesPlatform.Instance.SignOut();
             PlayerInformation.isLogin = false;
-            isLogin = false;
         }
-        return isLogin;
+        return PlayerInformation.isLogin;
     }
 
 

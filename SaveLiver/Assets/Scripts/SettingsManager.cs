@@ -235,7 +235,7 @@ public class SettingsManager : MonoBehaviour
 
     public void OnPrivacyButton()
     {
-
+        Application.OpenURL("https://cafe.naver.com/hosanvillage/2");
     }
 
 
