@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class StoreManager : MonoBehaviour
 {
+    public bool seeingStore = false;
     public DatabaseManager databaseManager;
 
     public Sprite[] boatSprites;
@@ -14,11 +15,22 @@ public class StoreManager : MonoBehaviour
     public Image boatImage;
     public Image faceImage;
 
+    public int[] customs = { 0, 0, 0 };
+    public int[] boatChargeList = { 2, 2, 2, 2, 2 };
+    public int[] faceChargeList = { 2, 2, 2, 2, 2 };
+    public int[] waveChargeList = { 2, 2, 2, 2, 2 };
+    public Image[] boatLockImage;
+    public Image[] faceLockImage;
+    public Image[] waveLockImage;
+    public Sprite lockImage;
+    public Sprite checkImage;
+    public Text[] boatPrice;
+    public Text[] facePrice;
+    public Text[] wavePrice;
+
     public GameObject facePanel;
     public GameObject boatPanel;
     public GameObject wavePanel;
-
-    private bool lockSprite = false;
 
     private int faceIndex = 0;
     private int faceCount = 5;
@@ -29,14 +41,30 @@ public class StoreManager : MonoBehaviour
 
     public Text listText;
 
+    
+
     private bool skipRunning = false;
 
     private enum PanelState { Face, Boat, Wave }
     private PanelState panelState;
 
+
     void Start()
     {
+        InitStoreAsync();
         panelState = PanelState.Face;
+    }
+
+
+    void Update()
+    {
+        // Store가 열려있을 때 CurrentCustom을 계속 추적함
+        if (seeingStore)
+        {
+            UpdateCurrentCustom();
+            //UpdateLock();
+            //Debug.Log(boatChargeList[0] + " " + boatChargeList[1] + " " + boatChargeList[2] + " " + boatChargeList[3] + " " + boatChargeList[4]);
+        }
     }
 
 
@@ -170,13 +198,32 @@ public class StoreManager : MonoBehaviour
 
     }
 
+
+    public void InitStoreAsync()
+    {
+        customs = databaseManager.GetCurrentCustom();
+        // customs[0] : boat, 1 : face, 2: wave
+
+        /*
+        for(int i=0; i<boatChargeList.Length; i++)
+        {
+            boatChargeList[i] = databaseManager.GetChargeList("boat", i);
+        }
+        for (int i = 0; i < faceChargeList.Length; i++)
+        {
+            faceChargeList[i] = databaseManager.GetChargeList("face", i);
+        }
+        for (int i = 0; i < waveChargeList.Length; i++)
+        {
+            waveChargeList[i] = databaseManager.GetChargeList("wave", i);
+        }
+        */
+    }
+
+
     public Text tmp;
     public void UpdateCurrentCustom()
     {
-        int[] customs = databaseManager.GetCurrentCustom();
-        // customs[0] : boat, 1 : face, 2: wave
-        tmp.text = customs[0].ToString() + " " + customs[1].ToString() + " " + customs[2].ToString();
-
         // boat
         if (customs[0] == 0)
         {
@@ -244,5 +291,120 @@ public class StoreManager : MonoBehaviour
         {
             
         }
+    }
+
+    /*
+    public void UpdateLock()
+    {
+        for(int i=0; i<boatLockImage.Length; i++)
+        {
+            if (boatChargeList[i] == -1) boatLockImage[i].sprite = lockImage;
+            else if (boatChargeList[i] == 0) boatLockImage[i].sprite = null;
+            else boatLockImage[i].sprite = checkImage;
+        }
+
+        for (int i = 0; i < faceLockImage.Length; i++)
+        {
+            if (faceChargeList[i] == -1) faceLockImage[i].sprite = lockImage;
+            else if (faceChargeList[i] == 0) faceLockImage[i].sprite = null;
+            else faceLockImage[i].sprite = checkImage;
+        }
+
+        for (int i = 0; i < waveLockImage.Length; i++)
+        {
+            if (waveChargeList[i] == -1) waveLockImage[i].sprite = lockImage;
+            else if (waveChargeList[i] == 0) waveLockImage[i].sprite = null;
+            else waveLockImage[i].sprite = checkImage;
+        }
+    }
+    */
+
+
+    public void OnBtnEquip()
+    {
+        if (skipRunning) return;
+
+        CheckPurchasingAndEquip(panelState, faceIndex);
+
+        if (panelState == PanelState.Face)
+        {
+            
+            if(faceIndex == 0)
+            {
+
+            }
+            else if(faceIndex == 1)
+            {
+
+            }
+            else if (faceIndex == 2)
+            {
+
+            }
+            else if (faceIndex == 3)
+            {
+
+            }
+            else if (faceIndex == 4)
+            {
+
+            }
+        }
+        else if(panelState == PanelState.Boat)
+        {
+            if(boatIndex == 0)
+            {
+
+            }
+            else if(boatIndex == 1)
+            {
+
+            }
+            else if (boatIndex == 2)
+            {
+
+            }
+            else if (boatIndex == 3)
+            {
+
+            }
+            else if (boatIndex == 4)
+            {
+
+            }
+        }
+        else if(panelState == PanelState.Wave)
+        {
+            if(waveIndex == 0)
+            {
+
+            }
+            else if(waveIndex == 1)
+            {
+
+            }
+            else if (waveIndex == 2)
+            {
+
+            }
+            else if (waveIndex == 3)
+            {
+
+            }
+            else if (waveIndex == 4)
+            {
+
+            }
+        }
+    }
+
+    
+    private int CheckPurchasingAndEquip(PanelState panelState, int index)
+    {
+        int equipOrPurchase = 0;
+
+        // 데이터베이스에서 정보 가져오기
+
+        return equipOrPurchase;
     }
 }

@@ -5829,6 +5829,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e3facf6b1d352c49a65e1f04e884c88, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  loadingLock: 1
 --- !u!4 &121201360
 Transform:
   m_ObjectHideFlags: 0
@@ -6056,17 +6057,6 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1612153469}
         m_MethodName: OnBtnStorePanel
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 904756242}
-        m_MethodName: UpdateCurrentCustom
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -11900,8 +11890,8 @@ RectTransform:
   m_Father: {fileID: 710517841}
   m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.05, y: 0.03}
-  m_AnchorMax: {x: 0.95, y: 0.37}
+  m_AnchorMin: {x: 0.1, y: 0.03}
+  m_AnchorMax: {x: 0.9, y: 0.37}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -25434,6 +25424,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae434b8cdd3204343940c971b97b437b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  seeingStore: 0
   databaseManager: {fileID: 121201359}
   boatSprites:
   - {fileID: 21300000, guid: eed8a8319a3548d4fbb17b2f15a455fc, type: 3}
@@ -25443,6 +25434,48 @@ MonoBehaviour:
   waveSprites: []
   boatImage: {fileID: 2089314633}
   faceImage: {fileID: 1390173614}
+  customs: 000000000000000000000000
+  boatChargeList: 0200000002000000020000000200000002000000
+  faceChargeList: 0200000002000000020000000200000002000000
+  waveChargeList: 0200000002000000020000000200000002000000
+  boatLockImage:
+  - {fileID: 899581581}
+  - {fileID: 1755871929}
+  - {fileID: 741342839}
+  - {fileID: 1363979145}
+  - {fileID: 330754771}
+  faceLockImage:
+  - {fileID: 1500703570}
+  - {fileID: 1477714563}
+  - {fileID: 1921464979}
+  - {fileID: 76516503}
+  - {fileID: 665657494}
+  waveLockImage:
+  - {fileID: 399845214}
+  - {fileID: 780766291}
+  - {fileID: 2025794816}
+  - {fileID: 1734840791}
+  - {fileID: 2019400410}
+  lockImage: {fileID: 21300000, guid: 2b9e529c732fb4142aea91df89e10a9a, type: 3}
+  checkImage: {fileID: 21300000, guid: 663c707ba3cc956469f9f67508e705fc, type: 3}
+  boatPrice:
+  - {fileID: 729755564}
+  - {fileID: 1195094275}
+  - {fileID: 1014445460}
+  - {fileID: 1363655971}
+  - {fileID: 1189519836}
+  facePrice:
+  - {fileID: 1776581903}
+  - {fileID: 1418635524}
+  - {fileID: 351481731}
+  - {fileID: 1932848393}
+  - {fileID: 1611829355}
+  wavePrice:
+  - {fileID: 473979211}
+  - {fileID: 827199355}
+  - {fileID: 1980536314}
+  - {fileID: 758570005}
+  - {fileID: 74887930}
   facePanel: {fileID: 1302516294}
   boatPanel: {fileID: 731814446}
   wavePanel: {fileID: 1272255796}
@@ -25702,6 +25735,7 @@ GameObject:
   - component: {fileID: 925364431}
   - component: {fileID: 925364430}
   - component: {fileID: 925364429}
+  - component: {fileID: 925364432}
   m_Layer: 5
   m_Name: Mask Panel (Face, Boat, Wave)
   m_TagString: Untagged
@@ -25756,7 +25790,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.3647059}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -25779,6 +25813,60 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 925364427}
   m_CullTransparentMesh: 0
+--- !u!114 &925364432
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 925364427}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Navigation:
+    m_Mode: 3
+    m_SelectOnUp: {fileID: 0}
+    m_SelectOnDown: {fileID: 0}
+    m_SelectOnLeft: {fileID: 0}
+    m_SelectOnRight: {fileID: 0}
+  m_Transition: 1
+  m_Colors:
+    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
+    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_ColorMultiplier: 1
+    m_FadeDuration: 0.1
+  m_SpriteState:
+    m_HighlightedSprite: {fileID: 0}
+    m_PressedSprite: {fileID: 0}
+    m_SelectedSprite: {fileID: 0}
+    m_DisabledSprite: {fileID: 0}
+  m_AnimationTriggers:
+    m_NormalTrigger: Normal
+    m_HighlightedTrigger: Highlighted
+    m_PressedTrigger: Pressed
+    m_SelectedTrigger: Selected
+    m_DisabledTrigger: Disabled
+  m_Interactable: 1
+  m_TargetGraphic: {fileID: 925364430}
+  m_OnClick:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 904756242}
+        m_MethodName: OnBtnEquip
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &940591706
 GameObject:
   m_ObjectHideFlags: 0
@@ -63772,6 +63860,7 @@ MonoBehaviour:
   getSoulOuterPanel: {fileID: 1627542678}
   getSoulPanel: {fileID: 7382194}
   getSoulPanelText: {fileID: 234403647}
+  storeManager: {fileID: 904756242}
   storeOuterPanel: {fileID: 337434494}
   storePanel: {fileID: 710517838}
   absManager: {fileID: 664548239}

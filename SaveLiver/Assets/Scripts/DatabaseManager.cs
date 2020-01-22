@@ -9,6 +9,8 @@ using UnityEngine.UI;
 
 public class DatabaseManager : MonoBehaviour
 {
+    public bool loadingLock = true;
+
     void Awake()
     {
         DontDestroyOnLoad(gameObject);
@@ -160,35 +162,108 @@ public class DatabaseManager : MonoBehaviour
 
     public int[] GetCurrentCustom()
     {
-        int[] customList = { 0, 0, 0 };
+        int[] customs = { 0, 0, 0 };
         DatabaseReference reference = PlayerInformation.GetDatabaseReference()
             .Child("user")
             .Child("pnRD68Js9kU5O4UNvRaPcoueTsy2")
             //.Child(PlayerInformation.auth.CurrentUser.UserId)
             .Child("custom");
-        
-        reference.OrderByChild("custom").GetValueAsync().ContinueWith(task =>
+
+        reference.GetValueAsync().ContinueWith(task =>
         {
-            Debug.Log("as");
             if (task.IsCompleted)
             {
-                Debug.Log("df");
                 DataSnapshot snapshot = task.Result;
 
-                Debug.Log(snapshot);
-                foreach(DataSnapshot data in snapshot.Children)
+                foreach (DataSnapshot data in snapshot.Children)
                 {
-                    IDictionary customs = (IDictionary)data.Value;
-                    customList[0] = int.Parse(customs["boat"].ToString());
-                    customList[1] = int.Parse(customs["face"].ToString());
-                    customList[2] = int.Parse(customs["wave"].ToString());
-                    Debug.Log(customList[0]);
-                    Debug.Log(customList[1]);
-                    Debug.Log(customList[2]);
+                    if (data.Key.ToString() == "boat")
+                        customs[0] = int.Parse(data.Value.ToString());
+                    else if (data.Key.ToString() == "face")
+                        customs[1] = int.Parse(data.Value.ToString());
+                    else if (data.Key.ToString() == "wave")
+                        customs[2] = int.Parse(data.Value.ToString());
                 }
             }
-            Debug.Log("asdfaaaa");
+            return customs;
         });
-        return customList;
+        return customs;
     }
+
+    /*
+    int[] chargeList = { 2, 2, 2, 2, 2 };
+
+    public int GetChargeList(string name, int index)
+    {
+        DatabaseReference reference = PlayerInformation.GetDatabaseReference()
+            .Child("user")
+            .Child("pnRD68Js9kU5O4UNvRaPcoueTsy2")
+            //.Child(PlayerInformation.auth.CurrentUser.UserId)
+            .Child("charge");
+
+        if(name == "boat")
+        {
+            reference.Child("boat").Child(index.ToString()).GetValueAsync().ContinueWith(task =>
+            {
+                if (task.IsCompleted)
+                {
+                    DataSnapshot snapshot = task.Result;
+                    if (snapshot.Exists)
+                    {
+                        chargeList[index] = 1;
+                    }
+                    else
+                    {
+                        chargeList[index] = -1;
+                    }
+                }
+                loadingLock = false;
+                return chargeList[index];
+            });
+        }
+        else if(name == "face")
+        {
+            reference.Child("face").Child(index.ToString()).GetValueAsync().ContinueWith(task =>
+            {
+                if (task.IsCompleted)
+                {
+                    DataSnapshot snapshot = task.Result;
+                    if (snapshot.Exists)
+                    {
+                        Debug.Log(snapshot);
+                        chargeList[index] = 1;
+                    }
+                    else
+                    {
+                        chargeList[index] = -1;
+                    }
+                }
+                loadingLock = false;
+                return chargeList[index];
+            });
+        }
+        else
+        {
+            reference.Child("wave").Child(index.ToString()).GetValueAsync().ContinueWith(task =>
+            {
+                if (task.IsCompleted)
+                {
+                    DataSnapshot snapshot = task.Result;
+                    if (snapshot.Exists)
+                    {
+                        chargeList[index] = 1;
+                    }
+                    else
+                    {
+                        chargeList[index] = -1;
+                    }
+                }
+                loadingLock = false;
+                return chargeList[index];
+            });
+        }
+        return 2;
+    }
+    */
+
 }

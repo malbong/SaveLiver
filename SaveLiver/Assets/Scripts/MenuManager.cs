@@ -28,6 +28,7 @@ public class MenuManager : MonoBehaviour
     private bool seeingGetSoulPanel = false;
     public Text getSoulPanelText;
 
+    public StoreManager storeManager;
     public GameObject storeOuterPanel;
     public GameObject storePanel;
     private bool storeFadeInRunning = false;
@@ -380,6 +381,7 @@ public class MenuManager : MonoBehaviour
     {
         if (storeFadeOutRunning) yield break;
 
+        storeManager.seeingStore = true;
         storePanel.SetActive(true);
         storeFadeInRunning = true;
 
@@ -412,6 +414,7 @@ public class MenuManager : MonoBehaviour
     {
         if (storeFadeInRunning) yield break;
 
+        storeManager.seeingStore = false;
         storeFadeOutRunning = true;
         seeingStorePanel = false;
         storeOuterPanel.SetActive(false);
