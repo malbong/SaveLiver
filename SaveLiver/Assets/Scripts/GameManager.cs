@@ -98,7 +98,7 @@ public class GameManager : MonoBehaviour
 
         if (Application.platform == RuntimePlatform.Android)
         {
-            if (Input.GetKey(KeyCode.Escape))
+            if (Input.GetKey(KeyCode.Escape) && Player.instance.isAlive)
             {
                 OnPause();
             }
@@ -171,6 +171,8 @@ public class GameManager : MonoBehaviour
 
         if (isPause) return;
 
+        SoundManager.instance.ButtonClick();
+
         originTimeScale = Time.timeScale; //저장해놓기
         Time.timeScale = 0f;
         Time.fixedDeltaTime = 0.02f * Time.timeScale; //바꾸는 것이 좋다고 함
@@ -179,8 +181,6 @@ public class GameManager : MonoBehaviour
 
         //originColor = Camera.main.backgroundColor; //원래 색 임시 저장 Color
         //Camera.main.backgroundColor = new Color(0.5f, 0.5f, 0.5f); //컬러를 회색으로 바꿈
-
-        //pauseButton.GetComponent<AudioSource>().Play(); //오디오 처리
 
         //다른 탭 동작 처리
         StartCoroutine(PauseButtonFadeOut());//PauseButton 닫기
@@ -194,6 +194,8 @@ public class GameManager : MonoBehaviour
         if (pauseButtonFadeOutRunning || joyStickFadeOutRunning || pausePanelFadeInRunning) return;
 
         if (!isPause) return;
+
+        SoundManager.instance.ButtonClick();
 
         Time.timeScale = originTimeScale; //원래의 타임스케일로 돌려줌
         Time.fixedDeltaTime = 0.02f * Time.timeScale;
@@ -212,6 +214,8 @@ public class GameManager : MonoBehaviour
     {
         if (!isPause) return;
 
+        SoundManager.instance.ButtonClick();
+
         Time.timeScale = 1.0f; //처음의 타임스케일로 돌려줌
         Time.fixedDeltaTime = 0.02f * Time.timeScale;
         isPause = false;
@@ -227,6 +231,8 @@ public class GameManager : MonoBehaviour
     public void OnHomeButtonClick()
     {
         if (!isPause) return;
+
+        SoundManager.instance.ButtonClick();
 
         Time.timeScale = 1.0f; //처음의 타임스케일로 돌려줌
         Time.fixedDeltaTime = 0.02f * Time.timeScale;

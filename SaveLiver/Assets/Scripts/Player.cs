@@ -244,6 +244,7 @@ public class Player : MonoBehaviour
         GetComponent<BoxCollider2D>().enabled = false;
 
         cam = Camera.main;
+        cam.GetComponent<AudioListener>().enabled = true;
         cam.transform.parent = null;
 
         ParticleSystem instance = Instantiate(onDeadParticle, transform.position, Quaternion.identity);

@@ -92,6 +92,7 @@ public class MenuManager : MonoBehaviour
 
     public void OnBtnPlay()
     {
+        SoundManager.instance.ButtonClick();
         sceneTransition.LoadPlayScene();
     }
 
@@ -101,6 +102,7 @@ public class MenuManager : MonoBehaviour
 
     public void OnBtnQuitYes()
     {
+        SoundManager.instance.ButtonClick();
         if (!quitFadeInRunning && !quitFadeOutRunning)
         {
             Application.Quit();
@@ -109,6 +111,7 @@ public class MenuManager : MonoBehaviour
 
     public void OnBtnQuitNo()
     {
+        SoundManager.instance.ButtonClick();
         if (!quitFadeInRunning && !quitFadeOutRunning)
         {
             StartCoroutine(GameQuitPanelFadeOut());
@@ -116,6 +119,7 @@ public class MenuManager : MonoBehaviour
     }
     public void OnBtnOuterQuitNo()
     {
+        SoundManager.instance.ButtonClick();
         if (seeingQuitPanel)
         {
             StartCoroutine(GameQuitPanelFadeOut());
@@ -128,6 +132,7 @@ public class MenuManager : MonoBehaviour
 
     public void OnBtnRewardPanel()
     {
+        SoundManager.instance.ButtonClick();
         if (!seeingRewardPanel)
         {
             StartCoroutine(GameRewardPanelFadeIn());
@@ -136,6 +141,7 @@ public class MenuManager : MonoBehaviour
 
     public void OnBtnRewardWatchAd()
     {
+        SoundManager.instance.ButtonClick();
         if (!rewardFadeInRunning && !rewardFadeOutRunning)
         {
             absManager.ShowRewardAd();
@@ -144,6 +150,7 @@ public class MenuManager : MonoBehaviour
 
     public void OnBtnRewardNo()
     {
+        SoundManager.instance.ButtonClick();
         if (!rewardFadeInRunning && !rewardFadeOutRunning)
         {
             StartCoroutine(GameRewardPanelFadeOut());
@@ -152,6 +159,7 @@ public class MenuManager : MonoBehaviour
 
     public void OnBtnOuterRewardNo()
     {
+        SoundManager.instance.ButtonClick();
         if (seeingRewardPanel)
         {
             StartCoroutine(GameRewardPanelFadeOut());
@@ -169,6 +177,7 @@ public class MenuManager : MonoBehaviour
 
     public void OnBtnGetSoulOK()
     {
+        SoundManager.instance.ButtonClick();
         if (seeingGetSoulPanel)
         {
             StartCoroutine(GetSoulPanelFadeOut());
@@ -181,11 +190,13 @@ public class MenuManager : MonoBehaviour
 
     public void OnBtnStorePanel()
     {
+        SoundManager.instance.ButtonClick();
         StartCoroutine(StorePanelFadeIn());
     }
 
     public void OnBtnStoreX()
     {
+        SoundManager.instance.ButtonClick();
         if (seeingStorePanel)
         {
             StartCoroutine(storePanelFadeOut());

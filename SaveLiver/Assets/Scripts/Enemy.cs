@@ -4,7 +4,7 @@ using UnityEngine;
 
 public abstract class Enemy : MonoBehaviour
 {
-    public float lifeTime = 10.0f;
+    public float lifeTime = 20.0f;
     public Sprite sprite;
     public ParticleSystem onDeadParticle;
     public ParticleSystem onDeadParticleGetLiver;

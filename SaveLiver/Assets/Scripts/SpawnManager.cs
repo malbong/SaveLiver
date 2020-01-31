@@ -20,17 +20,53 @@ public class SpawnManager : MonoBehaviour
 
 
     public float radius = 10.0f;
-    public float itemRadius = 5.0f;
+    public float itemRadius = 8.0f;
 
     public ObjectPooler objectPooler;
-    
+
+    public Swirl swirl;
+    private Vector3 playerPosition;
+    private float spawnRadius;
+    private float angle45Length;
+    private float itemSpawnTimePerLevel;
+
 
     private void Start()
     {
-        StartCoroutine(CreateEnemy());
+        spawnRadius = SpawnManager.instance.radius;
+        angle45Length = Mathf.Sqrt(Mathf.Pow(spawnRadius, 2) / 2.0f);
+
+        StartCoroutine(EnemyCreate());
+        StartCoroutine(ItemCreate());
     }
 
 
+    /********************************************
+     * @함수명 : CreateEnemy()
+     * @작성자 : Malbong
+     * @입력 : void
+     * @출력 : IEnumerator time
+     * @설명 : Coroutine을 사용하여 원하는 시간에 Spawn 호출
+     *         레벨 디자인을 하여 난이도 조절
+     */
+    IEnumerator EnemyCreate()
+    {
+        itemSpawnTimePerLevel = 5.0f;
+        yield return new WaitForSeconds(0.1f);
+        EnemySpawn(7);
+    }
+
+
+    IEnumerator ItemCreate()
+    {
+        yield return new WaitForSeconds(0.1f);
+
+        while (true)
+        {
+            ItemRandomSpawn();
+            yield return new WaitForSeconds(itemSpawnTimePerLevel);
+        }
+    }
     /********************************************
      * @함수명 : GetRandomPosition()
      * @작성자 : Malbong
@@ -85,7 +121,7 @@ public class SpawnManager : MonoBehaviour
      * @입력 : int
      * @출력 : void
      * @설명 : 임의의 위치에서 Spawn하기
-     *         CreateEnemy()라는 코루틴함수에서 계속 사용
+     *         Create()라는 코루틴함수에서 계속 사용
      *         입력된 인덱스의 Enemy를 생성함
      *         Turtle: 캐릭터를 향해 회전한 상태로 생성
      */
@@ -134,39 +170,188 @@ public class SpawnManager : MonoBehaviour
         obj.transform.position = randomPosition;
         obj.SetActive(true);
     }
-    
 
-    /********************************************
-     * @함수명 : CreateEnemy()
-     * @작성자 : Malbong
-     * @입력 : void
-     * @출력 : IEnumerator time
-     * @설명 : Coroutine을 사용하여 원하는 시간에 Spawn 호출
-     *         레벨 디자인을 하여 난이도 조절
-     */
-    IEnumerator CreateEnemy()
+
+    public GameObject CreateLinearTurtle(Vector3 diffPosition, Vector3 targetPosition)
     {
-        while (true)
+        Vector3 createPosition = targetPosition + diffPosition;
+        Quaternion rotation = SpawnManager.instance.GetAngleWithTargetFromY(createPosition, targetPosition);
+
+        GameObject obj = objectPooler.GetEnemyObject(6); // 6:Linear Turtle
+        obj.transform.position = createPosition;
+        obj.transform.GetChild(0).localPosition = Vector3.zero;
+        obj.transform.GetChild(0).rotation = rotation;
+        obj.SetActive(true);
+
+        return obj;
+    }
+
+
+    public void AllDirection4()
+    {
+        playerPosition = Player.instance.transform.position;
+
+        Vector3 diffPosition = new Vector3(0, spawnRadius, 0);
+        CreateLinearTurtle(diffPosition, playerPosition);
+
+        diffPosition = new Vector3(0, -spawnRadius, 0);
+        CreateLinearTurtle(diffPosition, playerPosition);
+
+        diffPosition = new Vector3(spawnRadius, 0, 0);
+        CreateLinearTurtle(diffPosition, playerPosition);
+
+        diffPosition = new Vector3(-spawnRadius, 0, 0);
+        CreateLinearTurtle(diffPosition, playerPosition);
+    }
+
+
+    public void AllDirection8()
+    {
+        AllDirection4();
+
+        playerPosition = Player.instance.transform.position;
+
+        Vector3 diffPosition = new Vector3(angle45Length, angle45Length, 0);
+        CreateLinearTurtle(diffPosition, playerPosition);
+
+        diffPosition = new Vector3(-angle45Length, angle45Length, 0);
+        CreateLinearTurtle(diffPosition, playerPosition);
+
+        diffPosition = new Vector3(-angle45Length, -angle45Length, 0);
+        CreateLinearTurtle(diffPosition, playerPosition);
+
+        diffPosition = new Vector3(angle45Length, -angle45Length, 0);
+        CreateLinearTurtle(diffPosition, playerPosition);
+    }
+
+
+    public void DiagonalLeft(float interval)
+    {
+        playerPosition = Player.instance.transform.position;
+
+        Vector3 targetPosition = playerPosition;
+        Vector3 diffPosition = new Vector3(-angle45Length, angle45Length, 0);
+
+        CreateLinearTurtle(diffPosition, targetPosition);
+
+        targetPosition = playerPosition + new Vector3(0, interval, 0);
+        CreateLinearTurtle(diffPosition, targetPosition);
+
+        targetPosition = playerPosition + new Vector3(0, -interval, 0);
+        CreateLinearTurtle(diffPosition, targetPosition);
+    }
+
+
+    public void DiagonalRight(float interval)
+    {
+        /*
+        playerPosition = Player.instance.transform.position;
+
+        Vector3 targetPosition = playerPosition;
+        Vector3 diffPosition = new Vector3(-angle45Length, angle45Length, 0);
+        GameObject obj = CreateLinearTurtle(diffPosition, targetPosition);
+        obj.transform.Translate(obj.transform.position.x * (-2), 0, 0);
+        //obj.transform.GetChild(0).Rotate(0, 180, 0);
+        obj.transform.Rotate(0, 180, 0);
+
+        targetPosition = playerPosition + new Vector3(0, interval, 0);
+        obj = CreateLinearTurtle(diffPosition, targetPosition);
+        obj.transform.Translate(obj.transform.position.x * (-2), 0, 0);
+        //obj.transform.GetChild(0).Rotate(0, 180, 0);
+        obj.transform.Rotate(0, 180, 0);
+
+        targetPosition = playerPosition + new Vector3(0, -interval, 0);
+        obj = CreateLinearTurtle(diffPosition, targetPosition);
+        obj.transform.Translate(obj.transform.position.x * (-2), 0, 0);
+        //obj.transform.GetChild(0).Rotate(0, 180, 0);
+        obj.transform.Rotate(0, 180, 0);
+        */
+
+        playerPosition = Player.instance.transform.position;
+
+        Vector3 targetPosition = playerPosition;
+        Vector3 diffPosition = new Vector3(angle45Length, angle45Length, 0);
+        GameObject obj = CreateLinearTurtle(diffPosition, targetPosition);
+        obj.transform.GetChild(0).Rotate(0, 180, 0);
+
+        targetPosition = playerPosition + new Vector3(0, interval, 0);
+        diffPosition = new Vector3(angle45Length, angle45Length, 0);
+        obj = CreateLinearTurtle(diffPosition, targetPosition);
+        obj.transform.GetChild(0).Rotate(0, 180, 0);
+
+        targetPosition = playerPosition + new Vector3(0, -interval, 0);
+        diffPosition = new Vector3(angle45Length, angle45Length, 0);
+        obj = CreateLinearTurtle(diffPosition, targetPosition);
+        obj.transform.GetChild(0).Rotate(0, 180, 0);
+    }
+
+
+    public void DiagonalBothSide(float interval)
+    {
+        DiagonalLeft(interval);
+        DiagonalRight(interval);
+    }
+
+
+    public void Swirl(float maxForce, float interval = 0, bool upDown = false)
+    {
+        playerPosition = Player.instance.transform.position;
+        if (upDown == true)
         {
-            yield return new WaitForSeconds(0.1f);
-            EnemySpawn(0);
-            ItemRandomSpawn();
-            yield return new WaitForSeconds(3.0f);
-            ItemRandomSpawn();
-            EnemySpawn(1);
-            yield return new WaitForSeconds(3.0f);
-            ItemRandomSpawn();
-            EnemySpawn(2);
-            yield return new WaitForSeconds(3.0f);
-            ItemRandomSpawn();
-            EnemySpawn(3);
-            yield return new WaitForSeconds(3.0f);
-            ItemRandomSpawn();
-            EnemySpawn(4);
-            yield return new WaitForSeconds(3.0f);
-            ItemRandomSpawn();
-            EnemySpawn(5);
-            yield return new WaitForSeconds(3.0f);
+            Vector3 targetPosition = playerPosition + new Vector3(0, interval, 0);
+            Swirl instance = Instantiate(swirl, targetPosition, Quaternion.identity);
+            instance.maxForce = maxForce;
+
+            targetPosition = playerPosition + new Vector3(0, -interval, 0);
+            instance = Instantiate(swirl, targetPosition, Quaternion.identity);
+            instance.maxForce = maxForce;
         }
+        else
+        {
+            Swirl instance = Instantiate(swirl, playerPosition, Quaternion.identity);
+            instance.maxForce = maxForce;
+        }
+
+    }
+
+
+    public void Dragon(int dir, int isOver, float interval)
+    {
+        playerPosition = Player.instance.transform.position;
+        if (dir == 1) // create right 
+        {
+            if (isOver == 1) // create over player
+            {
+                Vector3 createPosition = playerPosition + new Vector3(20, interval, 0);
+                GameObject obj = ObjectPooler.instance.GetDragonObject(1);
+                obj.transform.position = createPosition;
+                obj.SetActive(true);
+            }
+            else // create under player
+            {
+                Vector3 createPosition = playerPosition + new Vector3(20, -interval, 0);
+                GameObject obj = ObjectPooler.instance.GetDragonObject(1);
+                obj.transform.position = createPosition;
+                obj.SetActive(true);
+            }
+        }
+        else // create left
+        {
+            if (isOver == 1) // create over player
+            {
+                Vector3 createPosition = playerPosition + new Vector3(-20, interval, 0);
+                GameObject obj = ObjectPooler.instance.GetDragonObject(0);
+                obj.transform.position = createPosition;
+                obj.SetActive(true);
+            }
+            else // create under player
+            {
+                Vector3 createPosition = playerPosition + new Vector3(-20, -interval, 0);
+                GameObject obj = ObjectPooler.instance.GetDragonObject(0);
+                obj.transform.position = createPosition;
+                obj.SetActive(true);
+            }
+        }
+
     }
 }
