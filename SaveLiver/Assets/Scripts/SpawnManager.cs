@@ -52,8 +52,42 @@ public class SpawnManager : MonoBehaviour
     IEnumerator EnemyCreate()
     {
         itemSpawnTimePerLevel = 5.0f;
-        yield return new WaitForSeconds(0.1f);
-        EnemySpawn(7);
+        while (true)
+        {
+            yield return new WaitForSeconds(0.1f);
+            EnemySpawn(7);
+            DiagonalBothSide(5);
+            Dragon(1, 1, 2);
+
+            yield return new WaitForSeconds(3f);
+            EnemySpawn(1);
+            Swirl(-250, 2, true);
+
+            yield return new WaitForSeconds(3f);
+            EnemySpawn(2);
+            AllDirection4();
+
+            yield return new WaitForSeconds(3f);
+            EnemySpawn(3);
+            AllDirection8();
+
+            yield return new WaitForSeconds(3f);
+            EnemySpawn(4);
+            DiagonalLeft(5);
+
+            yield return new WaitForSeconds(3f);
+            EnemySpawn(5);
+            DiagonalRight(5);
+            Swirl(-250);
+
+            yield return new WaitForSeconds(3f);
+            DiagonalLeft(5);
+
+            yield return new WaitForSeconds(3f);
+            Dragon(-1, -1, 2);
+            EnemySpawn(6);
+        }
+        
     }
 
 
@@ -181,6 +215,7 @@ public class SpawnManager : MonoBehaviour
         obj.transform.position = createPosition;
         obj.transform.GetChild(0).localPosition = Vector3.zero;
         obj.transform.GetChild(0).rotation = rotation;
+        
         obj.SetActive(true);
 
         return obj;
@@ -293,10 +328,10 @@ public class SpawnManager : MonoBehaviour
     }
 
 
-    public void Swirl(float maxForce, float interval = 0, bool upDown = false)
+    public void Swirl(float maxForce, float interval = 0, bool upDownPosition = false)
     {
         playerPosition = Player.instance.transform.position;
-        if (upDown == true)
+        if (upDownPosition == true) // generate swirl over and under from player
         {
             Vector3 targetPosition = playerPosition + new Vector3(0, interval, 0);
             Swirl instance = Instantiate(swirl, targetPosition, Quaternion.identity);

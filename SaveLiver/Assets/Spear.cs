@@ -50,8 +50,6 @@ public class Spear : MonoBehaviour
 
         isShootingSpear = false;
 
-        transform.rotation = Quaternion.identity;
-
         gameObject.SetActive(false);
     }
 }
