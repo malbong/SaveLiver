@@ -196,21 +196,17 @@ public class TurtleSpear : Enemy
      *         각도를 구하고 천천히 따라감
      */
     public override void Move()
-    {   /*
-        if (shootingCycleTime >= 2.0f && shootingCycleTime < 2.5f)
+    {
+        if (shootingCycleTime >= 2.0f && shootingCycleTime <= 3f)
         {
-            enemyRigid.velocity = Vector3.SmoothDamp(enemyRigid.velocity, new Vector3(0, 0, 0), ref currentVelocity, 0.5f);
-        }
-        else if (shootingCycleTime >= 2.5f)
-        {
-            enemyRigid.velocity = Vector3.SmoothDamp(enemyRigid.velocity, -transform.up * speed, ref currentVelocity, 0.5f);
+            enemyRigid.velocity = -transform.up * GetMotionSpeed();
         }
         else
         {
             enemyRigid.velocity = -transform.up * speed;
         }
-        */
-        enemyRigid.velocity = -transform.up * speed;
+        
+        //enemyRigid.velocity = -transform.up * speed;
 
         Vector3 currentVec = -transform.up; //현재 이동방향 단위벡터
         Vector3 diffVec = (Player.instance.transform.position - transform.position).normalized; // 적 -> 플레이어 단위벡터
@@ -220,6 +216,16 @@ public class TurtleSpear : Enemy
 
         if (angle > rotateSpeed) transform.Rotate(0, 0, sign * rotateSpeed);
         else transform.Rotate(0, 0, sign * angle);    
+    }
+
+
+    private float GetMotionSpeed()
+    {
+        float x = shootingCycleTime - 2.5f;
+
+        float y = 2 * speed * Mathf.Abs(x);
+
+        return y;
     }
 
 
