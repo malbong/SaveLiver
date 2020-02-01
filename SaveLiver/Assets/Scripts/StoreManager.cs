@@ -7,6 +7,7 @@ public class StoreManager : MonoBehaviour
 {
     public bool seeingStore = false;
     public DatabaseManager databaseManager;
+    public MenuManager menuManager;
 
     public Sprite[] boatSprites;
     public Sprite[] faceSprites;
@@ -15,7 +16,6 @@ public class StoreManager : MonoBehaviour
     public Image boatImage;
     public Image faceImage;
 
-    public int[] customs = { 0, 0, 0 };
     public int[] boatChargeList = { 2, 2, 2, 2, 2 };
     public int[] faceChargeList = { 2, 2, 2, 2, 2 };
     public int[] waveChargeList = { 2, 2, 2, 2, 2 };
@@ -27,6 +27,8 @@ public class StoreManager : MonoBehaviour
     public Text[] boatPrice;
     public Text[] facePrice;
     public Text[] wavePrice;
+    public Sprite storeLoading;
+    public Sprite nullSprite;
 
     public GameObject facePanel;
     public GameObject boatPanel;
@@ -41,7 +43,9 @@ public class StoreManager : MonoBehaviour
 
     public Text listText;
 
-    
+    public int[] faceSoulPrice = { 0, 500, 1000, 2000, 5000 };
+    public int[] boatSoulPrice = { 0, 500, 1000, 2000, 5000 };
+    public int[] waveSoulPrice = { 0, 500, 500, 500, 500 };
 
     private bool skipRunning = false;
 
@@ -52,6 +56,9 @@ public class StoreManager : MonoBehaviour
     void Start()
     {
         InitStoreAsync();
+        InitFaceCharge();
+        InitBoatCharge();
+        InitWaveCharge();
         panelState = PanelState.Face;
     }
 
@@ -62,8 +69,6 @@ public class StoreManager : MonoBehaviour
         if (seeingStore)
         {
             UpdateCurrentCustom();
-            //UpdateLock();
-            //Debug.Log(boatChargeList[0] + " " + boatChargeList[1] + " " + boatChargeList[2] + " " + boatChargeList[3] + " " + boatChargeList[4]);
         }
     }
 
@@ -78,6 +83,7 @@ public class StoreManager : MonoBehaviour
                 if(boatPanel.activeInHierarchy) boatPanel.SetActive(false);
                 if(wavePanel.activeInHierarchy) wavePanel.SetActive(false);
                 UpdateFaceSprite();
+                InitFaceCharge();
                 break;
             case 1:
                 panelState = PanelState.Boat;
@@ -85,6 +91,7 @@ public class StoreManager : MonoBehaviour
                 boatPanel.SetActive(true);
                 if (wavePanel.activeInHierarchy) wavePanel.SetActive(false);
                 UpdateBoatSprite();
+                InitBoatCharge();
                 break;
             case 2:
                 panelState = PanelState.Wave;
@@ -92,6 +99,7 @@ public class StoreManager : MonoBehaviour
                 if (boatPanel.activeInHierarchy) boatPanel.SetActive(false);
                 wavePanel.SetActive(true);
                 UpdateWaveSprite();
+                InitWaveCharge();
                 break;
         }
     }
@@ -201,23 +209,38 @@ public class StoreManager : MonoBehaviour
 
     public void InitStoreAsync()
     {
-        customs = databaseManager.GetCurrentCustom();
+        PlayerInformation.customs = databaseManager.GetCurrentCustom();
         // customs[0] : boat, 1 : face, 2: wave
+    }
 
-        /*
-        for(int i=0; i<boatChargeList.Length; i++)
+
+    public void InitBoatCharge()
+    {
+        for (int i = 0; i < boatChargeList.Length; i++)
         {
-            boatChargeList[i] = databaseManager.GetChargeList("boat", i);
+            boatChargeList[i] = databaseManager.BoatCharge(i);
         }
+        UpdateLock();
+    }
+
+
+    public void InitFaceCharge()
+    {
         for (int i = 0; i < faceChargeList.Length; i++)
         {
-            faceChargeList[i] = databaseManager.GetChargeList("face", i);
+            faceChargeList[i] = databaseManager.FaceCharge(i);
         }
+        UpdateLock();
+    }
+
+
+    public void InitWaveCharge()
+    {
         for (int i = 0; i < waveChargeList.Length; i++)
         {
-            waveChargeList[i] = databaseManager.GetChargeList("wave", i);
+            waveChargeList[i] = databaseManager.WaveCharge(i);
         }
-        */
+        UpdateLock();
     }
 
 
@@ -225,186 +248,301 @@ public class StoreManager : MonoBehaviour
     public void UpdateCurrentCustom()
     {
         // boat
-        if (customs[0] == 0)
+        if (PlayerInformation.customs[0] == 0)
         {
             boatImage.sprite = boatSprites[0];
         }
-        else if(customs[0] == 1)
+        else if(PlayerInformation.customs[0] == 1)
+        {
+            boatImage.sprite = boatSprites[1];
+        }
+        else if (PlayerInformation.customs[0] == 2)
         {
 
         }
-        else if (customs[0] == 2)
+        else if (PlayerInformation.customs[0] == 3)
         {
 
         }
-        else if (customs[0] == 3)
-        {
-
-        }
-        else if (customs[0] == 4)
+        else if (PlayerInformation.customs[0] == 4)
         {
 
         }
 
 
         // face
-        if (customs[1] == 0)
+        if (PlayerInformation.customs[1] == 0)
         {
             faceImage.sprite = faceSprites[0];
         }
-        else if(customs[1] == 1)
+        else if(PlayerInformation.customs[1] == 1)
         {
             faceImage.sprite = faceSprites[1];
         }
-        else if (customs[1] == 2)
+        else if (PlayerInformation.customs[1] == 2)
         {
             
         }
-        else if (customs[1] == 3)
+        else if (PlayerInformation.customs[1] == 3)
         {
             
         }
-        else if (customs[1] == 4)
+        else if (PlayerInformation.customs[1] == 4)
         {
             
         }
 
 
         // wave
-        if (customs[2] == 0)
+        if (PlayerInformation.customs[2] == 0)
         {
             // default wave particle
         }
-        else if (customs[2] == 1)
+        else if (PlayerInformation.customs[2] == 1)
         {
             
         }
-        else if (customs[2] == 2)
+        else if (PlayerInformation.customs[2] == 2)
         {
             
         }
-        else if (customs[2] == 3)
+        else if (PlayerInformation.customs[2] == 3)
         {
             
         }
-        else if (customs[2] == 4)
+        else if (PlayerInformation.customs[2] == 4)
         {
             
         }
     }
 
-    /*
+    
     public void UpdateLock()
     {
-        for(int i=0; i<boatLockImage.Length; i++)
+        CheckEquip();
+        for (int i=0; i<boatCount; i++)
         {
             if (boatChargeList[i] == -1) boatLockImage[i].sprite = lockImage;
-            else if (boatChargeList[i] == 0) boatLockImage[i].sprite = null;
-            else boatLockImage[i].sprite = checkImage;
+            else if (boatChargeList[i] == 0)
+            {
+                boatLockImage[i].sprite = nullSprite;
+                boatPrice[i].text = " ";
+            }
+            else if (boatChargeList[i] == 1)
+            {
+                boatLockImage[i].sprite = checkImage;
+                boatPrice[i].text = " ";
+            }
+            else boatLockImage[i].sprite = storeLoading;
         }
-
-        for (int i = 0; i < faceLockImage.Length; i++)
+        
+        for (int i = 0; i < faceCount; i++)
         {
             if (faceChargeList[i] == -1) faceLockImage[i].sprite = lockImage;
-            else if (faceChargeList[i] == 0) faceLockImage[i].sprite = null;
-            else faceLockImage[i].sprite = checkImage;
+            else if (faceChargeList[i] == 0)
+            {
+                faceLockImage[i].sprite = nullSprite;
+                facePrice[i].text = " ";
+            }
+            else if (faceChargeList[i] == 1)
+            {
+                faceLockImage[i].sprite = checkImage;
+                facePrice[i].text = " ";
+            }
+            else faceLockImage[i].sprite = storeLoading;
         }
 
-        for (int i = 0; i < waveLockImage.Length; i++)
+        for (int i = 0; i < waveCount; i++)
         {
             if (waveChargeList[i] == -1) waveLockImage[i].sprite = lockImage;
-            else if (waveChargeList[i] == 0) waveLockImage[i].sprite = null;
-            else waveLockImage[i].sprite = checkImage;
+            else if (waveChargeList[i] == 0)
+            {
+                waveLockImage[i].sprite = nullSprite;
+                wavePrice[i].text = " ";
+            }
+            else if (waveChargeList[i] == 1)
+            {
+                waveLockImage[i].sprite = checkImage;
+                wavePrice[i].text = " ";
+            }
+            else waveLockImage[i].sprite = storeLoading;
         }
     }
-    */
 
 
     public void OnBtnEquip()
     {
         if (skipRunning) return;
 
-        CheckPurchasingAndEquip(panelState, faceIndex);
-
         if (panelState == PanelState.Face)
         {
-            
-            if(faceIndex == 0)
+            for(int i=0; i<faceCount; i++)
             {
-
-            }
-            else if(faceIndex == 1)
-            {
-
-            }
-            else if (faceIndex == 2)
-            {
-
-            }
-            else if (faceIndex == 3)
-            {
-
-            }
-            else if (faceIndex == 4)
-            {
-
+                if(faceIndex == i)
+                {
+                    if(faceChargeList[i] == -1) // 구매 X
+                    {
+                        menuManager.OnBtnChargePanel(); // 구매 패널 띄우기
+                    }
+                    else if(faceChargeList[i] == 0) // 구매 O, 장착 X
+                    {
+                        faceChargeList[i] = 1;
+                        PlayerInformation.customs[1] = i; // 장착하기
+                    }
+                    break;
+                }
             }
         }
         else if(panelState == PanelState.Boat)
         {
-            if(boatIndex == 0)
+            for (int i=0; i<boatCount; i++)
             {
-
-            }
-            else if(boatIndex == 1)
-            {
-
-            }
-            else if (boatIndex == 2)
-            {
-
-            }
-            else if (boatIndex == 3)
-            {
-
-            }
-            else if (boatIndex == 4)
-            {
-
+                if (boatIndex == i)
+                {
+                    if (boatChargeList[i] == -1) // 구매 X
+                    {
+                        menuManager.OnBtnChargePanel();
+                    }
+                    else if (boatChargeList[i] == 0) // 구매 O, 장착 X
+                    {
+                        boatChargeList[i] = 1;
+                        PlayerInformation.customs[0] = i;
+                    }
+                    break;
+                }
             }
         }
         else if(panelState == PanelState.Wave)
         {
-            if(waveIndex == 0)
+            for (int i=0; i < waveCount; i++)
             {
-
+                if (waveIndex == i)
+                {
+                    if (waveChargeList[i] == -1) // 구매 X
+                    {
+                        menuManager.OnBtnChargePanel();
+                    }
+                    else if (waveChargeList[i] == 0) // 구매 O, 장착 X
+                    {
+                        waveChargeList[i] = 1;
+                        PlayerInformation.customs[2] = i;
+                    }
+                    break;
+                }
             }
-            else if(waveIndex == 1)
-            {
+        }
+        databaseManager.SetCurrentCustom(PlayerInformation.customs);
+        UpdateLock();
+    }
+    
 
+    public void CheckEquip()
+    {
+        int boat = PlayerInformation.customs[0];
+        int face = PlayerInformation.customs[1];
+        int wave = PlayerInformation.customs[2];
+
+        for(int i=0; i<faceCount; i++)
+        {
+            if(faceChargeList[i] == 1 && face != i)
+            {
+                faceChargeList[i] = 0;
             }
-            else if (waveIndex == 2)
-            {
+        }
 
+        for (int i = 0; i < boatCount; i++)
+        {
+            if (boatChargeList[i] == 1 && boat != i)
+            {
+                boatChargeList[i] = 0;
             }
-            else if (waveIndex == 3)
-            {
+        }
 
-            }
-            else if (waveIndex == 4)
+        for (int i = 0; i < waveCount; i++)
+        {
+            if (waveChargeList[i] == 1 && wave != i)
             {
-
+                waveChargeList[i] = 0;
             }
         }
     }
 
-    
-    private int CheckPurchasingAndEquip(PanelState panelState, int index)
+
+    public void OnBtnPurchasing()
     {
-        int equipOrPurchase = 0;
+        if (!menuManager.seeingChargePanel) return;
 
-        // 데이터베이스에서 정보 가져오기
-
-        return equipOrPurchase;
+        if (panelState == PanelState.Face)
+        {
+            for (int i = 0; i < faceCount; i++)
+            {
+                if (faceIndex == i)
+                {
+                    if(PlayerInformation.SoulMoney > faceSoulPrice[i])
+                    {
+                        databaseManager.SetChargeNewData("face", i);
+                        InitFaceCharge();
+                        faceChargeList[i] = 0;
+                        UpdateLock();
+                        menuManager.OnBtnChargeNo();
+                        PlayerInformation.SoulMoney -= faceSoulPrice[i];
+                        databaseManager.UpdateMoney(-faceSoulPrice[i]);
+                    }
+                    else
+                    {
+                        menuManager.ChargeText.text = "Don't have" + "\nenough money";
+                    }
+                    break;
+                }
+            }
+        }
+        else if (panelState == PanelState.Boat)
+        {
+            for (int i = 0; i < boatCount; i++)
+            {
+                if (boatIndex == i)
+                {
+                    if (PlayerInformation.SoulMoney > boatSoulPrice[i])
+                    {
+                        databaseManager.SetChargeNewData("boat", i);
+                        InitBoatCharge();
+                        boatChargeList[i] = 0;
+                        UpdateLock();
+                        menuManager.OnBtnChargeNo();
+                        PlayerInformation.SoulMoney -= boatSoulPrice[i];
+                        databaseManager.UpdateMoney(-boatSoulPrice[i]);
+                    }
+                    else
+                    {
+                        menuManager.ChargeText.text = "Don't have" + "\nenough money";
+                    }
+                    break;
+                }
+            }
+        }
+        else if (panelState == PanelState.Wave)
+        {
+            for (int i = 0; i < waveCount; i++)
+            {
+                if (waveIndex == i)
+                {
+                    if (PlayerInformation.SoulMoney > waveSoulPrice[i])
+                    {
+                        databaseManager.SetChargeNewData("wave", i);
+                        InitWaveCharge();
+                        waveChargeList[i] = 0;
+                        UpdateLock();
+                        menuManager.OnBtnChargeNo();
+                        PlayerInformation.SoulMoney -= waveSoulPrice[i];
+                        databaseManager.UpdateMoney(-waveSoulPrice[i]);
+                    }
+                    else
+                    {
+                        menuManager.ChargeText.text = "Don't have" + "\nenough money";
+                    }
+                    break;
+                }
+            }
+        }
     }
 }

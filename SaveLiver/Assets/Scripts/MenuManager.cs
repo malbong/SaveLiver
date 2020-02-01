@@ -9,6 +9,8 @@ using Firebase.Unity.Editor;
 
 public class MenuManager : MonoBehaviour
 {
+    public DatabaseManager databaseManager;
+
     public GameObject quitOuterPannel;
     public GameObject quitPanel;
     private bool quitFadeInRunning = false;
@@ -35,10 +37,23 @@ public class MenuManager : MonoBehaviour
     private bool storeFadeOutRunning = false;
     private bool seeingStorePanel = false;
 
+    public GameObject chargeOuterPanel;
+    public GameObject chargePanel;
+    private bool chargeFadeInRunning = false;
+    private bool chargeFadeOutRunning = false;
+    public bool seeingChargePanel = false;
+
     public AbsManager absManager;
     public SceneTransition sceneTransition;
 
     public Text soulText;
+    public Text ChargeText;
+
+
+    void Start()
+    {
+        databaseManager.UpdateMoney(0);
+    }
 
 
     void Update()
@@ -50,8 +65,14 @@ public class MenuManager : MonoBehaviour
         //{
         if (Input.GetKeyDown(KeyCode.Escape))
         {
+            // 구매 창 보고 있다면
+            if (seeingChargePanel)
+            {
+                StartCoroutine(ChargePanelFadeOut());
+                return;
+            }
             // Store 창 보고 있다면
-            if (seeingStorePanel)
+            if (seeingStorePanel && !seeingChargePanel)
             {
                 StartCoroutine(storePanelFadeOut());
                 return;
@@ -171,6 +192,9 @@ public class MenuManager : MonoBehaviour
 
     public void OnBtnStorePanel()
     {
+        storeManager.InitFaceCharge();
+        storeManager.InitBoatCharge();
+        storeManager.InitWaveCharge();
         StartCoroutine(StorePanelFadeIn());
     }
 
@@ -179,6 +203,24 @@ public class MenuManager : MonoBehaviour
         if (seeingStorePanel)
         {
             StartCoroutine(storePanelFadeOut());
+        }
+    }
+
+
+
+    // Buy Panel
+
+    public void OnBtnChargePanel()
+    {
+        ChargeText.text = "Do you want to" + "\nbuy this?";
+        StartCoroutine(ChargePanelFadeIn());
+    }
+
+    public void OnBtnChargeNo()
+    {
+        if (seeingChargePanel)
+        {
+            StartCoroutine(ChargePanelFadeOut());
         }
     }
 
@@ -440,5 +482,69 @@ public class MenuManager : MonoBehaviour
 
         storeFadeOutRunning = false;
         storePanel.SetActive(false);
+    }
+
+
+    IEnumerator ChargePanelFadeIn()
+    {
+        if (chargeFadeOutRunning) yield break;
+
+        chargePanel.SetActive(true);
+        chargeFadeInRunning = true;
+
+        Image chargePanelImage = chargePanel.GetComponent<Image>();
+        Color tmpColor = chargePanelImage.color;
+
+        while (true)
+        {
+            chargePanel.transform.localScale -= new Vector3(0.2f, 0.2f, 0.2f);
+
+            tmpColor.a += 0.2f;
+            chargePanelImage.color = tmpColor;
+            if (chargePanel.transform.localScale.x <= 1f) break;
+
+            yield return new WaitForSecondsRealtime(0.01f);
+        }
+
+        chargePanel.transform.localScale = new Vector3(1f, 1f, 1f);
+        tmpColor.a = 1f;
+        chargePanelImage.color = tmpColor;
+
+        seeingChargePanel = true;
+        chargeOuterPanel.SetActive(true);
+
+        chargeFadeInRunning = false;
+    }
+
+
+    IEnumerator ChargePanelFadeOut()
+    {
+        if (chargeFadeInRunning) yield break;
+
+        chargeFadeOutRunning = true;
+        seeingChargePanel = false;
+        chargeOuterPanel.SetActive(false);
+
+        Image chargePanelImage = chargePanel.GetComponent<Image>();
+        Color tmpColor = chargePanelImage.color;
+
+        while (true)
+        {
+            chargePanel.transform.localScale -= new Vector3(0.2f, 0.2f, 0.2f);
+
+            tmpColor.a -= 0.2f;
+            chargePanelImage.color = tmpColor;
+
+            if (chargePanel.transform.localScale.x <= 0) break;
+
+            yield return new WaitForSecondsRealtime(0.01f);
+        }
+
+        chargePanel.transform.localScale = new Vector3(2, 2, 2);
+        tmpColor.a = 0f;
+        chargePanelImage.color = tmpColor;
+
+        chargeFadeOutRunning = false;
+        chargePanel.SetActive(false);
     }
 }

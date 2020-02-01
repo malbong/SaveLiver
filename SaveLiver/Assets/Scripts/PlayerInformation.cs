@@ -12,6 +12,8 @@ public static class PlayerInformation
     public static bool isLogin { get; set; } = false;
     public static bool isVibrationOn { get; set; } = true;
 
+    public static int[] customs { get; set; } = { 0, 0, 0 };
+
     public static Firebase.Auth.FirebaseAuth auth;
 
     public static DatabaseReference GetDatabaseReference()

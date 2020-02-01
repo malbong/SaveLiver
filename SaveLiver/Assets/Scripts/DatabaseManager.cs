@@ -41,7 +41,8 @@ public class DatabaseManager : MonoBehaviour
     {
         DatabaseReference reference = PlayerInformation.GetDatabaseReference()
             .Child("user")
-            .Child(PlayerInformation.auth.CurrentUser.UserId)
+            .Child("pnRD68Js9kU5O4UNvRaPcoueTsy2")
+            //.Child(PlayerInformation.auth.CurrentUser.UserId)
             .Child("money");
 
         reference.GetValueAsync().ContinueWith(task =>
@@ -51,8 +52,10 @@ public class DatabaseManager : MonoBehaviour
                 // Read
                 DataSnapshot snapshot = task.Result;
                 IDictionary data = (IDictionary)snapshot.Value;
-                int dataMoney = int.Parse(data["money"].ToString());
-                int finalAmount = dataMoney + amount;
+                string dataMoney = data["money"].ToString();
+                int tmpMoney = int.Parse(dataMoney);
+                int tmpAmount = amount;
+                int finalAmount = tmpAmount + tmpMoney;
                 PlayerInformation.SoulMoney = finalAmount;
 
                 // Write
@@ -62,6 +65,18 @@ public class DatabaseManager : MonoBehaviour
 
             }
         });
+    }
+
+
+    public void UpdateCustoms(int index)
+    {
+        DatabaseReference reference = PlayerInformation.GetDatabaseReference()
+            .Child("user")
+            .Child("pnRD68Js9kU5O4UNvRaPcoueTsy2")
+            //.Child(PlayerInformation.auth.CurrentUser.UserId)
+            .Child("custom");
+
+
     }
 
 
@@ -160,6 +175,7 @@ public class DatabaseManager : MonoBehaviour
         });
     }
 
+
     public int[] GetCurrentCustom()
     {
         int[] customs = { 0, 0, 0 };
@@ -190,10 +206,120 @@ public class DatabaseManager : MonoBehaviour
         return customs;
     }
 
-    /*
-    int[] chargeList = { 2, 2, 2, 2, 2 };
 
-    public int GetChargeList(string name, int index)
+    public void SetCurrentCustom(int[] customs)
+    {
+        DatabaseReference reference = PlayerInformation.GetDatabaseReference()
+            .Child("user")
+            .Child("pnRD68Js9kU5O4UNvRaPcoueTsy2")
+            //.Child(PlayerInformation.auth.CurrentUser.UserId)
+            .Child("custom");
+
+        Custom custom = new Custom(customs[0], customs[1], customs[2]);
+        string jsonCustom = JsonUtility.ToJson(custom);
+
+        reference.SetRawJsonValueAsync(jsonCustom);
+    }
+
+
+    int[] boatChargeList = { 2, 2, 2, 2, 2 };
+    int[] faceChargeList = { 2, 2, 2, 2, 2 };
+    int[] waveChargeList = { 2, 2, 2, 2, 2 };
+
+    public int BoatCharge(int index)
+    {
+        DatabaseReference reference = PlayerInformation.GetDatabaseReference()
+            .Child("user")
+            .Child("pnRD68Js9kU5O4UNvRaPcoueTsy2")
+            //.Child(PlayerInformation.auth.CurrentUser.UserId)
+            .Child("charge")
+            .Child("boat")
+            .Child(index.ToString());
+
+        reference.GetValueAsync().ContinueWith(task =>
+        {
+            if (task.IsCompleted)
+            {
+                DataSnapshot snapshot = task.Result;
+
+                if(snapshot == null || !snapshot.Exists) // 구매하지 않은 항목이라면
+                {
+                    boatChargeList[index] = -1;
+                }
+                else
+                {
+                    boatChargeList[index] = 1;
+                }
+            }
+            return boatChargeList[index];
+        });
+        return boatChargeList[index];
+    }
+
+
+    public int FaceCharge(int index)
+    {
+        DatabaseReference reference = PlayerInformation.GetDatabaseReference()
+            .Child("user")
+            .Child("pnRD68Js9kU5O4UNvRaPcoueTsy2")
+            //.Child(PlayerInformation.auth.CurrentUser.UserId)
+            .Child("charge")
+            .Child("face")
+            .Child(index.ToString());
+
+        reference.GetValueAsync().ContinueWith(task =>
+        {
+            if (task.IsCompleted)
+            {
+                DataSnapshot snapshot = task.Result;
+
+                if (snapshot == null || !snapshot.Exists) // 구매하지 않은 곡이라면
+                {
+                    faceChargeList[index] = -1;
+                }
+                else
+                {
+                    faceChargeList[index] = 1;
+                }
+            }
+            return faceChargeList[index];
+        });
+        return faceChargeList[index];
+    }
+
+
+    public int WaveCharge(int index)
+    {
+        DatabaseReference reference = PlayerInformation.GetDatabaseReference()
+            .Child("user")
+            .Child("pnRD68Js9kU5O4UNvRaPcoueTsy2")
+            //.Child(PlayerInformation.auth.CurrentUser.UserId)
+            .Child("charge")
+            .Child("wave")
+            .Child(index.ToString());
+
+        reference.GetValueAsync().ContinueWith(task =>
+        {
+            if (task.IsCompleted)
+            {
+                DataSnapshot snapshot = task.Result;
+
+                if (snapshot == null || !snapshot.Exists) // 구매하지 않은 곡이라면
+                {
+                    waveChargeList[index] = -1;
+                }
+                else
+                {
+                    waveChargeList[index] = 1;
+                }
+            }
+            return waveChargeList[index];
+        });
+        return waveChargeList[index];
+    }
+
+
+    public void SetChargeNewData(string name, int index)
     {
         DatabaseReference reference = PlayerInformation.GetDatabaseReference()
             .Child("user")
@@ -201,69 +327,20 @@ public class DatabaseManager : MonoBehaviour
             //.Child(PlayerInformation.auth.CurrentUser.UserId)
             .Child("charge");
 
-        if(name == "boat")
+        Charge charge = new Charge(GetTimestamp());
+        string jsonCharge = JsonUtility.ToJson(charge);
+
+        if (name == "boat")
         {
-            reference.Child("boat").Child(index.ToString()).GetValueAsync().ContinueWith(task =>
-            {
-                if (task.IsCompleted)
-                {
-                    DataSnapshot snapshot = task.Result;
-                    if (snapshot.Exists)
-                    {
-                        chargeList[index] = 1;
-                    }
-                    else
-                    {
-                        chargeList[index] = -1;
-                    }
-                }
-                loadingLock = false;
-                return chargeList[index];
-            });
+            reference.Child("boat").Child(index.ToString()).SetRawJsonValueAsync(jsonCharge);
         }
         else if(name == "face")
         {
-            reference.Child("face").Child(index.ToString()).GetValueAsync().ContinueWith(task =>
-            {
-                if (task.IsCompleted)
-                {
-                    DataSnapshot snapshot = task.Result;
-                    if (snapshot.Exists)
-                    {
-                        Debug.Log(snapshot);
-                        chargeList[index] = 1;
-                    }
-                    else
-                    {
-                        chargeList[index] = -1;
-                    }
-                }
-                loadingLock = false;
-                return chargeList[index];
-            });
+            reference.Child("face").Child(index.ToString()).SetRawJsonValueAsync(jsonCharge);
         }
-        else
+        else if(name == "wave")
         {
-            reference.Child("wave").Child(index.ToString()).GetValueAsync().ContinueWith(task =>
-            {
-                if (task.IsCompleted)
-                {
-                    DataSnapshot snapshot = task.Result;
-                    if (snapshot.Exists)
-                    {
-                        chargeList[index] = 1;
-                    }
-                    else
-                    {
-                        chargeList[index] = -1;
-                    }
-                }
-                loadingLock = false;
-                return chargeList[index];
-            });
+            reference.Child("wave").Child(index.ToString()).SetRawJsonValueAsync(jsonCharge);
         }
-        return 2;
     }
-    */
-
 }
