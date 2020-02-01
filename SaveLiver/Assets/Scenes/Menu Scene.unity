@@ -5497,7 +5497,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: SOUL 23400
+  m_Text: SOUL 500
 --- !u!222 &74887931
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -12479,7 +12479,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: SOUL 23400
+  m_Text: SOUL 1000
 --- !u!222 &351481732
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -13307,7 +13307,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: SOUL 23400
+  m_Text: SOUL 0
 --- !u!222 &473979212
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -14236,7 +14236,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   databaseManager: {fileID: 121201359}
   menuManager: {fileID: 1612153469}
-  rewardAdAmountSoul: 30
+  rewardAdAmountSoul: 3
 --- !u!4 &664548240
 Transform:
   m_ObjectHideFlags: 0
@@ -14738,7 +14738,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: SOUL 23400
+  m_Text: SOUL 0
 --- !u!222 &729755565
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -19848,7 +19848,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: SOUL 23400
+  m_Text: SOUL 500
 --- !u!222 &758570006
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -20658,7 +20658,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: SOUL 23400
+  m_Text: SOUL 500
 --- !u!222 &827199356
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -20739,6 +20739,83 @@ CanvasRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 830137592}
+  m_CullTransparentMesh: 0
+--- !u!1 &862707489
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 862707490}
+  - component: {fileID: 862707492}
+  - component: {fileID: 862707491}
+  m_Layer: 5
+  m_Name: Text
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &862707490
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 862707489}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1109832649}
+  m_RootOrder: 19
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 256}
+  m_SizeDelta: {x: 160, y: 30}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &862707491
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 862707489}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FontData:
+    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_FontSize: 50
+    m_FontStyle: 0
+    m_BestFit: 0
+    m_MinSize: 5
+    m_MaxSize: 50
+    m_Alignment: 4
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 1
+    m_VerticalOverflow: 1
+    m_LineSpacing: 1
+  m_Text: New Text
+--- !u!222 &862707492
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 862707489}
   m_CullTransparentMesh: 0
 --- !u!1 &869601403
 GameObject:
@@ -25940,7 +26017,6 @@ MonoBehaviour:
   waveSprites: []
   boatImage: {fileID: 2089314633}
   faceImage: {fileID: 1390173614}
-  customs: 000000000000000000000000
   boatChargeList: 0200000002000000020000000200000002000000
   faceChargeList: 0200000002000000020000000200000002000000
   waveChargeList: 0200000002000000020000000200000002000000
@@ -25991,6 +26067,19 @@ MonoBehaviour:
   faceSoulPrice: 00000000f4010000e8030000d007000088130000
   boatSoulPrice: 00000000f4010000e8030000d007000088130000
   waveSoulPrice: 00000000f4010000f4010000f4010000f4010000
+  waveParticle:
+  - {fileID: 250414943}
+  - {fileID: 1094465458}
+  - {fileID: 883056710}
+  - {fileID: 1388381756}
+  - {fileID: 1384763624}
+  - {fileID: 1329160648}
+  - {fileID: 754067470}
+  - {fileID: 1535074153}
+  - {fileID: 1214448205}
+  - {fileID: 2103094748}
+  - {fileID: 7270088}
+  - {fileID: 940591709}
   tmp: {fileID: 62652360}
 --- !u!4 &904756243
 Transform:
@@ -31929,7 +32018,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: SOUL 23400
+  m_Text: SOUL 1000
 --- !u!222 &1014445461
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -37325,6 +37414,7 @@ RectTransform:
   - {fileID: 1445081534}
   - {fileID: 1969079248}
   - {fileID: 62652362}
+  - {fileID: 862707490}
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -37828,7 +37918,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: SOUL 23400
+  m_Text: SOUL 5000
 --- !u!222 &1189519837
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -37905,7 +37995,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: SOUL 23400
+  m_Text: SOUL 500
 --- !u!222 &1195094276
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -48521,7 +48611,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: SOUL 23400
+  m_Text: SOUL 2000
 --- !u!222 &1363655972
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -58604,7 +58694,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: SOUL 23400
+  m_Text: SOUL 500
 --- !u!222 &1418635525
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -64533,7 +64623,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: SOUL 23400
+  m_Text: SOUL 5000
 --- !u!222 &1611829356
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -65819,7 +65909,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: SOUL 23400
+  m_Text: SOUL 0
 --- !u!222 &1776581904
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -66194,7 +66284,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: SOUL 23400
+  m_Text: SOUL 2000
 --- !u!222 &1932848394
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -66586,7 +66676,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: SOUL 23400
+  m_Text: SOUL 500
 --- !u!222 &1980536315
 CanvasRenderer:
   m_ObjectHideFlags: 0

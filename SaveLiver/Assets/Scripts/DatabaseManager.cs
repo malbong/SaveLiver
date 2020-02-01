@@ -54,8 +54,7 @@ public class DatabaseManager : MonoBehaviour
                 IDictionary data = (IDictionary)snapshot.Value;
                 string dataMoney = data["money"].ToString();
                 int tmpMoney = int.Parse(dataMoney);
-                int tmpAmount = amount;
-                int finalAmount = tmpAmount + tmpMoney;
+                int finalAmount = amount + tmpMoney;
                 PlayerInformation.SoulMoney = finalAmount;
 
                 // Write

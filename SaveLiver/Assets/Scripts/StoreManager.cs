@@ -47,6 +47,8 @@ public class StoreManager : MonoBehaviour
     public int[] boatSoulPrice = { 0, 500, 1000, 2000, 5000 };
     public int[] waveSoulPrice = { 0, 500, 500, 500, 500 };
 
+    public ParticleSystem[] waveParticle;
+
     private bool skipRunning = false;
 
     private enum PanelState { Face, Boat, Wave }
@@ -69,6 +71,24 @@ public class StoreManager : MonoBehaviour
         if (seeingStore)
         {
             UpdateCurrentCustom();
+        }
+    }
+
+
+    public void PlayAllWave()
+    {
+        for(int i=0; i<waveParticle.Length; i++)
+        {
+            waveParticle[i].Play();
+        }
+    }
+
+
+    public void StopAllWave()
+    {
+        for(int i=0; i<waveParticle.Length; i++)
+        {
+            waveParticle[i].Stop();
         }
     }
 
@@ -165,11 +185,13 @@ public class StoreManager : MonoBehaviour
     IEnumerator SkipLeft(GameObject panel)
     {
         skipRunning = true;
-        for(int i=0; i<9; i++)
+        if (panelState == PanelState.Wave) StopAllWave();
+        for (int i=0; i<9; i++)
         {
             panel.transform.localPosition += new Vector3(100, 0, 0);
             yield return new WaitForSeconds(0.01f);
         }
+        if (panelState == PanelState.Wave) PlayAllWave();
         skipRunning = false;
     }
 
@@ -177,11 +199,13 @@ public class StoreManager : MonoBehaviour
     IEnumerator SkipRight(GameObject panel)
     {
         skipRunning = true;
+        if (panelState == PanelState.Wave) StopAllWave();
         for (int i=0; i<9; i++)
         {
             panel.transform.localPosition -= new Vector3(100, 0, 0);
             yield return new WaitForSeconds(0.01f);
         }
+        if (panelState == PanelState.Wave) PlayAllWave();
         skipRunning = false;
     }
 

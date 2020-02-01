@@ -422,10 +422,11 @@ public class MenuManager : MonoBehaviour
     IEnumerator StorePanelFadeIn()
     {
         if (storeFadeOutRunning) yield break;
-
+        
         storeManager.seeingStore = true;
         storePanel.SetActive(true);
         storeFadeInRunning = true;
+        storeManager.StopAllWave();
 
         Image storePanelImage = storePanel.GetComponent<Image>();
         Color tmpColor = storePanelImage.color;
@@ -447,6 +448,7 @@ public class MenuManager : MonoBehaviour
 
         seeingStorePanel = true;
         storeOuterPanel.SetActive(true);
+        storeManager.PlayAllWave();
 
         storeFadeInRunning = false;
     }
@@ -456,6 +458,7 @@ public class MenuManager : MonoBehaviour
     {
         if (storeFadeInRunning) yield break;
 
+        storeManager.StopAllWave();
         storeManager.seeingStore = false;
         storeFadeOutRunning = true;
         seeingStorePanel = false;

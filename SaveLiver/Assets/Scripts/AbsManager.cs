@@ -18,7 +18,7 @@ public class AbsManager : MonoBehaviour
     private BannerView banner;
     private RewardBasedVideoAd rewardBasedVideo;
 
-    public int rewardAdAmountSoul = 30;
+    public int rewardAdAmountSoul = 3;
 
     void Start()
     {
@@ -87,7 +87,7 @@ public class AbsManager : MonoBehaviour
     public void HandleRewardBasedVideoRewarded(object sender, Reward args)
     {
         //string type = args.Type;
-        double amount = args.Amount; // args.Amount = 1
+        double amount = args.Amount; // args.Amount = 10
         int finalAmount = (int)amount * rewardAdAmountSoul;
 
         menuManager.OnBtnRewardNo();
