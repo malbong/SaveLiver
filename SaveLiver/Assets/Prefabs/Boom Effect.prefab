@@ -116,6 +116,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6000e35f277c5547ba973965ede51d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  anim: {fileID: 8688641715189491778}
 --- !u!58 &8688641715189491777
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -131,7 +132,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.15
+  m_Radius: 0.13
 --- !u!82 &6005433103326547761
 AudioSource:
   m_ObjectHideFlags: 0

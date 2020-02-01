@@ -50,6 +50,10 @@ public class ObjectPooler : MonoBehaviour
     public GameObject spear;
     public int spearCount = 10;
 
+    public static List<GameObject> poolBoom;
+    public GameObject boom;
+    public int boomCount = 3;
+
 
     private void Start()
     {
@@ -108,6 +112,11 @@ public class ObjectPooler : MonoBehaviour
         {
             if (obj.activeInHierarchy) { obj.SetActive(false); }
         }
+
+        foreach (GameObject obj in poolBoom)
+        {
+            if (obj.activeInHierarchy) { obj.SetActive(false); }
+        }
     }
 
 
@@ -120,7 +129,8 @@ public class ObjectPooler : MonoBehaviour
         poolsDeadParticles = new List<List<GameObject>>();
         poolSoul = new List<GameObject>();
         poolSpear = new List<GameObject>();
-        
+        poolBoom = new List<GameObject>();
+
         for (int i = 0; i < items.Count; i++)
         {
             poolsItems.Add(new List<GameObject>());
@@ -195,6 +205,14 @@ public class ObjectPooler : MonoBehaviour
             GameObject obj = Instantiate(spear);
             obj.SetActive(false);
             poolSpear.Add(obj);
+            DontDestroyOnLoad(obj);
+        }
+
+        for (int i = 0; i < boomCount; i++)
+        {
+            GameObject obj = Instantiate(boom);
+            obj.SetActive(false);
+            poolBoom.Add(obj);
             DontDestroyOnLoad(obj);
         }
     }
@@ -312,6 +330,23 @@ public class ObjectPooler : MonoBehaviour
         {
             GameObject obj = Instantiate(spear);
             poolSpear.Add(obj);
+            DontDestroyOnLoad(obj);
+            return obj;
+        }
+        return null;
+    }
+
+
+    public GameObject GetBoom()
+    {
+        foreach (GameObject obj in poolBoom)
+        {
+            if (!obj.activeInHierarchy) { return obj; }
+        }
+        if (more)
+        {
+            GameObject obj = Instantiate(boom);
+            poolBoom.Add(obj);
             DontDestroyOnLoad(obj);
             return obj;
         }

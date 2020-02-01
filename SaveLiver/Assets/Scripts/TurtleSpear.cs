@@ -39,6 +39,8 @@ public class TurtleSpear : Enemy
         spriteRenderer.color = new Color32(255, 255, 255, 255);
         spriteRenderer.sprite = sprite;
 
+        hasIndicator = false;
+
         StartCoroutine(TimeCheckAndDestroy());
     }
 

@@ -4,10 +4,22 @@ using UnityEngine;
 
 public class Boom : MonoBehaviour
 {
+    public Animator anim;
+
+
     void Start()
     {
-        Destroy(gameObject, 0.68f);
+        anim.SetTrigger("trigger");
+
+        StartCoroutine(TimeCheckAndDestroy());
     }
+
+
+    private void OnEnable()
+    {
+        Start();
+    }
+
 
     private void OnTriggerEnter2D(Collider2D other)
     {
@@ -15,5 +27,13 @@ public class Boom : MonoBehaviour
         {
             Player.instance.TakeDamage(1);
         }
+    }
+
+
+    private IEnumerator TimeCheckAndDestroy()
+    {
+        yield return new WaitForSeconds(0.68f);
+
+        gameObject.SetActive(false);
     }
 }

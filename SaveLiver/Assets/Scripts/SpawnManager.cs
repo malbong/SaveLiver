@@ -54,6 +54,9 @@ public class SpawnManager : MonoBehaviour
         itemSpawnTimePerLevel = 5.0f;
         while (true)
         {
+            yield return new WaitForSeconds(1f);
+            EnemySpawn(7);
+            /*
             yield return new WaitForSeconds(0.1f);
             EnemySpawn(7);
             DiagonalBothSide(5);
@@ -86,6 +89,7 @@ public class SpawnManager : MonoBehaviour
             yield return new WaitForSeconds(3f);
             Dragon(-1, -1, 2);
             EnemySpawn(6);
+            */
         }
         
     }
@@ -185,20 +189,18 @@ public class SpawnManager : MonoBehaviour
      */
     private void ItemRandomSpawn()
     {
-        int percentage = Random.Range(0, 15);
+        int percentage = Random.Range(0, 9);
         int index;
-        if (percentage < 1)
-            index = 0; // Bomb
-        else if (percentage >= 1 && percentage < 3)
-            index = 1; // Fever
-        else if (percentage >= 3 && percentage < 6)
-            index = 2; // Liver
-        else if (percentage >= 6 && percentage < 9)
-            index = 3; // Rotate
-        else if (percentage >= 9 && percentage < 12)
-            index = 4;
+        if (percentage < 2)
+            index = 0; // SpeedUp 0 1
+        else if (percentage >= 2 && percentage < 3)
+            index = 1; // Fever 2
+        else if (percentage >= 3 && percentage < 5)
+            index = 2; // Liver 3 4
+        else if (percentage >= 5 && percentage < 7)
+            index = 3; // Rotate 5 6
         else
-            index = 5; // SpeedUp
+            index = 4; // Shield 7 8
         Vector3 randomPosition = GetRandomPosition(true);
         GameObject obj = objectPooler.GetItemObject(index);
         obj.transform.position = randomPosition;
