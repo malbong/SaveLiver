@@ -53,6 +53,8 @@ public class TurtleFollow : Enemy
     {
         if (GameManager.instance.isPause) return;
 
+        if (base.isAlive == false) return;
+
         SetMyIndicator();
         if (hasIndicator)
         {
@@ -300,17 +302,19 @@ public class TurtleFollow : Enemy
 
         if (base.isAlive == false) yield break; // dont re died
 
+        base.isAlive = false;
+
         base.KeepOnTrail();
 
         transform.GetComponent<CircleCollider2D>().enabled = false;
-
+        
         if (hasIndicator && indicatorObj != null)
         {
             hasIndicator = false;
             indicatorObj.SetActive(false);
         }
         transform.GetChild(0).gameObject.SetActive(false);
-
+        
         if (!isFadeOutRunning)
         {
             StartCoroutine(FadeOut());

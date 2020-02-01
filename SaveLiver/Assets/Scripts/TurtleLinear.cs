@@ -245,6 +245,8 @@ public class TurtleLinear : Enemy
 
         if (base.isAlive == false) yield break; // dont re died
 
+        base.isAlive = false;
+
         base.KeepOnTrail();
 
         transform.GetComponent<CircleCollider2D>().enabled = false;

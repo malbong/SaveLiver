@@ -89,9 +89,21 @@ public abstract class Enemy : MonoBehaviour
         {
             HitOnPlayer();
         }
-        else if (other.tag == "Enemy" || other.tag == "Dragon" || other.tag == "Spear" || other.tag == "BoomEffect")
+        else if (other.tag == "Enemy" || other.tag == "Dragon" || other.tag == "BoomEffect")
         {
             OnDead(false);
+        }
+        else if (other.tag == "Spear")
+        {
+            Transform child = transform.GetChild(0);
+            if (child.name == "Spear" && other == child.GetComponent<Collider2D>())
+            {
+                return; //내 spear에 부딪힌 경우 -> 속도차이 -> 안죽고 리턴
+            }
+            else
+            {
+                OnDead(false);
+            }
         }
     }
 

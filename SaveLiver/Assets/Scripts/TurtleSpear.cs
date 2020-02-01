@@ -55,6 +55,8 @@ public class TurtleSpear : Enemy
     {
         if (GameManager.instance.isPause) return;
 
+        if (base.isAlive == false) return;
+
         SetMyIndicator();
         if (hasIndicator)
         {
@@ -394,6 +396,8 @@ public class TurtleSpear : Enemy
         yield return new WaitForSeconds(lifeTime);
 
         if (base.isAlive == false) yield break; // dont re died
+
+        base.isAlive = false;
 
         base.KeepOnTrail();
 

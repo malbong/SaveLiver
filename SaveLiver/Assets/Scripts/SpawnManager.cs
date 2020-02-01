@@ -55,41 +55,41 @@ public class SpawnManager : MonoBehaviour
         while (true)
         {
             yield return new WaitForSeconds(1f);
-            EnemySpawn(7);
-            /*
-            yield return new WaitForSeconds(0.1f);
-            EnemySpawn(7);
-            DiagonalBothSide(5);
-            Dragon(1, 1, 2);
-
-            yield return new WaitForSeconds(3f);
-            EnemySpawn(1);
-            Swirl(-250, 2, true);
-
-            yield return new WaitForSeconds(3f);
+            EnemySpawn(9);
             EnemySpawn(2);
-            AllDirection4();
+            yield return new WaitForSeconds(3f);
+            EnemySpawn(8);
+            //DiagonalBothSide(5);
+            //Dragon(1, 1, 2);
+            EnemySpawn(6);
+            yield return new WaitForSeconds(3f);
+            EnemySpawn(7);
+            //Swirl(-250, 2, true);
+            EnemySpawn(1);
+            yield return new WaitForSeconds(3f);
+            EnemySpawn(9);
+            //AllDirection4();
 
             yield return new WaitForSeconds(3f);
-            EnemySpawn(3);
-            AllDirection8();
-
+            EnemySpawn(8);
+            //AllDirection8();
+            EnemySpawn(0);
             yield return new WaitForSeconds(3f);
-            EnemySpawn(4);
-            DiagonalLeft(5);
-
+            EnemySpawn(7);
+            //DiagonalLeft(5);
+            EnemySpawn(1);
             yield return new WaitForSeconds(3f);
             EnemySpawn(5);
-            DiagonalRight(5);
-            Swirl(-250);
-
-            yield return new WaitForSeconds(3f);
-            DiagonalLeft(5);
-
-            yield return new WaitForSeconds(3f);
-            Dragon(-1, -1, 2);
             EnemySpawn(6);
-            */
+            //DiagonalRight(5);
+            //Swirl(-250);
+            yield return new WaitForSeconds(3f);
+            //DiagonalLeft(5);
+            EnemySpawn(4);
+            EnemySpawn(6);
+            yield return new WaitForSeconds(3f);
+            //Dragon(-1, -1, 2);
+            EnemySpawn(6);
         }
         
     }
