@@ -55,41 +55,44 @@ public class SpawnManager : MonoBehaviour
         while (true)
         {
             yield return new WaitForSeconds(1f);
-            EnemySpawn(9);
+            EnemySpawn(10);
             //EnemySpawn(2);
-            //yield return new WaitForSeconds(3f);
-            //EnemySpawn(8);
+            yield return new WaitForSeconds(3f);
+            EnemySpawn(8);
             //DiagonalBothSide(5);
             //Dragon(1, 1, 2);
-            //EnemySpawn(6);
-            //yield return new WaitForSeconds(3f);
-            //EnemySpawn(7);
+            yield return new WaitForSeconds(3f);
+            EnemySpawn(6);
+            yield return new WaitForSeconds(3f);
+            EnemySpawn(7);
             //Swirl(-250, 2, true);
             //EnemySpawn(1);
-            //yield return new WaitForSeconds(3f);
-            //EnemySpawn(9);
+            yield return new WaitForSeconds(3f);
+            EnemySpawn(9);
+            yield return new WaitForSeconds(3f);
+            EnemySpawn(6);
             //AllDirection4();
-
-            //yield return new WaitForSeconds(3f);
-            //EnemySpawn(8);
+            /*
+            yield return new WaitForSeconds(3f);
+            EnemySpawn(8);
             //AllDirection8();
             //EnemySpawn(0);
-            //yield return new WaitForSeconds(3f);
-            //EnemySpawn(7);
+            yield return new WaitForSeconds(3f);
+            EnemySpawn(7);
             //DiagonalLeft(5);
             //EnemySpawn(1);
-            //yield return new WaitForSeconds(3f);
+            yield return new WaitForSeconds(3f);
             //EnemySpawn(5);
-            //EnemySpawn(6);
+            EnemySpawn(6);
             //DiagonalRight(5);
             //Swirl(-250);
-            //yield return new WaitForSeconds(3f);
+            yield return new WaitForSeconds(3f);
             //DiagonalLeft(5);
             //EnemySpawn(4);
-            //EnemySpawn(6);
-            //yield return new WaitForSeconds(3f);
+            EnemySpawn(6);
+            yield return new WaitForSeconds(3f);
             //Dragon(-1, -1, 2);
-            //EnemySpawn(6);
+            EnemySpawn(6);*/
         }
         
     }

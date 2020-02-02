@@ -418,4 +418,29 @@ public class TurtleSuddenAttack : Enemy
             StartCoroutine(FadeOut());
         }
     }
+
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.tag == "Player")
+        {
+            base.HitOnPlayer();
+        }
+        else if (other.tag == "Enemy" || other.tag == "Dragon" || other.tag == "BoomEffect")
+        {
+            OnDead(false);
+        }
+        else if (other.tag == "Spear")
+        {
+            Transform spear = transform.Find("Spear");
+            if (spear != null && other == spear.GetComponent<Collider2D>())
+            {
+                return; //내 spear에 부딪힌 경우 -> 속도차이 -> 안죽고 리턴
+            }
+            else
+            {
+                OnDead(false);
+            }
+        }
+    }
 }

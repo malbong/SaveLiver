@@ -6,12 +6,14 @@ public class Soul : MonoBehaviour
 {
     public float lifeTime = 10f;
     private bool isAbsorbed = false;
-
+    private AudioSource audioSource;
 
     private void Start()
     {
         isAbsorbed = false;
         StartCoroutine(EndLifeTime());
+        audioSource = GetComponent<AudioSource>();
+        GetComponent<SpriteRenderer>().enabled = true;
     }
 
 
@@ -41,7 +43,7 @@ public class Soul : MonoBehaviour
 
         isAbsorbed = true;
 
-        GetComponent<AudioSource>().Play();
+        audioSource.Play();
         
         GameManager.instance.UpdateSoulCount(1);
         GameManager.instance.AddScore(20);
@@ -53,7 +55,10 @@ public class Soul : MonoBehaviour
     private IEnumerator FadeOut()
     {
         Vector3 originScale = transform.localScale;
-        
+
+        GetComponent<SpriteRenderer>().enabled = false;
+        transform.GetChild(0).GetComponent<ParticleSystem>().Stop();
+
         while (true)
         {
             transform.localScale -= new Vector3(0.05f, 0.05f, 0);
@@ -64,6 +69,11 @@ public class Soul : MonoBehaviour
             yield return new WaitForSeconds(0.01f);
         }
 
+        while (true)
+        {
+            yield return new WaitForSeconds(Time.deltaTime);
+            if (!audioSource.isPlaying) break;
+        }
         gameObject.SetActive(false);
 
         transform.localScale = originScale;
