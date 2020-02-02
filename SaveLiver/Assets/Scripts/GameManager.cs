@@ -56,6 +56,8 @@ public class GameManager : MonoBehaviour
 
     public AudioClip scoreUpClip;
 
+    private int dataScore;
+
 
     private void Awake()
     {
@@ -87,6 +89,8 @@ public class GameManager : MonoBehaviour
         UpdateSoulCount(0);
 
         totalPlayTime = 0;
+
+        dataScore = DatabaseManager.GetScore();
     }
 
 
@@ -243,6 +247,9 @@ public class GameManager : MonoBehaviour
 
     public void PlayerDied()
     {
+        dataScore = DatabaseManager.GetScore();
+        DatabaseManager.UpdateMoney(totalSoulCount);
+
         StartCoroutine(ShowDiedPanelFadeIn());
     }
 
@@ -453,6 +460,7 @@ public class GameManager : MonoBehaviour
             Text diedText = diedTextTransform.GetComponent<Text>();
             if (CheckBestScore())
             {
+                DatabaseManager.SetScore(totalScore);
                 diedText.color = Color.yellow;
                 diedText.fontSize = 140;
                 diedText.text = "Your\n Best Score";
@@ -671,7 +679,7 @@ public class GameManager : MonoBehaviour
 
     public bool CheckBestScore()
     {
-        return true;
-        
+        if (dataScore < totalScore) return true;
+        else return false;
     }
 }

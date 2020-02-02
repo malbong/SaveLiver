@@ -7,7 +7,6 @@ using UnityEngine.UI;
 
 public class AbsManager : MonoBehaviour
 {
-    public DatabaseManager databaseManager;
     public MenuManager menuManager;
 
     private readonly string unitID = "ca-app-pub-3940256099942544/6300978111";
@@ -94,6 +93,6 @@ public class AbsManager : MonoBehaviour
         menuManager.RunGetSoulPanelFadeIn();
         menuManager.getSoulPanelText.text = "GOOD !" + "\nYOU GOT 30 SOUL !";
 
-        databaseManager.UpdateMoney(finalAmount);
+        DatabaseManager.UpdateMoney(finalAmount);
     }
 }

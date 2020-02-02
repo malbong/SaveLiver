@@ -7,14 +7,12 @@ using Firebase.Unity.Editor;
 using System;
 using UnityEngine.UI;
 
-public class DatabaseManager : MonoBehaviour
+public static class DatabaseManager
 {
-    public bool loadingLock = true;
-
-    void Awake()
-    {
-        DontDestroyOnLoad(gameObject);
-    }
+    private static int score = 0;
+    private static int[] boatChargeList = { 2, 2, 2, 2, 2 };
+    private static int[] faceChargeList = { 2, 2, 2, 2, 2 };
+    private static int[] waveChargeList = { 2, 2, 2, 2, 2 };
 
 
     public class SoulMoney
@@ -26,58 +24,6 @@ public class DatabaseManager : MonoBehaviour
             this.money = money;
         }
     }
-
-
-    public int GetTimestamp()
-    {
-        DateTime now = DateTime.Now.ToLocalTime();
-        TimeSpan span = (now - new DateTime(1970, 1, 1, 0, 0, 0, 0).ToLocalTime());
-        int timestamp = (int)span.TotalSeconds;
-        return timestamp;
-    }
-
-
-    public void UpdateMoney(int amount)
-    {
-        DatabaseReference reference = PlayerInformation.GetDatabaseReference()
-            .Child("user")
-            .Child("pnRD68Js9kU5O4UNvRaPcoueTsy2")
-            //.Child(PlayerInformation.auth.CurrentUser.UserId)
-            .Child("money");
-
-        reference.GetValueAsync().ContinueWith(task =>
-        {
-            if (task.IsCompleted)
-            {
-                // Read
-                DataSnapshot snapshot = task.Result;
-                IDictionary data = (IDictionary)snapshot.Value;
-                string dataMoney = data["money"].ToString();
-                int tmpMoney = int.Parse(dataMoney);
-                int finalAmount = amount + tmpMoney;
-                PlayerInformation.SoulMoney = finalAmount;
-
-                // Write
-                SoulMoney soulMoney = new SoulMoney(PlayerInformation.SoulMoney);
-                string json = JsonUtility.ToJson(soulMoney);
-                reference.SetRawJsonValueAsync(json);
-
-            }
-        });
-    }
-
-
-    public void UpdateCustoms(int index)
-    {
-        DatabaseReference reference = PlayerInformation.GetDatabaseReference()
-            .Child("user")
-            .Child("pnRD68Js9kU5O4UNvRaPcoueTsy2")
-            //.Child(PlayerInformation.auth.CurrentUser.UserId)
-            .Child("custom");
-
-
-    }
-
 
     public class Charge
     {
@@ -116,7 +62,46 @@ public class DatabaseManager : MonoBehaviour
     }
 
 
-    public void SetNewUserData()
+    public static int GetTimestamp()
+    {
+        DateTime now = DateTime.Now.ToLocalTime();
+        TimeSpan span = (now - new DateTime(1970, 1, 1, 0, 0, 0, 0).ToLocalTime());
+        int timestamp = (int)span.TotalSeconds;
+        return timestamp;
+    }
+
+
+    public static void UpdateMoney(int amount)
+    {
+        DatabaseReference reference = PlayerInformation.GetDatabaseReference()
+            .Child("user")
+            .Child("pnRD68Js9kU5O4UNvRaPcoueTsy2")
+            //.Child(PlayerInformation.auth.CurrentUser.UserId)
+            .Child("money");
+
+        reference.GetValueAsync().ContinueWith(task =>
+        {
+            if (task.IsCompleted)
+            {
+                // Read
+                DataSnapshot snapshot = task.Result;
+                IDictionary data = (IDictionary)snapshot.Value;
+                string dataMoney = data["money"].ToString();
+                int tmpMoney = int.Parse(dataMoney);
+                int finalAmount = amount + tmpMoney;
+                PlayerInformation.SoulMoney = finalAmount;
+
+                // Write
+                SoulMoney soulMoney = new SoulMoney(PlayerInformation.SoulMoney);
+                string json = JsonUtility.ToJson(soulMoney);
+                reference.SetRawJsonValueAsync(json);
+
+            }
+        });
+    }
+
+
+    public static void SetNewUserData()
     {
         string userId = PlayerInformation.auth.CurrentUser.UserId;
         DatabaseReference reference = PlayerInformation.GetDatabaseReference()
@@ -148,34 +133,13 @@ public class DatabaseManager : MonoBehaviour
                     reference.Child(userId).Child("custom").SetRawJsonValueAsync(jsonCustom);
                     reference.Child(userId).Child("money").SetRawJsonValueAsync(jsonMoney);
                     reference.Child(userId).Child("score").SetRawJsonValueAsync(jsonScore);
-
-                    /*
-                    Dictionary<string, object> childUpdates = new Dictionary<string, object>();
-                    
-                    // charge list
-                    childUpdates["/user/" + userId + "/charge/" + "/boat/" + "/0/" + "/" + "timestamp"] = GetTimestamp().ToString();
-                    childUpdates["/user/" + userId + "/charge/" + "/face/" + "/0/" + "/" + "timestamp"] = GetTimestamp().ToString();
-                    childUpdates["/user/" + userId + "/charge/" + "/wave/" + "/0/" + "/" + "timestamp"] = GetTimestamp().ToString();
-
-                    // custom list
-                    childUpdates["/user/" + userId + "/custom/" + "/" + "boat"] = "0";
-                    childUpdates["/user/" + userId + "/custom/" + "/" + "face"] = "0";
-                    childUpdates["/user/" + userId + "/custom/" + "/" + "wave"] = "0";
-
-                    childUpdates["/user/" + userId + "/money/" + "/" + "money"] = "0";
-
-                    childUpdates["/user/" + userId + "/score/" + "/" + "score"] = "0";
-                    childUpdates["/user/" + userId + "/score/" + "/" + "timestamp"] = GetTimestamp().ToString();
-
-                    reference.UpdateChildrenAsync(childUpdates);
-                    */
                 }
             }
         });
     }
 
 
-    public int[] GetCurrentCustom()
+    public static int[] GetCurrentCustom()
     {
         int[] customs = { 0, 0, 0 };
         DatabaseReference reference = PlayerInformation.GetDatabaseReference()
@@ -206,7 +170,7 @@ public class DatabaseManager : MonoBehaviour
     }
 
 
-    public void SetCurrentCustom(int[] customs)
+    public static void SetCurrentCustom(int[] customs)
     {
         DatabaseReference reference = PlayerInformation.GetDatabaseReference()
             .Child("user")
@@ -221,11 +185,7 @@ public class DatabaseManager : MonoBehaviour
     }
 
 
-    int[] boatChargeList = { 2, 2, 2, 2, 2 };
-    int[] faceChargeList = { 2, 2, 2, 2, 2 };
-    int[] waveChargeList = { 2, 2, 2, 2, 2 };
-
-    public int BoatCharge(int index)
+    public static int BoatCharge(int index)
     {
         DatabaseReference reference = PlayerInformation.GetDatabaseReference()
             .Child("user")
@@ -256,7 +216,7 @@ public class DatabaseManager : MonoBehaviour
     }
 
 
-    public int FaceCharge(int index)
+    public static int FaceCharge(int index)
     {
         DatabaseReference reference = PlayerInformation.GetDatabaseReference()
             .Child("user")
@@ -287,7 +247,7 @@ public class DatabaseManager : MonoBehaviour
     }
 
 
-    public int WaveCharge(int index)
+    public static int WaveCharge(int index)
     {
         DatabaseReference reference = PlayerInformation.GetDatabaseReference()
             .Child("user")
@@ -318,7 +278,7 @@ public class DatabaseManager : MonoBehaviour
     }
 
 
-    public void SetChargeNewData(string name, int index)
+    public static void SetChargeNewData(string name, int index)
     {
         DatabaseReference reference = PlayerInformation.GetDatabaseReference()
             .Child("user")
@@ -341,5 +301,44 @@ public class DatabaseManager : MonoBehaviour
         {
             reference.Child("wave").Child(index.ToString()).SetRawJsonValueAsync(jsonCharge);
         }
+    }
+
+
+    public static void SetScore(int newScore)
+    {
+        DatabaseReference reference = PlayerInformation.GetDatabaseReference()
+            .Child("user")
+            .Child("pnRD68Js9kU5O4UNvRaPcoueTsy2")
+            //.Child(PlayerInformation.auth.CurrentUser.UserId)
+            .Child("score");
+
+        Score score = new Score(newScore, GetTimestamp());
+        string jsonScore = JsonUtility.ToJson(score);
+
+        reference.SetRawJsonValueAsync(jsonScore);
+    }
+
+
+    public static int GetScore()
+    {
+        DatabaseReference reference = PlayerInformation.GetDatabaseReference()
+            .Child("user")
+            .Child("pnRD68Js9kU5O4UNvRaPcoueTsy2")
+            //.Child(PlayerInformation.auth.CurrentUser.UserId)
+            .Child("score");
+
+
+        reference.Child("score").GetValueAsync().ContinueWith(task =>
+        {
+            if (task.IsCompleted)
+            {
+                DataSnapshot data = task.Result;
+
+                string tmpScore = data.Value.ToString();
+                score = int.Parse(tmpScore);
+            }
+            return score;
+        });
+        return score;
     }
 }

@@ -9,8 +9,6 @@ using Firebase.Unity.Editor;
 
 public class MenuManager : MonoBehaviour
 {
-    public DatabaseManager databaseManager;
-
     public GameObject quitOuterPannel;
     public GameObject quitPanel;
     private bool quitFadeInRunning = false;
@@ -52,7 +50,7 @@ public class MenuManager : MonoBehaviour
 
     void Start()
     {
-        databaseManager.UpdateMoney(0);
+        DatabaseManager.UpdateMoney(0);
     }
 
 

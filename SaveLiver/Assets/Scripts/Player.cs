@@ -21,7 +21,6 @@ public class Player : MonoBehaviour
         }
     }
 
-
     public int hp;
     public float speed;
     public float rotateSpeed;
@@ -71,7 +70,6 @@ public class Player : MonoBehaviour
 
     void Start()
     {
-
         playerRigid = GetComponent<Rigidbody2D>();
         playerCollider = GetComponent<BoxCollider2D>();
         playerSpriteRenderer = GetComponent<SpriteRenderer>();
@@ -415,7 +413,6 @@ public class Player : MonoBehaviour
 
     public void UpdateCustom()
     {
-        Debug.Log(PlayerInformation.customs[0] + " " + PlayerInformation.customs[1] + " " + PlayerInformation.customs[2]);
         // boat
         if (PlayerInformation.customs[0] == 0)
         {

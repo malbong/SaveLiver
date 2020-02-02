@@ -6,7 +6,6 @@ using UnityEngine.UI;
 public class StoreManager : MonoBehaviour
 {
     public bool seeingStore = false;
-    public DatabaseManager databaseManager;
     public MenuManager menuManager;
 
     public Sprite[] boatSprites;
@@ -235,7 +234,7 @@ public class StoreManager : MonoBehaviour
 
     public void InitStoreAsync()
     {
-        PlayerInformation.customs = databaseManager.GetCurrentCustom();
+        PlayerInformation.customs = DatabaseManager.GetCurrentCustom();
         // customs[0] : boat, 1 : face, 2: wave
     }
 
@@ -244,7 +243,7 @@ public class StoreManager : MonoBehaviour
     {
         for (int i = 0; i < boatChargeList.Length; i++)
         {
-            boatChargeList[i] = databaseManager.BoatCharge(i);
+            boatChargeList[i] = DatabaseManager.BoatCharge(i);
         }
         UpdateLock();
     }
@@ -254,7 +253,7 @@ public class StoreManager : MonoBehaviour
     {
         for (int i = 0; i < faceChargeList.Length; i++)
         {
-            faceChargeList[i] = databaseManager.FaceCharge(i);
+            faceChargeList[i] = DatabaseManager.FaceCharge(i);
         }
         UpdateLock();
     }
@@ -264,7 +263,7 @@ public class StoreManager : MonoBehaviour
     {
         for (int i = 0; i < waveChargeList.Length; i++)
         {
-            waveChargeList[i] = databaseManager.WaveCharge(i);
+            waveChargeList[i] = DatabaseManager.WaveCharge(i);
         }
         UpdateLock();
     }
@@ -459,7 +458,7 @@ public class StoreManager : MonoBehaviour
                 }
             }
         }
-        databaseManager.SetCurrentCustom(PlayerInformation.customs);
+        DatabaseManager.SetCurrentCustom(PlayerInformation.customs);
         UpdateLock();
     }
     
@@ -508,13 +507,13 @@ public class StoreManager : MonoBehaviour
                 {
                     if(PlayerInformation.SoulMoney > faceSoulPrice[i])
                     {
-                        databaseManager.SetChargeNewData("face", i);
+                        DatabaseManager.SetChargeNewData("face", i);
                         InitFaceCharge();
                         faceChargeList[i] = 0;
                         UpdateLock();
                         menuManager.OnBtnChargeNo();
                         PlayerInformation.SoulMoney -= faceSoulPrice[i];
-                        databaseManager.UpdateMoney(-faceSoulPrice[i]);
+                        DatabaseManager.UpdateMoney(-faceSoulPrice[i]);
                     }
                     else
                     {
@@ -532,13 +531,13 @@ public class StoreManager : MonoBehaviour
                 {
                     if (PlayerInformation.SoulMoney > boatSoulPrice[i])
                     {
-                        databaseManager.SetChargeNewData("boat", i);
+                        DatabaseManager.SetChargeNewData("boat", i);
                         InitBoatCharge();
                         boatChargeList[i] = 0;
                         UpdateLock();
                         menuManager.OnBtnChargeNo();
                         PlayerInformation.SoulMoney -= boatSoulPrice[i];
-                        databaseManager.UpdateMoney(-boatSoulPrice[i]);
+                        DatabaseManager.UpdateMoney(-boatSoulPrice[i]);
                     }
                     else
                     {
@@ -556,13 +555,13 @@ public class StoreManager : MonoBehaviour
                 {
                     if (PlayerInformation.SoulMoney > waveSoulPrice[i])
                     {
-                        databaseManager.SetChargeNewData("wave", i);
+                        DatabaseManager.SetChargeNewData("wave", i);
                         InitWaveCharge();
                         waveChargeList[i] = 0;
                         UpdateLock();
                         menuManager.OnBtnChargeNo();
                         PlayerInformation.SoulMoney -= waveSoulPrice[i];
-                        databaseManager.UpdateMoney(-waveSoulPrice[i]);
+                        DatabaseManager.UpdateMoney(-waveSoulPrice[i]);
                     }
                     else
                     {
