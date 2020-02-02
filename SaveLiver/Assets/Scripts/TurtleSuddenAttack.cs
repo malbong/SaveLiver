@@ -46,12 +46,12 @@ public class TurtleSuddenAttack : Enemy
         collider.enabled = true;
         transform.GetChild(0).gameObject.SetActive(true);
 
+        SetParentAnimator();
+
         SpriteRenderer spriteRenderer = transform.parent.GetComponent<SpriteRenderer>();
         spriteRenderer.color = new Color32(255, 255, 255, 255);
         spriteRenderer.sprite = sprite;
-
-        SetParentAnimator();
-
+        
         StartCoroutine(TimeCheckAndDestroy());
     }
 
@@ -189,6 +189,8 @@ public class TurtleSuddenAttack : Enemy
 
         enemyRigid.mass = originRigidMass;
 
+        spriteRenderer.sprite = sprite;
+
         immediatelyAfterAttackMotion = true; //공격 직 후 = true
 
         isAttackMotionRunning = false;
@@ -209,7 +211,7 @@ public class TurtleSuddenAttack : Enemy
         
         if (CheckInRange(3.0f))
         {   //범위안이여도 공격직후에는 따라가게 하기 + 또 다시 AttackMotion 하지 않음
-            if (immediatelyAfterAttackMotion == false) StartCoroutine(AttackMotion());
+            if (immediatelyAfterAttackMotion == false) StartCoroutine("AttackMotion");
         }
         else
         {   //범위 밖으로 나가면 공격 직후가 아님

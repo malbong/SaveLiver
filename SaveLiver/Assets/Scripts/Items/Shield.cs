@@ -54,7 +54,7 @@ public class Shield : Item, IItem
     */
     public void Use()
     {
-        GameManager.instance.AddScore(20);
+        GameManager.instance.AddScore(10);
         GameManager.instance.totalGetItemCount += 1;
         ItemManager.instance.AudioPlay();
 

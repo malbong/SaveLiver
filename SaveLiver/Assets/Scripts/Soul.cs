@@ -44,7 +44,7 @@ public class Soul : MonoBehaviour
         GetComponent<AudioSource>().Play();
         
         GameManager.instance.UpdateSoulCount(1);
-        GameManager.instance.AddScore(10);
+        GameManager.instance.AddScore(20);
 
         StartCoroutine(FadeOut());
     }
