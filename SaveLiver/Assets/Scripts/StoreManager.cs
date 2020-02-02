@@ -11,10 +11,12 @@ public class StoreManager : MonoBehaviour
 
     public Sprite[] boatSprites;
     public Sprite[] faceSprites;
-    public Sprite[] waveSprites;
+    public Material[] waveMaterials;
 
     public Image boatImage;
     public Image faceImage;
+    public ParticleSystemRenderer waveLeftParticle;
+    public ParticleSystemRenderer waveRightParticle;
 
     public int[] boatChargeList = { 2, 2, 2, 2, 2 };
     public int[] faceChargeList = { 2, 2, 2, 2, 2 };
@@ -320,11 +322,13 @@ public class StoreManager : MonoBehaviour
         // wave
         if (PlayerInformation.customs[2] == 0)
         {
-            // default wave particle
+            waveLeftParticle.trailMaterial = waveMaterials[0];
+            waveRightParticle.trailMaterial = waveMaterials[0];
         }
         else if (PlayerInformation.customs[2] == 1)
         {
-            
+            waveLeftParticle.trailMaterial = waveMaterials[1];
+            waveRightParticle.trailMaterial = waveMaterials[1];
         }
         else if (PlayerInformation.customs[2] == 2)
         {

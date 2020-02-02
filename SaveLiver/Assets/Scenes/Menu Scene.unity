@@ -14048,7 +14048,7 @@ GameObject:
   - component: {fileID: 630020461}
   - component: {fileID: 630020460}
   m_Layer: 5
-  m_Name: 2
+  m_Name: Blue Wave
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -26014,9 +26014,13 @@ MonoBehaviour:
   faceSprites:
   - {fileID: 21300000, guid: 310130c60fc7a4c4aacdc910751ee190, type: 3}
   - {fileID: 21300000, guid: 56347f0eef0b4de45a1b8d3597c405b1, type: 3}
-  waveSprites: []
+  waveMaterials:
+  - {fileID: 2100000, guid: ad37247b8d071e4448f0039ae223a57a, type: 2}
+  - {fileID: 2100000, guid: ac38de85870afef459a28ee89bc2120c, type: 2}
   boatImage: {fileID: 2089314633}
   faceImage: {fileID: 1390173614}
+  waveLeftParticle: {fileID: 250414942}
+  waveRightParticle: {fileID: 1094465457}
   boatChargeList: 0200000002000000020000000200000002000000
   faceChargeList: 0200000002000000020000000200000002000000
   waveChargeList: 0200000002000000020000000200000002000000
@@ -43766,7 +43770,7 @@ ParticleSystemRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 10758, guid: 0000000000000000f000000000000000, type: 0}
-  - {fileID: 2100000, guid: ad37247b8d071e4448f0039ae223a57a, type: 2}
+  - {fileID: 2100000, guid: ac38de85870afef459a28ee89bc2120c, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -48744,7 +48748,7 @@ ParticleSystemRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 10758, guid: 0000000000000000f000000000000000, type: 0}
-  - {fileID: 2100000, guid: ad37247b8d071e4448f0039ae223a57a, type: 2}
+  - {fileID: 2100000, guid: ac38de85870afef459a28ee89bc2120c, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

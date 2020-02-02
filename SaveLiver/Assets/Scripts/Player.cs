@@ -43,7 +43,8 @@ public class Player : MonoBehaviour
 
     public GameObject shield;
     public Sprite shieldSprite;
-    
+    public GameObject fever;
+
     public bool isAlive = true;
 
     public bool HasShield { get; set; } = false;
@@ -58,13 +59,25 @@ public class Player : MonoBehaviour
     public Image decreaseHpImage;
     public Text decreaseHpText;
 
+    public SpriteRenderer faceSprite;
+    public SpriteRenderer boatSprite;
+    public ParticleSystemRenderer waveLeftParticle;
+    public ParticleSystemRenderer waveRightParticle;
+
+    public Sprite[] boatSprites;
+    public Sprite[] faceSprites;
+    public Material[] waveMaterials;
+
 
     void Start()
     {
+
         playerRigid = GetComponent<Rigidbody2D>();
         playerCollider = GetComponent<BoxCollider2D>();
         playerSpriteRenderer = GetComponent<SpriteRenderer>();
         runningCoroutine = StartCoroutine(RotateAngle(180, -1)); // 시작하면 Player를 180도 오른쪽으로 돌리기.
+
+        UpdateCustom();
     }
 
     void FixedUpdate()
@@ -281,9 +294,11 @@ public class Player : MonoBehaviour
     public void FeverTime()
     {
         isFevered = true;
-        feverAni.SetBool("feverAnimation", true);
 
-        boatAnim.SetBool("feverAnimation", true);
+        fever.SetActive(true);
+
+        //feverAni.SetBool("feverAnimation", true);
+        //boatAnim.SetBool("feverAnimation", true);
     }
 
 
@@ -299,9 +314,11 @@ public class Player : MonoBehaviour
     public void EndFeverTime()
     {
         isFevered = false;
-        feverAni.SetBool("feverAnimation", false);
 
-        boatAnim.SetBool("feverAnimation", false);
+        fever.SetActive(false);
+
+        //feverAni.SetBool("feverAnimation", false);
+        //boatAnim.SetBool("feverAnimation", false);
     }
 
 
@@ -393,5 +410,80 @@ public class Player : MonoBehaviour
         decreaseHpImage.color = tmpColor;
 
         decreaseHpImage.gameObject.transform.localPosition = tmpPosition;
+    }
+
+
+    public void UpdateCustom()
+    {
+        Debug.Log(PlayerInformation.customs[0] + " " + PlayerInformation.customs[1] + " " + PlayerInformation.customs[2]);
+        // boat
+        if (PlayerInformation.customs[0] == 0)
+        {
+            boatSprite.sprite = boatSprites[0];
+        }
+        else if (PlayerInformation.customs[0] == 1)
+        {
+            boatSprite.sprite = boatSprites[1];
+        }
+        else if (PlayerInformation.customs[0] == 2)
+        {
+
+        }
+        else if (PlayerInformation.customs[0] == 3)
+        {
+
+        }
+        else if (PlayerInformation.customs[0] == 4)
+        {
+
+        }
+
+
+        // face
+        if (PlayerInformation.customs[1] == 0)
+        {
+            faceSprite.sprite = faceSprites[0];
+        }
+        else if (PlayerInformation.customs[1] == 1)
+        {
+            faceSprite.sprite = faceSprites[1];
+        }
+        else if (PlayerInformation.customs[1] == 2)
+        {
+
+        }
+        else if (PlayerInformation.customs[1] == 3)
+        {
+
+        }
+        else if (PlayerInformation.customs[1] == 4)
+        {
+
+        }
+
+
+        // wave
+        if (PlayerInformation.customs[2] == 0)
+        {
+            waveLeftParticle.trailMaterial = waveMaterials[0];
+            waveRightParticle.trailMaterial = waveMaterials[0];
+        }
+        else if (PlayerInformation.customs[2] == 1)
+        {
+            waveLeftParticle.trailMaterial = waveMaterials[1];
+            waveRightParticle.trailMaterial = waveMaterials[1];
+        }
+        else if (PlayerInformation.customs[2] == 2)
+        {
+
+        }
+        else if (PlayerInformation.customs[2] == 3)
+        {
+
+        }
+        else if (PlayerInformation.customs[2] == 4)
+        {
+
+        }
     }
 }
