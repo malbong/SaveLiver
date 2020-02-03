@@ -121,6 +121,11 @@ public class ObjectPooler : MonoBehaviour
         {
             if (obj.activeInHierarchy) { obj.SetActive(false); }
         }
+
+        foreach (GameObject obj in poolSummonCircle)
+        {
+            if (obj.activeInHierarchy) { obj.SetActive(false); }
+        }
     }
 
 

@@ -58,6 +58,10 @@ public class Player : MonoBehaviour
     public Image decreaseHpImage;
     public Text decreaseHpText;
 
+    public bool isReversed = false;
+    public GameObject confusionRotator;
+    private bool isTriggerConfusionRunning = false;
+
 
     void Start()
     {
@@ -65,7 +69,10 @@ public class Player : MonoBehaviour
         playerCollider = GetComponent<BoxCollider2D>();
         playerSpriteRenderer = GetComponent<SpriteRenderer>();
         runningCoroutine = StartCoroutine(RotateAngle(180, -1)); // 시작하면 Player를 180도 오른쪽으로 돌리기.
-    }
+
+        isReversed = false;
+        isTriggerConfusionRunning = false;
+}
 
     void FixedUpdate()
     {
@@ -118,14 +125,18 @@ public class Player : MonoBehaviour
     */
     IEnumerator RotateAngle(float angle, int sign)
     {
+        int reverseDir = 0;
+        if (isReversed) reverseDir = -1;
+        else reverseDir = 1;
+
         float mod = angle % rotateSpeed;
         for (float i = mod; i < angle; i += rotateSpeed)
         {
-            arrowRotate.Rotate(0, 0, sign * rotateSpeed);
+            arrowRotate.Rotate(0, 0, reverseDir * sign * rotateSpeed);
             yield return new WaitForSeconds(0.01f); // 1프레임 대기
         }
         
-        arrowRotate.Rotate(0, 0, sign * mod); // 남은 각도 회전
+        arrowRotate.Rotate(0, 0, reverseDir * sign * mod); // 남은 각도 회전
     }
 
 
@@ -394,5 +405,37 @@ public class Player : MonoBehaviour
         decreaseHpImage.color = tmpColor;
 
         decreaseHpImage.gameObject.transform.localPosition = tmpPosition;
+    }
+
+
+    private IEnumerator TriggerConfusion()
+    {
+        isTriggerConfusionRunning = true;
+
+        isReversed = true;
+
+        float secondsUnit = 0;
+        while (true)
+        {
+            confusionRotator.SetActive(true);
+            confusionRotator.transform.Rotate(0, 0, 10);
+            for (int i = 0; i < 3; i++) confusionRotator.transform.GetChild(i).rotation = Quaternion.identity;
+            yield return new WaitForSeconds(Time.deltaTime);
+            secondsUnit += Time.deltaTime;
+            if (secondsUnit >= 5.0f) break;
+        }
+
+        confusionRotator.SetActive(false);
+
+        isReversed = false;
+
+        isTriggerConfusionRunning = false;
+    }
+
+
+    public void ConfusePlayer()
+    {
+        if (isTriggerConfusionRunning) StopCoroutine("TriggerConfusion");
+        StartCoroutine("TriggerConfusion");
     }
 }
