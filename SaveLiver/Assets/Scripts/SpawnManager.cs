@@ -55,6 +55,11 @@ public class SpawnManager : MonoBehaviour
         while (true)
         {
             yield return new WaitForSeconds(1f);
+            EnemySpawn(13);
+            yield return new WaitForSeconds(1f);
+            EnemySpawn(12);
+            /*
+            yield return new WaitForSeconds(1f);
             EnemySpawn(10);
             //EnemySpawn(2);
             yield return new WaitForSeconds(3f);

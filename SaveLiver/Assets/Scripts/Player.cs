@@ -62,6 +62,9 @@ public class Player : MonoBehaviour
     public GameObject confusionRotator;
     private bool isTriggerConfusionRunning = false;
 
+    private bool isTriggerBlindingRunning = false;
+    public GameObject blindPanel;
+
 
     void Start()
     {
@@ -72,7 +75,8 @@ public class Player : MonoBehaviour
 
         isReversed = false;
         isTriggerConfusionRunning = false;
-}
+        isTriggerBlindingRunning = false;
+    }
 
     void FixedUpdate()
     {
@@ -414,15 +418,17 @@ public class Player : MonoBehaviour
 
         isReversed = true;
 
+        confusionRotator.SetActive(true);
+
         float secondsUnit = 0;
         while (true)
         {
-            confusionRotator.SetActive(true);
-            confusionRotator.transform.Rotate(0, 0, 10);
-            for (int i = 0; i < 3; i++) confusionRotator.transform.GetChild(i).rotation = Quaternion.identity;
+            confusionRotator.transform.Rotate(0, 0, 10); //효과
+            for (int i = 0; i < 3; i++) confusionRotator.transform.GetChild(i).rotation = Quaternion.identity; //자식은 고정
+
             yield return new WaitForSeconds(Time.deltaTime);
             secondsUnit += Time.deltaTime;
-            if (secondsUnit >= 5.0f) break;
+            if (secondsUnit >= 3.0f) break;
         }
 
         confusionRotator.SetActive(false);
@@ -436,6 +442,50 @@ public class Player : MonoBehaviour
     public void ConfusePlayer()
     {
         if (isTriggerConfusionRunning) StopCoroutine("TriggerConfusion");
+
         StartCoroutine("TriggerConfusion");
+    }
+
+
+    private IEnumerator TriggerBlinding()
+    {
+        isTriggerBlindingRunning = true;
+
+        blindPanel.SetActive(true);
+        Image blindImage = blindPanel.GetComponent<Image>();
+        Color tmpColor = blindImage.color;
+
+        float secondsUnit = 0;
+        while (true)
+        {
+            if (blindImage.color.a < 1.0f)
+            {
+                tmpColor.a += 0.1f;
+                blindImage.color = tmpColor;
+            }
+            yield return new WaitForSeconds(Time.deltaTime);
+            secondsUnit += Time.deltaTime;
+            if (secondsUnit >= 3.0f) break;
+        }
+
+        while (true)
+        {
+            tmpColor.a -= 0.1f;
+            blindImage.color = tmpColor;
+            yield return new WaitForSeconds(Time.deltaTime);
+            if (blindImage.color.a <= 0) break;
+        }
+        
+        blindPanel.SetActive(false);
+
+        isTriggerBlindingRunning = false;
+    }
+
+
+    public void BlindPlayer()
+    {
+        if (isTriggerBlindingRunning) StopCoroutine("TriggerBlinding");
+
+        StartCoroutine("TriggerBlinding");
     }
 }
