@@ -149,7 +149,12 @@ public class SpawnManager : MonoBehaviour
         while (true)
         {
             yield return new WaitForSeconds(0.1f);
-            EnemySpawn(0);
+
+            ItemRandomSpawn();
+
+            yield return new WaitForSeconds(3.0f);
+
+            /*EnemySpawn(0);
             ItemRandomSpawn();
             yield return new WaitForSeconds(3.0f);
             ItemRandomSpawn();
@@ -167,6 +172,7 @@ public class SpawnManager : MonoBehaviour
             ItemRandomSpawn();
             EnemySpawn(5);
             yield return new WaitForSeconds(3.0f);
+            */
         }
     }
 }

@@ -16,10 +16,17 @@ public class SpeedUp : Item, IItem
         StartCoroutine(TimeCheckAndDestroy());
     }
 
+
     void Update()
     {
         if (GameManager.instance.isPause) return;
         ItemDurationAndDestroy();
+    }
+
+
+    private void OnEnable()
+    {
+        StartCoroutine(TimeCheckAndDestroy());
     }
 
 

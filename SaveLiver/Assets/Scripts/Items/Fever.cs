@@ -25,6 +25,12 @@ public class Fever : Item, IItem
     }
 
 
+    private void OnEnable()
+    {
+        StartCoroutine(TimeCheckAndDestroy());
+    }
+
+
     /**************************************
     * @ Shield와 동일
     */
@@ -76,12 +82,14 @@ public class Fever : Item, IItem
     IEnumerator TimeCheckAndDestroy()
     {
         yield return new WaitForSeconds(ItemManager.instance.itemLifeTime);
+
         if (!hasItem)
         {
             SpriteRenderer spriteRenderer = transform.parent.GetComponent<SpriteRenderer>();
+            Color color = spriteRenderer.color;
+
             while (true)
             {
-                Color color = spriteRenderer.color;
                 color.a -= 0.05f;
                 spriteRenderer.color = color;
                 yield return new WaitForSeconds(0.05f);
