@@ -37,6 +37,8 @@ public class TurtleFollow : Enemy
         spriteRenderer.color = new Color32(255, 255, 255, 255);
         spriteRenderer.sprite = sprite;
 
+        hasIndicator = false;
+
         StartCoroutine(TimeCheckAndDestroy());
     }
 
@@ -50,6 +52,8 @@ public class TurtleFollow : Enemy
     private void Update()
     {
         if (GameManager.instance.isPause) return;
+
+        if (base.isAlive == false) return;
 
         SetMyIndicator();
         if (hasIndicator)
@@ -298,17 +302,19 @@ public class TurtleFollow : Enemy
 
         if (base.isAlive == false) yield break; // dont re died
 
+        base.isAlive = false;
+
         base.KeepOnTrail();
 
         transform.GetComponent<CircleCollider2D>().enabled = false;
-
+        
         if (hasIndicator && indicatorObj != null)
         {
             hasIndicator = false;
             indicatorObj.SetActive(false);
         }
         transform.GetChild(0).gameObject.SetActive(false);
-
+        
         if (!isFadeOutRunning)
         {
             StartCoroutine(FadeOut());

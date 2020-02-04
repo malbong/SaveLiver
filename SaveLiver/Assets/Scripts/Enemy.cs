@@ -4,7 +4,7 @@ using UnityEngine;
 
 public abstract class Enemy : MonoBehaviour
 {
-    public float lifeTime = 10.0f;
+    public float lifeTime = 20.0f;
     public Sprite sprite;
     public ParticleSystem onDeadParticle;
     public ParticleSystem onDeadParticleGetLiver;
@@ -89,7 +89,7 @@ public abstract class Enemy : MonoBehaviour
         {
             HitOnPlayer();
         }
-        else if (other.tag == "Enemy" || other.tag == "Dragon" || other.tag == "Spear" || other.tag == "BoomEffect")
+        else if (other.tag == "Enemy" || other.tag == "Dragon" || other.tag == "BoomEffect" || other.tag == "Spear")
         {
             OnDead(false);
         }

@@ -67,6 +67,13 @@ public class Player : MonoBehaviour
     public Sprite[] faceSprites;
     public Material[] waveMaterials;
 
+    public bool isReversed = false;
+    public GameObject confusionRotator;
+    private bool isTriggerConfusionRunning = false;
+
+    private bool isTriggerBlindingRunning = false;
+    public GameObject blindPanel;
+
 
     void Start()
     {
@@ -76,6 +83,10 @@ public class Player : MonoBehaviour
         runningCoroutine = StartCoroutine(RotateAngle(180, -1)); // 시작하면 Player를 180도 오른쪽으로 돌리기.
 
         UpdateCustom();
+
+        isReversed = false;
+        isTriggerConfusionRunning = false;
+        isTriggerBlindingRunning = false;
     }
 
     void FixedUpdate()
@@ -129,14 +140,18 @@ public class Player : MonoBehaviour
     */
     IEnumerator RotateAngle(float angle, int sign)
     {
+        int reverseSign = 0;
+        if (isReversed) reverseSign = -1;
+        else reverseSign = 1;
+
         float mod = angle % rotateSpeed;
         for (float i = mod; i < angle; i += rotateSpeed)
         {
-            arrowRotate.Rotate(0, 0, sign * rotateSpeed);
+            arrowRotate.Rotate(0, 0, reverseSign * sign * rotateSpeed);
             yield return new WaitForSeconds(0.01f); // 1프레임 대기
         }
         
-        arrowRotate.Rotate(0, 0, sign * mod); // 남은 각도 회전
+        arrowRotate.Rotate(0, 0, reverseSign * sign * mod); // 남은 각도 회전
     }
 
 
@@ -255,6 +270,7 @@ public class Player : MonoBehaviour
         GetComponent<BoxCollider2D>().enabled = false;
 
         cam = Camera.main;
+        cam.GetComponent<AudioListener>().enabled = true;
         cam.transform.parent = null;
 
         ParticleSystem instance = Instantiate(onDeadParticle, transform.position, Quaternion.identity);
@@ -482,5 +498,83 @@ public class Player : MonoBehaviour
         {
 
         }
+    }
+
+
+    private IEnumerator TriggerConfusion()
+    {
+        isTriggerConfusionRunning = true;
+
+        isReversed = true;
+
+        confusionRotator.SetActive(true);
+
+        float secondsUnit = 0;
+        while (true)
+        {
+            confusionRotator.transform.Rotate(0, 0, 10); //효과
+            for (int i = 0; i < 3; i++) confusionRotator.transform.GetChild(i).rotation = Quaternion.identity; //자식은 고정
+
+            yield return new WaitForSeconds(Time.deltaTime);
+            secondsUnit += Time.deltaTime;
+            if (secondsUnit >= 3.0f) break;
+        }
+
+        confusionRotator.SetActive(false);
+
+        isReversed = false;
+
+        isTriggerConfusionRunning = false;
+    }
+
+
+    public void ConfusePlayer()
+    {
+        if (isTriggerConfusionRunning) StopCoroutine("TriggerConfusion");
+
+        StartCoroutine("TriggerConfusion");
+    }
+
+
+    private IEnumerator TriggerBlinding()
+    {
+        isTriggerBlindingRunning = true;
+
+        blindPanel.SetActive(true);
+        Image blindImage = blindPanel.GetComponent<Image>();
+        Color tmpColor = blindImage.color;
+
+        float secondsUnit = 0;
+        while (true)
+        {
+            if (blindImage.color.a < 1.0f)
+            {
+                tmpColor.a += 0.1f;
+                blindImage.color = tmpColor;
+            }
+            yield return new WaitForSeconds(Time.deltaTime);
+            secondsUnit += Time.deltaTime;
+            if (secondsUnit >= 3.0f) break;
+        }
+
+        while (true)
+        {
+            tmpColor.a -= 0.1f;
+            blindImage.color = tmpColor;
+            yield return new WaitForSeconds(Time.deltaTime);
+            if (blindImage.color.a <= 0) break;
+        }
+        
+        blindPanel.SetActive(false);
+
+        isTriggerBlindingRunning = false;
+    }
+
+
+    public void BlindPlayer()
+    {
+        if (isTriggerBlindingRunning) StopCoroutine("TriggerBlinding");
+
+        StartCoroutine("TriggerBlinding");
     }
 }

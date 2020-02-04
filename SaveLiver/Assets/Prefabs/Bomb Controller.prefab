@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 5545729592395700199}
   - component: {fileID: 1635625524801330574}
   - component: {fileID: 1824427365968223218}
-  - component: {fileID: 4511488875374452834}
+  - component: {fileID: 3696809831638450310}
   m_Layer: 0
   m_Name: Bomb Collider
   m_TagString: Untagged
@@ -136,7 +136,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!82 &4511488875374452834
+--- !u!82 &3696809831638450310
 AudioSource:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -145,7 +145,8 @@ AudioSource:
   m_GameObject: {fileID: 1315216015269794549}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 6542069521705123523, guid: 2ad35a0e69846294992f08b18ef23a65,
+    type: 2}
   m_audioClip: {fileID: 8300000, guid: b4d0e7bc2e4d18c4aaf20d56e050bf56, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
@@ -156,8 +157,8 @@ AudioSource:
   SpatializePostEffects: 0
   Priority: 128
   DopplerLevel: 1
-  MinDistance: 1
-  MaxDistance: 500
+  MinDistance: 0
+  MaxDistance: 8
   Pan2D: 0
   rolloffMode: 0
   BypassEffects: 0
@@ -192,7 +193,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0

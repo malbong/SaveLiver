@@ -16,7 +16,6 @@ public class Dragon : MonoBehaviour
     private bool isAlive;
     private bool isFadeOutRunning = false;
 
-
     private void Start()
     {
         BoxCollider2D collider = GetComponent<BoxCollider2D>();
@@ -29,7 +28,7 @@ public class Dragon : MonoBehaviour
         
         isNotMove = false;
         isAlive = true;
-        
+
         enemyRigid = GetComponent<Rigidbody2D>();
 
         StartCoroutine(TimeCheckAndDestroy());
@@ -133,6 +132,9 @@ public class Dragon : MonoBehaviour
 
         enemyRigid.velocity = Vector2.zero;
         isNotMove = true;
+
+        AudioSource audio = GetComponent<AudioSource>();
+        audio.Play();
 
         DeadAnim.SetTrigger("Dead");
         StartCoroutine(FadeOutAndDead());

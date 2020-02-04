@@ -61,6 +61,7 @@ public class SettingsManager : MonoBehaviour
     
     public void OnSettingsButtonClick()
     {
+        SoundManager.instance.ButtonClick();
         //Settings Panel Fade In
         StartCoroutine(SettingsPanelFadeIn());
 
@@ -76,6 +77,8 @@ public class SettingsManager : MonoBehaviour
     public void OnSoundToggleButton()
     {
         bool isSoundOn = AudioListener.volume == 1f ? true : false;
+
+        SoundManager.instance.ButtonClick();
 
         if (isSoundOn)
         {
@@ -127,6 +130,8 @@ public class SettingsManager : MonoBehaviour
 
     public void OnVibeToggleButton()
     {
+        SoundManager.instance.ButtonClick();
+
         if (PlayerInformation.isVibrationOn)
         {
             PlayerInformation.isVibrationOn = false;
@@ -174,6 +179,7 @@ public class SettingsManager : MonoBehaviour
 
     public void OnSettingsExitButton()
     {
+        SoundManager.instance.ButtonClick();
         //Settings Panel Fade Out
         StartCoroutine(SettingsPanelFadeOut());
     }
@@ -181,6 +187,7 @@ public class SettingsManager : MonoBehaviour
 
     public void OnHelpButton()
     {
+        SoundManager.instance.ButtonClick();
         //help page 초기화
         helpPanelPage = 1;
         helpPageText.text = helpPanelPage + " / 3";
@@ -193,6 +200,7 @@ public class SettingsManager : MonoBehaviour
 
     public void OnHelpPanelExitButton()
     {
+        SoundManager.instance.ButtonClick();
         //Help Panel Fade Out
         StartCoroutine(HelpPanelFadeOut());
     }
@@ -200,6 +208,7 @@ public class SettingsManager : MonoBehaviour
 
     public void OnHelpPanelNextButton()
     {
+        SoundManager.instance.ButtonClick();
         if (helpPanelPage >= 3) //page 3 -> ignored
         {
             helpPanelPage = 3;
@@ -208,16 +217,20 @@ public class SettingsManager : MonoBehaviour
         }
         else if (helpPanelPage >= 1) //page 1 2
         {
-            helpPanelPage += 1;
-            helpPageText.text = helpPanelPage + " / 3";
-            //Slide Page
-            StartCoroutine(NextPageFadeIn());
+            if (!nextPageFadeRunning && !previousPageFadeRunning)
+            {
+                helpPanelPage += 1;
+                helpPageText.text = helpPanelPage + " / 3";
+                //Slide Page
+                StartCoroutine(NextPageFadeIn());
+            }
         }
     }
 
 
     public void OnHelpPanelPreviousButton()
     {
+        SoundManager.instance.ButtonClick();
         if (helpPanelPage <= 1) //page 1 -> ignored
         {
             helpPanelPage = 1;
@@ -225,22 +238,27 @@ public class SettingsManager : MonoBehaviour
         }
         else if (helpPanelPage <= 3) //page 2 3
         {
-            helpPanelPage -= 1;
-            helpPageText.text = helpPanelPage + " / 3";
-            //Slider Page
-            StartCoroutine(PreviousPageFadeIn());
+            if (!nextPageFadeRunning && !previousPageFadeRunning)
+            {
+                helpPanelPage -= 1;
+                helpPageText.text = helpPanelPage + " / 3";
+                //Slider Page
+                StartCoroutine(PreviousPageFadeIn());
+            }
         }
     }
 
 
     public void OnPrivacyButton()
     {
-
+        SoundManager.instance.ButtonClick();
+        Application.OpenURL("https://cafe.naver.com/hosanvillage/2");
     }
 
 
     public void OnLogoutAndLogInButton()
     {
+        SoundManager.instance.ButtonClick();
         googleAuthController.TryGoogleLoginOrLogout();
     }
 
