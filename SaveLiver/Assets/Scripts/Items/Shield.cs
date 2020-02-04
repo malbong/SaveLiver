@@ -25,6 +25,12 @@ public class Shield : Item, IItem
     }
 
 
+    /*private void OnEnable()
+    {
+        Start();
+    }*/
+
+
     /**************************************
     * @함수명: ItemDurationAndDestroy
     * @작성자: zeli
@@ -54,7 +60,7 @@ public class Shield : Item, IItem
     */
     public void Use()
     {
-        GameManager.instance.AddScore(10);
+        GameManager.instance.AddScore(20);
         GameManager.instance.totalGetItemCount += 1;
         ItemManager.instance.AudioPlay();
 
@@ -75,13 +81,16 @@ public class Shield : Item, IItem
     */
     IEnumerator TimeCheckAndDestroy()
     {
-        yield return new WaitForSeconds(ItemManager.instance.itemLifeTime);
+        yield return new WaitForSeconds(1f);
+        //yield return new WaitForSeconds(ItemManager.instance.itemLifeTime);
+
         if (!hasItem)
         {
             SpriteRenderer spriteRenderer = transform.parent.GetComponent<SpriteRenderer>();
+            Color color = spriteRenderer.color;
+            Debug.Log(spriteRenderer.sprite.name);
             while (true)
             {
-                Color color = spriteRenderer.color;
                 color.a -= 0.05f;
                 spriteRenderer.color = color;
                 yield return new WaitForSeconds(0.05f);
