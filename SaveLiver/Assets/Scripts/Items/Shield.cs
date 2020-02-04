@@ -81,8 +81,8 @@ public class Shield : Item, IItem
     */
     IEnumerator TimeCheckAndDestroy()
     {
-        yield return new WaitForSeconds(1f);
-        //yield return new WaitForSeconds(ItemManager.instance.itemLifeTime);
+        //yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(ItemManager.instance.itemLifeTime);
 
         if (!hasItem)
         {
