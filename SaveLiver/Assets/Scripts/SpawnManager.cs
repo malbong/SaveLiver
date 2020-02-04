@@ -51,6 +51,7 @@ public class SpawnManager : MonoBehaviour
     IEnumerator EnemyCreate()
     {
         itemSpawnTimePerLevel = 5.0f;
+
         while (true)
         {
             yield return new WaitForSeconds(3f);
@@ -77,6 +78,8 @@ public class SpawnManager : MonoBehaviour
             yield return new WaitForSeconds(3f);
             EnemySpawn(6);
             //AllDirection4();
+            
+            
             /*
             yield return new WaitForSeconds(3f);
             EnemySpawn(8);
@@ -111,6 +114,7 @@ public class SpawnManager : MonoBehaviour
         {
             ItemRandomSpawn();
             yield return new WaitForSeconds(itemSpawnTimePerLevel);
+            //yield return new WaitForSeconds(3.0f);
         }
     }
     /********************************************

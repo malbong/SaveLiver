@@ -140,18 +140,21 @@ public class Player : MonoBehaviour
     */
     IEnumerator RotateAngle(float angle, int sign)
     {
-        int reverseSign = 0;
-        if (isReversed) reverseSign = -1;
-        else reverseSign = 1;
-
+        Debug.Log(angle + " : " + sign);
+        if (isReversed)
+        {
+            angle = 180 - angle;
+            sign *= -1;
+        }
+        
         float mod = angle % rotateSpeed;
         for (float i = mod; i < angle; i += rotateSpeed)
         {
-            arrowRotate.Rotate(0, 0, reverseSign * sign * rotateSpeed);
+            arrowRotate.Rotate(0, 0, sign * rotateSpeed);
             yield return new WaitForSeconds(0.01f); // 1프레임 대기
         }
         
-        arrowRotate.Rotate(0, 0, reverseSign * sign * mod); // 남은 각도 회전
+        arrowRotate.Rotate(0, 0, sign * mod); // 남은 각도 회전
     }
 
 

@@ -41,7 +41,8 @@ public class Item : MonoBehaviour
     {
         if (GameManager.instance.isPause) return;
 
-        SetMyIndicator();
+        if(!hasItem) SetMyIndicator();
+
         if (hasIndicator)
         {
             OffScreenIndicator.instance.DrawIndicator(gameObject, indicatorObj);
