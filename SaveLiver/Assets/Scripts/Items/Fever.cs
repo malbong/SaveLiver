@@ -23,13 +23,7 @@ public class Fever : Item, IItem
         if (GameManager.instance.isPause) return;
         ItemDurationAndDestroy();
     }
-
-
-    private void OnEnable()
-    {
-        StartCoroutine(TimeCheckAndDestroy());
-    }
-
+    
 
     /**************************************
     * @ Shield와 동일

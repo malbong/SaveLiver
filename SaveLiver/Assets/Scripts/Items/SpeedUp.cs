@@ -24,12 +24,6 @@ public class SpeedUp : Item, IItem
     }
 
 
-    private void OnEnable()
-    {
-        StartCoroutine(TimeCheckAndDestroy());
-    }
-
-
     /**************************************
     * @ Shield와 동일
     */

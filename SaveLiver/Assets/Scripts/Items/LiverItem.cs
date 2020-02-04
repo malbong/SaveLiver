@@ -14,12 +14,6 @@ public class LiverItem : Item, IItem
     }
 
 
-    private void OnEnable()
-    {
-        StartCoroutine(TimeCheckAndDestroy());
-    }
-
-
     /**************************************
     * @함수명: Use
     * @작성자: zeli

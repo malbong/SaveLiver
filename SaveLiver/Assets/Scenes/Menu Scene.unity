@@ -25995,7 +25995,7 @@ MonoBehaviour:
   - {fileID: 1734840791}
   - {fileID: 2019400410}
   lockImage: {fileID: 21300000, guid: 2b9e529c732fb4142aea91df89e10a9a, type: 3}
-  checkImage: {fileID: 21300000, guid: 663c707ba3cc956469f9f67508e705fc, type: 3}
+  checkImage: {fileID: 21300000, guid: 3fda15c5236428a4aada8a12efa0d680, type: 3}
   boatPrice:
   - {fileID: 729755564}
   - {fileID: 1195094275}
@@ -26016,15 +26016,6 @@ MonoBehaviour:
   - {fileID: 74887930}
   storeLoading: {fileID: 21300000, guid: f2fe54c02cbe2e041abc0a59cdb03ee6, type: 3}
   nullSprite: {fileID: 21300000, guid: 8f772b989957eeb41a3dda8d03dd990b, type: 3}
-  m_Script: {fileID: 11500000, guid: 9534725042b83f1479b1914f9ee5a159, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  faceSprites:
-  - {fileID: 0}
-  - {fileID: 21300000, guid: 56347f0eef0b4de45a1b8d3597c405b1, type: 3}
-  boatSprites:
-  - {fileID: 0}
-  waveSprites: []
   facePanel: {fileID: 1302516294}
   boatPanel: {fileID: 731814446}
   wavePanel: {fileID: 1272255796}
@@ -32267,7 +32258,7 @@ GameObject:
   - component: {fileID: 1054186044}
   - component: {fileID: 1054186043}
   m_Layer: 0
-  m_Name: SoundManager
+  m_Name: Sound Manager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -32284,7 +32275,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 3391267215352815965, guid: 2ad35a0e69846294992f08b18ef23a65,
     type: 2}
-  m_audioClip: {fileID: 8300000, guid: 0d903eabd81854363b1cbb809ba2253c, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 3daf4f21b291e4b229995d56246f8a2b, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
@@ -32382,8 +32373,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ad19ac5857f8c748a3a104668443293, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  menuBGM: {fileID: 8300000, guid: 0d903eabd81854363b1cbb809ba2253c, type: 3}
-  playBGM: {fileID: 8300000, guid: 25aecf7b611854746b9e47bbefdb179c, type: 3}
+  menuBGM: {fileID: 8300000, guid: 3daf4f21b291e4b229995d56246f8a2b, type: 3}
+  playBGM: {fileID: 8300000, guid: 0f9e897e4f55146549ecb24c564e024b, type: 3}
 --- !u!4 &1054186045
 Transform:
   m_ObjectHideFlags: 0
@@ -58709,7 +58700,6 @@ RectTransform:
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 65, y: 96}
-  m_SizeDelta: {x: 70, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1408612649
 MonoBehaviour:
@@ -65506,7 +65496,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: c08ec0d9af88cec47b1536bc3dabac30, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.8
   m_Pitch: 1
   Loop: 0
   Mute: 0

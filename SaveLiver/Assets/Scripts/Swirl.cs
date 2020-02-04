@@ -16,15 +16,24 @@ public class Swirl : MonoBehaviour
     private float currentTime = 0f;
     private bool isDisappear = false;
 
-    public void Start()
+    private void Start()
     {
+
+    }
+
+
+    private void OnEnable()
+    {
+        currentForce = 0f;
+        currentTime = 0f;
+        isDisappear = false;
         pointEffector.forceMagnitude = minForce;
         currentForce = minForce;
         toMaxForceSpeed = (maxForce - minForce) / toMaxForceTime; // -150/2 => -75
     }
 
 
-    public void Update()
+    private void Update()
     {
         if (GameManager.instance.isPause) return;
 
@@ -33,21 +42,29 @@ public class Swirl : MonoBehaviour
 
         if (currentTime < toMaxForceTime)
         {
-            if (currentForce < maxForce) return; //절댓값이 max보다 크면
+            if (currentForce < maxForce) return; //절댓값이 max보다 크면 (toMaxForceTime에 가기전에 이미 최대값이면)
             currentForce += toMaxForceSpeed * Time.deltaTime;
             pointEffector.forceMagnitude = currentForce;
         }
         else if (currentTime > lifeTime - toDisappearTime) //disappear 실행
         {
-            if (currentForce > minForce) return;
+            if (currentForce > minForce) return; //절댓값이 최소값보다 작아지면
             if (isDisappear == false)
             {
                 anim.SetTrigger("Disappear");
-                Destroy(gameObject, toDisappearTime);
+                StartCoroutine(Disappear());
                 isDisappear = true;
             }
-            currentForce += -(maxForce - minForce) * Time.deltaTime; // -(-200 - (-50))
+            currentForce += -(maxForce - minForce) * Time.deltaTime; // -(-200 - (-50)) 증가된 수치만큼, 다시 min으로
             pointEffector.forceMagnitude = currentForce;   
         }
+    }
+
+
+    private IEnumerator Disappear()
+    {
+        yield return new WaitForSeconds(toDisappearTime);
+
+        gameObject.SetActive(false);
     }
 }

@@ -25,12 +25,6 @@ public class Shield : Item, IItem
     }
 
 
-    private void OnEnable()
-    {
-        StartCoroutine(TimeCheckAndDestroy());
-    }
-
-
     /**************************************
     * @함수명: ItemDurationAndDestroy
     * @작성자: zeli
