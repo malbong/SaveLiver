@@ -5,17 +5,9 @@ using UnityEngine;
 public class RotateItem : Item, IItem
 {
     public float itemDuration = 8f;
-    private bool hasItem = false;
     public float amountRotateUp = 2f;
     private float rotateUpItemTime = 0f;
 
-    private Rigidbody2D parent;
-
-    void Start()
-    {
-        parent = GetComponentInParent<Rigidbody2D>();
-        StartCoroutine(TimeCheckAndDestroy());
-    }
 
     void Update()
     {
@@ -61,27 +53,5 @@ public class RotateItem : Item, IItem
         Player.instance.HasRotateUp = true;
         rotateUpItemTime = Time.time;
         hasItem = true;
-    }
-
-
-    /**************************************
-    * @ Shield와 동일
-    */
-    IEnumerator TimeCheckAndDestroy()
-    {
-        yield return new WaitForSeconds(ItemManager.instance.itemLifeTime);
-        if (!hasItem)
-        {
-            SpriteRenderer spriteRenderer = transform.parent.GetComponent<SpriteRenderer>();
-            while (true)
-            {
-                Color color = spriteRenderer.color;
-                color.a -= 0.05f;
-                spriteRenderer.color = color;
-                yield return new WaitForSeconds(0.05f);
-                if (spriteRenderer.color.a <= 0.1f) break;
-            }
-            parent.gameObject.SetActive(false);
-        }
     }
 }

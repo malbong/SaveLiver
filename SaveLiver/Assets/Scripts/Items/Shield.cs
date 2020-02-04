@@ -5,17 +5,8 @@ using UnityEngine;
 public class Shield : Item, IItem
 {
     public float itemDuration = 5f;
-    private bool hasItem = false;
     //private GameObject shield;
-    private Rigidbody2D parent;
 
-    void Start()
-    {
-        parent = transform.GetComponentInParent<Rigidbody2D>();
-        //shield = Player.instance.gameObject.transform.GetChild(2).gameObject;
-        // GetChild(2) : Hare Shield
-        StartCoroutine(TimeCheckAndDestroy());
-    }
 
     void Update()
     {
@@ -63,33 +54,5 @@ public class Shield : Item, IItem
         GetComponent<Collider2D>().enabled = false;
         Player.instance.ShieldStart(); // 쉴드막 생성 (플레이어 자식 스프라이트 On)
         hasItem = true;
-    }
-
-
-    /**************************************
-    * @함수명: TimeCheckAndDestroy
-    * @작성자: zeli
-    * @입력: void
-    * @출력: IEnumerator
-    * @설명: Item의 lifeTime이 끝나면, 해당 아이템의 실행여부 판단 후 파괴여부 결정
-    */
-    IEnumerator TimeCheckAndDestroy()
-    {
-        yield return new WaitForSeconds(ItemManager.instance.itemLifeTime);
-
-        if (!hasItem)
-        {
-            SpriteRenderer spriteRenderer = transform.parent.GetComponent<SpriteRenderer>();
-            Color color = spriteRenderer.color;
-
-            while (true)
-            {
-                color.a -= 0.05f;
-                spriteRenderer.color = color;
-                yield return new WaitForSeconds(0.05f);
-                if (spriteRenderer.color.a <= 0.1f) break;
-            }
-            parent.gameObject.SetActive(false);
-        }
     }
 }

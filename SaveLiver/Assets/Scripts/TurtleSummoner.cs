@@ -394,7 +394,8 @@ public class TurtleSummoner : Enemy
         }
         else if (other.tag == "Spear")
         {
-            if (other.transform.parent.name == "TurtleSummons(Clone)") return; //소환수 spear에는 안죽음
+            if (other.transform.parent == null) OnDead(false); //기본 spear에 맞을경우
+            else if (other.transform.parent.name == "TurtleSummons(Clone)") return; //소환수 spear에는 안죽음
             else OnDead(false);
         }
     }
