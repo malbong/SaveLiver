@@ -11,10 +11,11 @@ public static class PlayerInformation
     public static bool TryOnceAutoAuth { get; set; }
     public static bool isLogin { get; set; } = false;
     public static bool isVibrationOn { get; set; } = true;
-
     public static int[] customs { get; set; } = { 0, 0, 0 };
+    public static int PlayNum { get; set; }
 
     public static Firebase.Auth.FirebaseAuth auth;
+
 
     public static DatabaseReference GetDatabaseReference()
     {

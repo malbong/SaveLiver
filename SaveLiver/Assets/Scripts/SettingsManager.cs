@@ -29,6 +29,7 @@ public class SettingsManager : MonoBehaviour
     public Text helpPageText;
     private int helpPanelPage = 1;
 
+    public bool seeingSettingPanel;
 
     private bool settingsPanelFadeInRunning = false;
     private bool settingsPanelFadeOutRunning = false;
@@ -321,6 +322,7 @@ public class SettingsManager : MonoBehaviour
         tmpInnerColor.a = 1f;
         settingsInnerPanelImage.color = tmpInnerColor;
 
+        seeingSettingPanel = true;
         settingsPanelFadeInRunning = false;
     }
 
@@ -329,6 +331,7 @@ public class SettingsManager : MonoBehaviour
     {
         if (settingsPanelFadeInRunning) yield break;
 
+        seeingSettingPanel = false;
         settingsPanelFadeOutRunning = true;
 
         settingsOuterPanel.SetActive(true);
@@ -364,7 +367,7 @@ public class SettingsManager : MonoBehaviour
 
         tmpInnerColor.a = 0f;
         settingsInnerPanelImage.color = tmpInnerColor;
-
+        
         settingsPanelFadeOutRunning = false;
     }
 

@@ -94,6 +94,24 @@ public class StoreManager : MonoBehaviour
     }
 
 
+    private void ActiveFalseWave()
+    {
+        for (int i = 2; i < waveParticle.Length; i++)
+        {
+            waveParticle[i].gameObject.SetActive(false);
+        }
+    }
+
+
+    private void ActiveTrueWave()
+    {
+        for(int i=2; i<waveParticle.Length; i++)
+        {
+            waveParticle[i].gameObject.SetActive(true);
+        }
+    }
+
+
     public void OnBtnPanelState(int onClickPanel) // onClickPanel - 0:face, 1:boat, 2:wave
     {
         switch (onClickPanel)
@@ -151,7 +169,10 @@ public class StoreManager : MonoBehaviour
             {
                 waveIndex -= 1;
                 if (waveIndex < 0) waveIndex = 0;
-                else StartCoroutine(SkipLeft(wavePanel));
+                else
+                {
+                    StartCoroutine(SkipLeft(wavePanel));
+                }
                 listText.text = waveIndex + 1 + " / " + waveCount;
             }
         }
@@ -176,7 +197,10 @@ public class StoreManager : MonoBehaviour
             {
                 waveIndex += 1;
                 if (waveIndex > waveCount - 1) waveIndex = waveCount - 1;
-                else StartCoroutine(SkipRight(wavePanel));
+                else
+                {
+                    StartCoroutine(SkipRight(wavePanel));
+                }
                 listText.text = waveIndex + 1 + " / " + waveCount;
             }
         }
@@ -186,13 +210,13 @@ public class StoreManager : MonoBehaviour
     IEnumerator SkipLeft(GameObject panel)
     {
         skipRunning = true;
-        if (panelState == PanelState.Wave) StopAllWave();
+        if (panelState == PanelState.Wave) ActiveFalseWave();
         for (int i=0; i<9; i++)
         {
             panel.transform.localPosition += new Vector3(100, 0, 0);
             yield return new WaitForSeconds(0.01f);
         }
-        if (panelState == PanelState.Wave) PlayAllWave();
+        if (panelState == PanelState.Wave) ActiveTrueWave();
         skipRunning = false;
     }
 
@@ -200,13 +224,13 @@ public class StoreManager : MonoBehaviour
     IEnumerator SkipRight(GameObject panel)
     {
         skipRunning = true;
-        if (panelState == PanelState.Wave) StopAllWave();
+        if (panelState == PanelState.Wave) ActiveFalseWave();
         for (int i=0; i<9; i++)
         {
             panel.transform.localPosition -= new Vector3(100, 0, 0);
             yield return new WaitForSeconds(0.01f);
         }
-        if (panelState == PanelState.Wave) PlayAllWave();
+        if (panelState == PanelState.Wave) ActiveTrueWave();
         skipRunning = false;
     }
 

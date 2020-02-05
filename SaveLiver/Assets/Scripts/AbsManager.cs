@@ -19,14 +19,36 @@ public class AbsManager : MonoBehaviour
 
     public int rewardAdAmountSoul = 3;
 
+    private bool rewarded = false;
+
     void Start()
     {
+        rewarded = false;
+
         rewardBasedVideo = RewardBasedVideoAd.Instance;
 
         rewardBasedVideo.OnAdRewarded += HandleRewardBasedVideoRewarded;
-
         InitBannerAd();
-        InitRewardAd();
+        if (!IsLoadedRewardAd())
+        {
+            tmp.text = "good";
+            InitRewardAd();
+        }
+    }
+
+
+    void Update()
+    {
+        if (rewarded)
+        {
+            menuManager.OnBtnRewardNo();
+            menuManager.RunGetSoulPanelFadeIn();
+            menuManager.getSoulPanelText.text = "GOOD !" + "\nYOU GOT 30 SOUL !";
+
+            DatabaseManager.UpdateMoney(30);
+
+            rewarded = false;
+        }
     }
 
 
@@ -72,7 +94,8 @@ public class AbsManager : MonoBehaviour
         if (rewardBasedVideo.IsLoaded())
         {
             rewardBasedVideo.Show();
-            InitRewardAd(); // 새 광고 로드
+            //InitRewardAd(); // 새 광고 로드
+            StartCoroutine(tmpRewardAd());
         }
         else
         {
@@ -83,16 +106,17 @@ public class AbsManager : MonoBehaviour
     }
 
 
+    IEnumerator tmpRewardAd()
+    {
+        yield return new WaitForSeconds(3f);
+        InitRewardAd();
+        tmp.text = "OK";
+    }
+
+
+    public Text tmp;
     public void HandleRewardBasedVideoRewarded(object sender, Reward args)
     {
-        //string type = args.Type;
-        double amount = args.Amount; // args.Amount = 10
-        int finalAmount = (int)amount * rewardAdAmountSoul;
-
-        menuManager.OnBtnRewardNo();
-        menuManager.RunGetSoulPanelFadeIn();
-        menuManager.getSoulPanelText.text = "GOOD !" + "\nYOU GOT 30 SOUL !";
-
-        DatabaseManager.UpdateMoney(finalAmount);
+        rewarded = true;
     }
 }

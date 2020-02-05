@@ -57,6 +57,7 @@ public class GameManager : MonoBehaviour
     public AudioClip scoreUpClip;
 
     private int dataScore;
+    private int dataPlayNum;
 
 
     private void Awake()
@@ -91,6 +92,7 @@ public class GameManager : MonoBehaviour
         totalPlayTime = 0;
 
         dataScore = DatabaseManager.GetScore();
+        dataPlayNum = DatabaseManager.GetPlayNum();
     }
 
 
@@ -254,7 +256,10 @@ public class GameManager : MonoBehaviour
     public void PlayerDied()
     {
         dataScore = DatabaseManager.GetScore();
+        dataPlayNum = DatabaseManager.GetPlayNum();
         DatabaseManager.UpdateMoney(totalSoulCount);
+        DatabaseManager.SetPlayNum(dataPlayNum + 1);
+        PlayerInformation.PlayNum += dataPlayNum + 1;
 
         StartCoroutine(ShowDiedPanelFadeIn());
     }

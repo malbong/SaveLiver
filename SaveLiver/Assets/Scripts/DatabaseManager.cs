@@ -10,6 +10,7 @@ using UnityEngine.UI;
 public static class DatabaseManager
 {
     private static int score = 0;
+    private static int playNum = 0;
     private static int[] boatChargeList = { 2, 2, 2, 2, 2 };
     private static int[] faceChargeList = { 2, 2, 2, 2, 2 };
     private static int[] waveChargeList = { 2, 2, 2, 2, 2 };
@@ -60,6 +61,19 @@ public static class DatabaseManager
             this.timestamp = timestamp;
         }
     }
+
+    public class PlayNum
+    {
+        public int num;
+        public int timestamp;
+
+        public PlayNum(int num, int timestamp)
+        {
+            this.num = num;
+            this.timestamp = timestamp;
+        }
+    }
+
 
 
     public static int GetTimestamp()
@@ -127,12 +141,16 @@ public static class DatabaseManager
                     Score score = new Score(0, GetTimestamp());
                     string jsonScore = JsonUtility.ToJson(score);
 
+                    PlayNum playNum = new PlayNum(0, GetTimestamp());
+                    string jsonPlayNum = JsonUtility.ToJson(playNum);
+
                     reference.Child(userId).Child("charge").Child("boat").Child("0").SetRawJsonValueAsync(jsonCharge);
                     reference.Child(userId).Child("charge").Child("face").Child("0").SetRawJsonValueAsync(jsonCharge);
                     reference.Child(userId).Child("charge").Child("wave").Child("0").SetRawJsonValueAsync(jsonCharge);
                     reference.Child(userId).Child("custom").SetRawJsonValueAsync(jsonCustom);
                     reference.Child(userId).Child("money").SetRawJsonValueAsync(jsonMoney);
                     reference.Child(userId).Child("score").SetRawJsonValueAsync(jsonScore);
+                    reference.Child(userId).Child("playNum").SetRawJsonValueAsync(jsonPlayNum);
                 }
             }
         });
@@ -327,7 +345,6 @@ public static class DatabaseManager
             //.Child(PlayerInformation.auth.CurrentUser.UserId)
             .Child("score");
 
-
         reference.Child("score").GetValueAsync().ContinueWith(task =>
         {
             if (task.IsCompleted)
@@ -340,5 +357,43 @@ public static class DatabaseManager
             return score;
         });
         return score;
+    }
+
+
+    public static void SetPlayNum(int num)
+    {
+        DatabaseReference reference = PlayerInformation.GetDatabaseReference()
+            .Child("user")
+            .Child("pnRD68Js9kU5O4UNvRaPcoueTsy2")
+            //.Child(PlayerInformation.auth.CurrentUser.UserId)
+            .Child("playNum");
+
+        PlayNum playNum = new PlayNum(num, GetTimestamp());
+        string jsonPlayNum = JsonUtility.ToJson(playNum);
+
+        reference.SetRawJsonValueAsync(jsonPlayNum);
+    }
+
+
+    public static int GetPlayNum()
+    {
+        DatabaseReference reference = PlayerInformation.GetDatabaseReference()
+            .Child("user")
+            .Child("pnRD68Js9kU5O4UNvRaPcoueTsy2")
+            //.Child(PlayerInformation.auth.CurrentUser.UserId)
+            .Child("playNum");
+
+        reference.Child("num").GetValueAsync().ContinueWith(task =>
+        {
+            if (task.IsCompleted)
+            {
+                DataSnapshot data = task.Result;
+
+                string tmpNum = data.Value.ToString();
+                playNum = int.Parse(tmpNum);
+            }
+            return playNum;
+        });
+        return playNum;
     }
 }

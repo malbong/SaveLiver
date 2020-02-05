@@ -93,6 +93,11 @@ public class MenuManager : MonoBehaviour
                 StartCoroutine(GameQuitPanelFadeOut());
                 return;
             }
+            if (SettingsManager.instance.seeingSettingPanel)
+            {
+                SettingsManager.instance.OnSettingsExitButton();
+                return;
+            }
             StartCoroutine(GameQuitPanelFadeIn());
         }
         //}
