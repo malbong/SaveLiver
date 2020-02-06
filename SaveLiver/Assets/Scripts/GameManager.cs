@@ -102,7 +102,12 @@ public class GameManager : MonoBehaviour
 
         AddTimeScore();
 
-        if (Application.platform == RuntimePlatform.Android)
+        if (PlayerInformation.IsWatched) // 광고를 보았다면 3분 카운트.
+        {
+            PlayerInformation.AdTimeCheck();
+        }
+
+            if (Application.platform == RuntimePlatform.Android)
         {
             if (Input.GetKey(KeyCode.Escape) && Player.instance.isAlive)
             {

@@ -20,7 +20,7 @@ public class MenuManager : MonoBehaviour
     private bool rewardFadeInRunning = false;
     private bool rewardFadeOutRunning = false;
     private bool seeingRewardPanel = false;
-
+    
     public GameObject getSoulOuterPanel;
     public GameObject getSoulPanel;
     private bool getSoulFadeInRunning = false;
@@ -41,11 +41,13 @@ public class MenuManager : MonoBehaviour
     private bool chargeFadeOutRunning = false;
     public bool seeingChargePanel = false;
 
-    public AbsManager absManager;
+    public AdsManager adsManager;
     public SceneTransition sceneTransition;
 
     public Text soulText;
     public Text ChargeText;
+
+    public bool seeingTimer = false;
 
 
     void Start()
@@ -56,6 +58,23 @@ public class MenuManager : MonoBehaviour
 
     void Update()
     {
+        if (PlayerInformation.IsWatched) // 광고를 보았다면 3분 카운트.
+        {
+            PlayerInformation.AdTimeCheck();
+
+            if (!adsManager.seeingGetSoulText)
+            {
+                getSoulPanelText.text = "Wait for next ad" + "\n"
+                    + PlayerInformation.Minutes + " : " + PlayerInformation.FinalSeconds;
+            }
+        }
+        else if(!PlayerInformation.IsWatched && seeingTimer) // 타이머 패널 띄우고 있는 와중에 시간이 다 된다면,
+        {
+            StartCoroutine(GetSoulPanelFadeOut());
+            StartCoroutine(GameRewardPanelFadeIn());
+        }
+        
+
         soulText.text = PlayerInformation.SoulMoney.ToString(); // Soul Money 표시
 
         // 안드로이드에서 뒤로가기 누르면 종료되는 처리
@@ -98,7 +117,10 @@ public class MenuManager : MonoBehaviour
                 SettingsManager.instance.OnSettingsExitButton();
                 return;
             }
-            StartCoroutine(GameQuitPanelFadeIn());
+            if(!quitFadeInRunning && !rewardFadeInRunning && !getSoulFadeInRunning && !storeFadeInRunning && !chargeFadeInRunning)
+            { 
+                StartCoroutine(GameQuitPanelFadeIn());
+            }
         }
         //}
     }
@@ -137,11 +159,29 @@ public class MenuManager : MonoBehaviour
     }
 
 
+    public void test()
+    {
+        PlayerInformation.SetFinalSeconds(4);
+        PlayerInformation.IsWatched = true;
+        PlayerInformation.AdTimeCheck();
+
+
+        Debug.Log(PlayerInformation.IsWatched);
+        Debug.Log(PlayerInformation.Minutes);
+        Debug.Log(PlayerInformation.FinalSeconds);
+    }
+
 
     // Reward Panel
 
     public void OnBtnRewardPanel()
     {
+        if (PlayerInformation.IsWatched) // 광고를 이미 보았다면, (3분 미경과)
+        {
+            seeingTimer = true;
+            RunGetSoulPanelFadeIn(); // 시간 패널 띄워주기
+            return;
+        }
         if (!seeingRewardPanel)
         {
             StartCoroutine(GameRewardPanelFadeIn());
@@ -152,7 +192,7 @@ public class MenuManager : MonoBehaviour
     {
         if (!rewardFadeInRunning && !rewardFadeOutRunning)
         {
-            absManager.ShowRewardAd();
+            adsManager.ShowRewardAd();
         }
     }
 
@@ -253,7 +293,7 @@ public class MenuManager : MonoBehaviour
         tmpColor.a = 1f;
         quitPanelImage.color = tmpColor;
 
-        absManager.ToggleAd(true);
+        adsManager.ToggleAd(true);
         seeingQuitPanel = true;
         quitOuterPannel.SetActive(true);
 
@@ -265,7 +305,7 @@ public class MenuManager : MonoBehaviour
     {
         if (quitFadeInRunning) yield break;
 
-        absManager.ToggleAd(false);
+        adsManager.ToggleAd(false);
         quitFadeOutRunning = true;
         seeingQuitPanel = false;
         quitOuterPannel.SetActive(false);
@@ -395,6 +435,7 @@ public class MenuManager : MonoBehaviour
         if (getSoulFadeInRunning) yield break;
 
         getSoulFadeOutRunning = true;
+        if (seeingTimer) seeingTimer = false;
         seeingGetSoulPanel = false;
         getSoulOuterPanel.SetActive(false);
 
@@ -417,6 +458,10 @@ public class MenuManager : MonoBehaviour
         tmpColor.a = 0f;
         getSoulPanelImage.color = tmpColor;
 
+        if (adsManager.seeingGetSoulText)
+        {
+            adsManager.seeingGetSoulText = false;
+        }
         getSoulFadeOutRunning = false;
         getSoulPanel.SetActive(false);
     }

@@ -488,15 +488,18 @@ public class Player : MonoBehaviour
         }
         else if (PlayerInformation.customs[2] == 2)
         {
-
+            waveLeftParticle.trailMaterial = waveMaterials[2];
+            waveRightParticle.trailMaterial = waveMaterials[2];
         }
         else if (PlayerInformation.customs[2] == 3)
         {
-
+            waveLeftParticle.trailMaterial = waveMaterials[3];
+            waveRightParticle.trailMaterial = waveMaterials[3];
         }
         else if (PlayerInformation.customs[2] == 4)
         {
-
+            waveLeftParticle.trailMaterial = waveMaterials[4];
+            waveRightParticle.trailMaterial = waveMaterials[4];
         }
     }
 
