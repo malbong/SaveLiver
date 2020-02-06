@@ -13,6 +13,7 @@ TagManager:
   - MoveCollider
   - Soul
   - AbsorbCollider
+  - Bullet
   layers:
   - Default
   - TransparentFX

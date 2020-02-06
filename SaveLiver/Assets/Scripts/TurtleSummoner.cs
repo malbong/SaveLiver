@@ -383,7 +383,7 @@ public class TurtleSummoner : Enemy
         {
             base.HitOnPlayer();
         }
-        else if (other.tag == "Dragon" || other.tag == "BoomEffect")
+        else if (other.tag == "Dragon" || other.tag == "BoomEffect" || other.tag == "Bullet")
         {
             OnDead(false);
         }

@@ -77,6 +77,8 @@ public class Player : MonoBehaviour
 
     public bool doubleSoulLucky = false;
 
+    public GameObject BulletShooter;
+
 
     void Start()
     {
@@ -526,9 +528,11 @@ public class Player : MonoBehaviour
                 speed += 2.25f;
                 break;
 
-            case 4: // + speed 2 rotate 3 + shooting
-                speed += 1.5f;
-                rotateSpeed += 3;
+            case 4: // + speed + 1 & rotate + 4 + shooting
+                speed += 0.75f;
+                rotateSpeed += 4;
+
+                BulletShooter.SetActive(true);
                 break;
         }
         //check face
