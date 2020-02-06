@@ -327,7 +327,6 @@ public static class DatabaseManager
             //.Child(PlayerInformation.auth.CurrentUser.UserId)
             .Child("score");
 
-
         reference.Child("score").GetValueAsync().ContinueWith(task =>
         {
             if (task.IsCompleted)

@@ -5,7 +5,7 @@ using UnityEngine;
 public class RotateItem : Item, IItem
 {
     public float itemDuration = 8f;
-    public float amountRotateUp = 2f;
+    public float amountRotateUp = 1f;
     private float rotateUpItemTime = 0f;
 
 

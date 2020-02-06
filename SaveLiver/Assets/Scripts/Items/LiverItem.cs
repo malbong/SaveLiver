@@ -15,10 +15,10 @@ public class LiverItem : Item, IItem
     */
     public void Use()
     {
-        if (Player.instance.hp < 3)
+        if (Player.instance.hp < Player.instance.maxHp)
         {
             Player.instance.hp += 1;
-            GameManager.instance.UpdateLiverCountText(Player.instance.hp);
+            GameManager.instance.UpdateLiverCountText();
         }
         GameManager.instance.AddScore(10);
         GameManager.instance.totalGetItemCount += 1;

@@ -5,7 +5,7 @@ using UnityEngine;
 public class SpeedUp : Item, IItem
 {
     public float itemDuration = 8f;
-    public float amountSpeedUp = 2f;
+    public float amountSpeedUp = 1f;
     private float speedUpItemTime = 0f;
 
 

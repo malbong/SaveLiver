@@ -27,7 +27,8 @@ public class SpawnManager : MonoBehaviour
     private Vector3 playerPosition;
     private float spawnRadius;
     private float angle45Length;
-    private float itemSpawnTimePerLevel;
+
+    public float itemSpawnTime = 5;
 
 
     private void Start()
@@ -37,6 +38,8 @@ public class SpawnManager : MonoBehaviour
 
         StartCoroutine(EnemyCreate());
         StartCoroutine(ItemCreate());
+
+        itemSpawnTime = 5.0f;
     }
 
 
@@ -50,8 +53,6 @@ public class SpawnManager : MonoBehaviour
      */
     IEnumerator EnemyCreate()
     {
-        itemSpawnTimePerLevel = 5.0f;
-
         while (true)
         {
             yield return new WaitForSeconds(3f);
@@ -113,7 +114,7 @@ public class SpawnManager : MonoBehaviour
         while (true)
         {
             ItemRandomSpawn();
-            yield return new WaitForSeconds(itemSpawnTimePerLevel);
+            yield return new WaitForSeconds(itemSpawnTime);
             //yield return new WaitForSeconds(3.0f);
         }
     }

@@ -75,14 +75,13 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         originTimeScale = Time.timeScale;
-
         isPause = false;
 
         secondsUnit = 0;
         totalScore = 0;
 
-        UpdateLiverCountText(3);
-
+        UpdateLiverCountText();
+        
         totalGetItemCount = 0;
 
         totalSoulCount = 0;
@@ -90,7 +89,7 @@ public class GameManager : MonoBehaviour
 
         totalPlayTime = 0;
 
-        dataScore = DatabaseManager.GetScore();
+        dataScore = PlayerInformation.BestScore;
     }
 
 
@@ -117,9 +116,9 @@ public class GameManager : MonoBehaviour
     * @출력: void
     * @설명: Player가 피격시마다 LiverUI를 새로 업데이트함.
     */
-    public void UpdateLiverCountText(int liverCount)
+    public void UpdateLiverCountText()
     {
-        liverCountText.text = "x " + liverCount;
+        liverCountText.text = "x " + Player.instance.hp;
     }
 
 

@@ -21,6 +21,7 @@ public class Player : MonoBehaviour
         }
     }
 
+    public int maxHp = 3;
     public int hp;
     public float speed;
     public float rotateSpeed;
@@ -74,6 +75,8 @@ public class Player : MonoBehaviour
     private bool isTriggerBlindingRunning = false;
     public GameObject blindPanel;
 
+    public bool doubleSoulLucky = false;
+
 
     void Start()
     {
@@ -81,6 +84,21 @@ public class Player : MonoBehaviour
         playerCollider = GetComponent<BoxCollider2D>();
         playerSpriteRenderer = GetComponent<SpriteRenderer>();
         runningCoroutine = StartCoroutine(RotateAngle(180, -1)); // 시작하면 Player를 180도 오른쪽으로 돌리기.
+
+        //커스텀 능력치 적용 전 초기화
+        /*
+        rotateSpeed = 5f;
+        speed = 4f;
+        isFevered = false;//
+        HasSpeedUp = false;//
+        HasRotateUp = false;//
+        HasShield = false;
+        doubleSoulLucky = false;
+        maxHp = 3;
+        hp = maxHp;
+        GameManager.instance.UpdateLiverCountText();
+        SpawnManager.instance.itemSpawnTime = 5;
+        */
 
         UpdateCustom();
         ApplyCustomAbility();
@@ -192,7 +210,7 @@ public class Player : MonoBehaviour
         }
 
         hp -= damage;
-        GameManager.instance.UpdateLiverCountText(hp);
+        GameManager.instance.UpdateLiverCountText();
         if(hp <= 0)
         {
             OnDead();
@@ -220,7 +238,7 @@ public class Player : MonoBehaviour
         if (isDragon)
         {
             hp = 0;
-            GameManager.instance.UpdateLiverCountText(hp);
+            GameManager.instance.UpdateLiverCountText();
             OnDead();
         }
     }
@@ -488,38 +506,69 @@ public class Player : MonoBehaviour
 
 
     private void ApplyCustomAbility()
-    {
-        //check face
-        switch (PlayerInformation.customs[1])
-        {
-            case 0: //default
-                break;
-            case 1: //shield
-                Player.instance.ShieldStart();
-                break;
-            case 2: //shield + liver
-                Player.instance.ShieldStart();
-                break;
-            case 3: //shield + soul x 2
-                Player.instance.ShieldStart();
-                break;
-            case 4: //shield liver 4 + item spawn
-                Player.instance.ShieldStart();
-                break;
-        }
-
+    {   
         //check boat
         switch (PlayerInformation.customs[0])
         {
             case 0: //default
                 break;
-            case 1: //speed 0 rotate 1
+
+            case 1: // rotate + 1
+                rotateSpeed += 1f;
                 break;
-            case 2: //speed 1 rotate 1
+
+            case 2: // speed + 1 & rotate + 1
+                speed += 0.75f;
+                rotateSpeed += 1f;
                 break;
-            case 3: //speed 1 rotate 3
+
+            case 3: // speed + 3
+                speed += 2.25f;
                 break;
-            case 4: //speed 2 rotate 3 + shooting
+
+            case 4: // + speed 2 rotate 3 + shooting
+                speed += 1.5f;
+                rotateSpeed += 3;
+                break;
+        }
+        //check face
+        switch (PlayerInformation.customs[1])
+        {
+            case 0: //default
+                break;
+
+            case 1: //shield
+                ShieldStart();
+                break;
+
+            case 2: //shield + liver
+                ShieldStart();
+
+                maxHp = 4;
+                hp = maxHp;
+                GameManager.instance.UpdateLiverCountText();
+                break;
+
+            case 3: //liver-1 + shield + soul x 2
+                maxHp = 2;
+                hp = maxHp;
+                GameManager.instance.UpdateLiverCountText();
+
+                ShieldStart();
+
+                doubleSoulLucky = true;
+                //1. 변수 Player.instance.doubleSoul = true; 
+                //2. soul쪽에서 PlayerInformation.customs[1] == 3 -> 어디에서 관리하는지 모름
+                break;
+
+            case 4: //shield + liver 4 + item spawn
+                ShieldStart();
+
+                maxHp = 4;
+                hp = maxHp;
+                GameManager.instance.UpdateLiverCountText();
+
+                SpawnManager.instance.itemSpawnTime = 10f / 3f;
                 break;
         }
     }

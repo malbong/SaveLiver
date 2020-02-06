@@ -193,7 +193,7 @@ public class TurtleSummons : Enemy
         {
             PlayParticle(false);
 
-            soul.CreateSoul(transform.position, 0.5f);
+            soul.CreateSoul(transform.position, 1f);
 
             StartCoroutine(FadeOut());
         }

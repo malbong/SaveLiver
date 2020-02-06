@@ -8,6 +8,7 @@ public class Soul : MonoBehaviour
     private bool isAbsorbed = false;
     private AudioSource audioSource;
 
+
     private void Start()
     {
         isAbsorbed = false;
@@ -30,12 +31,16 @@ public class Soul : MonoBehaviour
 
     public void CreateSoul(Vector3 createPosition, float percentage = 0.6f)
     {
-        float random = Random.Range(0f, 1f);
-        if (random < percentage) // default 60%
+        int tryCount = Player.instance.doubleSoulLucky ? 2 : 1; //customs[1] == 3
+        for (int i = 0; i < tryCount; i++)
         {
-            GameObject obj = ObjectPooler.instance.GetSoul();
-            obj.transform.position = createPosition;
-            obj.SetActive(true);
+            float random = Random.Range(0f, 1f);
+            if (random < percentage) // default 60%  &  follow 100%
+            {
+                GameObject obj = ObjectPooler.instance.GetSoul();
+                obj.transform.position = createPosition + new Vector3(i/5, i/5, 0);
+                obj.SetActive(true);
+            }
         }
     }
 
