@@ -47,16 +47,20 @@ public class MenuManager : MonoBehaviour
     public Text soulText;
     public Text ChargeText;
 
+    public Text bestScoreText;
+
 
     void Start()
     {
         DatabaseManager.UpdateMoney(0);
+        DatabaseManager.GetScore();
     }
 
 
     void Update()
     {
         soulText.text = PlayerInformation.SoulMoney.ToString(); // Soul Money 표시
+        bestScoreText.text = "Best Score : " + PlayerInformation.BestScore.ToString();
 
         // 안드로이드에서 뒤로가기 누르면 종료되는 처리
         //if(Application.platform == RuntimePlatform.Android)

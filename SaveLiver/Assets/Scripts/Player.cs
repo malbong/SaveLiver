@@ -83,6 +83,7 @@ public class Player : MonoBehaviour
         runningCoroutine = StartCoroutine(RotateAngle(180, -1)); // 시작하면 Player를 180도 오른쪽으로 돌리기.
 
         UpdateCustom();
+        ApplyCustomAbility();
 
         isReversed = false;
         isTriggerConfusionRunning = false;
@@ -140,7 +141,6 @@ public class Player : MonoBehaviour
     */
     IEnumerator RotateAngle(float angle, int sign)
     {
-        Debug.Log(angle + " : " + sign);
         if (isReversed)
         {
             angle = 180 - angle;
@@ -433,73 +433,94 @@ public class Player : MonoBehaviour
     public void UpdateCustom()
     {
         // boat
-        if (PlayerInformation.customs[0] == 0)
+        switch (PlayerInformation.customs[0])
         {
-            boatSprite.sprite = boatSprites[0];
+            case 0:
+                boatSprite.sprite = boatSprites[0];
+                break;
+            case 1:
+                boatSprite.sprite = boatSprites[1];
+                break;
+            case 2:
+                break;
+            case 3:
+                break;
+            case 4:
+                break;
         }
-        else if (PlayerInformation.customs[0] == 1)
-        {
-            boatSprite.sprite = boatSprites[1];
-        }
-        else if (PlayerInformation.customs[0] == 2)
-        {
-
-        }
-        else if (PlayerInformation.customs[0] == 3)
-        {
-
-        }
-        else if (PlayerInformation.customs[0] == 4)
-        {
-
-        }
-
-
+        
         // face
-        if (PlayerInformation.customs[1] == 0)
+        switch (PlayerInformation.customs[1])
         {
-            faceSprite.sprite = faceSprites[0];
+            case 0:
+                faceSprite.sprite = faceSprites[0];
+                break;
+            case 1:
+                faceSprite.sprite = faceSprites[1];
+                break;
+            case 2:
+                break;
+            case 3:
+                break;
+            case 4:
+                break;
         }
-        else if (PlayerInformation.customs[1] == 1)
-        {
-            faceSprite.sprite = faceSprites[1];
-        }
-        else if (PlayerInformation.customs[1] == 2)
-        {
-
-        }
-        else if (PlayerInformation.customs[1] == 3)
-        {
-
-        }
-        else if (PlayerInformation.customs[1] == 4)
-        {
-
-        }
-
-
+        
         // wave
-        if (PlayerInformation.customs[2] == 0)
+        switch (PlayerInformation.customs[2])
         {
-            waveLeftParticle.trailMaterial = waveMaterials[0];
-            waveRightParticle.trailMaterial = waveMaterials[0];
+            case 0:
+                waveLeftParticle.trailMaterial = waveMaterials[0];
+                waveRightParticle.trailMaterial = waveMaterials[0];
+                break;
+            case 1:
+                waveLeftParticle.trailMaterial = waveMaterials[1];
+                waveRightParticle.trailMaterial = waveMaterials[1];
+                break;
+            case 2:
+                break;
+            case 3:
+                break;
+            case 4:
+                break;
         }
-        else if (PlayerInformation.customs[2] == 1)
-        {
-            waveLeftParticle.trailMaterial = waveMaterials[1];
-            waveRightParticle.trailMaterial = waveMaterials[1];
-        }
-        else if (PlayerInformation.customs[2] == 2)
-        {
+    }
 
-        }
-        else if (PlayerInformation.customs[2] == 3)
-        {
 
-        }
-        else if (PlayerInformation.customs[2] == 4)
+    private void ApplyCustomAbility()
+    {
+        //check face
+        switch (PlayerInformation.customs[1])
         {
+            case 0: //default
+                break;
+            case 1: //shield
+                Player.instance.ShieldStart();
+                break;
+            case 2: //shield + liver
+                Player.instance.ShieldStart();
+                break;
+            case 3: //shield + soul x 2
+                Player.instance.ShieldStart();
+                break;
+            case 4: //shield liver 4 + item spawn
+                Player.instance.ShieldStart();
+                break;
+        }
 
+        //check boat
+        switch (PlayerInformation.customs[0])
+        {
+            case 0: //default
+                break;
+            case 1: //speed 0 rotate 1
+                break;
+            case 2: //speed 1 rotate 1
+                break;
+            case 3: //speed 1 rotate 3
+                break;
+            case 4: //speed 2 rotate 3 + shooting
+                break;
         }
     }
 

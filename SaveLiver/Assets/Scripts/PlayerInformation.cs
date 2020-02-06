@@ -14,7 +14,10 @@ public static class PlayerInformation
 
     public static int[] customs { get; set; } = { 0, 0, 0 };
 
+    public static int BestScore { get; set; }
+
     public static Firebase.Auth.FirebaseAuth auth;
+
 
     public static DatabaseReference GetDatabaseReference()
     {

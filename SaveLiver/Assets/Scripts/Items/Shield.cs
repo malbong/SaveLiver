@@ -21,7 +21,7 @@ public class Shield : Item, IItem
     * @작성자: zeli
     * @입력: void
     * @출력: void
-    * @설명: 쉴드의 지속시간이 지나면 쉴드 해제
+    * @설명: 쉴드가 깨지면 실행
     *        Update에서 실행
     */
     private void ItemDurationAndDestroy()
