@@ -110,6 +110,8 @@ public static class DatabaseManager
                 string json = JsonUtility.ToJson(soulMoney);
                 reference.SetRawJsonValueAsync(json);
 
+                // Achievement
+                PlayerInformation.AchievementSoul();
             }
         });
     }

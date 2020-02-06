@@ -97,14 +97,29 @@ public class GoogleAuth : MonoBehaviour
                     Social.ShowLeaderboardUI(); // 리더보드 띄우기
                     return;
                 }
-                else // 로그인 실패하면
+            });
+        }
+
+        PlayGamesPlatform.Instance.ShowLeaderboardUI();
+    }
+
+
+    public void ShowAchievement()
+    {
+        // 업적 띄우기 전에 로그인 여부 확인
+        if (!Social.localUser.authenticated) // 로그인 안 되어 있다면
+        {
+            Social.localUser.Authenticate(success =>
+            {
+                if (success) // 로그인 성공하면
                 {
-                    // 로그인이 안 되어 있다고 보여주는 처리
+                    StartCoroutine(TryFirebaseLogin());
+                    Social.ShowAchievementsUI(); // 업적 띄우기
                     return;
                 }
             });
         }
 
-        PlayGamesPlatform.Instance.ShowLeaderboardUI();
+        PlayGamesPlatform.Instance.ShowAchievementsUI();
     }
 }

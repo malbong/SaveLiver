@@ -266,6 +266,10 @@ public class GameManager : MonoBehaviour
         DatabaseManager.SetPlayNum(dataPlayNum + 1);
         PlayerInformation.PlayNum += dataPlayNum + 1;
 
+        PlayerInformation.AchievementPlayNum();
+        PlayerInformation.AchievementOncePlay(totalSoulCount, totalGetItemCount);
+        PlayerInformation.AchievementScore(totalScore);
+
         StartCoroutine(ShowDiedPanelFadeIn());
     }
 

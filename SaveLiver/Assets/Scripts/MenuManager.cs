@@ -49,7 +49,6 @@ public class MenuManager : MonoBehaviour
 
     public bool seeingTimer = false;
 
-
     void Start()
     {
         DatabaseManager.UpdateMoney(0);
@@ -82,6 +81,7 @@ public class MenuManager : MonoBehaviour
         //{
         if (Input.GetKeyDown(KeyCode.Escape))
         {
+            SoundManager.instance.ButtonClick();
             // 구매 창 보고 있다면
             if (seeingChargePanel)
             {
@@ -117,7 +117,8 @@ public class MenuManager : MonoBehaviour
                 SettingsManager.instance.OnSettingsExitButton();
                 return;
             }
-            if(!quitFadeInRunning && !rewardFadeInRunning && !getSoulFadeInRunning && !storeFadeInRunning && !chargeFadeInRunning)
+            if(!quitFadeInRunning && !rewardFadeInRunning && !getSoulFadeInRunning 
+                && !storeFadeInRunning && !chargeFadeInRunning && !sceneTransition.isSceneTransitionRunning())
             { 
                 StartCoroutine(GameQuitPanelFadeIn());
             }

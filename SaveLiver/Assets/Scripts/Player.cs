@@ -287,14 +287,6 @@ public class Player : MonoBehaviour
         GameManager.instance.PlayerDied();
     }
 
-    
-    // test용 재시작
-    private void Respawn()
-    {
-        ObjectPooler.instance.OnReset();
-        SceneManager.LoadScene(0);
-    }
-
 
     /**************************************
     * @함수명: FeverTime
