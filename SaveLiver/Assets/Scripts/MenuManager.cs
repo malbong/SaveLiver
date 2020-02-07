@@ -81,7 +81,6 @@ public class MenuManager : MonoBehaviour
         //{
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            SoundManager.instance.ButtonClick();
             // 구매 창 보고 있다면
             if (seeingChargePanel)
             {
@@ -148,6 +147,7 @@ public class MenuManager : MonoBehaviour
     {
         if (!quitFadeInRunning && !quitFadeOutRunning)
         {
+            SoundManager.instance.ButtonClick();
             StartCoroutine(GameQuitPanelFadeOut());
         }
     }
@@ -155,21 +155,9 @@ public class MenuManager : MonoBehaviour
     {
         if (seeingQuitPanel)
         {
+            SoundManager.instance.ButtonClick();
             StartCoroutine(GameQuitPanelFadeOut());
         }
-    }
-
-
-    public void test()
-    {
-        PlayerInformation.SetFinalSeconds(4);
-        PlayerInformation.IsWatched = true;
-        PlayerInformation.AdTimeCheck();
-
-
-        Debug.Log(PlayerInformation.IsWatched);
-        Debug.Log(PlayerInformation.Minutes);
-        Debug.Log(PlayerInformation.FinalSeconds);
     }
 
 
@@ -179,12 +167,14 @@ public class MenuManager : MonoBehaviour
     {
         if (PlayerInformation.IsWatched) // 광고를 이미 보았다면, (3분 미경과)
         {
+            SoundManager.instance.ButtonClick();
             seeingTimer = true;
             RunGetSoulPanelFadeIn(); // 시간 패널 띄워주기
             return;
         }
         if (!seeingRewardPanel)
         {
+            SoundManager.instance.ButtonClick();
             StartCoroutine(GameRewardPanelFadeIn());
         }
     }
@@ -201,6 +191,7 @@ public class MenuManager : MonoBehaviour
     {
         if (!rewardFadeInRunning && !rewardFadeOutRunning)
         {
+            SoundManager.instance.ButtonClick();
             StartCoroutine(GameRewardPanelFadeOut());
         }
     }
@@ -209,6 +200,7 @@ public class MenuManager : MonoBehaviour
     {
         if (seeingRewardPanel)
         {
+            SoundManager.instance.ButtonClick();
             StartCoroutine(GameRewardPanelFadeOut());
         }
     }
@@ -219,6 +211,7 @@ public class MenuManager : MonoBehaviour
 
     public void RunGetSoulPanelFadeIn()
     {
+        SoundManager.instance.ButtonClick();
         StartCoroutine(GetSoulPanelFadeIn());
     }
 
@@ -226,6 +219,7 @@ public class MenuManager : MonoBehaviour
     {
         if (seeingGetSoulPanel)
         {
+            SoundManager.instance.ButtonClick();
             StartCoroutine(GetSoulPanelFadeOut());
         }
     }
@@ -236,6 +230,7 @@ public class MenuManager : MonoBehaviour
 
     public void OnBtnStorePanel()
     {
+        SoundManager.instance.ButtonClick();
         storeManager.InitFaceCharge();
         storeManager.InitBoatCharge();
         storeManager.InitWaveCharge();
@@ -244,6 +239,7 @@ public class MenuManager : MonoBehaviour
 
     public void OnBtnStoreX()
     {
+        SoundManager.instance.ButtonClick();
         if (seeingStorePanel)
         {
             StartCoroutine(storePanelFadeOut());
@@ -256,6 +252,7 @@ public class MenuManager : MonoBehaviour
 
     public void OnBtnChargePanel()
     {
+        SoundManager.instance.ButtonClick();
         ChargeText.text = "Do you want to" + "\nbuy this?";
         StartCoroutine(ChargePanelFadeIn());
     }
@@ -264,6 +261,7 @@ public class MenuManager : MonoBehaviour
     {
         if (seeingChargePanel)
         {
+            SoundManager.instance.ButtonClick();
             StartCoroutine(ChargePanelFadeOut());
         }
     }

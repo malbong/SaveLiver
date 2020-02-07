@@ -114,6 +114,7 @@ public class StoreManager : MonoBehaviour
 
     public void OnBtnPanelState(int onClickPanel) // onClickPanel - 0:face, 1:boat, 2:wave
     {
+        SoundManager.instance.ButtonClick();
         switch (onClickPanel)
         {
             case 0:
@@ -147,6 +148,8 @@ public class StoreManager : MonoBehaviour
     public void Skip(int arrow) // arrow - 0:Left, 1:Right
     {
         if (skipRunning) return; // skip중이면 무시
+
+        SoundManager.instance.ButtonClick();
 
         // Left Skip
         if (arrow == 0)
@@ -428,6 +431,8 @@ public class StoreManager : MonoBehaviour
     {
         if (skipRunning) return;
 
+        SoundManager.instance.ButtonClick();
+
         if (panelState == PanelState.Face)
         {
             for(int i=0; i<faceCount; i++)
@@ -525,6 +530,8 @@ public class StoreManager : MonoBehaviour
     public void OnBtnPurchasing()
     {
         if (!menuManager.seeingChargePanel) return;
+
+        SoundManager.instance.ButtonClick();
 
         if (panelState == PanelState.Face)
         {
