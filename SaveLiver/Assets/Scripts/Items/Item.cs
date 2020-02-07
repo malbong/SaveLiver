@@ -6,12 +6,19 @@ public class Item : MonoBehaviour
 {
     private GameObject indicatorObj;
     private bool hasIndicator = false;
+    protected bool hasItem = false;
+    protected Rigidbody2D parent;
+
 
     void Start()
     {
+        hasItem = false;
+
+        parent = gameObject.GetComponentInParent<Rigidbody2D>();
+
         SpriteRenderer spriteRenderer = transform.parent.GetComponent<SpriteRenderer>();
         Color color = spriteRenderer.color;
-        color.a = 255f;
+        color.a = 1f;
         spriteRenderer.color = color;
 
         GetComponentInParent<SpriteRenderer>().enabled = true;
@@ -19,23 +26,27 @@ public class Item : MonoBehaviour
         GetComponent<Collider2D>().enabled = true;
 
         hasIndicator = false;
+
+        StartCoroutine(TimeCheckAndDestroy());
     }
+
+
+    protected void OnEnable()
+    {
+        Start();
+    }
+
 
     void FixedUpdate()
     {
         if (GameManager.instance.isPause) return;
 
-        SetMyIndicator();
+        if(!hasItem) SetMyIndicator();
+
         if (hasIndicator)
         {
             OffScreenIndicator.instance.DrawIndicator(gameObject, indicatorObj);
         }
-    }
-
-
-    private void OnEnable()
-    {
-        Start();
     }
 
 
@@ -92,5 +103,25 @@ public class Item : MonoBehaviour
     private void OnDisable()
     {
         if (hasIndicator && indicatorObj != null) indicatorObj.SetActive(false);
+    }
+
+
+    IEnumerator TimeCheckAndDestroy()
+    {
+        yield return new WaitForSeconds(Time.deltaTime);
+        yield return new WaitForSeconds(ItemManager.instance.itemLifeTime);
+        SpriteRenderer spriteRenderer = transform.parent.GetComponent<SpriteRenderer>();
+        if (!hasItem)
+        {
+            while (true)
+            {
+                Color color = spriteRenderer.color;
+                color.a -= 0.05f;
+                spriteRenderer.color = color;
+                yield return new WaitForSeconds(0.05f);
+                if (spriteRenderer.color.a <= 0.1f) break;
+            }
+            parent.gameObject.SetActive(false);
+        }
     }
 }

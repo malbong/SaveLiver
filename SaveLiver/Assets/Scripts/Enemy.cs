@@ -89,7 +89,7 @@ public abstract class Enemy : MonoBehaviour
         {
             HitOnPlayer();
         }
-        else if (other.tag == "Enemy" || other.tag == "Dragon" || other.tag == "BoomEffect" || other.tag == "Spear")
+        else if (other.tag == "Enemy" || other.tag == "Dragon" || other.tag == "BoomEffect" || other.tag == "Spear" || other.tag == "Bullet")
         {
             OnDead(false);
         }

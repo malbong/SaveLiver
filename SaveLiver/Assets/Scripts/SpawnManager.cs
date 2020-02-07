@@ -23,12 +23,12 @@ public class SpawnManager : MonoBehaviour
     public float itemRadius = 8.0f;
 
     public ObjectPooler objectPooler;
-
-    public Swirl swirl;
+    
     private Vector3 playerPosition;
     private float spawnRadius;
     private float angle45Length;
-    private float itemSpawnTimePerLevel;
+
+    public float itemSpawnTime = 5;
 
 
     private void Start()
@@ -38,6 +38,8 @@ public class SpawnManager : MonoBehaviour
 
         StartCoroutine(EnemyCreate());
         StartCoroutine(ItemCreate());
+
+        itemSpawnTime = 5.0f;
     }
 
 
@@ -51,15 +53,15 @@ public class SpawnManager : MonoBehaviour
      */
     IEnumerator EnemyCreate()
     {
-        itemSpawnTimePerLevel = 5.0f;
         while (true)
         {
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(3f);
             EnemySpawn(13);
-            yield return new WaitForSeconds(1f);
+            //Swirl(-250, 2, true);
+            yield return new WaitForSeconds(3f);
             EnemySpawn(12);
-            /*
-            yield return new WaitForSeconds(1f);
+            
+            yield return new WaitForSeconds(3f);
             EnemySpawn(10);
             //EnemySpawn(2);
             yield return new WaitForSeconds(3f);
@@ -77,6 +79,8 @@ public class SpawnManager : MonoBehaviour
             yield return new WaitForSeconds(3f);
             EnemySpawn(6);
             //AllDirection4();
+            
+            
             /*
             yield return new WaitForSeconds(3f);
             EnemySpawn(8);
@@ -110,7 +114,8 @@ public class SpawnManager : MonoBehaviour
         while (true)
         {
             ItemRandomSpawn();
-            yield return new WaitForSeconds(itemSpawnTimePerLevel);
+            yield return new WaitForSeconds(itemSpawnTime);
+            //yield return new WaitForSeconds(3.0f);
         }
     }
     /********************************************
@@ -343,18 +348,22 @@ public class SpawnManager : MonoBehaviour
         playerPosition = Player.instance.transform.position;
         if (upDownPosition == true) // generate swirl over and under from player
         {
-            Vector3 targetPosition = playerPosition + new Vector3(0, interval, 0);
-            Swirl instance = Instantiate(swirl, targetPosition, Quaternion.identity);
-            instance.maxForce = maxForce;
-
-            targetPosition = playerPosition + new Vector3(0, -interval, 0);
-            instance = Instantiate(swirl, targetPosition, Quaternion.identity);
-            instance.maxForce = maxForce;
+            GameObject obj = ObjectPooler.instance.GetSwirl();
+            obj.SetActive(true);
+            obj.transform.position = playerPosition + new Vector3(0, interval, 0);
+            obj.GetComponent<Swirl>().maxForce = maxForce;
+            
+            obj = ObjectPooler.instance.GetSwirl();
+            obj.SetActive(true);
+            obj.transform.position = playerPosition + new Vector3(0, -interval, 0);
+            obj.GetComponent<Swirl>().maxForce = maxForce;
         }
         else
         {
-            Swirl instance = Instantiate(swirl, playerPosition, Quaternion.identity);
-            instance.maxForce = maxForce;
+            GameObject obj = ObjectPooler.instance.GetSwirl();
+            obj.SetActive(true);
+            obj.transform.position = playerPosition;
+            obj.GetComponent<Swirl>().maxForce = maxForce;
         }
 
     }

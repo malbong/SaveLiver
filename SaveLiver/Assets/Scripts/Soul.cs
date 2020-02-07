@@ -8,12 +8,18 @@ public class Soul : MonoBehaviour
     private bool isAbsorbed = false;
     private AudioSource audioSource;
 
+
     private void Start()
     {
         isAbsorbed = false;
-        StartCoroutine(EndLifeTime());
+
         audioSource = GetComponent<AudioSource>();
+
         GetComponent<SpriteRenderer>().enabled = true;
+        GetComponent<CircleCollider2D>().enabled = true;
+        transform.GetChild(0).gameObject.SetActive(true);
+
+        StartCoroutine(EndLifeTime());
     }
 
 
@@ -25,12 +31,16 @@ public class Soul : MonoBehaviour
 
     public void CreateSoul(Vector3 createPosition, float percentage = 0.6f)
     {
-        float random = Random.Range(0f, 1f);
-        if (random < percentage) // default 60%
+        int tryCount = Player.instance.doubleSoulLucky ? 2 : 1; //customs[1] == 3
+        for (int i = 0; i < tryCount; i++)
         {
-            GameObject obj = ObjectPooler.instance.GetSoul();
-            obj.transform.position = createPosition;
-            obj.SetActive(true);
+            float random = Random.Range(0f, 1f);
+            if (random < percentage) // default 60%  &  follow 100%
+            {
+                GameObject obj = ObjectPooler.instance.GetSoul();
+                obj.transform.position = createPosition + new Vector3(i/5, i/5, 0);
+                obj.SetActive(true);
+            }
         }
     }
 
@@ -44,9 +54,12 @@ public class Soul : MonoBehaviour
         isAbsorbed = true;
 
         audioSource.Play();
-        
+
         GameManager.instance.UpdateSoulCount(1);
         GameManager.instance.AddScore(20);
+
+        GetComponent<CircleCollider2D>().enabled = false;
+        transform.GetChild(0).gameObject.SetActive(false);
 
         StartCoroutine(FadeOut());
     }
@@ -55,9 +68,6 @@ public class Soul : MonoBehaviour
     private IEnumerator FadeOut()
     {
         Vector3 originScale = transform.localScale;
-
-        GetComponent<SpriteRenderer>().enabled = false;
-        transform.GetChild(0).GetComponent<ParticleSystem>().Stop();
 
         while (true)
         {
@@ -84,6 +94,10 @@ public class Soul : MonoBehaviour
     private IEnumerator EndLifeTime()
     {
         yield return new WaitForSeconds(lifeTime);
+
+        GetComponent<CircleCollider2D>().enabled = false;
+        transform.GetChild(0).gameObject.SetActive(false);
+
         StartCoroutine(FadeOut());
     }
 }

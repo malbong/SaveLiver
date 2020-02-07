@@ -5,8 +5,8 @@ using UnityEngine.SceneManagement;
 
 public class SceneTransition : MonoBehaviour
 {
-    public Animator transition;
     private bool isRunning = false;
+    public GameObject LoadingPanel;
 
 
     public void LoadPlayScene()
@@ -25,7 +25,7 @@ public class SceneTransition : MonoBehaviour
     {
         isRunning = true;
 
-        transition.SetTrigger("Transition");
+        LoadingPanel.SetActive(true);
         yield return new WaitForSeconds(3f);
 
         isRunning = false;

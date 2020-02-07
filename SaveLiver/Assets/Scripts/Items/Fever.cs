@@ -5,31 +5,17 @@ using UnityEngine;
 public class Fever : Item, IItem
 {
     public float itemDuration = 8f;
-    private bool hasItem = false;
     public float amountSpeedUp = 2f;
     private float feverItemTime = 0f;
 
     public Sprite feverSprite;
-    private Rigidbody2D parent;
-
-    void Start()
-    {
-        parent = GetComponentInParent<Rigidbody2D>();
-        StartCoroutine(TimeCheckAndDestroy());
-    }
 
     void Update()
     {
         if (GameManager.instance.isPause) return;
         ItemDurationAndDestroy();
     }
-
-
-    private void OnEnable()
-    {
-        StartCoroutine(TimeCheckAndDestroy());
-    }
-
+    
 
     /**************************************
     * @ Shield와 동일
@@ -72,30 +58,5 @@ public class Fever : Item, IItem
         Player.instance.feverNum += 1; // 먹은 fever Item 갯수 +1
         Player.instance.FeverTime(); // 무적시작을 알림
         hasItem = true;
-    }
-
-
-
-    /**************************************
-    * @ Shield와 동일
-    */
-    IEnumerator TimeCheckAndDestroy()
-    {
-        yield return new WaitForSeconds(ItemManager.instance.itemLifeTime);
-
-        if (!hasItem)
-        {
-            SpriteRenderer spriteRenderer = transform.parent.GetComponent<SpriteRenderer>();
-            Color color = spriteRenderer.color;
-
-            while (true)
-            {
-                color.a -= 0.05f;
-                spriteRenderer.color = color;
-                yield return new WaitForSeconds(0.05f);
-                if (spriteRenderer.color.a <= 0.1f) break;
-            }
-            parent.gameObject.SetActive(false);
-        }
     }
 }

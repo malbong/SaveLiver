@@ -21,6 +21,8 @@ public static class PlayerInformation
     private static int tmpSeconds { get; set; } = 0;
     private static int tmp2Seconds { get; set; } = 0;
 
+    public static int BestScore { get; set; }
+
     public static Firebase.Auth.FirebaseAuth auth;
 
 

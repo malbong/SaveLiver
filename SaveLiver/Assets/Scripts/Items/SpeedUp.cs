@@ -5,28 +5,14 @@ using UnityEngine;
 public class SpeedUp : Item, IItem
 {
     public float itemDuration = 8f;
-    private bool hasItem = false;
-    public float amountSpeedUp = 2f;
-    private Rigidbody2D parent;
+    public float amountSpeedUp = 1f;
     private float speedUpItemTime = 0f;
-
-    void Start()
-    {
-        parent = gameObject.GetComponentInParent<Rigidbody2D>();
-        StartCoroutine(TimeCheckAndDestroy());
-    }
 
 
     void Update()
     {
         if (GameManager.instance.isPause) return;
         ItemDurationAndDestroy();
-    }
-
-
-    private void OnEnable()
-    {
-        StartCoroutine(TimeCheckAndDestroy());
     }
 
 
@@ -68,27 +54,5 @@ public class SpeedUp : Item, IItem
         Player.instance.HasSpeedUp = true;
         speedUpItemTime = Time.time;
         hasItem = true;
-    }
-
-
-    /**************************************
-    * @ Shield와 동일
-    */
-    IEnumerator TimeCheckAndDestroy()
-    {
-        yield return new WaitForSeconds(ItemManager.instance.itemLifeTime);
-        SpriteRenderer spriteRenderer = transform.parent.GetComponent<SpriteRenderer>();
-        if (!hasItem)
-        {
-            while (true)
-            {
-                Color color = spriteRenderer.color;
-                color.a -= 0.05f;
-                spriteRenderer.color = color;
-                yield return new WaitForSeconds(0.05f);
-                if (spriteRenderer.color.a <= 0.1f) break;
-            }
-            parent.gameObject.SetActive(false);
-        }
     }
 }

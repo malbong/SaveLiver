@@ -355,6 +355,8 @@ public static class DatabaseManager
 
                 string tmpScore = data.Value.ToString();
                 score = int.Parse(tmpScore);
+
+                PlayerInformation.BestScore = score;
             }
             return score;
         });

@@ -193,7 +193,7 @@ public class TurtleSummons : Enemy
         {
             PlayParticle(false);
 
-            soul.CreateSoul(transform.position, 0.5f);
+            soul.CreateSoul(transform.position, 1f);
 
             StartCoroutine(FadeOut());
         }
@@ -340,7 +340,7 @@ public class TurtleSummons : Enemy
         {
             base.HitOnPlayer();
         }
-        else if (other.tag == "Dragon" || other.tag == "BoomEffect")
+        else if (other.tag == "Dragon" || other.tag == "BoomEffect" || other.tag == "Bullet")
         {
             OnDead(false);
         }

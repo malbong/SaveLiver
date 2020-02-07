@@ -4,22 +4,6 @@ using UnityEngine;
 
 public class LiverItem : Item, IItem
 {
-    private Rigidbody2D parent;
-
-
-    void Start()
-    {
-        parent = GetComponentInParent<Rigidbody2D>();
-        StartCoroutine(TimeCheckAndDestroy());
-    }
-
-
-    private void OnEnable()
-    {
-        StartCoroutine(TimeCheckAndDestroy());
-    }
-
-
     /**************************************
     * @함수명: Use
     * @작성자: zeli
@@ -31,30 +15,14 @@ public class LiverItem : Item, IItem
     */
     public void Use()
     {
-        if (Player.instance.hp < 3)
+        if (Player.instance.hp < Player.instance.maxHp)
         {
             Player.instance.hp += 1;
-            GameManager.instance.UpdateLiverCountText(Player.instance.hp);
+            GameManager.instance.UpdateLiverCountText();
         }
         GameManager.instance.AddScore(10);
         GameManager.instance.totalGetItemCount += 1;
         ItemManager.instance.AudioPlay();
-        parent.gameObject.SetActive(false);
-    }
-
-
-    IEnumerator TimeCheckAndDestroy()
-    {
-        yield return new WaitForSeconds(ItemManager.instance.itemLifeTime);
-        SpriteRenderer spriteRenderer = transform.parent.GetComponent<SpriteRenderer>();
-        while (true)
-        {
-            Color color = spriteRenderer.color;
-            color.a -= 0.05f;
-            spriteRenderer.color = color;
-            yield return new WaitForSeconds(0.05f);
-            if (spriteRenderer.color.a <= 0.1f) break;
-        }
         parent.gameObject.SetActive(false);
     }
 }

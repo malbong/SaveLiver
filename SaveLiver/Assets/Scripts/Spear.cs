@@ -10,6 +10,7 @@ public class Spear : MonoBehaviour
     private Rigidbody2D spearRigidbody;
     public float speed = 8.0f;
 
+
     private void Start()
     {
         StartCoroutine(TimeCheckAndDestroy());
@@ -40,6 +41,10 @@ public class Spear : MonoBehaviour
         if (other.tag == "Player")
         {
             Player.instance.TakeDamage(1);
+        }
+        else if (other.tag == "Bullet" && isShootingSpear) // shootingSpear가 총알맞으면 사라짐
+        {
+            gameObject.SetActive(false);
         }
     }
 

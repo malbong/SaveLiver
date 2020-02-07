@@ -426,7 +426,7 @@ public class TurtleSuddenAttack : Enemy
         {
             base.HitOnPlayer();
         }
-        else if (other.tag == "Enemy" || other.tag == "Dragon" || other.tag == "BoomEffect")
+        else if (other.tag == "Enemy" || other.tag == "Dragon" || other.tag == "BoomEffect" || other.tag == "Bullet")
         {
             OnDead(false);
         }

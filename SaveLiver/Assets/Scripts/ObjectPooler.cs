@@ -58,6 +58,18 @@ public class ObjectPooler : MonoBehaviour
     public GameObject summonCircle;
     public int summonCircleCount = 3;
 
+    public static List<GameObject> poolSwirl;
+    public GameObject swirl;
+    public int swirlCount = 3;
+
+    public static List<GameObject> poolBullet;
+    public GameObject bullet;
+    public int bulletCount = 5;
+
+    public static List<GameObject> poolExplosionParticle;
+    public GameObject explosionParticle;
+    public int explosionParticleCount = 5;
+
 
     private void Start()
     {
@@ -126,6 +138,21 @@ public class ObjectPooler : MonoBehaviour
         {
             if (obj.activeInHierarchy) { obj.SetActive(false); }
         }
+
+        foreach (GameObject obj in poolSwirl)
+        {
+            if (obj.activeInHierarchy) { obj.SetActive(false); }
+        }
+
+        foreach (GameObject obj in poolBullet)
+        {
+            if (obj.activeInHierarchy) { obj.SetActive(false); }
+        }
+
+        foreach (GameObject obj in poolExplosionParticle)
+        {
+            if (obj.activeInHierarchy) { obj.SetActive(false); }
+        }
     }
 
 
@@ -140,6 +167,9 @@ public class ObjectPooler : MonoBehaviour
         poolSpear = new List<GameObject>();
         poolBoom = new List<GameObject>();
         poolSummonCircle = new List<GameObject>();
+        poolSwirl = new List<GameObject>();
+        poolBullet = new List<GameObject>();
+        poolExplosionParticle = new List<GameObject>();
 
         for (int i = 0; i < items.Count; i++)
         {
@@ -231,6 +261,30 @@ public class ObjectPooler : MonoBehaviour
             GameObject obj = Instantiate(summonCircle);
             obj.SetActive(false);
             poolSummonCircle.Add(obj);
+            DontDestroyOnLoad(obj);
+        }
+
+        for (int i = 0; i < swirlCount; i++)
+        {
+            GameObject obj = Instantiate(swirl);
+            obj.SetActive(false);
+            poolSwirl.Add(obj);
+            DontDestroyOnLoad(obj);
+        }
+
+        for (int i = 0; i < bulletCount; i++)
+        {
+            GameObject obj = Instantiate(bullet);
+            obj.SetActive(false);
+            poolBullet.Add(obj);
+            DontDestroyOnLoad(obj);
+        }
+
+        for (int i = 0; i < explosionParticleCount; i++)
+        {
+            GameObject obj = Instantiate(explosionParticle);
+            obj.SetActive(false);
+            poolExplosionParticle.Add(obj);
             DontDestroyOnLoad(obj);
         }
     }
@@ -382,6 +436,57 @@ public class ObjectPooler : MonoBehaviour
         {
             GameObject obj = Instantiate(summonCircle);
             poolSummonCircle.Add(obj);
+            DontDestroyOnLoad(obj);
+            return obj;
+        }
+        return null;
+    }
+
+
+    public GameObject GetSwirl()
+    {
+        foreach (GameObject obj in poolSwirl)
+        {
+            if (!obj.activeInHierarchy) { return obj; }
+        }
+        if (more)
+        {
+            GameObject obj = Instantiate(swirl);
+            poolSwirl.Add(obj);
+            DontDestroyOnLoad(obj);
+            return obj;
+        }
+        return null;
+    }
+
+
+    public GameObject GetBullet()
+    {
+        foreach (GameObject obj in poolBullet)
+        {
+            if (!obj.activeInHierarchy) { return obj; }
+        }
+        if (more)
+        {
+            GameObject obj = Instantiate(bullet);
+            poolBullet.Add(obj);
+            DontDestroyOnLoad(obj);
+            return obj;
+        }
+        return null;
+    }
+
+
+    public GameObject GetExplosionParticle()
+    {
+        foreach (GameObject obj in poolExplosionParticle)
+        {
+            if (!obj.activeInHierarchy) { return obj; }
+        }
+        if (more)
+        {
+            GameObject obj = Instantiate(explosionParticle);
+            poolExplosionParticle.Add(obj);
             DontDestroyOnLoad(obj);
             return obj;
         }

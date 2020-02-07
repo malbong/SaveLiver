@@ -21,6 +21,7 @@ public class Player : MonoBehaviour
         }
     }
 
+    public int maxHp = 3;
     public int hp;
     public float speed;
     public float rotateSpeed;
@@ -74,6 +75,10 @@ public class Player : MonoBehaviour
     private bool isTriggerBlindingRunning = false;
     public GameObject blindPanel;
 
+    public bool doubleSoulLucky = false;
+
+    public GameObject BulletShooter;
+
 
     void Start()
     {
@@ -82,7 +87,23 @@ public class Player : MonoBehaviour
         playerSpriteRenderer = GetComponent<SpriteRenderer>();
         runningCoroutine = StartCoroutine(RotateAngle(180, -1)); // 시작하면 Player를 180도 오른쪽으로 돌리기.
 
+        //커스텀 능력치 적용 전 초기화
+        /*
+        rotateSpeed = 5f;
+        speed = 4f;
+        isFevered = false;//
+        HasSpeedUp = false;//
+        HasRotateUp = false;//
+        HasShield = false;
+        doubleSoulLucky = false;
+        maxHp = 3;
+        hp = maxHp;
+        GameManager.instance.UpdateLiverCountText();
+        SpawnManager.instance.itemSpawnTime = 5;
+        */
+
         UpdateCustom();
+        ApplyCustomAbility();
 
         isReversed = false;
         isTriggerConfusionRunning = false;
@@ -140,18 +161,20 @@ public class Player : MonoBehaviour
     */
     IEnumerator RotateAngle(float angle, int sign)
     {
-        int reverseSign = 0;
-        if (isReversed) reverseSign = -1;
-        else reverseSign = 1;
-
+        if (isReversed)
+        {
+            angle = 180 - angle;
+            sign *= -1;
+        }
+        
         float mod = angle % rotateSpeed;
         for (float i = mod; i < angle; i += rotateSpeed)
         {
-            arrowRotate.Rotate(0, 0, reverseSign * sign * rotateSpeed);
+            arrowRotate.Rotate(0, 0, sign * rotateSpeed);
             yield return new WaitForSeconds(0.01f); // 1프레임 대기
         }
         
-        arrowRotate.Rotate(0, 0, reverseSign * sign * mod); // 남은 각도 회전
+        arrowRotate.Rotate(0, 0, sign * mod); // 남은 각도 회전
     }
 
 
@@ -189,7 +212,7 @@ public class Player : MonoBehaviour
         }
 
         hp -= damage;
-        GameManager.instance.UpdateLiverCountText(hp);
+        GameManager.instance.UpdateLiverCountText();
         if(hp <= 0)
         {
             OnDead();
@@ -217,7 +240,7 @@ public class Player : MonoBehaviour
         if (isDragon)
         {
             hp = 0;
-            GameManager.instance.UpdateLiverCountText(hp);
+            GameManager.instance.UpdateLiverCountText();
             OnDead();
         }
     }
@@ -422,76 +445,133 @@ public class Player : MonoBehaviour
     public void UpdateCustom()
     {
         // boat
-        if (PlayerInformation.customs[0] == 0)
+        switch (PlayerInformation.customs[0])
         {
-            boatSprite.sprite = boatSprites[0];
+            case 0:
+                boatSprite.sprite = boatSprites[0];
+                break;
+            case 1:
+                boatSprite.sprite = boatSprites[1];
+                break;
+            case 2:
+                break;
+            case 3:
+                break;
+            case 4:
+                break;
         }
-        else if (PlayerInformation.customs[0] == 1)
-        {
-            boatSprite.sprite = boatSprites[1];
-        }
-        else if (PlayerInformation.customs[0] == 2)
-        {
-
-        }
-        else if (PlayerInformation.customs[0] == 3)
-        {
-
-        }
-        else if (PlayerInformation.customs[0] == 4)
-        {
-
-        }
-
-
+        
         // face
-        if (PlayerInformation.customs[1] == 0)
+        switch (PlayerInformation.customs[1])
         {
-            faceSprite.sprite = faceSprites[0];
+            case 0:
+                faceSprite.sprite = faceSprites[0];
+                break;
+            case 1:
+                faceSprite.sprite = faceSprites[1];
+                break;
+            case 2:
+                break;
+            case 3:
+                break;
+            case 4:
+                break;
         }
-        else if (PlayerInformation.customs[1] == 1)
-        {
-            faceSprite.sprite = faceSprites[1];
-        }
-        else if (PlayerInformation.customs[1] == 2)
-        {
-
-        }
-        else if (PlayerInformation.customs[1] == 3)
-        {
-
-        }
-        else if (PlayerInformation.customs[1] == 4)
-        {
-
-        }
-
-
+        
         // wave
-        if (PlayerInformation.customs[2] == 0)
+        switch (PlayerInformation.customs[2])
         {
-            waveLeftParticle.trailMaterial = waveMaterials[0];
-            waveRightParticle.trailMaterial = waveMaterials[0];
+            case 0:
+                waveLeftParticle.trailMaterial = waveMaterials[0];
+                waveRightParticle.trailMaterial = waveMaterials[0];
+                break;
+            case 1:
+                waveLeftParticle.trailMaterial = waveMaterials[1];
+                waveRightParticle.trailMaterial = waveMaterials[1];
+                break;
+            case 2:
+                waveLeftParticle.trailMaterial = waveMaterials[2];
+                waveRightParticle.trailMaterial = waveMaterials[2];
+                break;
+            case 3:
+                waveLeftParticle.trailMaterial = waveMaterials[3];
+                waveRightParticle.trailMaterial = waveMaterials[3];
+                break;
+            case 4:
+                waveLeftParticle.trailMaterial = waveMaterials[4];
+                waveRightParticle.trailMaterial = waveMaterials[4];
+                break;
         }
-        else if (PlayerInformation.customs[2] == 1)
+    }
+
+
+    private void ApplyCustomAbility()
+    {   
+        //check boat
+        switch (PlayerInformation.customs[0])
         {
-            waveLeftParticle.trailMaterial = waveMaterials[1];
-            waveRightParticle.trailMaterial = waveMaterials[1];
+            case 0: //default
+                break;
+
+            case 1: // rotate + 1
+                rotateSpeed += 1f;
+                break;
+
+            case 2: // speed + 1 & rotate + 1
+                speed += 0.75f;
+                rotateSpeed += 1f;
+                break;
+
+            case 3: // speed + 3
+                speed += 2.25f;
+                break;
+
+            case 4: // + speed + 1 & rotate + 4 + shooting
+                speed += 0.75f;
+                rotateSpeed += 4;
+
+                BulletShooter.SetActive(true);
+                break;
         }
-        else if (PlayerInformation.customs[2] == 2)
+        //check face
+        switch (PlayerInformation.customs[1])
         {
-            waveLeftParticle.trailMaterial = waveMaterials[2];
-            waveRightParticle.trailMaterial = waveMaterials[2];
-        }
-        else if (PlayerInformation.customs[2] == 3)
-        {
-            waveLeftParticle.trailMaterial = waveMaterials[3];
-            waveRightParticle.trailMaterial = waveMaterials[3];
-        }
-        else if (PlayerInformation.customs[2] == 4)
-        {
-            waveLeftParticle.trailMaterial = waveMaterials[4];
-            waveRightParticle.trailMaterial = waveMaterials[4];
+            case 0: //default
+                break;
+
+            case 1: //shield
+                ShieldStart();
+                break;
+
+            case 2: //shield + liver
+                ShieldStart();
+
+                maxHp = 4;
+                hp = maxHp;
+                GameManager.instance.UpdateLiverCountText();
+                break;
+
+            case 3: //liver-1 + shield + soul x 2
+                maxHp = 2;
+                hp = maxHp;
+                GameManager.instance.UpdateLiverCountText();
+
+                ShieldStart();
+
+                doubleSoulLucky = true;
+                //1. 변수 Player.instance.doubleSoul = true; 
+                //2. soul쪽에서 PlayerInformation.customs[1] == 3 -> 어디에서 관리하는지 모름
+                break;
+
+            case 4: //shield + liver 4 + item spawn
+                ShieldStart();
+
+                maxHp = 4;
+                hp = maxHp;
+                GameManager.instance.UpdateLiverCountText();
+
+                SpawnManager.instance.itemSpawnTime = 10f / 3f;
+                break;
         }
     }
 
