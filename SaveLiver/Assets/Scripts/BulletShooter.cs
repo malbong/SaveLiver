@@ -4,9 +4,14 @@ using UnityEngine;
 
 public class BulletShooter : MonoBehaviour
 {
-    // Start is called before the first frame update
+    public Animator anim;
+
+    private AudioSource audioSource;
+
+
     void Start()
     {
+        audioSource = GetComponent<AudioSource>();
         StartCoroutine(ShootBullet());
     }
 
@@ -21,8 +26,12 @@ public class BulletShooter : MonoBehaviour
     {
         while (true)
         {
+            anim.SetTrigger("charging");
+
             yield return new WaitForSeconds(1f);
 
+            anim.SetTrigger("shooting");
+            audioSource.Play();
             CreateBullet();
         }
     }
