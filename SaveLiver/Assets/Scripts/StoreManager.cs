@@ -402,15 +402,17 @@ public class StoreManager : MonoBehaviour
         for (int i=0; i<boatCount; i++)
         {
             if (boatChargeList[i] == -1) boatLockImage[i].sprite = lockImage;
-            else if (boatChargeList[i] == 0)
+            else if (boatChargeList[i] == 0) // 샀는데 장착 안한거
             {
                 boatLockImage[i].sprite = nullSprite;
-                boatPrice[i].text = " ";
+                boatPrice[i].text = "Purchased";
+                boatPrice[i].color = new Color32(255, 0, 0, 255);
             }
-            else if (boatChargeList[i] == 1)
+            else if (boatChargeList[i] == 1) 
             {
                 boatLockImage[i].sprite = checkImage;
-                boatPrice[i].text = " ";
+                boatPrice[i].text = "Purchased";
+                boatPrice[i].color = new Color32(255, 0, 0, 255);
             }
             else boatLockImage[i].sprite = storeLoading;
         }
@@ -421,12 +423,14 @@ public class StoreManager : MonoBehaviour
             else if (faceChargeList[i] == 0)
             {
                 faceLockImage[i].sprite = nullSprite;
-                facePrice[i].text = " ";
+                facePrice[i].text = "Purchased";
+                facePrice[i].color = new Color32(255, 0, 0, 255);
             }
             else if (faceChargeList[i] == 1)
             {
                 faceLockImage[i].sprite = checkImage;
-                facePrice[i].text = " ";
+                facePrice[i].text = "Purchased";
+                facePrice[i].color = new Color32(255, 0, 0, 255);
             }
             else faceLockImage[i].sprite = storeLoading;
         }
@@ -437,12 +441,14 @@ public class StoreManager : MonoBehaviour
             else if (waveChargeList[i] == 0)
             {
                 waveLockImage[i].sprite = nullSprite;
-                wavePrice[i].text = " ";
+                wavePrice[i].text = "Purchased";
+                wavePrice[i].color = new Color32(255, 0, 0, 255);
             }
             else if (waveChargeList[i] == 1)
             {
                 waveLockImage[i].sprite = checkImage;
-                wavePrice[i].text = " ";
+                wavePrice[i].text = "Purchased";
+                wavePrice[i].color = new Color32(255, 0, 0, 255);
             }
             else waveLockImage[i].sprite = storeLoading;
         }

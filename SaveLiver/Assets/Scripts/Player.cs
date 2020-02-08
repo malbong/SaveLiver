@@ -534,6 +534,7 @@ public class Player : MonoBehaviour
 
             case 3: // speed + 3
                 speed += 2.25f;
+                rotateSpeed -= 1;
                 break;
 
             case 4: // + speed + 1 & rotate + 4 + shooting
