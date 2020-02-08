@@ -78,7 +78,7 @@ public class Player : MonoBehaviour
     public bool doubleSoulLucky = false;
 
     public GameObject BulletShooter;
-
+    private bool isPlayerBeatRunning = false;
 
     void Start()
     {
@@ -108,6 +108,7 @@ public class Player : MonoBehaviour
         isReversed = false;
         isTriggerConfusionRunning = false;
         isTriggerBlindingRunning = false;
+        isPlayerBeatRunning = false;
     }
 
     void FixedUpdate()
@@ -189,6 +190,8 @@ public class Player : MonoBehaviour
     */
     public void TakeDamage(int damage)
     {
+        if (isPlayerBeatRunning) return;
+
         if (HasShield) 
         {
             ShieldEnd();
@@ -256,6 +259,8 @@ public class Player : MonoBehaviour
     */
     IEnumerator PlayerBeat()
     {
+        isPlayerBeatRunning = true;
+
         playerCollider.enabled = false;
         int count = 0;
         
@@ -274,6 +279,8 @@ public class Player : MonoBehaviour
 
         playerSpriteRenderer.color = new Color32(255, 255, 255, 255);
         playerCollider.enabled = true;
+
+        isPlayerBeatRunning = false; 
     }
 
 
@@ -454,10 +461,13 @@ public class Player : MonoBehaviour
                 boatSprite.sprite = boatSprites[1];
                 break;
             case 2:
+                boatSprite.sprite = boatSprites[2];
                 break;
             case 3:
+                boatSprite.sprite = boatSprites[3];
                 break;
             case 4:
+                boatSprite.sprite = boatSprites[4];
                 break;
         }
         

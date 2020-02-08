@@ -12,8 +12,8 @@ public class StoreManager : MonoBehaviour
     public Sprite[] faceSprites;
     public Material[] waveMaterials;
 
-    public Image boatImage;
-    public Image faceImage;
+    public SpriteRenderer boatImage;
+    public SpriteRenderer faceImage;
     public ParticleSystemRenderer waveLeftParticle;
     public ParticleSystemRenderer waveRightParticle;
 
@@ -54,6 +54,8 @@ public class StoreManager : MonoBehaviour
 
     private enum PanelState { Face, Boat, Wave }
     private PanelState panelState;
+
+    public GameObject shipPanel;
 
 
     void Start()
@@ -295,34 +297,54 @@ public class StoreManager : MonoBehaviour
         UpdateLock();
     }
 
-
-    public Text tmp;
+    
     public void UpdateCurrentCustom()
     {
-        // boat
+        //boat
+        
+
         if (PlayerInformation.customs[0] == 0)
         {
             boatImage.sprite = boatSprites[0];
+            boatImage.transform.localScale = new Vector3(400, 400, 1);
+            shipPanel.SetActive(false);
         }
         else if(PlayerInformation.customs[0] == 1)
         {
             boatImage.sprite = boatSprites[1];
+            boatImage.transform.localScale = new Vector3(400, 400, 1);
+            shipPanel.SetActive(false);
         }
         else if (PlayerInformation.customs[0] == 2)
         {
-
+            boatImage.sprite = boatSprites[2];
+            boatImage.transform.localScale = new Vector3(300, 300, 1);
+            shipPanel.SetActive(false);
         }
         else if (PlayerInformation.customs[0] == 3)
         {
-
+            boatImage.sprite = boatSprites[3];
+            boatImage.transform.localScale = new Vector3(400, 400, 1);
+            shipPanel.SetActive(false);
         }
         else if (PlayerInformation.customs[0] == 4)
         {
-
+            boatImage.sprite = boatSprites[4];
+            boatImage.transform.localScale = new Vector3(170, 130, 1);
+            shipPanel.SetActive(true);
         }
 
 
         // face
+        if (PlayerInformation.customs[0] == 4) //boat가 ship일때 face크기 조정
+        {
+            faceImage.transform.localScale = new Vector3(200, 200, 1);
+        }
+        else
+        {
+            faceImage.transform.localScale = new Vector3(400, 400, 1);
+        }
+
         if (PlayerInformation.customs[1] == 0)
         {
             faceImage.sprite = faceSprites[0];
