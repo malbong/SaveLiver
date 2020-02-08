@@ -23,6 +23,8 @@ public static class PlayerInformation
 
     public static int BestScore { get; set; }
 
+    public static bool IsSawLogo { get; set; } = false;
+
     public static Firebase.Auth.FirebaseAuth auth;
 
 

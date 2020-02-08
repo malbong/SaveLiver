@@ -22,7 +22,7 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: -150
+        value: -200
         inSlope: 0
         outSlope: 0
         tangentMode: 136
@@ -31,7 +31,7 @@ AnimationClip:
         outWeight: 0.33333334
       - serializedVersion: 3
         time: 1.4166666
-        value: 15
+        value: 0
         inSlope: 0
         outSlope: 0
         tangentMode: 136
@@ -39,8 +39,8 @@ AnimationClip:
         inWeight: 0.33333334
         outWeight: 0.33333334
       - serializedVersion: 3
-        time: 1.6666666
-        value: -5
+        time: 1.7
+        value: -40
         inSlope: 0
         outSlope: 0
         tangentMode: 136
@@ -51,7 +51,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_AnchoredPosition.y
-    path: Panel/Hosan Text
+    path: Text Panel/Hosan Text
     classID: 224
     script: {fileID: 0}
   - curve:
@@ -67,8 +67,17 @@ AnimationClip:
         inWeight: 0
         outWeight: 0
       - serializedVersion: 3
-        time: 0.81666666
+        time: 0.5
         value: 1
+        inSlope: Infinity
+        outSlope: Infinity
+        tangentMode: 103
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1.7
+        value: 0
         inSlope: Infinity
         outSlope: Infinity
         tangentMode: 103
@@ -91,7 +100,7 @@ AnimationClip:
   m_ClipBindingConstant:
     genericBindings:
     - serializedVersion: 2
-      path: 4226464398
+      path: 1647018739
       attribute: 538195251
       script: {fileID: 0}
       typeID: 224
@@ -110,7 +119,7 @@ AnimationClip:
     m_AdditiveReferencePoseClip: {fileID: 0}
     m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
-    m_StopTime: 1.6666666
+    m_StopTime: 1.7
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0
@@ -131,7 +140,7 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: -150
+        value: -200
         inSlope: 0
         outSlope: 0
         tangentMode: 136
@@ -140,7 +149,7 @@ AnimationClip:
         outWeight: 0.33333334
       - serializedVersion: 3
         time: 1.4166666
-        value: 15
+        value: 0
         inSlope: 0
         outSlope: 0
         tangentMode: 136
@@ -148,8 +157,8 @@ AnimationClip:
         inWeight: 0.33333334
         outWeight: 0.33333334
       - serializedVersion: 3
-        time: 1.6666666
-        value: -5
+        time: 1.7
+        value: -40
         inSlope: 0
         outSlope: 0
         tangentMode: 136
@@ -160,7 +169,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_AnchoredPosition.y
-    path: Panel/Hosan Text
+    path: Text Panel/Hosan Text
     classID: 224
     script: {fileID: 0}
   - curve:
@@ -176,8 +185,17 @@ AnimationClip:
         inWeight: 0
         outWeight: 0
       - serializedVersion: 3
-        time: 0.81666666
+        time: 0.5
         value: 1
+        inSlope: Infinity
+        outSlope: Infinity
+        tangentMode: 103
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1.7
+        value: 0
         inSlope: Infinity
         outSlope: Infinity
         tangentMode: 103

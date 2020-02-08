@@ -7,6 +7,7 @@ public class SoundManager : MonoBehaviour
 {
     public static SoundManager instance { get; set; }
 
+    public AudioSource menuAudio;
     public AudioClip menuBGM;
 
     public AudioClip playBGM;
