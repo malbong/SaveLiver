@@ -28,7 +28,11 @@ public class SpawnManager : MonoBehaviour
     private float spawnRadius;
     private float angle45Length;
 
-    public float itemSpawnTime = 5;
+    public float itemSpawnTime = 8;
+
+    private bool isRunningNormal = false;
+    private bool isRunningSpecial = false;
+    private bool isRunningPattern = false;
 
 
     private void Start()
@@ -36,77 +40,412 @@ public class SpawnManager : MonoBehaviour
         spawnRadius = SpawnManager.instance.radius;
         angle45Length = Mathf.Sqrt(Mathf.Pow(spawnRadius, 2) / 2.0f);
 
-        StartCoroutine(EnemyCreate());
-        StartCoroutine(ItemCreate());
+        isRunningNormal = false;
+        isRunningSpecial = false;
+        isRunningPattern = false;
 
-        itemSpawnTime = 5.0f;
+        StartCoroutine(Play());
+        StartCoroutine(ItemCreate());
     }
 
 
-    /********************************************
-     * @함수명 : CreateEnemy()
-     * @작성자 : Malbong
-     * @입력 : void
-     * @출력 : IEnumerator time
-     * @설명 : Coroutine을 사용하여 원하는 시간에 Spawn 호출
-     *         레벨 디자인을 하여 난이도 조절
-     */
-    IEnumerator EnemyCreate()
+    private IEnumerator Play()
     {
+        yield return new WaitForSeconds(0.1f);
+        EnemySpawn(0);
+
+        yield return new WaitForSeconds(3f);
+        int randomIndex = Random.Range(0, 2);
+        EnemySpawn(randomIndex);
+
+        yield return new WaitForSeconds(3f);
+        EnemySpawn(1); 
+
+        yield return new WaitForSeconds(3f);
+        CreateEasySpecialEnemy();
+
+        yield return new WaitForSeconds(3f);
+        EnemySpawn(2);
+
+        yield return new WaitForSeconds(3f); 
+        randomIndex = Random.Range(1, 3);
+        EnemySpawn(randomIndex);
+
+        yield return new WaitForSeconds(3f); 
+        EnemySpawn(3); 
+
+        yield return new WaitForSeconds(3f);
+        CreateEasySpecialEnemy();
+
+        yield return new WaitForSeconds(0.5f);
+        EnemySpawn(3); 
+
+        yield return new WaitForSeconds(3f);
+        CreateEasySpecialEnemy();
+
+
+        yield return new WaitForSeconds(4f); 
+        randomIndex = Random.Range(2, 4);
+        EnemySpawn(randomIndex);
+        AllDirection4();
+
+        yield return new WaitForSeconds(4f);
+        CreateEasySpecialEnemy();
+
+        yield return new WaitForSeconds(0.5f);
+        randomIndex = Random.Range(2, 4);
+        EnemySpawn(randomIndex);
+        
+        yield return new WaitForSeconds(3f);
+        randomIndex = Random.Range(2, 4);
+        EnemySpawn(randomIndex);
+
+        int tmpRandom = Random.Range(0, 2);
+        if (tmpRandom == 0)
+        {
+            DiagonalLeft(3, Random.Range(0, 2) == 0 ? 1 : -1);
+        }
+        else
+        {
+            DiagonalRight(3, Random.Range(0, 2) == 0 ? 1 : -1);
+        }
+
+        yield return new WaitForSeconds(3f); 
+        EnemySpawn(4);
+
+        yield return new WaitForSeconds(3f);
+        CreateMiddleSpecialEnemy();
+        yield return new WaitForSeconds(1f);
+        Swirl(-250);
+        
+
+        yield return new WaitForSeconds(4f); 
+        EnemySpawn(4);
+        DiagonalBothSide(3, Random.Range(0, 2) == 0 ? 1 : -1);
+        yield return new WaitForSeconds(0.5f);
+        CreateMiddleSpecialEnemy();
+
+        yield return new WaitForSeconds(4f);
+        randomIndex = Random.Range(3, 5);
+        EnemySpawn(randomIndex);
+        
+        yield return new WaitForSeconds(4.5f);
+        CreateHardSpecialEnemy();
+        Dragon(Random.Range(0, 2) == 0 ? 1 : -1, -1, Random.Range(3, 5));
+
+        yield return new WaitForSeconds(3f);
+        EnemySpawn(5);
+        yield return new WaitForSeconds(0.5f); 
+
+        tmpRandom = Random.Range(0, 2);
+        if (tmpRandom == 0) //left
+        {
+            DiagonalLeftSeqStart(2, Random.Range(0, 2) == 0 ? 1 : -1);
+        }
+        else //right
+        {
+            DiagonalRightSeqStart(2, Random.Range(0, 2) == 0 ? 1 : -1);
+        }
+
+        yield return new WaitForSeconds(3f);
+        EnemySpawn(9);
+        yield return new WaitForSeconds(0.3f);
+        EnemySpawn(9);
+        yield return new WaitForSeconds(0.3f);
+        EnemySpawn(9);
+        yield return new WaitForSeconds(0.3f);
+        EnemySpawn(9);
+
+        //1분 이후 (60초)
+
+        //totalPlayTime :        60  90   120  150   180  210      ~  210이상
+        //level                  1   2    3    4     5    6             7
+        //NomalEnemyRandom :     10  9    8    7     6    5  (time)     
+        //SpecialEnemyRandom :   4   3.8  3.6  3.4   3.2  3  (time)
+        //PatternEnemyRandom :   4   3.8  3.6  3.4   3.2  3  (time)
+
         while (true)
         {
-            
-            yield return new WaitForSeconds(3f);
-            DiagonalLeftStart(1.5f);
-            /*
-            EnemySpawn(13);
-            //Swirl(-250, 2, true);
-            yield return new WaitForSeconds(3f);
-            EnemySpawn(12);
-            
-            yield return new WaitForSeconds(3f);
-            EnemySpawn(10);
-            //EnemySpawn(2);
-            yield return new WaitForSeconds(3f);
-            EnemySpawn(8);
-            //DiagonalBothSide(5);
-            //Dragon(1, 1, 2);
-            yield return new WaitForSeconds(3f);
-            EnemySpawn(6);
-            yield return new WaitForSeconds(3f);
-            EnemySpawn(7);
-            //Swirl(-250, 2, true);
-            //EnemySpawn(1);
-            yield return new WaitForSeconds(3f);
-            EnemySpawn(9);
-            yield return new WaitForSeconds(3f);
-            EnemySpawn(6);
-            //AllDirection4();
-            */
-            
-            /*
-            yield return new WaitForSeconds(3f);
-            EnemySpawn(8);
-            //AllDirection8();
-            //EnemySpawn(0);
-            yield return new WaitForSeconds(3f);
-            EnemySpawn(7);
-            //DiagonalLeft(5);
-            //EnemySpawn(1);
-            yield return new WaitForSeconds(3f);
-            //EnemySpawn(5);
-            EnemySpawn(6);
-            //DiagonalRight(5);
-            //Swirl(-250);
-            yield return new WaitForSeconds(3f);
-            //DiagonalLeft(5);
-            //EnemySpawn(4);
-            EnemySpawn(6);
-            yield return new WaitForSeconds(3f);
-            //Dragon(-1, -1, 2);
-            EnemySpawn(6);*/
+            if(isRunningNormal == false)
+            {
+                float delayTime1 = GetDelayTime(1);
+                StartCoroutine(NomalEnemyRandomCreate(delayTime1));
+            }
+            if(isRunningSpecial == false)
+            {
+                float delayTime2 = GetDelayTime(2);
+                StartCoroutine(SpecialEnemyRandomCreate(delayTime2));
+            }
+            if(isRunningPattern == false)
+            {
+                float delayTime3 = GetDelayTime(3);
+                StartCoroutine(PatterRandomCreate(delayTime3));
+            }
+            Debug.Log(GetLevel());
+            yield return new WaitForSeconds(Time.deltaTime);
         }
         
+    }
+    
+
+    private float GetDelayTime(int flag)
+    {
+        float delayTime = 0; //y
+
+        float level = GetLevel();
+        switch (flag)
+        {
+            case 1://nomal >>> y = -x + 11
+                delayTime = -1 * level + 11;
+                if (delayTime < 5) delayTime = 5;
+                break;
+            case 2 ://special
+                delayTime = -1 / 5.0f * level + 21 / 5.0f;
+                if (delayTime < 3) delayTime = 3;
+                break;
+            case 3://pattern
+                delayTime = -1 / 5.0f * level + 21 / 5.0f;
+                if (delayTime < 3) delayTime = 3;
+                break;
+        }
+        return delayTime; //y
+    }
+
+
+    private float GetLevel()
+    {
+        float level = GameManager.instance.totalPlayTime / 30.0f - 1;
+        if (level > 6) level = 7;
+        return level;
+    }
+
+
+    private IEnumerator NomalEnemyRandomCreate(float time) 
+    {
+        isRunningNormal = true;
+
+        yield return new WaitForSeconds(time);
+        EnemySpawn(Random.Range(3, 6));
+
+        isRunningNormal = false;
+    }
+
+
+    private IEnumerator SpecialEnemyRandomCreate(float time)
+    {
+        isRunningSpecial = true;
+
+        yield return new WaitForSeconds(time);
+
+        //level 1-2.66  2.66-4.33  4.33-6
+        //easy : Linear, SuddenAttack, Blinder
+        //middle : Spear, Boom 
+        //hard : Summons, Confuser, Summoner
+        int random = Random.Range(1, 101); // 1 ~ 100
+        float level = GetLevel();
+        if (1 <= level && level < 2.66)
+        {
+            /*//easy 50 middle 30 hard 20
+            if (1 <= random && random <= 50) CreateEasySpecialEnemy();
+            else if (50 < random && random <= 80) CreateMiddleSpecialEnemy();
+            else CreateHardSpecialEnemy();*/// 81~100
+
+            //easy 30 middle 40 hard 30
+            if (1 <= random && random <= 30) CreateEasySpecialEnemy();
+            else if (30 < random && random <= 70) CreateMiddleSpecialEnemy();
+            else CreateHardSpecialEnemy(); // 71~100
+        }
+        else if (2.66 <= level && level < 4.33)
+        {
+            //easy 20 middle 30 hard 50
+            if (1 <= random && random <= 20) CreateEasySpecialEnemy();
+            else if (20 < random && random <= 50) CreateMiddleSpecialEnemy();
+            else CreateHardSpecialEnemy(); // 51~100
+        }
+        else if (4.33 <= level && level <= 6) //4.33 ~ 6
+        {
+            //easy 0 middle 30 hard 70
+            if (1 <= random && random <= 30) CreateMiddleSpecialEnemy();
+            else CreateHardSpecialEnemy();
+        }
+        else // level 7 max
+        {
+            //easy 0 middle 10 hard 90
+            if (1 <= random && random <= 10) CreateMiddleSpecialEnemy();
+            else CreateHardSpecialEnemy();
+        }
+        
+        isRunningSpecial = false;
+    }
+
+
+    private void CreateEasySpecialEnemy()
+    {
+        int randomInt = Random.Range(0, 3);
+        switch (randomInt)
+        {
+            case 0:
+                EnemySpawn(6);
+                break;
+            case 1:
+                EnemySpawn(9);
+                break;
+            case 2:
+                EnemySpawn(10);
+                break;
+        }
+    }
+
+
+    private void CreateMiddleSpecialEnemy()
+    {
+        int randomInt = Random.Range(0, 2);
+        switch (randomInt)
+        {
+            case 0:
+                EnemySpawn(7);
+                break;
+            case 1:
+                EnemySpawn(8);
+                break;
+        }
+        //EnemySpawn(Random.Range(7, 9));
+    }
+
+
+    private void CreateHardSpecialEnemy()
+    {
+        int randomInt = Random.Range(0, 3);
+        switch (randomInt)
+        {
+            case 0:
+                EnemySpawn(11);
+                break;
+            case 1:
+                EnemySpawn(12);
+                break;
+            case 2:
+                EnemySpawn(13);
+                break;
+        }
+        //EnemySpawn(Random.Range(11, 14));
+    }
+
+
+    private IEnumerator PatterRandomCreate(float time)
+    {
+        isRunningPattern = true;
+        yield return new WaitForSeconds(time);
+
+        //level 1-2.66  2.66-4.33  4.33-6
+
+        //easy : all4, left, right 
+        //middle : all8, swirl, both 
+        //hard : dragon, diagonalseq, swirl 2
+        int random = Random.Range(1, 101); // 1 ~ 100
+        float level = GetLevel();
+        if (1 <= level && level < 2.66)
+        {
+            /*//easy 20 middle 30 hard 50
+            if (1 <= random && random <= 50) CreateEasyPattern();
+            else if (50 < random && random <= 80) CreateMiddlePattern();
+            else CreateHardPattern(); // 81~100
+            */
+            //easy 30 middle 40 hard 30
+            if (1 <= random && random <= 30) CreateEasyPattern();
+            else if (30 < random && random <= 70) CreateMiddlePattern();
+            else CreateHardPattern(); // 71 ~ 100
+        }
+        else if (2.66 <= level && level < 4.33)
+        {
+            //easy 20 middle 30 hard 50
+            if (1 <= random && random <= 20) CreateEasyPattern();
+            else if (20 < random && random <= 50) CreateMiddlePattern();
+            else CreateHardPattern(); // 51 ~ 100
+        }
+        else if (4.33 <= level && level <= 6)//4.33 ~ 6
+        {
+            //easy 0 middle 30 hard 70
+            if (1 <= random && random <= 30) CreateMiddlePattern();
+            else CreateHardPattern();
+        }
+        else //level 7 max
+        {
+            //easy 0 middle 10 hard 90
+            if (1 <= random && random <= 10) CreateMiddlePattern();
+            else CreateHardPattern();
+        }
+
+        isRunningPattern = false;
+    }
+
+
+    private void CreateEasyPattern()
+    {
+        int randomInt = Random.Range(0, 3);
+        switch (randomInt)
+        {
+            case 0:
+                AllDirection4();
+                break;
+            case 1:
+                DiagonalLeft(3, Random.Range(0, 2) == 0 ? 1 : -1);
+                break;
+            case 2:
+                DiagonalRight(3, Random.Range(0, 2) == 0 ? 1 : -1);
+                break;
+        }
+    }
+
+
+    private void CreateMiddlePattern()
+    {
+        int randomInt = Random.Range(0, 3);
+        switch (randomInt)
+        {
+            case 0:
+                AllDirection8();
+                break;
+            case 1:
+                Swirl(-250);
+                break;
+            case 2:
+                DiagonalBothSide(3, Random.Range(0, 2) == 0 ? 1 : -1);
+                break;
+        }
+    }
+
+
+    private void CreateHardPattern()
+    {
+        int randomInt = Random.Range(0, 3);
+        switch (randomInt)
+        {
+            case 0:
+                if (Random.Range(1, 3) == 1) // 1 마리
+                {
+                    Dragon(Random.Range(0, 2) == 0 ? 1 : -1, Random.Range(0, 2) == 0 ? 1 : -1, Random.Range(2.0f, 3.0f));
+                }
+                else //2마리
+                {
+                    Dragon(Random.Range(0, 2) == 0 ? 1 : -1, 1, Random.Range(2.0f, 3.0f));
+                    Dragon(Random.Range(0, 2) == 0 ? 1 : -1, -1, Random.Range(2.0f, 3.0f));
+                }
+                break;
+            case 1:
+                if (Random.Range(0, 2) == 0)
+                {
+                    DiagonalLeftSeqStart(2, Random.Range(0, 2) == 0 ? 1 : -1);
+                }
+                else
+                {
+                    DiagonalRightSeqStart(2, Random.Range(0, 2) == 0 ? 1 : -1);
+                }
+                break;
+            case 2:
+                Swirl(-250, Random.Range(2.0f, 3.0f), true);
+                break;
+        }
     }
 
 
@@ -118,7 +457,6 @@ public class SpawnManager : MonoBehaviour
         {
             ItemRandomSpawn();
             yield return new WaitForSeconds(itemSpawnTime);
-            //yield return new WaitForSeconds(3.0f);
         }
     }
     /********************************************
@@ -278,12 +616,12 @@ public class SpawnManager : MonoBehaviour
     }
 
 
-    public void DiagonalLeft(float interval)
+    public void DiagonalLeft(float interval, int sign = 1)
     {
         playerPosition = Player.instance.transform.position;
 
         Vector3 targetPosition = playerPosition;
-        Vector3 diffPosition = new Vector3(-angle45Length, angle45Length, 0);
+        Vector3 diffPosition = new Vector3(-angle45Length, sign * angle45Length, 0);
 
         CreateLinearTurtle(diffPosition, targetPosition);
 
@@ -295,46 +633,59 @@ public class SpawnManager : MonoBehaviour
     }
 
 
-    public IEnumerator DiagonalLeftSequence(float interval)
+    public IEnumerator DiagonalLeftSequence(float interval, int sign = 1)
     {
         playerPosition = Player.instance.transform.position;
-
         
-        Vector3 diffPosition = new Vector3(-angle45Length, angle45Length, 0);
-
-        Vector3 targetPosition = playerPosition + new Vector3(0, interval, 0);
+        Vector3 diffPosition = new Vector3(-angle45Length, sign * angle45Length, 0);
+        
+        Vector3 targetPosition = playerPosition;
         CreateLinearTurtle(diffPosition, targetPosition);
-        yield return new WaitForSeconds(0.3f);
+        yield return new WaitForSeconds(0.25f);
 
-        targetPosition = playerPosition;
+        targetPosition = playerPosition + new Vector3(sign * interval * 1 * Mathf.Sqrt(2) / 2, interval * 1 * Mathf.Sqrt(2)/2, 0);
         CreateLinearTurtle(diffPosition, targetPosition);
-        yield return new WaitForSeconds(0.3f);
+        targetPosition = playerPosition + new Vector3(sign * -interval * 1 * Mathf.Sqrt(2) / 2, -interval * 1, 0);
+        CreateLinearTurtle(diffPosition, targetPosition);
+        yield return new WaitForSeconds(0.25f);
 
-        targetPosition = playerPosition + new Vector3(0, -interval * 1, 0);
+        targetPosition = playerPosition + new Vector3(sign * interval * 2 * Mathf.Sqrt(2) / 2, interval * 2 * Mathf.Sqrt(2) / 2, 0);
         CreateLinearTurtle(diffPosition, targetPosition);
-        yield return new WaitForSeconds(0.3f);
+        targetPosition = playerPosition + new Vector3(sign * -interval * 2 * Mathf.Sqrt(2) / 2, -interval * 2, 0);
+        CreateLinearTurtle(diffPosition, targetPosition);
+        yield return new WaitForSeconds(0.25f);
 
-        targetPosition = playerPosition + new Vector3(0, -interval * 2, 0);
+        targetPosition = playerPosition + new Vector3(sign * interval * 3 * Mathf.Sqrt(2) / 2, interval * 3 * Mathf.Sqrt(2) / 2, 0);
         CreateLinearTurtle(diffPosition, targetPosition);
-        yield return new WaitForSeconds(0.3f);
+        targetPosition = playerPosition + new Vector3(sign * -interval * 3 * Mathf.Sqrt(2) / 2, -interval * 3, 0);
+        CreateLinearTurtle(diffPosition, targetPosition);
+        yield return new WaitForSeconds(0.25f);
 
-        targetPosition = playerPosition + new Vector3(0, -interval * 3, 0);
+        targetPosition = playerPosition + new Vector3(sign * interval * 4 * Mathf.Sqrt(2) / 2, interval * 4 * Mathf.Sqrt(2) / 2, 0);
         CreateLinearTurtle(diffPosition, targetPosition);
-        yield return new WaitForSeconds(0.3f);
+        targetPosition = playerPosition + new Vector3(sign * -interval * 4 * Mathf.Sqrt(2) / 2, -interval * 4, 0);
+        CreateLinearTurtle(diffPosition, targetPosition);
+        yield return new WaitForSeconds(0.25f);
 
-        targetPosition = playerPosition + new Vector3(0, -interval * 4, 0);
+        targetPosition = playerPosition + new Vector3(sign * interval * 5 * Mathf.Sqrt(2) / 2, interval * 5 * Mathf.Sqrt(2) / 2, 0);
         CreateLinearTurtle(diffPosition, targetPosition);
-        yield return new WaitForSeconds(0.3f);
+        targetPosition = playerPosition + new Vector3(sign * -interval * 5 * Mathf.Sqrt(2) / 2, -interval * 5, 0);
+        CreateLinearTurtle(diffPosition, targetPosition);
+        yield return new WaitForSeconds(0.25f);
+
+        targetPosition = playerPosition + new Vector3(sign * interval * 6 * Mathf.Sqrt(2) / 2, interval * 6 * Mathf.Sqrt(2) / 2, 0);
+        CreateLinearTurtle(diffPosition, targetPosition);
+        targetPosition = playerPosition + new Vector3(sign * -interval * 6 * Mathf.Sqrt(2) / 2, -interval * 6, 0);
+        CreateLinearTurtle(diffPosition, targetPosition);
+        yield return new WaitForSeconds(0.25f);
     }
-
-
-    public void DiagonalLeftStart(float interval)
+    public void DiagonalLeftSeqStart(float interval, int sign)
     {
-        StartCoroutine(DiagonalLeftSequence(interval));
+        StartCoroutine(DiagonalLeftSequence(interval, sign));
     }
 
 
-    public void DiagonalRight(float interval)
+    public void DiagonalRight(float interval, int sign = 1)
     {
         /*
         playerPosition = Player.instance.transform.position;
@@ -362,28 +713,91 @@ public class SpawnManager : MonoBehaviour
         playerPosition = Player.instance.transform.position;
 
         Vector3 targetPosition = playerPosition;
-        Vector3 diffPosition = new Vector3(angle45Length, angle45Length, 0);
+        Vector3 diffPosition = new Vector3(angle45Length, sign * angle45Length, 0);
         GameObject obj = CreateLinearTurtle(diffPosition, targetPosition);
         obj.transform.GetChild(0).Rotate(0, 180, 0);
 
         targetPosition = playerPosition + new Vector3(0, interval, 0);
-        diffPosition = new Vector3(angle45Length, angle45Length, 0);
         obj = CreateLinearTurtle(diffPosition, targetPosition);
         obj.transform.GetChild(0).Rotate(0, 180, 0);
 
         targetPosition = playerPosition + new Vector3(0, -interval, 0);
-        diffPosition = new Vector3(angle45Length, angle45Length, 0);
         obj = CreateLinearTurtle(diffPosition, targetPosition);
         obj.transform.GetChild(0).Rotate(0, 180, 0);
     }
 
 
-    public void DiagonalBothSide(float interval)
+    public IEnumerator DiagonalRightSequence(float interval, int sign = 1)
     {
-        DiagonalLeft(interval);
-        DiagonalRight(interval);
+        playerPosition = Player.instance.transform.position;
+
+        Vector3 diffPosition = new Vector3(angle45Length, sign * angle45Length, 0);
+
+        Vector3 targetPosition = playerPosition;
+        GameObject obj = CreateLinearTurtle(diffPosition, targetPosition);
+        obj.transform.GetChild(0).Rotate(0, 180, 0);
+        yield return new WaitForSeconds(0.25f);
+
+        targetPosition = playerPosition + new Vector3(sign * -interval * 1 * Mathf.Sqrt(2) / 2, interval * 1 * Mathf.Sqrt(2) / 2, 0);
+        obj = CreateLinearTurtle(diffPosition, targetPosition);
+        obj.transform.GetChild(0).Rotate(0, 180, 0);
+        targetPosition = playerPosition + new Vector3(sign * interval * 1 * Mathf.Sqrt(2) / 2, -interval * 1 * Mathf.Sqrt(2) / 2, 0);
+        obj = CreateLinearTurtle(diffPosition, targetPosition);
+        obj.transform.GetChild(0).Rotate(0, 180, 0);
+        yield return new WaitForSeconds(0.25f);
+
+        targetPosition = playerPosition + new Vector3(sign * -interval * 2 * Mathf.Sqrt(2) / 2, interval * 2 * Mathf.Sqrt(2) / 2, 0);
+        obj = CreateLinearTurtle(diffPosition, targetPosition);
+        obj.transform.GetChild(0).Rotate(0, 180, 0);
+        targetPosition = playerPosition + new Vector3(sign * interval * 2 * Mathf.Sqrt(2) / 2, -interval * 2 * Mathf.Sqrt(2) / 2, 0);
+        obj = CreateLinearTurtle(diffPosition, targetPosition);
+        obj.transform.GetChild(0).Rotate(0, 180, 0);
+        yield return new WaitForSeconds(0.25f);
+
+        targetPosition = playerPosition + new Vector3(sign * -interval * 3 * Mathf.Sqrt(2) / 2, interval * 3 * Mathf.Sqrt(2) / 2, 0);
+        obj = CreateLinearTurtle(diffPosition, targetPosition);
+        obj.transform.GetChild(0).Rotate(0, 180, 0);
+        targetPosition = playerPosition + new Vector3(sign * interval * 3 * Mathf.Sqrt(2) / 2, -interval * 3 * Mathf.Sqrt(2) / 2, 0);
+        obj = CreateLinearTurtle(diffPosition, targetPosition);
+        obj.transform.GetChild(0).Rotate(0, 180, 0);
+        yield return new WaitForSeconds(0.25f);
+
+        targetPosition = playerPosition + new Vector3(sign * -interval * 4 * Mathf.Sqrt(2) / 2, interval * 4 * Mathf.Sqrt(2) / 2, 0);
+        obj = CreateLinearTurtle(diffPosition, targetPosition);
+        obj.transform.GetChild(0).Rotate(0, 180, 0);
+        targetPosition = playerPosition + new Vector3(sign * interval * 4 * Mathf.Sqrt(2) / 2, -interval * 4 * Mathf.Sqrt(2) / 2, 0);
+        obj = CreateLinearTurtle(diffPosition, targetPosition);
+        obj.transform.GetChild(0).Rotate(0, 180, 0);
+        yield return new WaitForSeconds(0.25f);
+
+        targetPosition = playerPosition + new Vector3(sign * -interval * 5 * Mathf.Sqrt(2) / 2, interval * 5 * Mathf.Sqrt(2) / 2, 0);
+        obj = CreateLinearTurtle(diffPosition, targetPosition);
+        obj.transform.GetChild(0).Rotate(0, 180, 0);
+        targetPosition = playerPosition + new Vector3(sign * interval * 5 * Mathf.Sqrt(2) / 2, -interval * 5 * Mathf.Sqrt(2) / 2, 0);
+        obj = CreateLinearTurtle(diffPosition, targetPosition);
+        obj.transform.GetChild(0).Rotate(0, 180, 0);
+        yield return new WaitForSeconds(0.25f);
+
+        targetPosition = playerPosition + new Vector3(sign * -interval * 6 * Mathf.Sqrt(2) / 2, interval * 6 * Mathf.Sqrt(2) / 2, 0);
+        obj = CreateLinearTurtle(diffPosition, targetPosition);
+        obj.transform.GetChild(0).Rotate(0, 180, 0);
+        targetPosition = playerPosition + new Vector3(sign * interval * 6 * Mathf.Sqrt(2) / 2, -interval * 6 * Mathf.Sqrt(2) / 2, 0);
+        obj = CreateLinearTurtle(diffPosition, targetPosition);
+        obj.transform.GetChild(0).Rotate(0, 180, 0);
+        yield return new WaitForSeconds(0.25f);
+    }
+    public void DiagonalRightSeqStart(float interval, int sign = 1)
+    {
+        StartCoroutine(DiagonalRightSequence(interval, sign));
     }
 
+
+    public void DiagonalBothSide(float interval, int sign = 1)
+    {
+        DiagonalLeft(interval, sign);
+        DiagonalRight(interval, sign);
+    }
+    
 
     public void Swirl(float maxForce, float interval = 0, bool upDownPosition = false)
     {
