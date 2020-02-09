@@ -341,7 +341,7 @@ public class StoreManager : MonoBehaviour
         // face
         if (PlayerInformation.customs[0] == 4) //boat가 ship일때 face크기 조정
         {
-            faceImage.transform.localScale = new Vector3(200, 200, 1);
+            faceImage.transform.localScale = new Vector3(250, 250, 1);
         }
         else
         {
