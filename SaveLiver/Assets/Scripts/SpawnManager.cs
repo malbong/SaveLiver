@@ -55,7 +55,10 @@ public class SpawnManager : MonoBehaviour
     {
         while (true)
         {
+            
             yield return new WaitForSeconds(3f);
+            DiagonalLeftStart(1.5f);
+            /*
             EnemySpawn(13);
             //Swirl(-250, 2, true);
             yield return new WaitForSeconds(3f);
@@ -79,7 +82,7 @@ public class SpawnManager : MonoBehaviour
             yield return new WaitForSeconds(3f);
             EnemySpawn(6);
             //AllDirection4();
-            
+            */
             
             /*
             yield return new WaitForSeconds(3f);
@@ -289,6 +292,45 @@ public class SpawnManager : MonoBehaviour
 
         targetPosition = playerPosition + new Vector3(0, -interval, 0);
         CreateLinearTurtle(diffPosition, targetPosition);
+    }
+
+
+    public IEnumerator DiagonalLeftSequence(float interval)
+    {
+        playerPosition = Player.instance.transform.position;
+
+        
+        Vector3 diffPosition = new Vector3(-angle45Length, angle45Length, 0);
+
+        Vector3 targetPosition = playerPosition + new Vector3(0, interval, 0);
+        CreateLinearTurtle(diffPosition, targetPosition);
+        yield return new WaitForSeconds(0.3f);
+
+        targetPosition = playerPosition;
+        CreateLinearTurtle(diffPosition, targetPosition);
+        yield return new WaitForSeconds(0.3f);
+
+        targetPosition = playerPosition + new Vector3(0, -interval * 1, 0);
+        CreateLinearTurtle(diffPosition, targetPosition);
+        yield return new WaitForSeconds(0.3f);
+
+        targetPosition = playerPosition + new Vector3(0, -interval * 2, 0);
+        CreateLinearTurtle(diffPosition, targetPosition);
+        yield return new WaitForSeconds(0.3f);
+
+        targetPosition = playerPosition + new Vector3(0, -interval * 3, 0);
+        CreateLinearTurtle(diffPosition, targetPosition);
+        yield return new WaitForSeconds(0.3f);
+
+        targetPosition = playerPosition + new Vector3(0, -interval * 4, 0);
+        CreateLinearTurtle(diffPosition, targetPosition);
+        yield return new WaitForSeconds(0.3f);
+    }
+
+
+    public void DiagonalLeftStart(float interval)
+    {
+        StartCoroutine(DiagonalLeftSequence(interval));
     }
 
 

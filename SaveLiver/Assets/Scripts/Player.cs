@@ -584,7 +584,7 @@ public class Player : MonoBehaviour
 
                 soulLucky = 1.5f;
                 
-                SpawnManager.instance.itemSpawnTime = 10f / 3f;
+                SpawnManager.instance.itemSpawnTime = 16f / 3f;
                 break;
         }
     }
