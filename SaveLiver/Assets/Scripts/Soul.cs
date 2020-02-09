@@ -31,11 +31,16 @@ public class Soul : MonoBehaviour
 
     public void CreateSoul(Vector3 createPosition, float percentage = 0.6f)
     {
-        int tryCount = Player.instance.doubleSoulLucky ? 2 : 1; //customs[1] == 3
+        float tryCount = Player.instance.soulLucky; //customs[1] == 3
+        if (tryCount == 1.5f)
+        {
+            tryCount = Random.Range(1, 3);
+        }
+
         for (int i = 0; i < tryCount; i++)
         {
             float random = Random.Range(0f, 1f);
-            if (random < percentage) // default 60%  &  follow 100%
+            if (random < percentage) // default 60%  &  follow enemy 100%
             {
                 GameObject obj = ObjectPooler.instance.GetSoul();
                 obj.transform.position = createPosition + new Vector3(i/5, i/5, 0);
