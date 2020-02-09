@@ -29,7 +29,8 @@ public class SettingsManager : MonoBehaviour
     public Text helpPageText;
     private int helpPanelPage = 1;
 
-    public bool seeingSettingPanel;
+    public bool seeingSettingPanel = false;
+    public bool seeingHelpPanel = false;
 
     private bool settingsPanelFadeInRunning = false;
     private bool settingsPanelFadeOutRunning = false;
@@ -37,7 +38,6 @@ public class SettingsManager : MonoBehaviour
     private bool helpPanelFadeOutRunning = false;
     private bool nextPageFadeRunning = false;
     private bool previousPageFadeRunning = false;
-
 
     private void Awake()
     {
@@ -181,6 +181,7 @@ public class SettingsManager : MonoBehaviour
     public void OnSettingsExitButton()
     {
         SoundManager.instance.ButtonClick();
+        
         //Settings Panel Fade Out
         StartCoroutine(SettingsPanelFadeOut());
     }
@@ -193,7 +194,7 @@ public class SettingsManager : MonoBehaviour
         helpPanelPage = 1;
         helpPageText.text = helpPanelPage + " / 3";
         pagePanel.transform.localPosition = new Vector3(0, 0, 0);
-
+        
         //Help Panel Fade In
         StartCoroutine(HelpPanelFadeIn());
     }
@@ -202,6 +203,7 @@ public class SettingsManager : MonoBehaviour
     public void OnHelpPanelExitButton()
     {
         SoundManager.instance.ButtonClick();
+
         //Help Panel Fade Out
         StartCoroutine(HelpPanelFadeOut());
     }
@@ -290,6 +292,10 @@ public class SettingsManager : MonoBehaviour
 
         settingsPanelFadeInRunning = true;
 
+        seeingSettingPanel = true;
+        seeingHelpPanel = false;
+        if (GameManager.instance != null) GameManager.instance.seeingPausePanel = false;
+
         settingsOuterPanel.SetActive(true);
 
         Transform settingsInnerPanel = settingsOuterPanel.transform.GetChild(0);
@@ -322,7 +328,6 @@ public class SettingsManager : MonoBehaviour
         tmpInnerColor.a = 1f;
         settingsInnerPanelImage.color = tmpInnerColor;
 
-        seeingSettingPanel = true;
         settingsPanelFadeInRunning = false;
     }
 
@@ -332,6 +337,9 @@ public class SettingsManager : MonoBehaviour
         if (settingsPanelFadeInRunning) yield break;
 
         seeingSettingPanel = false;
+        seeingHelpPanel = false;
+        if (GameManager.instance != null) GameManager.instance.seeingPausePanel = true;
+
         settingsPanelFadeOutRunning = true;
 
         settingsOuterPanel.SetActive(true);
@@ -374,9 +382,12 @@ public class SettingsManager : MonoBehaviour
 
     private IEnumerator HelpPanelFadeIn()
     {
-        if (helpPanelFadeOutRunning) yield break;
+        if (helpPanelFadeOutRunning || settingsPanelFadeOutRunning) yield break;
 
         helpPanelFadeInRunning = true;
+
+        seeingSettingPanel = false;
+        seeingHelpPanel = true;
 
         helpOuterPanel.SetActive(true);
 
@@ -419,6 +430,9 @@ public class SettingsManager : MonoBehaviour
         if (helpPanelFadeInRunning) yield break;
 
         helpPanelFadeOutRunning = true;
+
+        seeingSettingPanel = true;
+        seeingHelpPanel = false;
 
         Transform helpInnerPanel = helpOuterPanel.transform.GetChild(0);
 

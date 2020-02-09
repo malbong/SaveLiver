@@ -76008,6 +76008,7 @@ MonoBehaviour:
   pagePanel: {fileID: 1291509289}
   helpPageText: {fileID: 1034375932}
   seeingSettingPanel: 0
+  seeingHelpPanel: 0
 --- !u!4 &1676497467
 Transform:
   m_ObjectHideFlags: 0
