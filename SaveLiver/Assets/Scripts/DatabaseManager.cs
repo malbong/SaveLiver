@@ -89,8 +89,7 @@ public static class DatabaseManager
     {
         DatabaseReference reference = PlayerInformation.GetDatabaseReference()
             .Child("user")
-            .Child("pnRD68Js9kU5O4UNvRaPcoueTsy2")
-            //.Child(PlayerInformation.auth.CurrentUser.UserId)
+            .Child(PlayerInformation.auth.CurrentUser.UserId)
             .Child("money");
 
         reference.GetValueAsync().ContinueWith(task =>
@@ -164,8 +163,7 @@ public static class DatabaseManager
         int[] customs = { 0, 0, 0 };
         DatabaseReference reference = PlayerInformation.GetDatabaseReference()
             .Child("user")
-            .Child("pnRD68Js9kU5O4UNvRaPcoueTsy2")
-            //.Child(PlayerInformation.auth.CurrentUser.UserId)
+            .Child(PlayerInformation.auth.CurrentUser.UserId)
             .Child("custom");
 
         reference.GetValueAsync().ContinueWith(task =>
@@ -194,8 +192,7 @@ public static class DatabaseManager
     {
         DatabaseReference reference = PlayerInformation.GetDatabaseReference()
             .Child("user")
-            .Child("pnRD68Js9kU5O4UNvRaPcoueTsy2")
-            //.Child(PlayerInformation.auth.CurrentUser.UserId)
+            .Child(PlayerInformation.auth.CurrentUser.UserId)
             .Child("custom");
 
         Custom custom = new Custom(customs[0], customs[1], customs[2]);
@@ -209,8 +206,7 @@ public static class DatabaseManager
     {
         DatabaseReference reference = PlayerInformation.GetDatabaseReference()
             .Child("user")
-            .Child("pnRD68Js9kU5O4UNvRaPcoueTsy2")
-            //.Child(PlayerInformation.auth.CurrentUser.UserId)
+            .Child(PlayerInformation.auth.CurrentUser.UserId)
             .Child("charge")
             .Child("boat")
             .Child(index.ToString());
@@ -240,8 +236,7 @@ public static class DatabaseManager
     {
         DatabaseReference reference = PlayerInformation.GetDatabaseReference()
             .Child("user")
-            .Child("pnRD68Js9kU5O4UNvRaPcoueTsy2")
-            //.Child(PlayerInformation.auth.CurrentUser.UserId)
+            .Child(PlayerInformation.auth.CurrentUser.UserId)
             .Child("charge")
             .Child("face")
             .Child(index.ToString());
@@ -271,8 +266,7 @@ public static class DatabaseManager
     {
         DatabaseReference reference = PlayerInformation.GetDatabaseReference()
             .Child("user")
-            .Child("pnRD68Js9kU5O4UNvRaPcoueTsy2")
-            //.Child(PlayerInformation.auth.CurrentUser.UserId)
+            .Child(PlayerInformation.auth.CurrentUser.UserId)
             .Child("charge")
             .Child("wave")
             .Child(index.ToString());
@@ -302,8 +296,7 @@ public static class DatabaseManager
     {
         DatabaseReference reference = PlayerInformation.GetDatabaseReference()
             .Child("user")
-            .Child("pnRD68Js9kU5O4UNvRaPcoueTsy2")
-            //.Child(PlayerInformation.auth.CurrentUser.UserId)
+            .Child(PlayerInformation.auth.CurrentUser.UserId)
             .Child("charge");
 
         Charge charge = new Charge(GetTimestamp());
@@ -328,8 +321,7 @@ public static class DatabaseManager
     {
         DatabaseReference reference = PlayerInformation.GetDatabaseReference()
             .Child("user")
-            .Child("pnRD68Js9kU5O4UNvRaPcoueTsy2")
-            //.Child(PlayerInformation.auth.CurrentUser.UserId)
+            .Child(PlayerInformation.auth.CurrentUser.UserId)
             .Child("score");
 
         Score score = new Score(newScore, GetTimestamp());
@@ -343,8 +335,7 @@ public static class DatabaseManager
     {
         DatabaseReference reference = PlayerInformation.GetDatabaseReference()
             .Child("user")
-            .Child("pnRD68Js9kU5O4UNvRaPcoueTsy2")
-            //.Child(PlayerInformation.auth.CurrentUser.UserId)
+            .Child(PlayerInformation.auth.CurrentUser.UserId)
             .Child("score");
 
         reference.Child("score").GetValueAsync().ContinueWith(task =>
@@ -368,8 +359,7 @@ public static class DatabaseManager
     {
         DatabaseReference reference = PlayerInformation.GetDatabaseReference()
             .Child("user")
-            .Child("pnRD68Js9kU5O4UNvRaPcoueTsy2")
-            //.Child(PlayerInformation.auth.CurrentUser.UserId)
+            .Child(PlayerInformation.auth.CurrentUser.UserId)
             .Child("playNum");
 
         PlayNum playNum = new PlayNum(num, GetTimestamp());
@@ -383,8 +373,7 @@ public static class DatabaseManager
     {
         DatabaseReference reference = PlayerInformation.GetDatabaseReference()
             .Child("user")
-            .Child("pnRD68Js9kU5O4UNvRaPcoueTsy2")
-            //.Child(PlayerInformation.auth.CurrentUser.UserId)
+            .Child(PlayerInformation.auth.CurrentUser.UserId)
             .Child("playNum");
 
         reference.Child("num").GetValueAsync().ContinueWith(task =>

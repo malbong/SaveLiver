@@ -86,6 +86,7 @@ public class MenuManager : MonoBehaviour
         //{
         if (Input.GetKeyDown(KeyCode.Escape))
         {
+            SoundManager.instance.ButtonClick();
             // 구매 창 보고 있다면
             if (seeingChargePanel)
             {

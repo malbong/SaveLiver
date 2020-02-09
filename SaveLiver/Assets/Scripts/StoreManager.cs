@@ -46,7 +46,7 @@ public class StoreManager : MonoBehaviour
 
     public int[] faceSoulPrice = { 0, 500, 1000, 2000, 5000 };
     public int[] boatSoulPrice = { 0, 500, 1000, 2000, 5000 };
-    public int[] waveSoulPrice = { 0, 500, 500, 500, 500 };
+    public int[] waveSoulPrice = { 0, 100, 100, 100, 100 };
 
     public ParticleSystem[] waveParticle;
 
@@ -64,6 +64,9 @@ public class StoreManager : MonoBehaviour
         InitFaceCharge();
         InitBoatCharge();
         InitWaveCharge();
+        UpdateFaceSprite();
+        UpdateBoatSprite();
+        UpdateWaveSprite();
         panelState = PanelState.Face;
     }
 
