@@ -75,7 +75,7 @@ public class Player : MonoBehaviour
     private bool isTriggerBlindingRunning = false;
     public GameObject blindPanel;
 
-    public bool doubleSoulLucky = false;
+    public float soulLucky = 1;
 
     public GameObject BulletShooter;
     private bool isPlayerBeatRunning = false;
@@ -100,6 +100,7 @@ public class Player : MonoBehaviour
         hp = maxHp;
         GameManager.instance.UpdateLiverCountText();
         SpawnManager.instance.itemSpawnTime = 5;
+        soulLucky = 1;
         */
 
         UpdateCustom();
@@ -534,12 +535,11 @@ public class Player : MonoBehaviour
 
             case 3: // speed + 3
                 speed += 2.25f;
-                rotateSpeed -= 1;
                 break;
 
-            case 4: // + speed + 1 & rotate + 4 + shooting
+            case 4: // + speed + 1 & rotate + 3 + shooting
                 speed += 0.75f;
-                rotateSpeed += 4;
+                rotateSpeed += 3;
 
                 BulletShooter.SetActive(true);
                 break;
@@ -566,21 +566,24 @@ public class Player : MonoBehaviour
                 maxHp = 2;
                 hp = maxHp;
                 GameManager.instance.UpdateLiverCountText();
-
+                
                 ShieldStart();
 
-                doubleSoulLucky = true;
+                soulLucky = 2; //200 %
+                
                 //1. 변수 Player.instance.doubleSoul = true; 
                 //2. soul쪽에서 PlayerInformation.customs[1] == 3 -> 어디에서 관리하는지 모름
                 break;
 
             case 4: //shield + liver 4 + item spawn
                 ShieldStart();
-
+                
                 maxHp = 4;
                 hp = maxHp;
                 GameManager.instance.UpdateLiverCountText();
 
+                soulLucky = 1.5f;
+                
                 SpawnManager.instance.itemSpawnTime = 10f / 3f;
                 break;
         }
