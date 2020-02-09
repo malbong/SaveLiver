@@ -9,6 +9,7 @@ using Firebase.Auth;
 public class GoogleAuth : MonoBehaviour
 {
     private FirebaseAuth auth;
+    public StoreManager storeManager;
 
 
     void Start()
@@ -79,6 +80,13 @@ public class GoogleAuth : MonoBehaviour
                 PlayerInformation.auth = auth;
                 PlayerInformation.isLogin = true;
                 DatabaseManager.SetNewUserData();
+
+                storeManager.InitStoreAsync();
+                storeManager.InitFaceCharge();
+                storeManager.InitBoatCharge();
+                storeManager.InitWaveCharge();
+                PlayerInformation.BestScore = DatabaseManager.GetScore();
+                DatabaseManager.UpdateMoney(0);
             }
         });
     }
