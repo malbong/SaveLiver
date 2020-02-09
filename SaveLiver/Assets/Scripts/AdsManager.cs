@@ -9,9 +9,10 @@ public class AdsManager : MonoBehaviour
 {
     public MenuManager menuManager;
 
-    private readonly string unitID = "ca-app-pub-3940256099942544/6300978111";
+    private readonly string unitID = "ca-app-pub-6349048174225682/6935715262";
     private readonly string test_unitID = "ca-app-pub-3940256099942544/6300978111";
 
+    private readonly string unitID_reward = "ca-app-pub-6349048174225682/6042603281";
     private readonly string test_unitID_reward = "ca-app-pub-3940256099942544/5224354917";
 
     private BannerView banner;
@@ -30,6 +31,7 @@ public class AdsManager : MonoBehaviour
         rewardBasedVideo = RewardBasedVideoAd.Instance;
 
         rewardBasedVideo.OnAdRewarded += HandleRewardBasedVideoRewarded;
+
         InitBannerAd();
         if (!IsLoadedRewardAd())
         {
@@ -58,6 +60,12 @@ public class AdsManager : MonoBehaviour
     }
 
 
+    public void EventMinus()
+    {
+        rewardBasedVideo.OnAdRewarded -= HandleRewardBasedVideoRewarded;
+    }
+
+
     private void InitBannerAd()
     {
         string id = Debug.isDebugBuild ? test_unitID : unitID;
@@ -70,7 +78,7 @@ public class AdsManager : MonoBehaviour
 
     public void InitRewardAd()
     {
-        string id = test_unitID_reward;
+        string id = Debug.isDebugBuild ? test_unitID_reward : unitID_reward;
         AdRequest request = new AdRequest.Builder().Build();
         rewardBasedVideo.LoadAd(request, id);
     }

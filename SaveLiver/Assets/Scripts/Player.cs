@@ -37,7 +37,7 @@ public class Player : MonoBehaviour
     public Transform arrowRotate; // 화살표 회전 컨트롤
 
     private Rigidbody2D playerRigid;
-    public Animator feverAni;
+    public Animator playerAnimator;
     private SpriteRenderer playerSpriteRenderer;
     private BoxCollider2D playerCollider;
 
@@ -79,6 +79,11 @@ public class Player : MonoBehaviour
 
     public GameObject BulletShooter;
     private bool isPlayerBeatRunning = false;
+
+    public RuntimeAnimatorController skeletonSpriteAnimation;
+    public RuntimeAnimatorController paperBirdAnimation;
+
+    public Transform boatTransform;
 
     void Start()
     {
@@ -468,7 +473,12 @@ public class Player : MonoBehaviour
                 boatSprite.sprite = boatSprites[3];
                 break;
             case 4:
+                boatTransform.localScale = new Vector3(2.5f, 2.5f, 1);
                 boatSprite.sprite = boatSprites[4];
+                boatAnim.runtimeAnimatorController = paperBirdAnimation;
+                break;
+            case 5:
+                boatSprite.sprite = boatSprites[5];
                 break;
         }
         
@@ -482,10 +492,14 @@ public class Player : MonoBehaviour
                 faceSprite.sprite = faceSprites[1];
                 break;
             case 2:
+                faceSprite.sprite = faceSprites[2];
                 break;
             case 3:
+                faceSprite.sprite = faceSprites[3];
                 break;
             case 4:
+                faceSprite.sprite = faceSprites[4];
+                playerAnimator.runtimeAnimatorController = skeletonSpriteAnimation;
                 break;
         }
         
@@ -535,14 +549,21 @@ public class Player : MonoBehaviour
 
             case 3: // speed + 3
                 speed += 2.25f;
+                rotateSpeed -= 1f;
                 break;
 
-            case 4: // + speed + 1 & rotate + 3 + shooting
+            case 4: // speed + 1 & rotate +2
+                speed += 0.75f;
+                rotateSpeed += 2f;
+                break;
+
+            case 5: // + speed + 1 & rotate + 3 + shooting
                 speed += 0.75f;
                 rotateSpeed += 3;
 
                 BulletShooter.SetActive(true);
                 break;
+
         }
         //check face
         switch (PlayerInformation.customs[1])
@@ -560,6 +581,7 @@ public class Player : MonoBehaviour
                 maxHp = 4;
                 hp = maxHp;
                 GameManager.instance.UpdateLiverCountText();
+                SpawnManager.instance.itemSpawnTime = 40f / 6f;
                 break;
 
             case 3: //liver-1 + shield + soul x 2
@@ -584,7 +606,7 @@ public class Player : MonoBehaviour
 
                 soulLucky = 1.5f;
                 
-                SpawnManager.instance.itemSpawnTime = 10f / 3f;
+                SpawnManager.instance.itemSpawnTime = 16f / 3f;
                 break;
         }
     }

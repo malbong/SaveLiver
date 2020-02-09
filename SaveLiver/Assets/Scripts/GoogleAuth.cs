@@ -63,7 +63,7 @@ public class GoogleAuth : MonoBehaviour
         PlayGamesPlatform.DebugLogEnabled = true;
         PlayGamesPlatform.Activate();
     }
-    
+
 
     IEnumerator TryFirebaseLogin()
     {
@@ -80,13 +80,13 @@ public class GoogleAuth : MonoBehaviour
                 PlayerInformation.auth = auth;
                 PlayerInformation.isLogin = true;
                 DatabaseManager.SetNewUserData();
+                DatabaseManager.UpdateMoney(0);
+                PlayerInformation.BestScore = DatabaseManager.GetScore();
 
                 storeManager.InitStoreAsync();
                 storeManager.InitFaceCharge();
                 storeManager.InitBoatCharge();
                 storeManager.InitWaveCharge();
-                PlayerInformation.BestScore = DatabaseManager.GetScore();
-                DatabaseManager.UpdateMoney(0);
             }
         });
     }

@@ -17,7 +17,7 @@ public class StoreManager : MonoBehaviour
     public ParticleSystemRenderer waveLeftParticle;
     public ParticleSystemRenderer waveRightParticle;
 
-    public int[] boatChargeList = { 2, 2, 2, 2, 2 };
+    public int[] boatChargeList = { 2, 2, 2, 2, 2, 2 };
     public int[] faceChargeList = { 2, 2, 2, 2, 2 };
     public int[] waveChargeList = { 2, 2, 2, 2, 2 };
     public Image[] boatLockImage;
@@ -38,14 +38,14 @@ public class StoreManager : MonoBehaviour
     private int faceIndex = 0;
     private int faceCount = 5;
     private int boatIndex = 0;
-    private int boatCount = 5;
+    private int boatCount = 6;
     private int waveIndex = 0;
     private int waveCount = 5;
 
     public Text listText;
 
     public int[] faceSoulPrice = { 0, 500, 1000, 2000, 5000 };
-    public int[] boatSoulPrice = { 0, 500, 1000, 2000, 5000 };
+    public int[] boatSoulPrice = { 0, 500, 1000, 2000, 3000, 5000 };
     public int[] waveSoulPrice = { 0, 100, 100, 100, 100 };
 
     public ParticleSystem[] waveParticle;
@@ -56,6 +56,15 @@ public class StoreManager : MonoBehaviour
     private PanelState panelState;
 
     public GameObject shipPanel;
+
+    public RuntimeAnimatorController skeletonAnimation;
+    public RuntimeAnimatorController skeletonSpriteAnimation;
+    public RuntimeAnimatorController paperBirdAnimation;
+    public Animator equipFaceAnimator;
+    public Animator equipBoatAnimator;
+
+    public RectTransform chargeNoButton;
+    public Text chargeNoText;
 
 
     void Start()
@@ -304,42 +313,52 @@ public class StoreManager : MonoBehaviour
     public void UpdateCurrentCustom()
     {
         //boat
-        
-
         if (PlayerInformation.customs[0] == 0)
         {
             boatImage.sprite = boatSprites[0];
             boatImage.transform.localScale = new Vector3(400, 400, 1);
+            equipBoatAnimator.runtimeAnimatorController = null;
             shipPanel.SetActive(false);
         }
         else if(PlayerInformation.customs[0] == 1)
         {
             boatImage.sprite = boatSprites[1];
             boatImage.transform.localScale = new Vector3(400, 400, 1);
+            equipBoatAnimator.runtimeAnimatorController = null;
             shipPanel.SetActive(false);
         }
         else if (PlayerInformation.customs[0] == 2)
         {
             boatImage.sprite = boatSprites[2];
             boatImage.transform.localScale = new Vector3(300, 300, 1);
+            equipBoatAnimator.runtimeAnimatorController = null;
             shipPanel.SetActive(false);
         }
         else if (PlayerInformation.customs[0] == 3)
         {
             boatImage.sprite = boatSprites[3];
             boatImage.transform.localScale = new Vector3(400, 400, 1);
+            equipBoatAnimator.runtimeAnimatorController = null;
             shipPanel.SetActive(false);
         }
         else if (PlayerInformation.customs[0] == 4)
         {
             boatImage.sprite = boatSprites[4];
+            boatImage.transform.localScale = new Vector3(700, 700, 1);
+            equipBoatAnimator.runtimeAnimatorController = paperBirdAnimation;
+            shipPanel.SetActive(false);
+        }
+        else if (PlayerInformation.customs[0] == 5)
+        {
+            boatImage.sprite = boatSprites[5];
             boatImage.transform.localScale = new Vector3(170, 130, 1);
+            equipBoatAnimator.runtimeAnimatorController = null;
             shipPanel.SetActive(true);
         }
 
 
         // face
-        if (PlayerInformation.customs[0] == 4) //boat가 ship일때 face크기 조정
+        if (PlayerInformation.customs[0] == 5) //boat가 ship일때 face크기 조정
         {
             faceImage.transform.localScale = new Vector3(250, 250, 1);
         }
@@ -350,23 +369,28 @@ public class StoreManager : MonoBehaviour
 
         if (PlayerInformation.customs[1] == 0)
         {
+            equipFaceAnimator.runtimeAnimatorController = null;
             faceImage.sprite = faceSprites[0];
         }
         else if(PlayerInformation.customs[1] == 1)
         {
+            equipFaceAnimator.runtimeAnimatorController = null;
             faceImage.sprite = faceSprites[1];
         }
         else if (PlayerInformation.customs[1] == 2)
         {
-            
+            equipFaceAnimator.runtimeAnimatorController = null;
+            faceImage.sprite = faceSprites[2];
         }
         else if (PlayerInformation.customs[1] == 3)
         {
-            
+            equipFaceAnimator.runtimeAnimatorController = null;
+            faceImage.sprite = faceSprites[3];
         }
         else if (PlayerInformation.customs[1] == 4)
         {
-            
+            equipFaceAnimator.runtimeAnimatorController = skeletonSpriteAnimation;
+            faceImage.sprite = faceSprites[4];
         }
 
 
@@ -473,6 +497,8 @@ public class StoreManager : MonoBehaviour
                     if(faceChargeList[i] == -1) // 구매 X
                     {
                         menuManager.OnBtnChargePanel(); // 구매 패널 띄우기
+                        chargeNoButton.anchorMin = new Vector2(0.51f, 0.05f);
+                        chargeNoText.text = "NO";
                     }
                     else if(faceChargeList[i] == 0) // 구매 O, 장착 X
                     {
@@ -492,6 +518,8 @@ public class StoreManager : MonoBehaviour
                     if (boatChargeList[i] == -1) // 구매 X
                     {
                         menuManager.OnBtnChargePanel();
+                        chargeNoButton.anchorMin = new Vector2(0.51f, 0.05f);
+                        chargeNoText.text = "NO";
                     }
                     else if (boatChargeList[i] == 0) // 구매 O, 장착 X
                     {
@@ -511,6 +539,8 @@ public class StoreManager : MonoBehaviour
                     if (waveChargeList[i] == -1) // 구매 X
                     {
                         menuManager.OnBtnChargePanel();
+                        chargeNoButton.anchorMin = new Vector2(0.51f, 0.05f);
+                        chargeNoText.text = "NO";
                     }
                     else if (waveChargeList[i] == 0) // 구매 O, 장착 X
                     {
@@ -582,6 +612,8 @@ public class StoreManager : MonoBehaviour
                     }
                     else
                     {
+                        chargeNoButton.anchorMin = new Vector2(0.02f, 0.05f);
+                        chargeNoText.text = "OK";
                         menuManager.ChargeText.text = "Don't have" + "\nenough money";
                     }
                     break;
@@ -606,6 +638,8 @@ public class StoreManager : MonoBehaviour
                     }
                     else
                     {
+                        chargeNoButton.anchorMin = new Vector2(0.02f, 0.05f);
+                        chargeNoText.text = "OK";
                         menuManager.ChargeText.text = "Don't have" + "\nenough money";
                     }
                     break;
@@ -630,6 +664,8 @@ public class StoreManager : MonoBehaviour
                     }
                     else
                     {
+                        chargeNoButton.anchorMin = new Vector2(0.02f, 0.05f);
+                        chargeNoText.text = "OK";
                         menuManager.ChargeText.text = "Don't have" + "\nenough money";
                     }
                     break;

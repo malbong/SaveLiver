@@ -55,7 +55,7 @@ public class MenuManager : MonoBehaviour
     void Start()
     {
         DatabaseManager.UpdateMoney(0);
-        DatabaseManager.GetScore();
+        PlayerInformation.BestScore = DatabaseManager.GetScore();
     }
 
 
@@ -134,6 +134,8 @@ public class MenuManager : MonoBehaviour
 
     public void OnBtnPlay()
     {
+        adsManager.EventMinus();
+        SoundManager.instance.ButtonClick();
         sceneTransition.LoadPlayScene();
     }
 

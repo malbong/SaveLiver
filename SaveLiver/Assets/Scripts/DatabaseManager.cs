@@ -11,7 +11,7 @@ public static class DatabaseManager
 {
     private static int score = 0;
     private static int playNum = 0;
-    private static int[] boatChargeList = { 2, 2, 2, 2, 2 };
+    private static int[] boatChargeList = { 2, 2, 2, 2, 2, 2 };
     private static int[] faceChargeList = { 2, 2, 2, 2, 2 };
     private static int[] waveChargeList = { 2, 2, 2, 2, 2 };
 
@@ -89,6 +89,7 @@ public static class DatabaseManager
     {
         DatabaseReference reference = PlayerInformation.GetDatabaseReference()
             .Child("user")
+            //.Child("pnRD68Js9kU5O4UNvRaPcoueTsy2")
             .Child(PlayerInformation.auth.CurrentUser.UserId)
             .Child("money");
 
@@ -163,6 +164,7 @@ public static class DatabaseManager
         int[] customs = { 0, 0, 0 };
         DatabaseReference reference = PlayerInformation.GetDatabaseReference()
             .Child("user")
+            //.Child("pnRD68Js9kU5O4UNvRaPcoueTsy2")
             .Child(PlayerInformation.auth.CurrentUser.UserId)
             .Child("custom");
 
@@ -192,6 +194,7 @@ public static class DatabaseManager
     {
         DatabaseReference reference = PlayerInformation.GetDatabaseReference()
             .Child("user")
+            //.Child("pnRD68Js9kU5O4UNvRaPcoueTsy2")
             .Child(PlayerInformation.auth.CurrentUser.UserId)
             .Child("custom");
 
@@ -206,6 +209,7 @@ public static class DatabaseManager
     {
         DatabaseReference reference = PlayerInformation.GetDatabaseReference()
             .Child("user")
+            //.Child("pnRD68Js9kU5O4UNvRaPcoueTsy2")
             .Child(PlayerInformation.auth.CurrentUser.UserId)
             .Child("charge")
             .Child("boat")
@@ -236,6 +240,7 @@ public static class DatabaseManager
     {
         DatabaseReference reference = PlayerInformation.GetDatabaseReference()
             .Child("user")
+            //.Child("pnRD68Js9kU5O4UNvRaPcoueTsy2")
             .Child(PlayerInformation.auth.CurrentUser.UserId)
             .Child("charge")
             .Child("face")
@@ -266,6 +271,7 @@ public static class DatabaseManager
     {
         DatabaseReference reference = PlayerInformation.GetDatabaseReference()
             .Child("user")
+            //.Child("pnRD68Js9kU5O4UNvRaPcoueTsy2")
             .Child(PlayerInformation.auth.CurrentUser.UserId)
             .Child("charge")
             .Child("wave")
@@ -296,6 +302,7 @@ public static class DatabaseManager
     {
         DatabaseReference reference = PlayerInformation.GetDatabaseReference()
             .Child("user")
+            //.Child("pnRD68Js9kU5O4UNvRaPcoueTsy2")
             .Child(PlayerInformation.auth.CurrentUser.UserId)
             .Child("charge");
 
@@ -321,6 +328,7 @@ public static class DatabaseManager
     {
         DatabaseReference reference = PlayerInformation.GetDatabaseReference()
             .Child("user")
+            //.Child("pnRD68Js9kU5O4UNvRaPcoueTsy2")
             .Child(PlayerInformation.auth.CurrentUser.UserId)
             .Child("score");
 
@@ -335,6 +343,7 @@ public static class DatabaseManager
     {
         DatabaseReference reference = PlayerInformation.GetDatabaseReference()
             .Child("user")
+            //.Child("pnRD68Js9kU5O4UNvRaPcoueTsy2")
             .Child(PlayerInformation.auth.CurrentUser.UserId)
             .Child("score");
 
@@ -359,6 +368,7 @@ public static class DatabaseManager
     {
         DatabaseReference reference = PlayerInformation.GetDatabaseReference()
             .Child("user")
+            //.Child("pnRD68Js9kU5O4UNvRaPcoueTsy2")
             .Child(PlayerInformation.auth.CurrentUser.UserId)
             .Child("playNum");
 
@@ -373,6 +383,7 @@ public static class DatabaseManager
     {
         DatabaseReference reference = PlayerInformation.GetDatabaseReference()
             .Child("user")
+            //.Child("pnRD68Js9kU5O4UNvRaPcoueTsy2")
             .Child(PlayerInformation.auth.CurrentUser.UserId)
             .Child("playNum");
 

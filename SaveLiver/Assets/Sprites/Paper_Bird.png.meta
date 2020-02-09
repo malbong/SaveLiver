@@ -1,7 +1,130 @@
 fileFormatVersion: 2
 guid: 168bb675fcc486d4a90502489eb8e886
 TextureImporter:
-  internalIDToNameTable: []
+  internalIDToNameTable:
+  - first:
+      213: -8969846381095635171
+    second: Paper_Bird_0
+  - first:
+      213: 9202113048599978173
+    second: Paper_Bird_1
+  - first:
+      213: -5008969517376301702
+    second: Paper_Bird_2
+  - first:
+      213: -8702316657803003253
+    second: Paper_Bird_3
+  - first:
+      213: -1651280431667559172
+    second: Paper_Bird_4
+  - first:
+      213: -5650019069528134064
+    second: Paper_Bird_5
+  - first:
+      213: 3288892598512139394
+    second: Paper_Bird_6
+  - first:
+      213: -7257294474690174488
+    second: Paper_Bird_7
+  - first:
+      213: -1789829421838807550
+    second: Paper_Bird_8
+  - first:
+      213: -6862173058369275625
+    second: Paper_Bird_9
+  - first:
+      213: 2967261086376949467
+    second: Paper_Bird_10
+  - first:
+      213: -235369977735138119
+    second: Paper_Bird_11
+  - first:
+      213: 1781409520646630080
+    second: Paper_Bird_12
+  - first:
+      213: 2368521593771187660
+    second: Paper_Bird_13
+  - first:
+      213: -501023030151708886
+    second: Paper_Bird_14
+  - first:
+      213: -998066190313075147
+    second: Paper_Bird_15
+  - first:
+      213: 553421886075687952
+    second: Paper_Bird_16
+  - first:
+      213: 5625868957354585967
+    second: Paper_Bird_17
+  - first:
+      213: -1969415545709198715
+    second: Paper_Bird_18
+  - first:
+      213: -4182069624230302918
+    second: Paper_Bird_19
+  - first:
+      213: -7609289028527629085
+    second: Paper_Bird_20
+  - first:
+      213: -6012338593375411051
+    second: Paper_Bird_21
+  - first:
+      213: -7928077031240754677
+    second: Paper_Bird_22
+  - first:
+      213: -9009091659815696051
+    second: Paper_Bird_23
+  - first:
+      213: -4474390509114347623
+    second: Paper_Bird_24
+  - first:
+      213: -1739743366637240416
+    second: Paper_Bird_25
+  - first:
+      213: -7730344831542854724
+    second: Paper_Bird_26
+  - first:
+      213: 342662579013771584
+    second: Paper_Bird_27
+  - first:
+      213: 4461987504158177579
+    second: Paper_Bird_28
+  - first:
+      213: 8512278598281830763
+    second: Paper_Bird_29
+  - first:
+      213: -5295228858830507709
+    second: Paper_Bird_30
+  - first:
+      213: 5840010012991918885
+    second: Paper_Bird_31
+  - first:
+      213: -5146380211604994759
+    second: Paper_Bird_32
+  - first:
+      213: -8753960774503271058
+    second: Paper_Bird_33
+  - first:
+      213: -5897137020525886948
+    second: Paper_Bird_34
+  - first:
+      213: 8096927806079368941
+    second: Paper_Bird_35
+  - first:
+      213: -6097342275047362126
+    second: Paper_Bird_36
+  - first:
+      213: -7024223645045614600
+    second: Paper_Bird_37
+  - first:
+      213: -6549774816876650247
+    second: Paper_Bird_38
+  - first:
+      213: 1601138221928282091
+    second: Paper_Bird_39
+  - first:
+      213: -4681436405225330377
+    second: Paper_Bird_40
   externalObjects: {}
   serializedVersion: 10
   mipmaps:
@@ -31,7 +154,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: -1
+    filterMode: 0
     aniso: -1
     mipBias: -100
     wrapU: 1
@@ -40,7 +163,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -61,9 +184,33 @@ TextureImporter:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
     maxTextureSize: 2048
-    resizeAlgorithm: 0
+    resizeAlgorithm: 1
     textureFormat: -1
-    textureCompression: 1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 1
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 1
+    textureFormat: -1
+    textureCompression: 0
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -72,7 +219,868 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: Paper_Bird_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 59
+        height: 57
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d627018e0ec38364e87c0d69a4297188
+      internalID: -8969846381095635171
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Paper_Bird_1
+      rect:
+        serializedVersion: 2
+        x: 59
+        y: 0
+        width: 59
+        height: 57
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 394364615a25e0d4d850fad835811a9f
+      internalID: 9202113048599978173
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Paper_Bird_2
+      rect:
+        serializedVersion: 2
+        x: 118
+        y: 0
+        width: 59
+        height: 57
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 31b7b66f947ab4940a25f337254a646d
+      internalID: -5008969517376301702
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Paper_Bird_3
+      rect:
+        serializedVersion: 2
+        x: 177
+        y: 0
+        width: 59
+        height: 57
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6b896436b76abc241968b245bf21bf6a
+      internalID: -8702316657803003253
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Paper_Bird_4
+      rect:
+        serializedVersion: 2
+        x: 236
+        y: 0
+        width: 59
+        height: 57
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5e0d1449b8eea0f4caec81277703324d
+      internalID: -1651280431667559172
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Paper_Bird_5
+      rect:
+        serializedVersion: 2
+        x: 295
+        y: 0
+        width: 59
+        height: 57
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a15eb728370b62c45944168c15e66ade
+      internalID: -5650019069528134064
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Paper_Bird_6
+      rect:
+        serializedVersion: 2
+        x: 354
+        y: 0
+        width: 59
+        height: 57
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3b53ba8c0cd6c6c4bb14756b1762a8be
+      internalID: 3288892598512139394
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Paper_Bird_7
+      rect:
+        serializedVersion: 2
+        x: 413
+        y: 0
+        width: 59
+        height: 57
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: eeae52e655d954549bf9d91563d9a0ad
+      internalID: -7257294474690174488
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Paper_Bird_8
+      rect:
+        serializedVersion: 2
+        x: 472
+        y: 0
+        width: 59
+        height: 57
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 107a16f771c20e547806e36342087947
+      internalID: -1789829421838807550
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Paper_Bird_9
+      rect:
+        serializedVersion: 2
+        x: 531
+        y: 0
+        width: 59
+        height: 57
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b13ed430b7e3b0b47a977ff26fe3c251
+      internalID: -6862173058369275625
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Paper_Bird_10
+      rect:
+        serializedVersion: 2
+        x: 590
+        y: 0
+        width: 59
+        height: 57
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0d3e2ba1d1965b74f98188ba1318d50b
+      internalID: 2967261086376949467
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Paper_Bird_11
+      rect:
+        serializedVersion: 2
+        x: 649
+        y: 0
+        width: 59
+        height: 57
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4e4a5d2d24ce0f24e83ebf2b47650563
+      internalID: -235369977735138119
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Paper_Bird_12
+      rect:
+        serializedVersion: 2
+        x: 708
+        y: 0
+        width: 59
+        height: 57
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f04e7ac7e84a16a4b8a1a0ea9eb2f448
+      internalID: 1781409520646630080
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Paper_Bird_13
+      rect:
+        serializedVersion: 2
+        x: 767
+        y: 0
+        width: 59
+        height: 57
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 777d80bcd89d8ce4e9f0a340dc8c83e3
+      internalID: 2368521593771187660
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Paper_Bird_14
+      rect:
+        serializedVersion: 2
+        x: 826
+        y: 0
+        width: 59
+        height: 57
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c6ddf29283c3ffb448ab598b455ee47d
+      internalID: -501023030151708886
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Paper_Bird_15
+      rect:
+        serializedVersion: 2
+        x: 885
+        y: 0
+        width: 59
+        height: 57
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4b8826a066c0e5447a230a64cb42a590
+      internalID: -998066190313075147
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Paper_Bird_16
+      rect:
+        serializedVersion: 2
+        x: 944
+        y: 0
+        width: 59
+        height: 57
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1b287b22287906e47b5d5dd7cdfc4efd
+      internalID: 553421886075687952
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Paper_Bird_17
+      rect:
+        serializedVersion: 2
+        x: 1003
+        y: 0
+        width: 59
+        height: 57
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: facd941a9cde9d9438288e1233ef30aa
+      internalID: 5625868957354585967
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Paper_Bird_18
+      rect:
+        serializedVersion: 2
+        x: 1062
+        y: 0
+        width: 59
+        height: 57
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a8f0baaebb760354085f3217a74397aa
+      internalID: -1969415545709198715
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Paper_Bird_19
+      rect:
+        serializedVersion: 2
+        x: 1121
+        y: 0
+        width: 59
+        height: 57
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4b47540583ba5d141b73a0c2533c23da
+      internalID: -4182069624230302918
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Paper_Bird_20
+      rect:
+        serializedVersion: 2
+        x: 1180
+        y: 0
+        width: 59
+        height: 57
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 892b7a71c5b69f54babc583ad5db00c0
+      internalID: -7609289028527629085
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Paper_Bird_21
+      rect:
+        serializedVersion: 2
+        x: 1239
+        y: 0
+        width: 59
+        height: 57
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1de6b57ca633558408a3cff72f4d3ae9
+      internalID: -6012338593375411051
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Paper_Bird_22
+      rect:
+        serializedVersion: 2
+        x: 1298
+        y: 0
+        width: 59
+        height: 57
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1253192a722714c499338ff50510ca07
+      internalID: -7928077031240754677
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Paper_Bird_23
+      rect:
+        serializedVersion: 2
+        x: 1357
+        y: 0
+        width: 59
+        height: 57
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 005bf3bfbc5bd4e49b65dab4e429b9d8
+      internalID: -9009091659815696051
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Paper_Bird_24
+      rect:
+        serializedVersion: 2
+        x: 1416
+        y: 0
+        width: 59
+        height: 57
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7fd8c68c4a43db84290ac60c136da274
+      internalID: -4474390509114347623
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Paper_Bird_25
+      rect:
+        serializedVersion: 2
+        x: 1475
+        y: 0
+        width: 59
+        height: 57
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c6b876433311bbd4b853bb38b62aae2b
+      internalID: -1739743366637240416
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Paper_Bird_26
+      rect:
+        serializedVersion: 2
+        x: 1534
+        y: 0
+        width: 59
+        height: 57
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 671e0d92a3b0acc45b865136c20df125
+      internalID: -7730344831542854724
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Paper_Bird_27
+      rect:
+        serializedVersion: 2
+        x: 1593
+        y: 0
+        width: 59
+        height: 57
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 14e18b8a900641a488f3e42856270030
+      internalID: 342662579013771584
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Paper_Bird_28
+      rect:
+        serializedVersion: 2
+        x: 1652
+        y: 0
+        width: 59
+        height: 57
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0b94b4da3a1b88043bb8b5c47e18e44a
+      internalID: 4461987504158177579
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Paper_Bird_29
+      rect:
+        serializedVersion: 2
+        x: 1711
+        y: 0
+        width: 59
+        height: 57
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fa73783cc9e87e04eb7f8445a28283f3
+      internalID: 8512278598281830763
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Paper_Bird_30
+      rect:
+        serializedVersion: 2
+        x: 1770
+        y: 0
+        width: 59
+        height: 57
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3bb20990eac0a2046b8c93c2c32f0113
+      internalID: -5295228858830507709
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Paper_Bird_31
+      rect:
+        serializedVersion: 2
+        x: 1829
+        y: 0
+        width: 59
+        height: 57
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 922ed257593d9fd4691fae90fa1da9a0
+      internalID: 5840010012991918885
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Paper_Bird_32
+      rect:
+        serializedVersion: 2
+        x: 1888
+        y: 0
+        width: 59
+        height: 57
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6a8060552308eed4888709b3e436c5fb
+      internalID: -5146380211604994759
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Paper_Bird_33
+      rect:
+        serializedVersion: 2
+        x: 1947
+        y: 0
+        width: 59
+        height: 57
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: de7e2c3b33b918043aa6df39caac2337
+      internalID: -8753960774503271058
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Paper_Bird_34
+      rect:
+        serializedVersion: 2
+        x: 2006
+        y: 0
+        width: 59
+        height: 57
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5c9b9373c2f7a684d8b1d86db33e80fa
+      internalID: -5897137020525886948
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Paper_Bird_35
+      rect:
+        serializedVersion: 2
+        x: 2065
+        y: 0
+        width: 59
+        height: 57
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 342d8cc91f629f84087dda3f66951252
+      internalID: 8096927806079368941
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Paper_Bird_36
+      rect:
+        serializedVersion: 2
+        x: 2124
+        y: 0
+        width: 59
+        height: 57
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e7039c91ee667a34481f7f4fffec0ab5
+      internalID: -6097342275047362126
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Paper_Bird_37
+      rect:
+        serializedVersion: 2
+        x: 2183
+        y: 0
+        width: 59
+        height: 57
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 867a185df5d385c4583a8ae1ea2f4cc0
+      internalID: -7024223645045614600
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Paper_Bird_38
+      rect:
+        serializedVersion: 2
+        x: 2242
+        y: 0
+        width: 59
+        height: 57
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8bdc9794c6ba81844bebb38c0fe88380
+      internalID: -6549774816876650247
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Paper_Bird_39
+      rect:
+        serializedVersion: 2
+        x: 2301
+        y: 0
+        width: 59
+        height: 57
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1a10be9ded6469e4dacd846ff1b0eb1b
+      internalID: 1601138221928282091
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Paper_Bird_40
+      rect:
+        serializedVersion: 2
+        x: 2360
+        y: 0
+        width: 59
+        height: 57
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 813f0a24fc9083a4ab179766b789b826
+      internalID: -4681436405225330377
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []

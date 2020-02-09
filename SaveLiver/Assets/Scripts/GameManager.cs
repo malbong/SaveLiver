@@ -18,7 +18,7 @@ public class GameManager : MonoBehaviour
     public int totalSoulCount = 0;
     public Text playingPanelSoulCountText;
 
-    private int totalPlayTime = 0;
+    public int totalPlayTime = 0;
     private float secondsUnit = 0;
 
     public bool isPause;
