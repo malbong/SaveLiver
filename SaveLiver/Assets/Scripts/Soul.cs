@@ -8,16 +8,20 @@ public class Soul : MonoBehaviour
     private bool isAbsorbed = false;
     private AudioSource audioSource;
 
+    private bool isFadeOutRunning = false;
 
     private void Start()
     {
         isAbsorbed = false;
+
+        isFadeOutRunning = false;
 
         audioSource = GetComponent<AudioSource>();
 
         GetComponent<SpriteRenderer>().enabled = true;
         GetComponent<CircleCollider2D>().enabled = true;
         transform.GetChild(0).gameObject.SetActive(true);
+        transform.localScale = new Vector3(0.8f, 0.8f, 0.8f);
 
         StartCoroutine(EndLifeTime());
     }
@@ -72,6 +76,10 @@ public class Soul : MonoBehaviour
 
     private IEnumerator FadeOut()
     {
+        if (isFadeOutRunning) yield break;
+
+        isFadeOutRunning = true;
+
         Vector3 originScale = transform.localScale;
 
         while (true)
@@ -93,6 +101,8 @@ public class Soul : MonoBehaviour
 
         transform.localScale = originScale;
         isAbsorbed = false;
+
+        isFadeOutRunning = false;
     }
 
 
