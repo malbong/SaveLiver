@@ -23,7 +23,7 @@ public class SpawnManager : MonoBehaviour
     public float itemRadius = 8.0f;
 
     public ObjectPooler objectPooler;
-
+    
     private Vector3 playerPosition;
     private float spawnRadius;
     private float angle45Length;
@@ -59,7 +59,7 @@ public class SpawnManager : MonoBehaviour
         EnemySpawn(randomIndex);
 
         yield return new WaitForSeconds(3f);
-        EnemySpawn(1);
+        EnemySpawn(1); 
 
         yield return new WaitForSeconds(3f);
         CreateEasySpecialEnemy();
@@ -67,24 +67,24 @@ public class SpawnManager : MonoBehaviour
         yield return new WaitForSeconds(3f);
         EnemySpawn(2);
 
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(3f); 
         randomIndex = Random.Range(1, 3);
         EnemySpawn(randomIndex);
 
-        yield return new WaitForSeconds(3f);
-        EnemySpawn(3);
+        yield return new WaitForSeconds(3f); 
+        EnemySpawn(3); 
 
         yield return new WaitForSeconds(3f);
         CreateEasySpecialEnemy();
 
         yield return new WaitForSeconds(0.5f);
-        EnemySpawn(3);
+        EnemySpawn(3); 
 
         yield return new WaitForSeconds(3f);
         CreateEasySpecialEnemy();
 
 
-        yield return new WaitForSeconds(4f);
+        yield return new WaitForSeconds(4f); 
         randomIndex = Random.Range(2, 4);
         EnemySpawn(randomIndex);
         AllDirection4();
@@ -95,7 +95,7 @@ public class SpawnManager : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
         randomIndex = Random.Range(2, 4);
         EnemySpawn(randomIndex);
-
+        
         yield return new WaitForSeconds(3f);
         randomIndex = Random.Range(2, 4);
         EnemySpawn(randomIndex);
@@ -110,16 +110,16 @@ public class SpawnManager : MonoBehaviour
             DiagonalRight(3, Random.Range(0, 2) == 0 ? 1 : -1);
         }
 
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(3f); 
         EnemySpawn(4);
 
         yield return new WaitForSeconds(3f);
         CreateMiddleSpecialEnemy();
         yield return new WaitForSeconds(1f);
         Swirl(-250);
+        
 
-
-        yield return new WaitForSeconds(4f);
+        yield return new WaitForSeconds(4f); 
         EnemySpawn(4);
         DiagonalBothSide(3, Random.Range(0, 2) == 0 ? 1 : -1);
         yield return new WaitForSeconds(0.5f);
@@ -128,14 +128,14 @@ public class SpawnManager : MonoBehaviour
         yield return new WaitForSeconds(4f);
         randomIndex = Random.Range(3, 5);
         EnemySpawn(randomIndex);
-
+        
         yield return new WaitForSeconds(4.5f);
         CreateHardSpecialEnemy();
         Dragon(Random.Range(0, 2) == 0 ? 1 : -1, -1, Random.Range(3, 5));
 
         yield return new WaitForSeconds(3f);
         EnemySpawn(5);
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.5f); 
 
         tmpRandom = Random.Range(0, 2);
         if (tmpRandom == 0) //left
@@ -147,6 +147,14 @@ public class SpawnManager : MonoBehaviour
             DiagonalRightSeqStart(2, Random.Range(0, 2) == 0 ? 1 : -1);
         }
 
+        yield return new WaitForSeconds(3f);
+        EnemySpawn(9);
+        yield return new WaitForSeconds(0.3f);
+        EnemySpawn(9);
+        yield return new WaitForSeconds(0.3f);
+        EnemySpawn(9);
+        yield return new WaitForSeconds(0.3f);
+        EnemySpawn(9);
 
         //1분 이후 (60초)
 
@@ -158,17 +166,17 @@ public class SpawnManager : MonoBehaviour
 
         while (true)
         {
-            if (isRunningNormal == false)
+            if(isRunningNormal == false)
             {
                 float delayTime1 = GetDelayTime(1);
                 StartCoroutine(NomalEnemyRandomCreate(delayTime1));
             }
-            if (isRunningSpecial == false)
+            if(isRunningSpecial == false)
             {
                 float delayTime2 = GetDelayTime(2);
                 StartCoroutine(SpecialEnemyRandomCreate(delayTime2));
             }
-            if (isRunningPattern == false)
+            if(isRunningPattern == false)
             {
                 float delayTime3 = GetDelayTime(3);
                 StartCoroutine(PatterRandomCreate(delayTime3));
@@ -176,9 +184,9 @@ public class SpawnManager : MonoBehaviour
             Debug.Log(GetLevel());
             yield return new WaitForSeconds(Time.deltaTime);
         }
-
+        
     }
-
+    
 
     private float GetDelayTime(int flag)
     {
@@ -191,7 +199,7 @@ public class SpawnManager : MonoBehaviour
                 delayTime = -1 * level + 11;
                 if (delayTime < 5) delayTime = 5;
                 break;
-            case 2://special
+            case 2 ://special
                 delayTime = -1 / 5.0f * level + 21 / 5.0f;
                 if (delayTime < 3) delayTime = 3;
                 break;
@@ -212,7 +220,7 @@ public class SpawnManager : MonoBehaviour
     }
 
 
-    private IEnumerator NomalEnemyRandomCreate(float time)
+    private IEnumerator NomalEnemyRandomCreate(float time) 
     {
         isRunningNormal = true;
 
@@ -266,7 +274,7 @@ public class SpawnManager : MonoBehaviour
             if (1 <= random && random <= 10) CreateMiddleSpecialEnemy();
             else CreateHardSpecialEnemy();
         }
-
+        
         isRunningSpecial = false;
     }
 
@@ -563,7 +571,7 @@ public class SpawnManager : MonoBehaviour
         obj.transform.position = createPosition;
         obj.transform.GetChild(0).localPosition = Vector3.zero;
         obj.transform.GetChild(0).rotation = rotation;
-
+        
         obj.SetActive(true);
 
         return obj;
@@ -628,14 +636,14 @@ public class SpawnManager : MonoBehaviour
     public IEnumerator DiagonalLeftSequence(float interval, int sign = 1)
     {
         playerPosition = Player.instance.transform.position;
-
+        
         Vector3 diffPosition = new Vector3(-angle45Length, sign * angle45Length, 0);
-
+        
         Vector3 targetPosition = playerPosition;
         CreateLinearTurtle(diffPosition, targetPosition);
         yield return new WaitForSeconds(0.25f);
 
-        targetPosition = playerPosition + new Vector3(sign * interval * 1 * Mathf.Sqrt(2) / 2, interval * 1 * Mathf.Sqrt(2) / 2, 0);
+        targetPosition = playerPosition + new Vector3(sign * interval * 1 * Mathf.Sqrt(2) / 2, interval * 1 * Mathf.Sqrt(2)/2, 0);
         CreateLinearTurtle(diffPosition, targetPosition);
         targetPosition = playerPosition + new Vector3(sign * -interval * 1 * Mathf.Sqrt(2) / 2, -interval * 1, 0);
         CreateLinearTurtle(diffPosition, targetPosition);
@@ -789,7 +797,7 @@ public class SpawnManager : MonoBehaviour
         DiagonalLeft(interval, sign);
         DiagonalRight(interval, sign);
     }
-
+    
 
     public void Swirl(float maxForce, float interval = 0, bool upDownPosition = false)
     {
@@ -800,7 +808,7 @@ public class SpawnManager : MonoBehaviour
             obj.SetActive(true);
             obj.transform.position = playerPosition + new Vector3(0, interval, 0);
             obj.GetComponent<Swirl>().maxForce = maxForce;
-
+            
             obj = ObjectPooler.instance.GetSwirl();
             obj.SetActive(true);
             obj.transform.position = playerPosition + new Vector3(0, -interval, 0);

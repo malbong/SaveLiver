@@ -4927,5 +4927,5 @@ MonoBehaviour:
   getLiverSprite: {fileID: 21300000, guid: 30dace10c302dde4ca6dc635380254be, type: 3}
   score: 5
   hitCount: 1
-  speed: 6
-  rotateSpeed: 3
+  speed: 6.5
+  rotateSpeed: 3.6

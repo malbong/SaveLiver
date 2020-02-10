@@ -59,6 +59,8 @@ public class GameManager : MonoBehaviour
     private int dataScore;
     private int dataPlayNum;
 
+    public bool seeingPausePanel = false;
+
 
     private void Awake()
     {
@@ -92,12 +94,37 @@ public class GameManager : MonoBehaviour
 
         dataPlayNum = DatabaseManager.GetPlayNum();
         dataScore = PlayerInformation.BestScore;
-    }
+
+        seeingPausePanel = false;
+}
 
 
     void Update()
     {
-        if (isPause) return;
+        if (isPause)
+        {
+            //if (Application.platform == RuntimePlatform.Android)
+            //{
+                if (Input.GetKeyDown(KeyCode.Escape))
+                {
+                    if (SettingsManager.instance.seeingHelpPanel)
+                    {
+                        SettingsManager.instance.OnHelpPanelExitButton();
+                        return;
+                    }
+                    else if (SettingsManager.instance.seeingSettingPanel)
+                    {
+                        SettingsManager.instance.OnSettingsExitButton();
+                        return;
+                    }
+                    else if (seeingPausePanel)
+                    {
+                        OnContinue();
+                        return;
+                    }
+                }
+            //}
+        }
 
         AddTimeScore();
 
@@ -106,13 +133,15 @@ public class GameManager : MonoBehaviour
             PlayerInformation.AdTimeCheck();
         }
 
-            if (Application.platform == RuntimePlatform.Android)
-        {
+
+
+        //if (Application.platform == RuntimePlatform.Android)
+        //{
             if (Input.GetKey(KeyCode.Escape) && Player.instance.isAlive)
             {
                 OnPause();
             }
-        }
+        //}
     }
 
 
@@ -181,6 +210,8 @@ public class GameManager : MonoBehaviour
 
         if (isPause) return;
 
+        seeingPausePanel = true;
+
         SoundManager.instance.ButtonClick();
 
         originTimeScale = Time.timeScale; //저장해놓기
@@ -202,8 +233,10 @@ public class GameManager : MonoBehaviour
     public void OnContinue() //pause panel에 play버튼에 onClick 달아줌
     {
         if (pauseButtonFadeOutRunning || joyStickFadeOutRunning || pausePanelFadeInRunning) return;
-
+        
         if (!isPause) return;
+
+        seeingPausePanel = false;
 
         SoundManager.instance.ButtonClick();
 
@@ -574,7 +607,6 @@ public class GameManager : MonoBehaviour
         audioSystem.Play();
 
         StartCoroutine(IndependentTimeScaleParticle());
-        
 
         //time
         int tmpTotalTime = 0;

@@ -117,12 +117,20 @@ public class MenuManager : MonoBehaviour
                 StartCoroutine(GameQuitPanelFadeOut());
                 return;
             }
+            
+            // help 창을 보고 있다면
+            if (SettingsManager.instance.seeingHelpPanel)
+            {
+                SettingsManager.instance.OnHelpPanelExitButton();
+                return;
+            }
+            //setting 창을 보고 있다면 
             if (SettingsManager.instance.seeingSettingPanel)
             {
                 SettingsManager.instance.OnSettingsExitButton();
                 return;
             }
-            if(!quitFadeInRunning && !rewardFadeInRunning && !getSoulFadeInRunning 
+            if (!quitFadeInRunning && !rewardFadeInRunning && !getSoulFadeInRunning 
                 && !storeFadeInRunning && !chargeFadeInRunning && !sceneTransition.isSceneTransitionRunning())
             { 
                 StartCoroutine(GameQuitPanelFadeIn());
