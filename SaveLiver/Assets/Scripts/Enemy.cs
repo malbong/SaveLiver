@@ -41,8 +41,6 @@ public abstract class Enemy : MonoBehaviour
 
     private void Update()
     {
-        if (GameManager.instance.isPause) return;
-        
         transform.parent.position = transform.position;
         transform.localPosition = Vector3.zero;
     }

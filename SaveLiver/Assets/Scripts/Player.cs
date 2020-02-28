@@ -197,6 +197,7 @@ public class Player : MonoBehaviour
     public void TakeDamage(int damage)
     {
         if (isPlayerBeatRunning) return;
+        if (!isAlive) return;
 
         if (HasShield) 
         {
