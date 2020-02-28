@@ -121,7 +121,7 @@ public class Item : MonoBehaviour
                 yield return new WaitForSeconds(0.05f);
                 if (spriteRenderer.color.a <= 0.1f) break;
             }
-            parent.gameObject.SetActive(false);
+            if(!hasItem) parent.gameObject.SetActive(false);
         }
     }
 }

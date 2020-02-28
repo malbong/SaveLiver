@@ -7426,7 +7426,7 @@ MonoBehaviour:
     m_LineSpacing: 0.8
   m_Text: 'GOOD !
 
-    YOU GOT 30 SOUL !'
+    YOU GOT 100 SOUL !'
 --- !u!222 &234403648
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -16900,7 +16900,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   menuManager: {fileID: 1612153469}
-  rewardAdAmountSoul: 3
+  rewardAdAmountSoul: 100
   seeingGetSoulText: 0
 --- !u!4 &664548240
 Transform:
@@ -77800,7 +77800,7 @@ MonoBehaviour:
     m_LineSpacing: 0.8
   m_Text: 'WHEN YOU WATCH WHOLE AD
 
-    YOU GET 30 SOUL'
+    YOU GET 100 SOUL'
 --- !u!222 &1773858215
 CanvasRenderer:
   m_ObjectHideFlags: 0

@@ -118,7 +118,7 @@ public class OffScreenIndicator : MonoBehaviour
 
             float posX = (Mathf.Abs(xPrime) * playerToScreenTop) / yPrime;
 
-            if (xPrime > 0)
+            if (xPrime > 0) // Left
             {
                 anchorMinX = screenHalfWidth + posX;
                 anchorMaxX = screenHalfWidth + posX;
@@ -129,7 +129,7 @@ public class OffScreenIndicator : MonoBehaviour
                 indicator.rectTransform.anchorMin = new Vector2(anchorMinX, anchorMinY);
                 indicator.rectTransform.anchorMax = new Vector2(anchorMaxX, anchorMaxY);
             }
-            else
+            else // Right
             {
                 anchorMinX = screenHalfWidth - posX;
                 anchorMaxX = screenHalfWidth - posX;

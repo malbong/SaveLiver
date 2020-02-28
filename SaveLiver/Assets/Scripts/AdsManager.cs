@@ -18,7 +18,7 @@ public class AdsManager : MonoBehaviour
     private BannerView banner;
     private RewardBasedVideoAd rewardBasedVideo;
 
-    public int rewardAdAmountSoul = 3;
+    public int rewardAdAmountSoul = 100;
 
     private bool rewarded = false;
 
@@ -47,12 +47,12 @@ public class AdsManager : MonoBehaviour
             seeingGetSoulText = true;
             menuManager.OnBtnRewardNo();
             menuManager.RunGetSoulPanelFadeIn();
-            menuManager.getSoulPanelText.text = "GOOD !" + "\nYOU GOT 30 SOUL !";
+            menuManager.getSoulPanelText.text = "GOOD !" + "\nYOU GOT 100 SOUL !";
             PlayerInformation.SetFinalSeconds(120);
             PlayerInformation.IsWatched = true;
             PlayerInformation.AdTimeCheck();
 
-            DatabaseManager.UpdateMoney(30);
+            DatabaseManager.UpdateMoney(rewardAdAmountSoul);
             InitRewardAd();
 
             rewarded = false;

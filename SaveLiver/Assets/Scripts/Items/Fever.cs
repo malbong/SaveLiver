@@ -26,7 +26,7 @@ public class Fever : Item, IItem
         {
             hasItem = false;
             Player.instance.feverNum -= 1;
-            if(Player.instance.feverNum == 0) Player.instance.EndFeverTime(); // Item 소진 시 무적종료 알림
+            if(Player.instance.feverNum <= 0) Player.instance.EndFeverTime(); // Item 소진 시 무적종료 알림
             Player.instance.speed -= amountSpeedUp;
             GetComponentInParent<SpriteRenderer>().sprite = feverSprite;
             parent.gameObject.SetActive(false);
