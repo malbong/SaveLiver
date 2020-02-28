@@ -51,6 +51,9 @@ public class TurtleFollow : Enemy
 
     private void Update()
     {
+        transform.parent.position = transform.position;
+        transform.localPosition = Vector3.zero;
+
         if (GameManager.instance.isPause) return;
 
         if (base.isAlive == false) return;
@@ -60,10 +63,6 @@ public class TurtleFollow : Enemy
         {
             OffScreenIndicator.instance.DrawIndicator(gameObject, indicatorObj);
         }
-
-        transform.parent.position = transform.position;
-        //parentRigid.velocity = -transform.up * speed;
-        transform.localPosition = Vector3.zero;
     }
 
 

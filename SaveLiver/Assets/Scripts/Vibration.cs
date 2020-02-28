@@ -22,10 +22,10 @@ public static class Vibration
             Handheld.Vibrate();
     }
 
-
+    public static bool isVibOn = true;
     public static void Vibrate(long milliseconds)
     {
-        if (isAndroid())
+        if (isAndroid() && isVibOn)
             vibrator.Call("vibrate", milliseconds);
         else
             Handheld.Vibrate();
