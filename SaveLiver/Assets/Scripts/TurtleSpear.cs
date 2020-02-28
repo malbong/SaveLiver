@@ -53,6 +53,9 @@ public class TurtleSpear : Enemy
 
     private void Update()
     {
+        transform.parent.position = transform.position;
+        transform.localPosition = Vector3.zero;
+
         if (GameManager.instance.isPause) return;
 
         if (base.isAlive == false) return;
@@ -62,9 +65,6 @@ public class TurtleSpear : Enemy
         {
             OffScreenIndicator.instance.DrawIndicator(gameObject, indicatorObj);
         }
-
-        transform.parent.position = transform.position;
-        transform.localPosition = Vector3.zero;
 
         shootingCycleTime += Time.deltaTime;
         if (shootingCycleTime >= 2.0f)

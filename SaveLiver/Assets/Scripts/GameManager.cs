@@ -154,7 +154,10 @@ public class GameManager : MonoBehaviour
     */
     public void UpdateLiverCountText()
     {
-        liverCountText.text = "x " + Player.instance.hp;
+        if (Player.instance.hp >= 0)
+        {
+            liverCountText.text = "x " + Player.instance.hp;
+        }
     }
 
 

@@ -64,6 +64,10 @@ public class TurtleSuddenAttack : Enemy
 
     private void Update()
     {
+        transform.parent.position = transform.position;
+        //parentRigid.velocity = -transform.up * speed;
+        transform.localPosition = Vector3.zero;
+
         if (GameManager.instance.isPause) return;
 
         if (base.isAlive == false) return;
@@ -73,10 +77,6 @@ public class TurtleSuddenAttack : Enemy
         {
             OffScreenIndicator.instance.DrawIndicator(gameObject, indicatorObj);
         }
-
-        transform.parent.position = transform.position;
-        //parentRigid.velocity = -transform.up * speed;
-        transform.localPosition = Vector3.zero;
     }
 
 
