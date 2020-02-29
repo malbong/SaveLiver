@@ -52,7 +52,6 @@ public class Player : MonoBehaviour
     public bool HasRotateUp { get; set; } = false;
 
     public int feverNum { get; set; } = 0;
-    public int speedUpNum { get; set; } = 0;
 
     public Animator boatAnim;
 
@@ -199,14 +198,14 @@ public class Player : MonoBehaviour
         if (isPlayerBeatRunning) return;
         if (!isAlive) return;
 
-        if (HasShield) 
+        if (isFevered)
         {
-            ShieldEnd();
             return;
         }
 
-        if (isFevered)
+        if (HasShield) 
         {
+            ShieldEnd();
             return;
         }
 
@@ -231,14 +230,14 @@ public class Player : MonoBehaviour
 
     public void TakeDamage(bool isDragon)
     {
-        if (HasShield)
+        if (isFevered)
         {
-            ShieldEnd();
             return;
         }
 
-        if (isFevered)
+        if (HasShield)
         {
+            ShieldEnd();
             return;
         }
 
@@ -337,11 +336,7 @@ public class Player : MonoBehaviour
     public void FeverTime()
     {
         isFevered = true;
-
         fever.SetActive(true);
-
-        //feverAni.SetBool("feverAnimation", true);
-        //boatAnim.SetBool("feverAnimation", true);
     }
 
 
@@ -357,11 +352,7 @@ public class Player : MonoBehaviour
     public void EndFeverTime()
     {
         isFevered = false;
-
         fever.SetActive(false);
-
-        //feverAni.SetBool("feverAnimation", false);
-        //boatAnim.SetBool("feverAnimation", false);
     }
 
 

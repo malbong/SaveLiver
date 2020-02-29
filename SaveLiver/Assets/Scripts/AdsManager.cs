@@ -16,7 +16,7 @@ public class AdsManager : MonoBehaviour
     private readonly string test_unitID_reward = "ca-app-pub-3940256099942544/5224354917";
 
     private BannerView banner;
-    private RewardBasedVideoAd rewardBasedVideo;
+    private RewardedAd rewardedAd;
 
     public int rewardAdAmountSoul = 100;
 
@@ -27,10 +27,6 @@ public class AdsManager : MonoBehaviour
     void Start()
     {
         rewarded = false;
-
-        rewardBasedVideo = RewardBasedVideoAd.Instance;
-
-        rewardBasedVideo.OnAdRewarded += HandleRewardBasedVideoRewarded;
 
         InitBannerAd();
         if (!IsLoadedRewardAd())
@@ -53,17 +49,18 @@ public class AdsManager : MonoBehaviour
             PlayerInformation.AdTimeCheck();
 
             DatabaseManager.UpdateMoney(rewardAdAmountSoul);
-            InitRewardAd();
 
             rewarded = false;
         }
     }
 
-
+    
     public void EventMinus()
     {
-        rewardBasedVideo.OnAdRewarded -= HandleRewardBasedVideoRewarded;
+        rewardedAd.OnUserEarnedReward -= HandleUserEarnedReward;
+        rewardedAd.OnAdClosed -= HandleRewardedAdClosed;
     }
+    
 
 
     private void InitBannerAd()
@@ -79,10 +76,38 @@ public class AdsManager : MonoBehaviour
     public void InitRewardAd()
     {
         string id = Debug.isDebugBuild ? test_unitID_reward : unitID_reward;
+
+        rewardedAd = new RewardedAd(id);
         AdRequest request = new AdRequest.Builder().Build();
-        rewardBasedVideo.LoadAd(request, id);
+        rewardedAd.LoadAd(request);
+
+        rewardedAd.OnUserEarnedReward += HandleUserEarnedReward;
+        // 사용자가 광고를 끝까지 시청했을 때
+        rewardedAd.OnAdClosed += HandleRewardedAdClosed;
+        // 사용자가 광고를 중간에 닫았을 때
     }
 
+
+    public void CreateAndLoadRewardedAd() // 광고 다시 로드하는 함수
+    {
+        rewardedAd = new RewardedAd(unitID_reward);
+        AdRequest request = new AdRequest.Builder().Build();
+        rewardedAd.LoadAd(request);
+
+        rewardedAd.OnUserEarnedReward += HandleUserEarnedReward;
+        rewardedAd.OnAdClosed += HandleRewardedAdClosed;
+    }
+
+
+    private void HandleRewardedAdClosed(object sender, EventArgs e)
+    {
+        CreateAndLoadRewardedAd();
+    }
+
+    private void HandleUserEarnedReward(object sender, Reward e)
+    {
+        rewarded = true;
+    }
 
     public void ToggleAd(bool active)
     {
@@ -99,16 +124,15 @@ public class AdsManager : MonoBehaviour
 
     public bool IsLoadedRewardAd()
     {
-        return rewardBasedVideo.IsLoaded();
+        return rewardedAd.IsLoaded();
     }
 
 
     public void ShowRewardAd()
     {
-        if (rewardBasedVideo.IsLoaded())
+        if (IsLoadedRewardAd())
         {
-            rewardBasedVideo.Show();
-            //InitRewardAd(); // 새 광고 로드
+            rewardedAd.Show();
         }
         else
         {
@@ -116,11 +140,5 @@ public class AdsManager : MonoBehaviour
             menuManager.RunGetSoulPanelFadeIn();
             menuManager.getSoulPanelText.text = "SORRY, NOT READY AD" + "\nTRY AGAIN";
         }
-    }
-
-
-    public void HandleRewardBasedVideoRewarded(object sender, Reward args)
-    {
-        rewarded = true;
     }
 }

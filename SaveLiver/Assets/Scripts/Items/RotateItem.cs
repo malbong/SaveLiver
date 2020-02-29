@@ -6,21 +6,32 @@ public class RotateItem : Item, IItem
 {
     public float itemDuration = 8f;
     public float amountRotateUp = 1f;
-    private float rotateUpItemTime = 0f;
+    //private float rotateUpItemTime = 0f;
 
 
     void Update()
     {
         if (GameManager.instance.isPause) return;
-        ItemDurationAndDestroy();
+        //ItemDurationAndDestroy();
     }
 
 
     /**************************************
     * @ Shield와 동일
     */
-    private void ItemDurationAndDestroy()
+    IEnumerator ItemDurationAndDestroy()
     {
+        yield return new WaitForSeconds(itemDuration);
+
+        if (hasItem)
+        {
+            hasItem = false;
+            Player.instance.rotateSpeed -= amountRotateUp;
+            Player.instance.HasRotateUp = false;
+            parent.gameObject.SetActive(false);
+        }
+
+        /*
         if (Time.time - rotateUpItemTime >= itemDuration && hasItem)
         {
             hasItem = false;
@@ -28,6 +39,7 @@ public class RotateItem : Item, IItem
             Player.instance.HasRotateUp = false;
             parent.gameObject.SetActive(false);
         }
+        */
     }
 
 
@@ -51,7 +63,8 @@ public class RotateItem : Item, IItem
         GetComponent<Collider2D>().enabled = false;
         Player.instance.rotateSpeed += amountRotateUp;
         Player.instance.HasRotateUp = true;
-        rotateUpItemTime = Time.time;
+        StartCoroutine(ItemDurationAndDestroy());
+        //rotateUpItemTime = Time.time;
         hasItem = true;
     }
 }

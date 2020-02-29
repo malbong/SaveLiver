@@ -6,21 +6,32 @@ public class SpeedUp : Item, IItem
 {
     public float itemDuration = 8f;
     public float amountSpeedUp = 1f;
-    private float speedUpItemTime = 0f;
+    //private float speedUpItemTime = 0f;
 
 
     void Update()
     {
         if (GameManager.instance.isPause) return;
-        ItemDurationAndDestroy();
+        //ItemDurationAndDestroy();
     }
 
 
     /**************************************
     * @ Shield와 동일
     */
-    private void ItemDurationAndDestroy()
+    IEnumerator ItemDurationAndDestroy()
     {
+        yield return new WaitForSeconds(itemDuration);
+
+        if (hasItem)
+        {
+            hasItem = false;
+            Player.instance.speed -= amountSpeedUp;
+            Player.instance.HasSpeedUp = false;
+            parent.gameObject.SetActive(false);
+        }
+
+        /*
         if (Time.time - speedUpItemTime >= itemDuration && hasItem)
         {
             hasItem = false;
@@ -28,6 +39,7 @@ public class SpeedUp : Item, IItem
             Player.instance.HasSpeedUp = false;
             parent.gameObject.SetActive(false);
         }
+        */
     }
 
 
@@ -52,7 +64,8 @@ public class SpeedUp : Item, IItem
 
         Player.instance.speed += amountSpeedUp;
         Player.instance.HasSpeedUp = true;
-        speedUpItemTime = Time.time;
+        StartCoroutine(ItemDurationAndDestroy());
+        //speedUpItemTime = Time.time;
         hasItem = true;
     }
 }
