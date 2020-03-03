@@ -49,13 +49,20 @@ public class MenuManager : MonoBehaviour
 
     public bool seeingTimer = false;
 
-    public Text bestScoreText;
+    public GameObject levelOuterPanel;
+    public Animator levelAnimator;
+    public RuntimeAnimatorController levelIn;
+    public RuntimeAnimatorController levelOut;
+    public Text HardBestScoreText;
+    public Text EasyBestScoreText;
+    private bool seeingLevel = false;
 
 
     void Start()
     {
         DatabaseManager.UpdateMoney(0);
-        PlayerInformation.BestScore = DatabaseManager.GetScore();
+        PlayerInformation.BestScore = DatabaseManager.GetScore(true);
+        PlayerInformation.EasyBestScore = DatabaseManager.GetScore(false);
     }
 
 
@@ -68,7 +75,9 @@ public class MenuManager : MonoBehaviour
             if (!adsManager.seeingGetSoulText)
             {
                 getSoulPanelText.text = "Wait for next ad" + "\n"
-                    + PlayerInformation.Minutes + " : " + PlayerInformation.FinalSeconds;
+                    + string.Format("{0:D2}", PlayerInformation.Minutes) 
+                    + " : " 
+                    + string.Format("{0:D2}", PlayerInformation.FinalSeconds);
             }
         }
         else if(!PlayerInformation.IsWatched && seeingTimer) // 타이머 패널 띄우고 있는 와중에 시간이 다 된다면,
@@ -78,8 +87,9 @@ public class MenuManager : MonoBehaviour
         }
         
 
-        soulText.text = PlayerInformation.SoulMoney.ToString(); // Soul Money 표시
-        bestScoreText.text = "Best Score : " + PlayerInformation.BestScore.ToString();
+        soulText.text = string.Format("{0:N0}", PlayerInformation.SoulMoney.ToString()); // Soul Money 표시
+        HardBestScoreText.text = string.Format("{0:N0}", PlayerInformation.BestScore.ToString());
+        EasyBestScoreText.text = string.Format("{0:N0}", PlayerInformation.EasyBestScore.ToString());
 
         // 안드로이드에서 뒤로가기 누르면 종료되는 처리
         //if(Application.platform == RuntimePlatform.Android)
@@ -93,6 +103,12 @@ public class MenuManager : MonoBehaviour
             }
 
             SoundManager.instance.ButtonClick();
+            // 난이도 창 보고 있다면
+            if (seeingLevel)
+            {
+                OnBtnLevelOut();
+                return;
+            }
             // 구매 창 보고 있다면
             if (seeingChargePanel)
             {
@@ -148,11 +164,35 @@ public class MenuManager : MonoBehaviour
 
     public void OnBtnPlay()
     {
-        adsManager.EventMinus();
         SoundManager.instance.ButtonClick();
+        seeingLevel = true;
+        levelAnimator.runtimeAnimatorController = levelIn;
+        levelAnimator.SetTrigger("In");
+        levelOuterPanel.SetActive(true);
+    }
+
+    public void OnBtnHard()
+    {
+        //adsManager.EventMinus();
+        PlayerInformation.IsHard = true;
         sceneTransition.LoadPlayScene();
     }
 
+    public void OnBtnEasy()
+    {
+        //adsManager.EventMinus();
+        PlayerInformation.IsHard = false;
+        sceneTransition.LoadPlayScene();
+    }
+
+    public void OnBtnLevelOut()
+    {
+        SoundManager.instance.ButtonClick();
+        levelAnimator.runtimeAnimatorController = levelOut;
+        levelAnimator.SetTrigger("Out");
+        levelOuterPanel.SetActive(false);
+        seeingLevel = false;
+    }
 
 
     // Quit Pannel

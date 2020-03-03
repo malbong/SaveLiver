@@ -62,6 +62,18 @@ public static class DatabaseManager
         }
     }
 
+    public class EasyScore
+    {
+        public int easyScore;
+        public int timestamp;
+
+        public EasyScore(int easyScore, int timestamp)
+        {
+            this.easyScore = easyScore;
+            this.timestamp = timestamp;
+        }
+    }
+
     public class PlayNum
     {
         public int num;
@@ -143,6 +155,9 @@ public static class DatabaseManager
                     Score score = new Score(0, GetTimestamp());
                     string jsonScore = JsonUtility.ToJson(score);
 
+                    EasyScore easyScore = new EasyScore(0, GetTimestamp());
+                    string jsonEasyScore = JsonUtility.ToJson(easyScore);
+
                     PlayNum playNum = new PlayNum(0, GetTimestamp());
                     string jsonPlayNum = JsonUtility.ToJson(playNum);
 
@@ -152,6 +167,7 @@ public static class DatabaseManager
                     reference.Child(userId).Child("custom").SetRawJsonValueAsync(jsonCustom);
                     reference.Child(userId).Child("money").SetRawJsonValueAsync(jsonMoney);
                     reference.Child(userId).Child("score").SetRawJsonValueAsync(jsonScore);
+                    reference.Child(userId).Child("easyScore").SetRawJsonValueAsync(jsonEasyScore);
                     reference.Child(userId).Child("playNum").SetRawJsonValueAsync(jsonPlayNum);
                 }
             }
@@ -324,43 +340,81 @@ public static class DatabaseManager
     }
 
 
-    public static void SetScore(int newScore)
+    public static void SetScore(int newScore, bool isHard)
     {
-        DatabaseReference reference = PlayerInformation.GetDatabaseReference()
+        if (isHard)
+        {
+            DatabaseReference reference = PlayerInformation.GetDatabaseReference()
             .Child("user")
-            //.Child("pnRD68Js9kU5O4UNvRaPcoueTsy2")
             .Child(PlayerInformation.auth.CurrentUser.UserId)
             .Child("score");
 
-        Score score = new Score(newScore, GetTimestamp());
-        string jsonScore = JsonUtility.ToJson(score);
+            Score score = new Score(newScore, GetTimestamp());
+            string jsonScore = JsonUtility.ToJson(score);
 
-        reference.SetRawJsonValueAsync(jsonScore);
+            reference.SetRawJsonValueAsync(jsonScore);
+        }
+        else
+        {
+            DatabaseReference reference = PlayerInformation.GetDatabaseReference()
+            .Child("user")
+            .Child(PlayerInformation.auth.CurrentUser.UserId)
+            .Child("easyScore");
+
+            EasyScore easyScore = new EasyScore(newScore, GetTimestamp());
+            string jsonEasyScore = JsonUtility.ToJson(easyScore);
+
+            reference.SetRawJsonValueAsync(jsonEasyScore);
+        }
     }
 
 
-    public static int GetScore()
+    public static int GetScore(bool isHard)
     {
-        DatabaseReference reference = PlayerInformation.GetDatabaseReference()
+        if (isHard)
+        {
+            DatabaseReference reference = PlayerInformation.GetDatabaseReference()
             .Child("user")
-            //.Child("pnRD68Js9kU5O4UNvRaPcoueTsy2")
             .Child(PlayerInformation.auth.CurrentUser.UserId)
             .Child("score");
 
-        reference.Child("score").GetValueAsync().ContinueWith(task =>
-        {
-            if (task.IsCompleted)
+            reference.Child("score").GetValueAsync().ContinueWith(task =>
             {
-                DataSnapshot data = task.Result;
+                if (task.IsCompleted)
+                {
+                    DataSnapshot data = task.Result;
 
-                string tmpScore = data.Value.ToString();
-                score = int.Parse(tmpScore);
+                    string tmpScore = data.Value.ToString();
+                    score = int.Parse(tmpScore);
 
-                PlayerInformation.BestScore = score;
-            }
+                    PlayerInformation.BestScore = score;
+                }
+                return score;
+            });
             return score;
-        });
-        return score;
+        }
+        else
+        {
+            DatabaseReference reference = PlayerInformation.GetDatabaseReference()
+            .Child("user")
+            .Child(PlayerInformation.auth.CurrentUser.UserId)
+            .Child("easyScore");
+
+            reference.Child("easyScore").GetValueAsync().ContinueWith(task =>
+            {
+                if (task.IsCompleted)
+                {
+                    DataSnapshot data = task.Result;
+
+                    string tmpScore = data.Value.ToString();
+                    score = int.Parse(tmpScore);
+
+                    PlayerInformation.EasyBestScore = score;
+                }
+                return score;
+            });
+            return score;
+        }
     }
 
 
@@ -368,7 +422,6 @@ public static class DatabaseManager
     {
         DatabaseReference reference = PlayerInformation.GetDatabaseReference()
             .Child("user")
-            //.Child("pnRD68Js9kU5O4UNvRaPcoueTsy2")
             .Child(PlayerInformation.auth.CurrentUser.UserId)
             .Child("playNum");
 
@@ -383,7 +436,6 @@ public static class DatabaseManager
     {
         DatabaseReference reference = PlayerInformation.GetDatabaseReference()
             .Child("user")
-            //.Child("pnRD68Js9kU5O4UNvRaPcoueTsy2")
             .Child(PlayerInformation.auth.CurrentUser.UserId)
             .Child("playNum");
 

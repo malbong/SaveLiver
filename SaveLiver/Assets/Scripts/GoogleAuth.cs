@@ -82,7 +82,8 @@ public class GoogleAuth : MonoBehaviour
                 PlayerInformation.isLogin = true;
                 DatabaseManager.SetNewUserData();
                 DatabaseManager.UpdateMoney(0);
-                PlayerInformation.BestScore = DatabaseManager.GetScore();
+                PlayerInformation.BestScore = DatabaseManager.GetScore(true);
+                PlayerInformation.EasyBestScore = DatabaseManager.GetScore(false);
 
                 storeManager.InitStoreAsync();
                 storeManager.InitFaceCharge();

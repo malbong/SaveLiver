@@ -24,23 +24,24 @@
 
 public static class GPGSIds
 {
-        public const string achievement_habit = "CgkInuiR96cbEAIQFA"; // <GPGSID>
-        public const string leaderboard_ranking = "CgkInuiR96cbEAIQAQ"; // <GPGSID>
         public const string achievement_expert = "CgkInuiR96cbEAIQCg"; // <GPGSID>
         public const string achievement_fortune = "CgkInuiR96cbEAIQDg"; // <GPGSID>
         public const string achievement_saver = "CgkInuiR96cbEAIQDw"; // <GPGSID>
         public const string achievement_pro = "CgkInuiR96cbEAIQCQ"; // <GPGSID>
-        public const string achievement_beginner = "CgkInuiR96cbEAIQEw"; // <GPGSID>
+        public const string achievement_fat = "CgkInuiR96cbEAIQEg"; // <GPGSID>
         public const string achievement_greed = "CgkInuiR96cbEAIQBQ"; // <GPGSID>
-        public const string achievement_rich = "CgkInuiR96cbEAIQEQ"; // <GPGSID>
+        public const string achievement_habit = "CgkInuiR96cbEAIQFA"; // <GPGSID>
         public const string achievement_newbie = "CgkInuiR96cbEAIQBw"; // <GPGSID>
         public const string achievement_developer = "CgkInuiR96cbEAIQDA"; // <GPGSID>
         public const string achievement_small = "CgkInuiR96cbEAIQDQ"; // <GPGSID>
-        public const string achievement_collector = "CgkInuiR96cbEAIQEA"; // <GPGSID>
+        public const string leaderboard_hard_ranking = "CgkInuiR96cbEAIQAQ"; // <GPGSID>
+        public const string achievement_beginner = "CgkInuiR96cbEAIQEw"; // <GPGSID>
+        public const string leaderboard_easy_ranking = "CgkInuiR96cbEAIQFw"; // <GPGSID>
         public const string achievement_master = "CgkInuiR96cbEAIQCw"; // <GPGSID>
         public const string achievement_addict = "CgkInuiR96cbEAIQFQ"; // <GPGSID>
         public const string achievement_persist = "CgkInuiR96cbEAIQBg"; // <GPGSID>
-        public const string achievement_fat = "CgkInuiR96cbEAIQEg"; // <GPGSID>
+        public const string achievement_rich = "CgkInuiR96cbEAIQEQ"; // <GPGSID>
+        public const string achievement_collector = "CgkInuiR96cbEAIQEA"; // <GPGSID>
         public const string achievement_normal = "CgkInuiR96cbEAIQCA"; // <GPGSID>
 
 }

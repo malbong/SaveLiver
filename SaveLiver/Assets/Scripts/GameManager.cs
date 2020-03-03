@@ -75,7 +75,7 @@ public class GameManager : MonoBehaviour
     }
 
 
-    private void Start()
+    void Start()
     {
         originTimeScale = Time.timeScale;
         isPause = false;
@@ -203,7 +203,14 @@ public class GameManager : MonoBehaviour
     public void ReportScore(int score)
     {
         // ReportScore는 현재 score와 기록된 score를 비교해 Leaderboard에 기록.
-        PlayGamesPlatform.Instance.ReportScore(score, GPGSIds.leaderboard_ranking, null);
+        if (PlayerInformation.IsHard)
+        {
+            PlayGamesPlatform.Instance.ReportScore(score, GPGSIds.leaderboard_hard_ranking, null);
+        }
+        else
+        {
+            PlayGamesPlatform.Instance.ReportScore(score, GPGSIds.leaderboard_easy_ranking, null);
+        }
     }
 
 
@@ -295,7 +302,7 @@ public class GameManager : MonoBehaviour
 
     public void PlayerDied()
     {
-        dataScore = DatabaseManager.GetScore();
+        dataScore = DatabaseManager.GetScore(PlayerInformation.IsHard);
         dataPlayNum = DatabaseManager.GetPlayNum();
         DatabaseManager.UpdateMoney(totalSoulCount);
         DatabaseManager.SetPlayNum(dataPlayNum + 1);
@@ -515,7 +522,7 @@ public class GameManager : MonoBehaviour
             Text diedText = diedTextTransform.GetComponent<Text>();
             if (CheckBestScore())
             {
-                DatabaseManager.SetScore(totalScore);
+                DatabaseManager.SetScore(totalScore, PlayerInformation.IsHard);
                 diedText.color = Color.yellow;
                 diedText.fontSize = 140;
                 diedText.text = "Your\n Best Score";

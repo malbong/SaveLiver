@@ -20,10 +20,10 @@ public static class PlayerInformation
     public static int Minutes { get; set; } = 0;
     private static int tmpSeconds { get; set; } = 0;
     private static int tmp2Seconds { get; set; } = 0;
-
     public static int BestScore { get; set; }
-
+    public static int EasyBestScore { get; set; }
     public static bool IsSawLogo { get; set; } = false;
+    public static bool IsHard { get; set; } = false;
 
     public static Firebase.Auth.FirebaseAuth auth;
 

@@ -51,140 +51,169 @@ public class SpawnManager : MonoBehaviour
 
     private IEnumerator Play()
     {
-        yield return new WaitForSeconds(0.1f);
-        EnemySpawn(0);
-
-        yield return new WaitForSeconds(3f);
-        int randomIndex = Random.Range(0, 2);
-        EnemySpawn(randomIndex);
-
-        yield return new WaitForSeconds(3f);
-        EnemySpawn(1); 
-
-        yield return new WaitForSeconds(3f);
-        CreateEasySpecialEnemy();
-
-        yield return new WaitForSeconds(3f);
-        EnemySpawn(2);
-
-        yield return new WaitForSeconds(3f); 
-        randomIndex = Random.Range(1, 3);
-        EnemySpawn(randomIndex);
-
-        yield return new WaitForSeconds(3f); 
-        EnemySpawn(3); 
-
-        yield return new WaitForSeconds(3f);
-        CreateEasySpecialEnemy();
-
-        yield return new WaitForSeconds(0.5f);
-        EnemySpawn(3); 
-
-        yield return new WaitForSeconds(3f);
-        CreateEasySpecialEnemy();
-
-
-        yield return new WaitForSeconds(4f); 
-        randomIndex = Random.Range(2, 4);
-        EnemySpawn(randomIndex);
-        AllDirection4();
-
-        yield return new WaitForSeconds(4f);
-        CreateEasySpecialEnemy();
-
-        yield return new WaitForSeconds(0.5f);
-        randomIndex = Random.Range(2, 4);
-        EnemySpawn(randomIndex);
-        
-        yield return new WaitForSeconds(3f);
-        randomIndex = Random.Range(2, 4);
-        EnemySpawn(randomIndex);
-
-        int tmpRandom = Random.Range(0, 2);
-        if (tmpRandom == 0)
+        if (PlayerInformation.IsHard) // Hard 모드일 때
         {
-            DiagonalLeft(3, Random.Range(0, 2) == 0 ? 1 : -1);
-        }
-        else
-        {
-            DiagonalRight(3, Random.Range(0, 2) == 0 ? 1 : -1);
-        }
+            yield return new WaitForSeconds(0.1f);
+            EnemySpawn(0);
 
-        yield return new WaitForSeconds(3f); 
-        EnemySpawn(4);
+            yield return new WaitForSeconds(3f);
+            int randomIndex = Random.Range(0, 2);
+            EnemySpawn(randomIndex);
 
-        yield return new WaitForSeconds(3f);
-        CreateMiddleSpecialEnemy();
-        yield return new WaitForSeconds(1f);
-        Swirl(-250);
-        
+            yield return new WaitForSeconds(3f);
+            EnemySpawn(1);
 
-        yield return new WaitForSeconds(4f); 
-        EnemySpawn(4);
-        DiagonalBothSide(3, Random.Range(0, 2) == 0 ? 1 : -1);
-        yield return new WaitForSeconds(0.5f);
-        CreateMiddleSpecialEnemy();
+            yield return new WaitForSeconds(3f);
+            CreateEasySpecialEnemy();
 
-        yield return new WaitForSeconds(4f);
-        randomIndex = Random.Range(3, 5);
-        EnemySpawn(randomIndex);
-        
-        yield return new WaitForSeconds(4.5f);
-        CreateHardSpecialEnemy();
-        Dragon(Random.Range(0, 2) == 0 ? 1 : -1, -1, Random.Range(3, 5));
+            yield return new WaitForSeconds(3f);
+            EnemySpawn(2);
 
-        yield return new WaitForSeconds(3f);
-        EnemySpawn(5);
-        yield return new WaitForSeconds(0.5f); 
+            yield return new WaitForSeconds(3f);
+            randomIndex = Random.Range(1, 3);
+            EnemySpawn(randomIndex);
 
-        tmpRandom = Random.Range(0, 2);
-        if (tmpRandom == 0) //left
-        {
-            DiagonalLeftSeqStart(2, Random.Range(0, 2) == 0 ? 1 : -1);
-        }
-        else //right
-        {
-            DiagonalRightSeqStart(2, Random.Range(0, 2) == 0 ? 1 : -1);
-        }
+            yield return new WaitForSeconds(3f);
+            EnemySpawn(3);
 
-        yield return new WaitForSeconds(3f);
-        EnemySpawn(9);
-        yield return new WaitForSeconds(0.3f);
-        EnemySpawn(9);
-        yield return new WaitForSeconds(0.3f);
-        EnemySpawn(9);
-        yield return new WaitForSeconds(0.3f);
-        EnemySpawn(9);
+            yield return new WaitForSeconds(3f);
+            CreateEasySpecialEnemy();
 
-        //1분 이후 (60초)
+            yield return new WaitForSeconds(0.5f);
+            EnemySpawn(3);
 
-        //totalPlayTime :        60  90   120  150   180  210      ~  210이상
-        //level                  1   2    3    4     5    6             7
-        //NomalEnemyRandom :     10  9    8    7     6    5  (time)     
-        //SpecialEnemyRandom :   4   3.8  3.6  3.4   3.2  3  (time)
-        //PatternEnemyRandom :   4   3.8  3.6  3.4   3.2  3  (time)
+            yield return new WaitForSeconds(3f);
+            CreateEasySpecialEnemy();
 
-        while (true)
-        {
-            if(isRunningNormal == false)
+
+            yield return new WaitForSeconds(4f);
+            randomIndex = Random.Range(2, 4);
+            EnemySpawn(randomIndex);
+            AllDirection4();
+
+            yield return new WaitForSeconds(4f);
+            CreateEasySpecialEnemy();
+
+            yield return new WaitForSeconds(0.5f);
+            randomIndex = Random.Range(2, 4);
+            EnemySpawn(randomIndex);
+
+            yield return new WaitForSeconds(3f);
+            randomIndex = Random.Range(2, 4);
+            EnemySpawn(randomIndex);
+
+            int tmpRandom = Random.Range(0, 2);
+            if (tmpRandom == 0)
             {
-                float delayTime1 = GetDelayTime(1);
-                StartCoroutine(NomalEnemyRandomCreate(delayTime1));
+                DiagonalLeft(3, Random.Range(0, 2) == 0 ? 1 : -1);
             }
-            if(isRunningSpecial == false)
+            else
             {
-                float delayTime2 = GetDelayTime(2);
-                StartCoroutine(SpecialEnemyRandomCreate(delayTime2));
+                DiagonalRight(3, Random.Range(0, 2) == 0 ? 1 : -1);
             }
-            if(isRunningPattern == false)
+
+            yield return new WaitForSeconds(3f);
+            EnemySpawn(4);
+
+            yield return new WaitForSeconds(3f);
+            CreateMiddleSpecialEnemy();
+            yield return new WaitForSeconds(1f);
+            Swirl(-250);
+
+
+            yield return new WaitForSeconds(4f);
+            EnemySpawn(4);
+            DiagonalBothSide(3, Random.Range(0, 2) == 0 ? 1 : -1);
+            yield return new WaitForSeconds(0.5f);
+            CreateMiddleSpecialEnemy();
+
+            yield return new WaitForSeconds(4f);
+            randomIndex = Random.Range(3, 5);
+            EnemySpawn(randomIndex);
+
+            yield return new WaitForSeconds(4.5f);
+            CreateHardSpecialEnemy();
+            Dragon(Random.Range(0, 2) == 0 ? 1 : -1, -1, Random.Range(3, 5));
+
+            yield return new WaitForSeconds(3f);
+            EnemySpawn(5);
+            yield return new WaitForSeconds(0.5f);
+
+            tmpRandom = Random.Range(0, 2);
+            if (tmpRandom == 0) //left
             {
-                float delayTime3 = GetDelayTime(3);
-                StartCoroutine(PatterRandomCreate(delayTime3));
+                DiagonalLeftSeqStart(2, Random.Range(0, 2) == 0 ? 1 : -1);
             }
-            Debug.Log(GetLevel());
-            yield return new WaitForSeconds(Time.deltaTime);
+            else //right
+            {
+                DiagonalRightSeqStart(2, Random.Range(0, 2) == 0 ? 1 : -1);
+            }
+
+            yield return new WaitForSeconds(3f);
+            EnemySpawn(9);
+            yield return new WaitForSeconds(0.3f);
+            EnemySpawn(9);
+            yield return new WaitForSeconds(0.3f);
+            EnemySpawn(9);
+            yield return new WaitForSeconds(0.3f);
+            EnemySpawn(9);
+
+            //1분 이후 (60초)
+
+            //totalPlayTime :        60  90   120  150   180  210      ~  210이상
+            //level                  1   2    3    4     5    6             7
+            //NomalEnemyRandom :     10  9    8    7     6    5  (time)     
+            //SpecialEnemyRandom :   4   3.8  3.6  3.4   3.2  3  (time)
+            //PatternEnemyRandom :   4   3.8  3.6  3.4   3.2  3  (time)
+
+            while (true)
+            {
+                if (isRunningNormal == false)
+                {
+                    float delayTime1 = GetDelayTime(1);
+                    StartCoroutine(NomalEnemyRandomCreate(delayTime1));
+                }
+                if (isRunningSpecial == false)
+                {
+                    float delayTime2 = GetDelayTime(2);
+                    StartCoroutine(SpecialEnemyRandomCreate(delayTime2));
+                }
+                if (isRunningPattern == false)
+                {
+                    float delayTime3 = GetDelayTime(3);
+                    StartCoroutine(PatterRandomCreate(delayTime3));
+                }
+                Debug.Log(GetLevel());
+                yield return new WaitForSeconds(Time.deltaTime);
+            }
         }
-        
+        else // Easy 모드일 때
+        {
+            yield return new WaitForSeconds(0.1f);
+            EnemySpawn(0);
+
+            yield return new WaitForSeconds(5f);
+            EnemySpawn(0);
+
+            yield return new WaitForSeconds(5f);
+            EnemySpawn(1);
+
+            yield return new WaitForSeconds(7f);
+            EnemySpawn(1);
+
+            yield return new WaitForSeconds(7f);
+            EnemySpawn(1);
+
+            yield return new WaitForSeconds(7f);
+            EnemySpawn(2);
+
+            yield return new WaitForSeconds(10f);
+            EnemySpawn(2);
+
+            yield return new WaitForSeconds(10f);
+            EnemySpawn(2);
+            EnemySpawn(3);
+        }
     }
     
 
