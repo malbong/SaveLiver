@@ -41,7 +41,7 @@ public class SoundManager : MonoBehaviour
         
         if (sceneName == "Play Scene")
         {
-            if (GameManager.instance.isPause || !Player.instance.isAlive)
+            if (GameManager.instance.isPause || !Player.instance.isAlive || Player.instance.seeingEnding)
             {
                 audioSource.volume = 0;
             }

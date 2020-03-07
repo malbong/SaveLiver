@@ -115,4 +115,13 @@ public class Soul : MonoBehaviour
 
         StartCoroutine(FadeOut());
     }
+
+
+    public void EndingDestroySoul()
+    {
+        GetComponent<CircleCollider2D>().enabled = false;
+        transform.GetChild(0).gameObject.SetActive(false);
+        gameObject.SetActive(false);
+        isAbsorbed = false;
+    }
 }

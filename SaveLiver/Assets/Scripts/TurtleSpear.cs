@@ -260,6 +260,8 @@ public class TurtleSpear : Enemy
 
         base.KeepOnTrail();
 
+        GameManager.instance.enemyCount -= 1;
+
         transform.GetComponent<CircleCollider2D>().enabled = false;
         if (hasIndicator && indicatorObj != null)
         {

@@ -9,13 +9,6 @@ using UnityEngine.UI;
 
 public static class DatabaseManager
 {
-    private static int score = 0;
-    private static int playNum = 0;
-    private static int[] boatChargeList = { 2, 2, 2, 2, 2, 2 };
-    private static int[] faceChargeList = { 2, 2, 2, 2, 2 };
-    private static int[] waveChargeList = { 2, 2, 2, 2, 2 };
-
-
     public class SoulMoney
     {
         public int money = 0;
@@ -175,9 +168,8 @@ public static class DatabaseManager
     }
 
 
-    public static int[] GetCurrentCustom()
+    public static void GetCurrentCustom()
     {
-        int[] customs = { 0, 0, 0 };
         DatabaseReference reference = PlayerInformation.GetDatabaseReference()
             .Child("user")
             //.Child("pnRD68Js9kU5O4UNvRaPcoueTsy2")
@@ -193,16 +185,14 @@ public static class DatabaseManager
                 foreach (DataSnapshot data in snapshot.Children)
                 {
                     if (data.Key.ToString() == "boat")
-                        customs[0] = int.Parse(data.Value.ToString());
+                        PlayerInformation.customs[0] = int.Parse(data.Value.ToString());
                     else if (data.Key.ToString() == "face")
-                        customs[1] = int.Parse(data.Value.ToString());
+                        PlayerInformation.customs[1] = int.Parse(data.Value.ToString());
                     else if (data.Key.ToString() == "wave")
-                        customs[2] = int.Parse(data.Value.ToString());
+                        PlayerInformation.customs[2] = int.Parse(data.Value.ToString());
                 }
             }
-            return customs;
         });
-        return customs;
     }
 
 
@@ -221,7 +211,7 @@ public static class DatabaseManager
     }
 
 
-    public static int BoatCharge(int index)
+    public static void BoatCharge(int index)
     {
         DatabaseReference reference = PlayerInformation.GetDatabaseReference()
             .Child("user")
@@ -239,20 +229,18 @@ public static class DatabaseManager
 
                 if(snapshot == null || !snapshot.Exists) // 구매하지 않은 항목이라면
                 {
-                    boatChargeList[index] = -1;
+                    PlayerInformation.boatChargeList[index] = -1;
                 }
                 else
                 {
-                    boatChargeList[index] = 1;
+                    PlayerInformation.boatChargeList[index] = 1;
                 }
             }
-            return boatChargeList[index];
         });
-        return boatChargeList[index];
     }
 
 
-    public static int FaceCharge(int index)
+    public static void FaceCharge(int index)
     {
         DatabaseReference reference = PlayerInformation.GetDatabaseReference()
             .Child("user")
@@ -268,22 +256,20 @@ public static class DatabaseManager
             {
                 DataSnapshot snapshot = task.Result;
 
-                if (snapshot == null || !snapshot.Exists) // 구매하지 않은 곡이라면
+                if (snapshot == null || !snapshot.Exists) // 구매하지 않은 것이라면
                 {
-                    faceChargeList[index] = -1;
+                    PlayerInformation.faceChargeList[index] = -1;
                 }
                 else
                 {
-                    faceChargeList[index] = 1;
+                    PlayerInformation.faceChargeList[index] = 1;
                 }
             }
-            return faceChargeList[index];
         });
-        return faceChargeList[index];
     }
 
 
-    public static int WaveCharge(int index)
+    public static void WaveCharge(int index)
     {
         DatabaseReference reference = PlayerInformation.GetDatabaseReference()
             .Child("user")
@@ -299,18 +285,16 @@ public static class DatabaseManager
             {
                 DataSnapshot snapshot = task.Result;
 
-                if (snapshot == null || !snapshot.Exists) // 구매하지 않은 곡이라면
+                if (snapshot == null || !snapshot.Exists) // 구매하지 않은 것이라면
                 {
-                    waveChargeList[index] = -1;
+                    PlayerInformation.waveChargeList[index] = -1;
                 }
                 else
                 {
-                    waveChargeList[index] = 1;
+                    PlayerInformation.waveChargeList[index] = 1;
                 }
             }
-            return waveChargeList[index];
         });
-        return waveChargeList[index];
     }
 
 
@@ -358,19 +342,19 @@ public static class DatabaseManager
         {
             DatabaseReference reference = PlayerInformation.GetDatabaseReference()
             .Child("user")
-            .Child(PlayerInformation.auth.CurrentUser.UserId)
-            .Child("easyScore");
+            .Child(PlayerInformation.auth.CurrentUser.UserId);
 
             EasyScore easyScore = new EasyScore(newScore, GetTimestamp());
             string jsonEasyScore = JsonUtility.ToJson(easyScore);
 
-            reference.SetRawJsonValueAsync(jsonEasyScore);
+            reference.Child("easyScore").SetRawJsonValueAsync(jsonEasyScore);
         }
     }
 
 
-    public static int GetScore(bool isHard)
+    public static void GetScore(bool isHard)
     {
+        int score;
         if (isHard)
         {
             DatabaseReference reference = PlayerInformation.GetDatabaseReference()
@@ -389,9 +373,7 @@ public static class DatabaseManager
 
                     PlayerInformation.BestScore = score;
                 }
-                return score;
             });
-            return score;
         }
         else
         {
@@ -411,9 +393,7 @@ public static class DatabaseManager
 
                     PlayerInformation.EasyBestScore = score;
                 }
-                return score;
             });
-            return score;
         }
     }
 
@@ -432,7 +412,7 @@ public static class DatabaseManager
     }
 
 
-    public static int GetPlayNum()
+    public static void GetPlayNum()
     {
         DatabaseReference reference = PlayerInformation.GetDatabaseReference()
             .Child("user")
@@ -446,10 +426,8 @@ public static class DatabaseManager
                 DataSnapshot data = task.Result;
 
                 string tmpNum = data.Value.ToString();
-                playNum = int.Parse(tmpNum);
+                PlayerInformation.PlayNum = int.Parse(tmpNum);
             }
-            return playNum;
         });
-        return playNum;
     }
 }

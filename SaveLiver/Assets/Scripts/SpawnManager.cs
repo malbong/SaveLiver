@@ -33,7 +33,11 @@ public class SpawnManager : MonoBehaviour
     private bool isRunningNormal = false;
     private bool isRunningSpecial = false;
     private bool isRunningPattern = false;
+    private bool isRunningEasyNormal = false;
+    private bool isRunningEasySpecial = false;
+    private bool isRunningEasyPattern = false;
 
+    Dictionary<int, bool> easySpecialIndexCheck = new Dictionary<int, bool>();
 
     private void Start()
     {
@@ -43,13 +47,22 @@ public class SpawnManager : MonoBehaviour
         isRunningNormal = false;
         isRunningSpecial = false;
         isRunningPattern = false;
+        isRunningEasyNormal = false;
+        isRunningEasySpecial = false;
+        isRunningEasyPattern = false;
 
         StartCoroutine(Play());
         StartCoroutine(ItemCreate());
+
+        for(int i=6; i<14; i++)
+        {
+            easySpecialIndexCheck.Add(i, false);
+        }
+        easySpecialIndexCheck[11] = true; // summon
     }
 
 
-    private IEnumerator Play()
+    public IEnumerator Play()
     {
         if (PlayerInformation.IsHard) // Hard 모드일 때
         {
@@ -183,69 +196,232 @@ public class SpawnManager : MonoBehaviour
                     float delayTime3 = GetDelayTime(3);
                     StartCoroutine(PatterRandomCreate(delayTime3));
                 }
-                Debug.Log(GetLevel());
                 yield return new WaitForSeconds(Time.deltaTime);
             }
         }
         else // Easy 모드일 때
         {
-            yield return new WaitForSeconds(0.1f);
+            yield return new WaitForSeconds(3f);
             EnemySpawn(0);
 
             yield return new WaitForSeconds(5f);
-            EnemySpawn(0);
-
-            yield return new WaitForSeconds(5f);
             EnemySpawn(1);
 
-            yield return new WaitForSeconds(7f);
-            EnemySpawn(1);
-
-            yield return new WaitForSeconds(7f);
-            EnemySpawn(1);
-
-            yield return new WaitForSeconds(7f);
-            EnemySpawn(2);
-
-            yield return new WaitForSeconds(10f);
-            EnemySpawn(2);
-
-            yield return new WaitForSeconds(10f);
-            EnemySpawn(2);
-            EnemySpawn(3);
+            
+            while (true)
+            {
+                if (isRunningEasyNormal == false)
+                {
+                    float delayTime1 = GetDelayTime(1);
+                    StartCoroutine(NomalEasyEnemyRandomCreate(delayTime1));
+                }
+                if (isRunningEasySpecial == false)
+                {
+                    float delayTime2 = GetDelayTime(2);
+                    StartCoroutine(EasyRandomSpecialSpawn(delayTime2));
+                }
+                if (isRunningEasyPattern == false)
+                {
+                    float delayTime3 = GetDelayTime(3);
+                    StartCoroutine(EasyPatterRandomCreate(delayTime3));
+                }
+                yield return new WaitForSeconds(Time.deltaTime);
+            }
         }
     }
-    
+
+
+    private int EasyGetRandomIndexSpecial()
+    {
+        int index = Random.Range(6, 14);
+        bool transCheck = false;
+        if (easySpecialIndexCheck[index]) // summon or 출몰했었던 적
+        {
+            for (int i = 6; i < 14; i++) // 출몰안한 적으로 대체
+            {
+                if (!easySpecialIndexCheck[index])
+                {
+                    index = i;
+                    transCheck = true;
+                    break;
+                }
+            }
+            if (!transCheck) // 모두 출몰했다면
+            {
+                for(int i=6; i<14; i++)
+                {
+                    easySpecialIndexCheck[i] = false; // 초기화
+                }
+                easySpecialIndexCheck[11] = true; // summon
+                while (index != 11) // summon일 때 다시 뽑기
+                {
+                    index = Random.Range(6, 14);
+                }
+            }
+        }
+        return index;
+    }
+
+
+    IEnumerator EasyRandomSpecialSpawn(float time)
+    {
+        isRunningEasySpecial = true;
+        yield return new WaitForSeconds(time);
+
+        int index = EasyGetRandomIndexSpecial();
+        float level = GetEasyLevel(); // 1 ~ 5
+        WaitForSeconds linearWaitTime = new WaitForSeconds(1.0f/level);
+        WaitForSeconds suddenWaitTime = new WaitForSeconds(1.0f/level);
+        WaitForSeconds spearWaitTime = new WaitForSeconds(10f/level);
+        WaitForSeconds boomWaitTime = new WaitForSeconds(10f/level);
+        WaitForSeconds blinderWaitTime = new WaitForSeconds(10f/level);
+        WaitForSeconds confuserWaitTime = new WaitForSeconds(8f/level);
+        WaitForSeconds summonerWaitTime = new WaitForSeconds(15f / level);
+        switch (index)
+        {
+            case 6: //linear
+                for(int i=0; i<5; i++) // 5개는 기본 생성
+                {
+                    EnemySpawn(6);
+                    yield return linearWaitTime;
+                }
+                yield return new WaitForSeconds(10f / level);
+                for (int i=0; i<level*2; i++) // level*2개 생성
+                {
+                    EnemySpawn(6);
+                    yield return linearWaitTime;
+                }
+                break;
+            case 7: //spear
+                for(int i=0; i<level; i++)
+                {
+                    EnemySpawn(7);
+                    yield return spearWaitTime;
+                }
+                break;
+            case 8: //boom (with Swirl)
+                for (int i=0; i<level; i++)
+                {
+                    EnemySpawn(8);
+                    yield return boomWaitTime;
+                }
+                Swirl(-250);
+                break;
+            case 9: //sudden attack
+                for(int i=0; i<level+2; i++)
+                {
+                    EnemySpawn(9);
+                    yield return suddenWaitTime;
+                }
+                break;
+            case 10: //blinder (with linear)
+                for (int i = 0; i < level; i++)
+                {
+                    EnemySpawn(10);
+                    yield return blinderWaitTime;
+                    EnemySpawn(6);
+                    EnemySpawn(6);
+                }
+                break;
+            case 12: //confuser (with linear)
+                for (int i=0; i<level; i++)
+                {
+                    EnemySpawn(12);
+                    yield return confuserWaitTime;
+                    EnemySpawn(6);
+                }
+                break;
+            case 13: //summoner
+                for (int i=0; i<level; i+=2) // Level 1,2(1번) 3,4(2번) 5(3번)
+                {
+                    EnemySpawn(13);
+                    yield return summonerWaitTime;
+                }
+                break;
+        }
+
+        isRunningEasySpecial = false;
+    }
+
 
     private float GetDelayTime(int flag)
     {
         float delayTime = 0; //y
 
-        float level = GetLevel();
-        switch (flag)
+        if (PlayerInformation.IsHard)
         {
-            case 1://nomal >>> y = -x + 11
-                delayTime = -1 * level + 11;
-                if (delayTime < 5) delayTime = 5;
-                break;
-            case 2 ://special
-                delayTime = -1 / 5.0f * level + 21 / 5.0f;
-                if (delayTime < 3) delayTime = 3;
-                break;
-            case 3://pattern
-                delayTime = -1 / 5.0f * level + 21 / 5.0f;
-                if (delayTime < 3) delayTime = 3;
-                break;
+            float level = GetLevel();
+            switch (flag)
+            {
+                case 1://nomal >>> y = -x + 11
+                    delayTime = -1 * level + 11;
+                    if (delayTime < 5) delayTime = 5;
+                    break;
+                case 2://special
+                    delayTime = -1 / 5.0f * level + 21 / 5.0f;
+                    if (delayTime < 3) delayTime = 3;
+                    break;
+                case 3://pattern
+                    delayTime = -1 / 5.0f * level + 21 / 5.0f;
+                    if (delayTime < 3) delayTime = 3;
+                    break;
+            }
+        }
+        else
+        {
+            float level = GetEasyLevel();
+            switch (flag)
+            {
+                case 1://nomal
+                    delayTime = -1 * level + 11;
+                    if (delayTime < 5) delayTime = 5;
+                    break;
+                case 2://special
+                    delayTime = -2 * level + 20;
+                    if (delayTime < 10) delayTime = 10;
+                    break;
+                case 3://pattern
+                    delayTime = -2 * level + 15;
+                    if (delayTime < 5) delayTime = 5;
+                    break;
+            }
         }
         return delayTime; //y
     }
 
 
+    private float GetEasyLevel() // 1 ~ 5
+    {
+        float level = GameManager.instance.totalPlayTime / 40.0f;
+        if (level > 4) level = 5;
+        return level;
+    }
+
+
     private float GetLevel()
     {
-        float level = GameManager.instance.totalPlayTime / 30.0f - 1;
+        float level = GameManager.instance.totalPlayTime / 30.0f - 1; 
         if (level > 6) level = 7;
         return level;
+    }
+
+
+    private IEnumerator NomalEasyEnemyRandomCreate(float time)
+    {
+        isRunningEasyNormal = true;
+
+        yield return new WaitForSeconds(time);
+
+        //index 012 123 234 345 45
+        //level 0   1   2   3   4
+        int level = (int)GetEasyLevel();
+        int min = level;
+        int max = level + 2;
+        if (level == 4) max = level+1;
+
+        EnemySpawn(Random.Range(min, max+1));
+
+        isRunningEasyNormal = false;
     }
 
 
@@ -358,6 +534,50 @@ public class SpawnManager : MonoBehaviour
                 break;
         }
         //EnemySpawn(Random.Range(11, 14));
+    }
+
+
+    private IEnumerator EasyPatterRandomCreate(float time)
+    {
+        isRunningEasyPattern = true;
+        yield return new WaitForSeconds(time);
+
+        //level 1-2.33  2.33-3.66  3.66-4.99
+
+        //easy : all4, left, right 
+        //middle : all8, swirl, both 
+        //hard : dragon, diagonalseq, swirl 2
+        int random = Random.Range(1, 101); // 1 ~ 100
+        float level = GetEasyLevel();
+        if (1 <= level && level < 2.33)
+        {
+            //easy 60 middle 30 hard 10
+            if (1 <= random && random <= 60) CreateEasyPattern();
+            else if (60 < random && random <= 90) CreateMiddlePattern();
+            else CreateHardPattern(); // 91 ~ 100
+        }
+        else if (2.33 <= level && level < 3.66)
+        {
+            //easy 30 middle 40 hard 30
+            if (1 <= random && random <= 30) CreateEasyPattern();
+            else if (30 < random && random <= 70) CreateMiddlePattern();
+            else CreateHardPattern(); // 71 ~ 100
+        }
+        else if (3.66 <= level && level <= 4.99)//4.33 ~ 6
+        {
+            //easy 10 middle 30 hard 60
+            if (1 <= random && random <= 10) CreateEasyPattern();
+            else if (10 <= random && random <= 40) CreateMiddlePattern();
+            else CreateHardPattern(); // 41 ~ 100
+        }
+        else //level 5 max
+        {
+            //easy 0 middle 20 hard 80
+            if (1 <= random && random <= 20) CreateMiddlePattern();
+            else CreateHardPattern();
+        }
+
+        isRunningEasyPattern = false;
     }
 
 
@@ -480,7 +700,7 @@ public class SpawnManager : MonoBehaviour
 
     IEnumerator ItemCreate()
     {
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(5f);
 
         while (true)
         {
@@ -556,6 +776,8 @@ public class SpawnManager : MonoBehaviour
         obj.transform.GetChild(0).transform.position = randomPosition;
         obj.transform.GetChild(0).rotation = rotation;
         obj.SetActive(true);
+
+        GameManager.instance.enemyCount += 1;
     }
 
 

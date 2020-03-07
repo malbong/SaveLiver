@@ -20,7 +20,7 @@ public class MenuManager : MonoBehaviour
     private bool rewardFadeInRunning = false;
     private bool rewardFadeOutRunning = false;
     private bool seeingRewardPanel = false;
-    
+
     public GameObject getSoulOuterPanel;
     public GameObject getSoulPanel;
     private bool getSoulFadeInRunning = false;
@@ -57,12 +57,28 @@ public class MenuManager : MonoBehaviour
     public Text EasyBestScoreText;
     private bool seeingLevel = false;
 
+    public Slider EasyDestinationSlider;
+    public Slider HardDestinationSlider;
+    public GameObject EasyDesObj;
+    public GameObject HardDesObj;
+    public GameObject clearEasyImage;
+    public GameObject clearHardImage;
+
+    private const int END_SCORE = 3000;
+
 
     void Start()
     {
         DatabaseManager.UpdateMoney(0);
-        PlayerInformation.BestScore = DatabaseManager.GetScore(true);
-        PlayerInformation.EasyBestScore = DatabaseManager.GetScore(false);
+        DatabaseManager.GetScore(true);
+        DatabaseManager.GetScore(false);
+
+        //PlayerInformation.BestScore = DatabaseManager.GetScore(true);
+        //PlayerInformation.EasyBestScore = DatabaseManager.GetScore(false);
+        if (PlayerInformation.IsSawLogo)
+        {
+            SetDestination();
+        }
     }
 
 
@@ -75,21 +91,24 @@ public class MenuManager : MonoBehaviour
             if (!adsManager.seeingGetSoulText)
             {
                 getSoulPanelText.text = "Wait for next ad" + "\n"
-                    + string.Format("{0:D2}", PlayerInformation.Minutes) 
-                    + " : " 
+                    + string.Format("{0:D2}", PlayerInformation.Minutes)
+                    + " : "
                     + string.Format("{0:D2}", PlayerInformation.FinalSeconds);
             }
         }
-        else if(!PlayerInformation.IsWatched && seeingTimer) // 타이머 패널 띄우고 있는 와중에 시간이 다 된다면,
+        else if (!PlayerInformation.IsWatched && seeingTimer) // 타이머 패널 띄우고 있는 와중에 시간이 다 된다면,
         {
             StartCoroutine(GetSoulPanelFadeOut());
             StartCoroutine(GameRewardPanelFadeIn());
         }
-        
 
-        soulText.text = string.Format("{0:N0}", PlayerInformation.SoulMoney.ToString()); // Soul Money 표시
-        HardBestScoreText.text = string.Format("{0:N0}", PlayerInformation.BestScore.ToString());
-        EasyBestScoreText.text = string.Format("{0:N0}", PlayerInformation.EasyBestScore.ToString());
+
+        soulText.text = string.Format("{0:N0}", PlayerInformation.SoulMoney); // Soul Money 표시
+        HardBestScoreText.text = string.Format("{0:N0}", PlayerInformation.BestScore);
+        EasyBestScoreText.text = string.Format("{0:N0}", PlayerInformation.EasyBestScore);
+        EasyDestinationSlider.value = PlayerInformation.EasyBestScore;
+        HardDestinationSlider.value = PlayerInformation.BestScore;
+
 
         // 안드로이드에서 뒤로가기 누르면 종료되는 처리
         //if(Application.platform == RuntimePlatform.Android)
@@ -139,7 +158,7 @@ public class MenuManager : MonoBehaviour
                 StartCoroutine(GameQuitPanelFadeOut());
                 return;
             }
-            
+
             // help 창을 보고 있다면
             if (SettingsManager.instance.seeingHelpPanel)
             {
@@ -152,13 +171,28 @@ public class MenuManager : MonoBehaviour
                 SettingsManager.instance.OnSettingsExitButton();
                 return;
             }
-            if (!quitFadeInRunning && !rewardFadeInRunning && !getSoulFadeInRunning 
+            if (!quitFadeInRunning && !rewardFadeInRunning && !getSoulFadeInRunning
                 && !storeFadeInRunning && !chargeFadeInRunning && !sceneTransition.isSceneTransitionRunning())
-            { 
+            {
                 StartCoroutine(GameQuitPanelFadeIn());
             }
         }
         //}
+    }
+
+
+    public void SetDestination()
+    {
+        if (PlayerInformation.BestScore >= END_SCORE)
+        {
+            clearHardImage.SetActive(true);
+            HardDesObj.SetActive(false);
+        }
+        if (PlayerInformation.EasyBestScore >= END_SCORE)
+        {
+            clearEasyImage.SetActive(true);
+            EasyDesObj.SetActive(false);
+        }
     }
 
 
@@ -174,15 +208,19 @@ public class MenuManager : MonoBehaviour
     public void OnBtnHard()
     {
         //adsManager.EventMinus();
+        SoundManager.instance.ButtonClick();
         PlayerInformation.IsHard = true;
-        sceneTransition.LoadPlayScene();
+        SceneManager.LoadScene(1);
+        //sceneTransition.LoadPlayScene();
     }
 
     public void OnBtnEasy()
     {
         //adsManager.EventMinus();
+        SoundManager.instance.ButtonClick();
         PlayerInformation.IsHard = false;
-        sceneTransition.LoadPlayScene();
+        SceneManager.LoadScene(1);
+        //sceneTransition.LoadPlayScene();
     }
 
     public void OnBtnLevelOut()
@@ -531,7 +569,7 @@ public class MenuManager : MonoBehaviour
     IEnumerator StorePanelFadeIn()
     {
         if (storeFadeOutRunning) yield break;
-        
+
         storeManager.seeingStore = true;
         storePanel.SetActive(true);
         storeFadeInRunning = true;

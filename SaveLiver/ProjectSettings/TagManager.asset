@@ -14,6 +14,8 @@ TagManager:
   - Soul
   - AbsorbCollider
   - Bullet
+  - Indicator
+  - Swirl
   layers:
   - Default
   - TransparentFX

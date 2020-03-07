@@ -13,6 +13,9 @@ public static class PlayerInformation
     public static bool isLogin { get; set; } = false;
     public static bool isVibrationOn { get; set; } = true;
     public static int[] customs { get; set; } = { 0, 0, 0 };
+    public static int[] boatChargeList { get; set; } = { 2, 2, 2, 2, 2, 2 };
+    public static int[] faceChargeList { get; set; } = { 2, 2, 2, 2, 2 };
+    public static int[] waveChargeList { get; set; } = { 2, 2, 2, 2, 2 };
     public static int PlayNum { get; set; }
     public static bool IsWatched { get; set; } = false;
     public static float Seconds { get; set; } = 0;

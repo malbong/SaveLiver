@@ -124,4 +124,11 @@ public class Item : MonoBehaviour
             if(!hasItem) parent.gameObject.SetActive(false);
         }
     }
+
+
+    public void EndingDestroyItem()
+    {
+        StopCoroutine(TimeCheckAndDestroy());
+        if (!hasItem) parent.gameObject.SetActive(false);
+    }
 }

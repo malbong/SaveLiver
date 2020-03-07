@@ -66,6 +66,9 @@ public class StoreManager : MonoBehaviour
     public RectTransform chargeNoButton;
     public Text chargeNoText;
 
+    public Image facePanelImage;
+    public Image boatPanelImage;
+    public Image wavePanelImage;
 
     void Start()
     {
@@ -125,7 +128,7 @@ public class StoreManager : MonoBehaviour
         }
     }
 
-
+    
     public void OnBtnPanelState(int onClickPanel) // onClickPanel - 0:face, 1:boat, 2:wave
     {
         SoundManager.instance.ButtonClick();
@@ -136,6 +139,12 @@ public class StoreManager : MonoBehaviour
                 facePanel.SetActive(true);
                 if(boatPanel.activeInHierarchy) boatPanel.SetActive(false);
                 if(wavePanel.activeInHierarchy) wavePanel.SetActive(false);
+                facePanelImage.rectTransform.SetSiblingIndex(3);
+                boatPanelImage.rectTransform.SetSiblingIndex(0);
+                wavePanelImage.rectTransform.SetSiblingIndex(1);
+                facePanelImage.rectTransform.localPosition = new Vector2(-415, 688);
+                boatPanelImage.rectTransform.localPosition = new Vector2(-400, 535);
+                wavePanelImage.rectTransform.localPosition = new Vector2(-400, 382);
                 UpdateFaceSprite();
                 InitFaceCharge();
                 break;
@@ -144,6 +153,12 @@ public class StoreManager : MonoBehaviour
                 if (facePanel.activeInHierarchy) facePanel.SetActive(false);
                 boatPanel.SetActive(true);
                 if (wavePanel.activeInHierarchy) wavePanel.SetActive(false);
+                facePanelImage.rectTransform.SetSiblingIndex(0);
+                boatPanelImage.rectTransform.SetSiblingIndex(3);
+                wavePanelImage.rectTransform.SetSiblingIndex(1);
+                facePanelImage.rectTransform.localPosition = new Vector2(-400, 688);
+                boatPanelImage.rectTransform.localPosition = new Vector2(-415, 535);
+                wavePanelImage.rectTransform.localPosition = new Vector2(-400, 382);
                 UpdateBoatSprite();
                 InitBoatCharge();
                 break;
@@ -152,6 +167,12 @@ public class StoreManager : MonoBehaviour
                 if (facePanel.activeInHierarchy) facePanel.SetActive(false);
                 if (boatPanel.activeInHierarchy) boatPanel.SetActive(false);
                 wavePanel.SetActive(true);
+                facePanelImage.rectTransform.SetSiblingIndex(0);
+                boatPanelImage.rectTransform.SetSiblingIndex(1);
+                wavePanelImage.rectTransform.SetSiblingIndex(3);
+                facePanelImage.rectTransform.localPosition = new Vector2(-400, 688);
+                boatPanelImage.rectTransform.localPosition = new Vector2(-400, 535);
+                wavePanelImage.rectTransform.localPosition = new Vector2(-415, 382);
                 UpdateWaveSprite();
                 InitWaveCharge();
                 break;
@@ -275,7 +296,7 @@ public class StoreManager : MonoBehaviour
 
     public void InitStoreAsync()
     {
-        PlayerInformation.customs = DatabaseManager.GetCurrentCustom();
+        DatabaseManager.GetCurrentCustom();
         // customs[0] : boat, 1 : face, 2: wave
     }
 
@@ -284,8 +305,9 @@ public class StoreManager : MonoBehaviour
     {
         for (int i = 0; i < boatChargeList.Length; i++)
         {
-            boatChargeList[i] = DatabaseManager.BoatCharge(i);
+            DatabaseManager.BoatCharge(i);
         }
+        boatChargeList = PlayerInformation.boatChargeList;
         UpdateLock();
     }
 
@@ -294,8 +316,9 @@ public class StoreManager : MonoBehaviour
     {
         for (int i = 0; i < faceChargeList.Length; i++)
         {
-            faceChargeList[i] = DatabaseManager.FaceCharge(i);
+            DatabaseManager.FaceCharge(i);
         }
+        faceChargeList = PlayerInformation.faceChargeList;
         UpdateLock();
     }
 
@@ -304,8 +327,9 @@ public class StoreManager : MonoBehaviour
     {
         for (int i = 0; i < waveChargeList.Length; i++)
         {
-            waveChargeList[i] = DatabaseManager.WaveCharge(i);
+            DatabaseManager.WaveCharge(i);
         }
+        waveChargeList = PlayerInformation.waveChargeList;
         UpdateLock();
     }
 
@@ -487,6 +511,7 @@ public class StoreManager : MonoBehaviour
         if (skipRunning) return;
 
         SoundManager.instance.ButtonClick();
+        CheckEquip();
 
         if (panelState == PanelState.Face)
         {
@@ -503,6 +528,7 @@ public class StoreManager : MonoBehaviour
                     else if(faceChargeList[i] == 0) // 구매 O, 장착 X
                     {
                         faceChargeList[i] = 1;
+                        PlayerInformation.faceChargeList[i] = 1;
                         PlayerInformation.customs[1] = i; // 장착하기
                     }
                     break;
@@ -524,6 +550,7 @@ public class StoreManager : MonoBehaviour
                     else if (boatChargeList[i] == 0) // 구매 O, 장착 X
                     {
                         boatChargeList[i] = 1;
+                        PlayerInformation.boatChargeList[i] = 1;
                         PlayerInformation.customs[0] = i;
                     }
                     break;
@@ -545,6 +572,7 @@ public class StoreManager : MonoBehaviour
                     else if (waveChargeList[i] == 0) // 구매 O, 장착 X
                     {
                         waveChargeList[i] = 1;
+                        PlayerInformation.waveChargeList[i] = 1;
                         PlayerInformation.customs[2] = i;
                     }
                     break;
@@ -567,6 +595,7 @@ public class StoreManager : MonoBehaviour
             if(faceChargeList[i] == 1 && face != i)
             {
                 faceChargeList[i] = 0;
+                PlayerInformation.faceChargeList[i] = 0;
             }
         }
 
@@ -575,6 +604,7 @@ public class StoreManager : MonoBehaviour
             if (boatChargeList[i] == 1 && boat != i)
             {
                 boatChargeList[i] = 0;
+                PlayerInformation.boatChargeList[i] = 0;
             }
         }
 
@@ -583,6 +613,7 @@ public class StoreManager : MonoBehaviour
             if (waveChargeList[i] == 1 && wave != i)
             {
                 waveChargeList[i] = 0;
+                PlayerInformation.waveChargeList[i] = 0;
             }
         }
     }
@@ -604,6 +635,7 @@ public class StoreManager : MonoBehaviour
                     {
                         DatabaseManager.SetChargeNewData("face", i);
                         InitFaceCharge();
+                        PlayerInformation.faceChargeList[i] = 0;
                         faceChargeList[i] = 0;
                         UpdateLock();
                         menuManager.OnBtnChargeNo();
@@ -630,6 +662,7 @@ public class StoreManager : MonoBehaviour
                     {
                         DatabaseManager.SetChargeNewData("boat", i);
                         InitBoatCharge();
+                        PlayerInformation.boatChargeList[i] = 0;
                         boatChargeList[i] = 0;
                         UpdateLock();
                         menuManager.OnBtnChargeNo();
@@ -656,6 +689,7 @@ public class StoreManager : MonoBehaviour
                     {
                         DatabaseManager.SetChargeNewData("wave", i);
                         InitWaveCharge();
+                        PlayerInformation.waveChargeList[i] = 0;
                         waveChargeList[i] = 0;
                         UpdateLock();
                         menuManager.OnBtnChargeNo();

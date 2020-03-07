@@ -61,6 +61,14 @@ public class GameManager : MonoBehaviour
 
     public bool seeingPausePanel = false;
 
+    public int enemyCount = 0;
+
+    public Slider destinationSlider;
+    public Animator destinationAnimator;
+    public RuntimeAnimatorController easyAni;
+    public RuntimeAnimatorController hardAni;
+
+    public bool isEnd = false;
 
     private void Awake()
     {
@@ -77,11 +85,17 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
+        if (PlayerInformation.IsHard)
+            destinationAnimator.runtimeAnimatorController = hardAni;
+        else 
+            destinationAnimator.runtimeAnimatorController = easyAni;
+
         originTimeScale = Time.timeScale;
         isPause = false;
 
         secondsUnit = 0;
         totalScore = 0;
+        destinationSlider.value = totalScore;
 
         UpdateLiverCountText();
         
@@ -92,8 +106,10 @@ public class GameManager : MonoBehaviour
 
         totalPlayTime = 0;
 
-        dataPlayNum = DatabaseManager.GetPlayNum();
-        dataScore = PlayerInformation.BestScore;
+        //dataPlayNum = DatabaseManager.GetPlayNum();
+        //dataScore = PlayerInformation.BestScore;
+
+        DatabaseManager.GetPlayNum();
 
         seeingPausePanel = false;
 }
@@ -137,7 +153,7 @@ public class GameManager : MonoBehaviour
 
         //if (Application.platform == RuntimePlatform.Android)
         //{
-            if (Input.GetKey(KeyCode.Escape) && Player.instance.isAlive)
+            if (Input.GetKey(KeyCode.Escape) && Player.instance.isAlive && !Player.instance.seeingEnding)
             {
                 OnPause();
             }
@@ -181,7 +197,7 @@ public class GameManager : MonoBehaviour
         if (Player.instance.isAlive == false) return;
 
         totalSoulCount += soulCount;
-        playingPanelSoulCountText.text = totalSoulCount.ToString();
+        playingPanelSoulCountText.text = string.Format("{0:N0}", totalSoulCount);
     }
 
 
@@ -189,6 +205,7 @@ public class GameManager : MonoBehaviour
     {
         if (Player.instance.isAlive == false) return;
         totalScore += score;
+        destinationSlider.value = totalScore;
     }
 
 
@@ -302,11 +319,13 @@ public class GameManager : MonoBehaviour
 
     public void PlayerDied()
     {
-        dataScore = DatabaseManager.GetScore(PlayerInformation.IsHard);
-        dataPlayNum = DatabaseManager.GetPlayNum();
+        //dataScore = DatabaseManager.GetScore(PlayerInformation.IsHard);
+        if (PlayerInformation.IsHard) dataScore = PlayerInformation.BestScore;
+        else dataScore = PlayerInformation.EasyBestScore;
+        
         DatabaseManager.UpdateMoney(totalSoulCount);
-        DatabaseManager.SetPlayNum(dataPlayNum + 1);
         PlayerInformation.PlayNum += dataPlayNum + 1;
+        DatabaseManager.SetPlayNum(PlayerInformation.PlayNum);
 
         PlayerInformation.AchievementPlayNum();
         PlayerInformation.AchievementOncePlay(totalSoulCount, totalGetItemCount);
@@ -502,9 +521,9 @@ public class GameManager : MonoBehaviour
     }
 
 
-    private IEnumerator ShowDiedPanelFadeIn()
+    public IEnumerator ShowDiedPanelFadeIn()
     {
-        if (Player.instance.isAlive) yield break;
+        if (Player.instance.isAlive && !isEnd) yield break;
 
         StartCoroutine(PauseButtonFadeOut());
         StartCoroutine(JoyStickFadeOut());
@@ -742,11 +761,5 @@ public class GameManager : MonoBehaviour
     {
         if (dataScore < totalScore) return true;
         else return false;
-    }
-
-
-    private void SetBestScore()
-    {
-
     }
 }

@@ -298,22 +298,22 @@ public class SettingsManager : MonoBehaviour
 
         settingsOuterPanel.SetActive(true);
 
-        Transform settingsInnerPanel = settingsOuterPanel.transform.GetChild(0);
+        //Transform settingsInnerPanel = settingsOuterPanel.transform.GetChild(0);
 
-        Image settingsOuterPanelImage = settingsOuterPanel.GetComponent<Image>();
-        Color tmpOuterColor = settingsOuterPanelImage.color;
+        //Image settingsOuterPanelImage = settingsOuterPanel.GetComponent<Image>();
+        //Color tmpOuterColor = settingsOuterPanelImage.color;
 
-        Image settingsInnerPanelImage = settingsInnerPanel.GetComponent<Image>();
-        Color tmpInnerColor = settingsInnerPanelImage.color;
+        //Image settingsInnerPanelImage = settingsInnerPanel.GetComponent<Image>();
+        //Color tmpInnerColor = settingsInnerPanelImage.color;
 
         while (true)
         {
             settingsOuterPanel.transform.localScale -= new Vector3(0.2f, 0.2f, 0.2f);
 
-            tmpOuterColor.a += 0.1f;
-            tmpInnerColor.a += 0.2f;
-            settingsInnerPanelImage.color = tmpInnerColor;
-            settingsOuterPanelImage.color = tmpOuterColor;
+            //tmpOuterColor.a += 0.1f;
+            //tmpInnerColor.a += 0.2f;
+            //settingsInnerPanelImage.color = tmpInnerColor;
+            //settingsOuterPanelImage.color = tmpOuterColor;
 
             if (settingsOuterPanel.transform.localScale.x <= 1) break;
 
@@ -322,11 +322,11 @@ public class SettingsManager : MonoBehaviour
 
         settingsOuterPanel.transform.localScale = new Vector3(1, 1, 1);
 
-        tmpOuterColor.a = 0.5f;
-        settingsOuterPanelImage.color = tmpOuterColor;
+        //tmpOuterColor.a = 0.5f;
+        //settingsOuterPanelImage.color = tmpOuterColor;
 
-        tmpInnerColor.a = 1f;
-        settingsInnerPanelImage.color = tmpInnerColor;
+        //tmpInnerColor.a = 1f;
+        //settingsInnerPanelImage.color = tmpInnerColor;
 
         settingsPanelFadeInRunning = false;
     }
@@ -344,22 +344,22 @@ public class SettingsManager : MonoBehaviour
 
         settingsOuterPanel.SetActive(true);
 
-        Transform settingsInnerPanel = settingsOuterPanel.transform.GetChild(0);
+        //Transform settingsInnerPanel = settingsOuterPanel.transform.GetChild(0);
 
-        Image settingsOuterPanelImage = settingsOuterPanel.GetComponent<Image>();
-        Color tmpOuterColor = settingsOuterPanelImage.color;
+        //Image settingsOuterPanelImage = settingsOuterPanel.GetComponent<Image>();
+        //Color tmpOuterColor = settingsOuterPanelImage.color;
 
-        Image settingsInnerPanelImage = settingsInnerPanel.GetComponent<Image>();
-        Color tmpInnerColor = settingsInnerPanelImage.color;
+        //Image settingsInnerPanelImage = settingsInnerPanel.GetComponent<Image>();
+        //Color tmpInnerColor = settingsInnerPanelImage.color;
 
         while (true)
         {
             settingsOuterPanel.transform.localScale -= new Vector3(0.2f, 0.2f, 0.2f);
 
-            tmpOuterColor.a -= 0.1f;
-            tmpInnerColor.a -= 0.2f;
-            settingsInnerPanelImage.color = tmpInnerColor;
-            settingsOuterPanelImage.color = tmpOuterColor;
+            //tmpOuterColor.a -= 0.1f;
+            //tmpInnerColor.a -= 0.2f;
+            //settingsInnerPanelImage.color = tmpInnerColor;
+            //settingsOuterPanelImage.color = tmpOuterColor;
 
             if (settingsOuterPanel.transform.localScale.x <= 0) break;
 
@@ -370,11 +370,11 @@ public class SettingsManager : MonoBehaviour
 
         settingsOuterPanel.transform.localScale = new Vector3(2, 2, 2);
 
-        tmpOuterColor.a = 0f;
-        settingsOuterPanelImage.color = tmpOuterColor;
+        //tmpOuterColor.a = 0f;
+        //settingsOuterPanelImage.color = tmpOuterColor;
 
-        tmpInnerColor.a = 0f;
-        settingsInnerPanelImage.color = tmpInnerColor;
+        //tmpInnerColor.a = 0f;
+        //settingsInnerPanelImage.color = tmpInnerColor;
         
         settingsPanelFadeOutRunning = false;
     }
@@ -393,20 +393,20 @@ public class SettingsManager : MonoBehaviour
 
         Transform helpInnerPanel = helpOuterPanel.transform.GetChild(0);
 
-        Image helpOuterImage = helpOuterPanel.GetComponent<Image>();
-        Color tmpOuterColor = helpOuterImage.color;
+        //Image helpOuterImage = helpOuterPanel.GetComponent<Image>();
+        //Color tmpOuterColor = helpOuterImage.color;
 
-        Image helpInnerImage = helpInnerPanel.GetComponent<Image>();
-        Color tmpInnerColor = helpInnerImage.color;
+        //Image helpInnerImage = helpInnerPanel.GetComponent<Image>();
+        //Color tmpInnerColor = helpInnerImage.color;
 
         while (true)
         {
             helpOuterPanel.transform.localScale -= new Vector3(0.2f, 0.2f, 0.2f);
 
-            tmpOuterColor.a += 0.1f;
-            tmpInnerColor.a += 0.2f;
-            helpOuterImage.color = tmpOuterColor;
-            helpInnerImage.color = tmpInnerColor;
+            //tmpOuterColor.a += 0.1f;
+            //tmpInnerColor.a += 0.2f;
+            //helpOuterImage.color = tmpOuterColor;
+            //helpInnerImage.color = tmpInnerColor;
 
             if (helpOuterPanel.transform.localScale.x <= 1) break;
 
@@ -415,11 +415,11 @@ public class SettingsManager : MonoBehaviour
 
         helpOuterPanel.transform.localScale = new Vector3(1, 1, 1);
 
-        tmpOuterColor.a = 0.5f;
-        helpOuterImage.color = tmpOuterColor;
+        //tmpOuterColor.a = 0.5f;
+        //helpOuterImage.color = tmpOuterColor;
 
-        tmpInnerColor.a = 1f;
-        helpInnerImage.color = tmpInnerColor;
+        //tmpInnerColor.a = 1f;
+        //helpInnerImage.color = tmpInnerColor;
 
         helpPanelFadeInRunning = false;
     }
@@ -434,22 +434,22 @@ public class SettingsManager : MonoBehaviour
         seeingSettingPanel = true;
         seeingHelpPanel = false;
 
-        Transform helpInnerPanel = helpOuterPanel.transform.GetChild(0);
+        //Transform helpInnerPanel = helpOuterPanel.transform.GetChild(0);
 
-        Image helpOuterImage = helpOuterPanel.GetComponent<Image>();
-        Color tmpOuterColor = helpOuterImage.color;
+        //Image helpOuterImage = helpOuterPanel.GetComponent<Image>();
+        //Color tmpOuterColor = helpOuterImage.color;
 
-        Image helpInnerImage = helpInnerPanel.GetComponent<Image>();
-        Color tmpInnerColor = helpInnerImage.color;
+        //Image helpInnerImage = helpInnerPanel.GetComponent<Image>();
+        //Color tmpInnerColor = helpInnerImage.color;
 
         while (true)
         {
             helpOuterPanel.transform.localScale -= new Vector3(0.2f, 0.2f, 0.2f);
 
-            tmpOuterColor.a -= 0.1f;
-            tmpInnerColor.a -= 0.2f;
-            helpOuterImage.color = tmpOuterColor;
-            helpInnerImage.color = tmpInnerColor;
+            //tmpOuterColor.a -= 0.1f;
+            //tmpInnerColor.a -= 0.2f;
+            //helpOuterImage.color = tmpOuterColor;
+            //helpInnerImage.color = tmpInnerColor;
 
             if (helpOuterPanel.transform.localScale.x <= 0) break;
 
@@ -460,11 +460,11 @@ public class SettingsManager : MonoBehaviour
 
         helpOuterPanel.transform.localScale = new Vector3(2, 2, 2);
 
-        tmpOuterColor.a = 0f;
-        helpOuterImage.color = tmpOuterColor;
+        //tmpOuterColor.a = 0f;
+        //helpOuterImage.color = tmpOuterColor;
 
-        tmpInnerColor.a = 0f;
-        helpInnerImage.color = tmpInnerColor;
+        //tmpInnerColor.a = 0f;
+        //helpInnerImage.color = tmpInnerColor;
 
         helpPanelFadeOutRunning = false;
     }

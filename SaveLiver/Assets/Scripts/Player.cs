@@ -84,6 +84,9 @@ public class Player : MonoBehaviour
 
     public Transform boatTransform;
 
+    public bool seeingEnding = false;
+
+
     void Start()
     {
         playerRigid = GetComponent<Rigidbody2D>();
@@ -114,6 +117,7 @@ public class Player : MonoBehaviour
         isTriggerConfusionRunning = false;
         isTriggerBlindingRunning = false;
         isPlayerBeatRunning = false;
+        seeingEnding = false;
     }
 
     void FixedUpdate()
@@ -165,7 +169,7 @@ public class Player : MonoBehaviour
     * @설명: 일정한 속도(rotateSpeed)로 회전.
     *        터치가 발생하면 호출됨
     */
-    IEnumerator RotateAngle(float angle, int sign)
+    public IEnumerator RotateAngle(float angle, int sign)
     {
         if (isReversed)
         {
@@ -356,7 +360,7 @@ public class Player : MonoBehaviour
     }
 
 
-    private void KeepOnTrail()
+    public void KeepOnTrail()
     {
         Transform rotator = transform.Find("Rotator");
         if (rotator != null)

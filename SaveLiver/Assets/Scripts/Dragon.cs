@@ -126,7 +126,7 @@ public class Dragon : MonoBehaviour
     *        Dead Animation 실행
     *        페이드 아웃 코루틴 호출
     */
-    private void OnDead()
+    public void OnDead()
     {
         if (!isAlive) return; //죽었으면 리턴
 

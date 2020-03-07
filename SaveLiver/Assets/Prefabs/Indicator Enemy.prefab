@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 6320070025923731741}
   m_Layer: 5
   m_Name: Indicator Enemy
-  m_TagString: Untagged
+  m_TagString: Indicator
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

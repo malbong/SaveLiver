@@ -9,7 +9,7 @@ public class Logo : MonoBehaviour
     public Text hosanText;
     public Image logoImage;
     public GameObject soundObject;
-
+    public MenuManager menuManager;
 
     void Start()
     {
@@ -29,7 +29,7 @@ public class Logo : MonoBehaviour
     {
         yield return new WaitForSeconds(4f);
         PlayerInformation.IsSawLogo = true;
-
+        menuManager.SetDestination();
         SoundManager.instance.menuAudio.Play();
         logoCanvas.gameObject.SetActive(false);
     }
