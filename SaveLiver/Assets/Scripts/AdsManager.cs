@@ -29,10 +29,7 @@ public class AdsManager : MonoBehaviour
         rewarded = false;
 
         InitBannerAd();
-        if (!IsLoadedRewardAd())
-        {
-            InitRewardAd();
-        }
+        InitRewardAd();
     }
 
 

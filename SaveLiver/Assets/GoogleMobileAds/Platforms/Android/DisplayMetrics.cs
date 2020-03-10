@@ -11,8 +11,6 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-#if UNITY_ANDROID
-
 using UnityEngine;
 using System;
 using System.Collections.Generic;
@@ -21,15 +19,15 @@ namespace GoogleMobileAds.Android
 {
     public class DisplayMetrics {
         // The logical density of the display.
-        public static float Density { get; protected set; }
+        public float Density { get; protected set; }
 
         // The absolute height of the display in pixels
-        public static int HeightPixels { get; protected set; }
+        public int HeightPixels { get; protected set; }
 
         // The absolute width of the display in pixels
-        public static int WidthPixels { get; protected set; }
+        public int WidthPixels { get; protected set; }
 
-        static DisplayMetrics() {
+        public DisplayMetrics() {
             using (
                 AndroidJavaClass unityPlayerClass = new AndroidJavaClass(Utils.UnityActivityClassName),
                 metricsClass = new AndroidJavaClass(Utils.DisplayMetricsClassName)
@@ -52,4 +50,4 @@ namespace GoogleMobileAds.Android
     }
 }
 
-#endif
+

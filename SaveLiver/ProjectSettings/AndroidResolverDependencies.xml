@@ -1,6 +1,6 @@
 <dependencies>
   <packages>
-    <package>com.google.android.gms:play-services-ads:18.3.0</package>
+    <package>com.google.android.gms:play-services-ads:19.0.0</package>
     <package>com.google.firebase:firebase-analytics:17.2.1</package>
     <package>com.google.firebase:firebase-app-unity:6.9.0</package>
     <package>com.google.firebase:firebase-auth:19.2.0</package>
@@ -39,10 +39,10 @@
     <file>Assets/Plugins/Android/androidx.swiperefreshlayout.swiperefreshlayout-1.0.0.aar</file>
     <file>Assets/Plugins/Android/androidx.versionedparcelable.versionedparcelable-1.0.0.aar</file>
     <file>Assets/Plugins/Android/androidx.viewpager.viewpager-1.0.0.aar</file>
-    <file>Assets/Plugins/Android/com.google.android.gms.play-services-ads-18.3.0.aar</file>
-    <file>Assets/Plugins/Android/com.google.android.gms.play-services-ads-base-18.3.0.aar</file>
+    <file>Assets/Plugins/Android/com.google.android.gms.play-services-ads-19.0.0.aar</file>
+    <file>Assets/Plugins/Android/com.google.android.gms.play-services-ads-base-19.0.0.aar</file>
     <file>Assets/Plugins/Android/com.google.android.gms.play-services-ads-identifier-17.0.0.aar</file>
-    <file>Assets/Plugins/Android/com.google.android.gms.play-services-ads-lite-18.3.0.aar</file>
+    <file>Assets/Plugins/Android/com.google.android.gms.play-services-ads-lite-19.0.0.aar</file>
     <file>Assets/Plugins/Android/com.google.android.gms.play-services-auth-17.0.0.aar</file>
     <file>Assets/Plugins/Android/com.google.android.gms.play-services-auth-api-phone-17.0.0.aar</file>
     <file>Assets/Plugins/Android/com.google.android.gms.play-services-auth-base-17.0.0.aar</file>
@@ -50,7 +50,7 @@
     <file>Assets/Plugins/Android/com.google.android.gms.play-services-basement-17.0.0.aar</file>
     <file>Assets/Plugins/Android/com.google.android.gms.play-services-drive-17.0.0.aar</file>
     <file>Assets/Plugins/Android/com.google.android.gms.play-services-games-18.0.1.aar</file>
-    <file>Assets/Plugins/Android/com.google.android.gms.play-services-gass-18.3.0.aar</file>
+    <file>Assets/Plugins/Android/com.google.android.gms.play-services-gass-19.0.0.aar</file>
     <file>Assets/Plugins/Android/com.google.android.gms.play-services-measurement-17.2.1.aar</file>
     <file>Assets/Plugins/Android/com.google.android.gms.play-services-measurement-api-17.2.1.aar</file>
     <file>Assets/Plugins/Android/com.google.android.gms.play-services-measurement-base-17.2.1.aar</file>
