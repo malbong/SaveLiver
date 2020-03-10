@@ -75,10 +75,8 @@ public class MenuManager : MonoBehaviour
 
         //PlayerInformation.BestScore = DatabaseManager.GetScore(true);
         //PlayerInformation.EasyBestScore = DatabaseManager.GetScore(false);
-        if (PlayerInformation.IsSawLogo)
-        {
-            SetDestination();
-        }
+        
+        SetDestination();
     }
 
 
@@ -108,7 +106,7 @@ public class MenuManager : MonoBehaviour
         EasyBestScoreText.text = string.Format("{0:N0}", PlayerInformation.EasyBestScore);
         EasyDestinationSlider.value = PlayerInformation.EasyBestScore;
         HardDestinationSlider.value = PlayerInformation.BestScore;
-
+        SetDestination();
 
         // 안드로이드에서 뒤로가기 누르면 종료되는 처리
         //if(Application.platform == RuntimePlatform.Android)
@@ -576,22 +574,22 @@ public class MenuManager : MonoBehaviour
         storeManager.StopAllWave();
 
         Image storePanelImage = storePanel.GetComponent<Image>();
-        Color tmpColor = storePanelImage.color;
+        //Color tmpColor = storePanelImage.color;
 
         while (true)
         {
             storePanel.transform.localScale -= new Vector3(0.2f, 0.2f, 0.2f);
 
-            tmpColor.a += 0.2f;
-            storePanelImage.color = tmpColor;
+            //tmpColor.a += 0.2f;
+            //storePanelImage.color = tmpColor;
             if (storePanel.transform.localScale.x <= 1f) break;
 
             yield return new WaitForSecondsRealtime(0.01f);
         }
 
         storePanel.transform.localScale = new Vector3(1f, 1f, 1f);
-        tmpColor.a = 1f;
-        storePanelImage.color = tmpColor;
+        //tmpColor.a = 1f;
+        //storePanelImage.color = tmpColor;
 
         seeingStorePanel = true;
         storeOuterPanel.SetActive(true);
@@ -612,14 +610,14 @@ public class MenuManager : MonoBehaviour
         storeOuterPanel.SetActive(false);
 
         Image storePanelImage = storePanel.GetComponent<Image>();
-        Color tmpColor = storePanelImage.color;
+        //Color tmpColor = storePanelImage.color;
 
         while (true)
         {
             storePanel.transform.localScale -= new Vector3(0.2f, 0.2f, 0.2f);
 
-            tmpColor.a -= 0.2f;
-            storePanelImage.color = tmpColor;
+            //tmpColor.a -= 0.2f;
+            //storePanelImage.color = tmpColor;
 
             if (storePanel.transform.localScale.x <= 0) break;
 
@@ -627,8 +625,8 @@ public class MenuManager : MonoBehaviour
         }
 
         storePanel.transform.localScale = new Vector3(2, 2, 2);
-        tmpColor.a = 0f;
-        storePanelImage.color = tmpColor;
+        //tmpColor.a = 0f;
+        //storePanelImage.color = tmpColor;
 
         storeFadeOutRunning = false;
         storePanel.SetActive(false);

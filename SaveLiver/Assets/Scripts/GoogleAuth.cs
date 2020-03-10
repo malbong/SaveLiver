@@ -10,7 +10,7 @@ public class GoogleAuth : MonoBehaviour
 {
     private FirebaseAuth auth;
     public StoreManager storeManager;
-
+    public MenuManager menuManager;
 
     void Start()
     {
@@ -92,6 +92,7 @@ public class GoogleAuth : MonoBehaviour
                 storeManager.InitFaceCharge();
                 storeManager.InitBoatCharge();
                 storeManager.InitWaveCharge();
+                menuManager.SetDestination();
             }
         });
     }
