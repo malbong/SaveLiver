@@ -1,11 +1,5 @@
 
-# 게임소개 SaveLiver (거북이 피하기) 살펴보기
-<img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2Fd9ix7F%2FbtqHEdSbEpd%2F3IYuoasi327HLnKfVx2yk0%2Fimg.jpg" width="300px" height="600px" alt="1"></img>
-<img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FWFwOY%2FbtqHJoMsbAA%2FSKHkfqhxZ0i8nb1TZzXQLk%2Fimg.jpg" width="300px" height="600px" alt="1"></img>
-<img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbejKnn%2FbtqHMv5mSjO%2FLoKMn3CEissocmw9zqcHlK%2Fimg.jpg" width="300px" height="600px" alt="1"></img>
-<img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FSUtEv%2FbtqHQHjSl4d%2FlY8n7cjSFFaRKp49J5b9O0%2Fimg.jpg" width="300px" height="600px" alt="1"></img>
-<img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbXdXKq%2FbtqHG75C3Em%2FxDHVAK7K4LBxc2ry8QdUPk%2Fimg.jpg" width="300px" height="600px" alt="1"></img>
-<img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2Fb0xPSA%2FbtqHBSAQsv4%2FET65MYkFy7o1Kmaqdk1MaK%2Fimg.jpg" width="300px" height="600px" alt="1"></img>
+# SaveLiver 소개
 ### 스토리 : 별주부전을 바탕으로 거북이가 토끼를 쫒아오는 스토리를 구상해보았습니다.
 ### 장르 : 아케이드, 캐주얼
 ### 조작 : 조이스틱
@@ -17,6 +11,15 @@
 ### 5. 거북이가 죽으면 영혼(Soul)이 나오는데, 영혼으로 캐릭터, 보트, 웨이브를 구매할 수 있습니다.
 ### 6. 각 캐릭터, 보트마다 능력이 있습니다.   
 ###
+
+# 인게임
+<img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2Fd9ix7F%2FbtqHEdSbEpd%2F3IYuoasi327HLnKfVx2yk0%2Fimg.jpg" width="300px" height="600px" alt="1"></img>
+<img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FWFwOY%2FbtqHJoMsbAA%2FSKHkfqhxZ0i8nb1TZzXQLk%2Fimg.jpg" width="300px" height="600px" alt="1"></img>
+<img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbejKnn%2FbtqHMv5mSjO%2FLoKMn3CEissocmw9zqcHlK%2Fimg.jpg" width="300px" height="600px" alt="1"></img>
+<img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FSUtEv%2FbtqHQHjSl4d%2FlY8n7cjSFFaRKp49J5b9O0%2Fimg.jpg" width="300px" height="600px" alt="1"></img>
+<img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbXdXKq%2FbtqHG75C3Em%2FxDHVAK7K4LBxc2ry8QdUPk%2Fimg.jpg" width="300px" height="600px" alt="1"></img>
+<img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2Fb0xPSA%2FbtqHBSAQsv4%2FET65MYkFy7o1Kmaqdk1MaK%2Fimg.jpg" width="300px" height="600px" alt="1"></img>
+
 # 
 # 제작기간
 ### 2019/12 ~ 2020/2 약 두달
