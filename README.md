@@ -11,7 +11,7 @@
 ### 5. 거북이가 죽으면 영혼(Soul)이 나오는데, 영혼으로 캐릭터, 보트, 웨이브를 구매할 수 있습니다.
 ### 6. 각 캐릭터, 보트마다 능력이 있습니다.   
 ###
-
+#
 # 인게임
 <img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2Fd9ix7F%2FbtqHEdSbEpd%2F3IYuoasi327HLnKfVx2yk0%2Fimg.jpg" width="300px" height="600px" alt="1"></img>
 <img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FWFwOY%2FbtqHJoMsbAA%2FSKHkfqhxZ0i8nb1TZzXQLk%2Fimg.jpg" width="300px" height="600px" alt="1"></img>
