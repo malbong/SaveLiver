@@ -1,3 +1,13 @@
+
+#
+# 인게임 화면
+<img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2Fd9ix7F%2FbtqHEdSbEpd%2F3IYuoasi327HLnKfVx2yk0%2Fimg.jpg" width="300px" height="600px" alt="1"></img>
+<img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FWFwOY%2FbtqHJoMsbAA%2FSKHkfqhxZ0i8nb1TZzXQLk%2Fimg.jpg" width="300px" height="600px" alt="1"></img>
+<img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbejKnn%2FbtqHMv5mSjO%2FLoKMn3CEissocmw9zqcHlK%2Fimg.jpg" width="300px" height="600px" alt="1"></img>
+<img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FSUtEv%2FbtqHQHjSl4d%2FlY8n7cjSFFaRKp49J5b9O0%2Fimg.jpg" width="300px" height="600px" alt="1"></img>
+<img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbXdXKq%2FbtqHG75C3Em%2FxDHVAK7K4LBxc2ry8QdUPk%2Fimg.jpg" width="300px" height="600px" alt="1"></img>
+<img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2Fb0xPSA%2FbtqHBSAQsv4%2FET65MYkFy7o1Kmaqdk1MaK%2Fimg.jpg" width="300px" height="600px" alt="1"></img>
+
 # 
 # 게임소개 
 ### 스토리 : 별주부전을 바탕으로 거북이가 토끼를 쫒아오는 스토리를 구상해보았습니다.
@@ -23,17 +33,7 @@
 ### Firebase Database
 ### Google play, Admob
 
-
 #
 # 디자인
 ### Aseprite를 이용한 pixel디자인
-### 개발자 2명에서 직접 하나씩 찍음
-
-#
-# 인게임 화면
-<img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2Fd9ix7F%2FbtqHEdSbEpd%2F3IYuoasi327HLnKfVx2yk0%2Fimg.jpg" width="300px" height="600px" alt="1"></img>
-<img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FWFwOY%2FbtqHJoMsbAA%2FSKHkfqhxZ0i8nb1TZzXQLk%2Fimg.jpg" width="300px" height="600px" alt="1"></img>
-<img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbejKnn%2FbtqHMv5mSjO%2FLoKMn3CEissocmw9zqcHlK%2Fimg.jpg" width="300px" height="600px" alt="1"></img>
-<img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FSUtEv%2FbtqHQHjSl4d%2FlY8n7cjSFFaRKp49J5b9O0%2Fimg.jpg" width="300px" height="600px" alt="1"></img>
-<img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbXdXKq%2FbtqHG75C3Em%2FxDHVAK7K4LBxc2ry8QdUPk%2Fimg.jpg" width="300px" height="600px" alt="1"></img>
-<img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2Fb0xPSA%2FbtqHBSAQsv4%2FET65MYkFy7o1Kmaqdk1MaK%2Fimg.jpg" width="300px" height="600px" alt="1"></img>
+### 개발자 2명에서 직접 하나씩 찍
