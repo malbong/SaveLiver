@@ -1,6 +1,5 @@
 
-# 게임소개
-# SaveLiver (거북이 피하기) 살펴보기
+# 게임소개 SaveLiver (거북이 피하기) 살펴보기
 <img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2Fd9ix7F%2FbtqHEdSbEpd%2F3IYuoasi327HLnKfVx2yk0%2Fimg.jpg" width="300px" height="600px" alt="1"></img>
 <img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FWFwOY%2FbtqHJoMsbAA%2FSKHkfqhxZ0i8nb1TZzXQLk%2Fimg.jpg" width="300px" height="600px" alt="1"></img>
 <img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbejKnn%2FbtqHMv5mSjO%2FLoKMn3CEissocmw9zqcHlK%2Fimg.jpg" width="300px" height="600px" alt="1"></img>
@@ -16,21 +15,21 @@
 ### 3. 총 3개의 목숨(간) 이 있습니다. 
 ### 4. 각종 아이템으로 살아남는데 도움이 될것입니다.
 ### 5. 거북이가 죽으면 영혼(Soul)이 나오는데, 영혼으로 캐릭터, 보트, 웨이브를 구매할 수 있습니다.
-### 6. 각 캐릭터, 보트마다 능력이 있습니다.
-
+### 6. 각 캐릭터, 보트마다 능력이 있습니다.   
+###
 # 
 # 제작기간
 ### 2019/12 ~ 2020/2 약 두달
 ### 아무래도 유니티를 처음 다룰 때여서 미숙했던 부분이 많음
-### "배우면서 만들었다"가 적당한 말인 듯
-
+### "배우면서 만들었다"가 적당한 말인 듯   
+###
 #
 # 개발
 ### Unity, C#
 ### Firebase Database
-### Google play, Admob
-
+### Google play, Admob   
+###
 #
 # 디자인
 ### Aseprite를 이용한 pixel디자인
-### 개발자 2명에서 직접 하나씩 찍
+### 개발자 2명에서 직접 하나씩 찍음   
