@@ -6,14 +6,12 @@ public class Fever : Item, IItem
 {
     public float itemDuration = 8f;
     public float amountSpeedUp = 2f;
-    //private float feverItemTime = 0f;
 
     public Sprite feverSprite;
 
     void Update()
     {
         if (GameManager.instance.isPause) return;
-        //ItemDurationAndDestroy();
     }
     
 
@@ -32,17 +30,6 @@ public class Fever : Item, IItem
             GetComponentInParent<SpriteRenderer>().sprite = feverSprite;
             parent.gameObject.SetActive(false);
         }
-        /*
-        if (Time.time - feverItemTime >= itemDuration && hasItem)
-        {
-            hasItem = false;
-            Player.instance.feverNum -= 1;
-            if(Player.instance.feverNum <= 0) Player.instance.EndFeverTime(); // Item 소진 시 무적종료 알림
-            Player.instance.speed -= amountSpeedUp;
-            GetComponentInParent<SpriteRenderer>().sprite = feverSprite;
-            parent.gameObject.SetActive(false);
-        }
-        */
     }
 
 
@@ -66,7 +53,6 @@ public class Fever : Item, IItem
         GetComponentInParent<SpriteRenderer>().enabled = false;
         GetComponent<Collider2D>().enabled = false;
         StartCoroutine(ItemDurationAndDestroy());
-        //feverItemTime = Time.time;
         Player.instance.speed += amountSpeedUp; // 스피드업
         Player.instance.feverNum += 1; // 먹은 fever Item 갯수 +1
         Player.instance.FeverTime(); // 무적시작을 알림

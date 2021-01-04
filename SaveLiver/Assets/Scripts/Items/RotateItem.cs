@@ -6,13 +6,11 @@ public class RotateItem : Item, IItem
 {
     public float itemDuration = 8f;
     public float amountRotateUp = 1f;
-    //private float rotateUpItemTime = 0f;
 
 
     void Update()
     {
         if (GameManager.instance.isPause) return;
-        //ItemDurationAndDestroy();
     }
 
 
@@ -30,16 +28,6 @@ public class RotateItem : Item, IItem
             Player.instance.HasRotateUp = false;
             parent.gameObject.SetActive(false);
         }
-
-        /*
-        if (Time.time - rotateUpItemTime >= itemDuration && hasItem)
-        {
-            hasItem = false;
-            Player.instance.rotateSpeed -= amountRotateUp;
-            Player.instance.HasRotateUp = false;
-            parent.gameObject.SetActive(false);
-        }
-        */
     }
 
 
@@ -64,7 +52,6 @@ public class RotateItem : Item, IItem
         Player.instance.rotateSpeed += amountRotateUp;
         Player.instance.HasRotateUp = true;
         StartCoroutine(ItemDurationAndDestroy());
-        //rotateUpItemTime = Time.time;
         hasItem = true;
     }
 }
